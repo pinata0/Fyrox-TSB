@@ -1,0 +1,1161 @@
+[
+  {
+    "id": 0,
+    "slug": "vivi",
+    "name": "비비",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/vivi-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/vivi/vivi/Vivi.webp",
+        "sha256": "b7118cf132766e2e1aac9ba3fe428716d698434089b0691ea5ce800d69ad2f84",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/vivi-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/vivi/vivi/Vivi.webp",
+        "sha256": "2d13c826a2ea2072c28a492555405e07af168c429c98511dab420af06a4dfca7",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/vivi",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-vivi-vivi",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vivi/vivi/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vivi/vivi/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack2_1",
+      "EasterEgg_Victory",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "EyeLashe_L_Idle",
+      "EyeLashe_R_Idle",
+      "Eye_L_Idle",
+      "Eye_L_Twinkle",
+      "Eye_R_Idle",
+      "Eye_R_Twinkle",
+      "Idle",
+      "Idle_EasterEggAfter",
+      "Idle_EasterEggBefore",
+      "Mouth_Idle1",
+      "Mouth_Idle2",
+      "Move",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Attack3",
+      "Point_Attack4",
+      "Point_Attack5",
+      "Point_Attack6",
+      "Point_Attack7",
+      "Point_SkillReady",
+      "Skill1_1",
+      "UserSkill1_1",
+      "UserSkill2_1",
+      "Victory",
+      "Wing_L",
+      "Wing_L2V",
+      "Wing_LV",
+      "Wing_L_1U",
+      "Wing_L_2VBm",
+      "Wing_L_3W",
+      "Wing_L_F",
+      "Wing_L_F2",
+      "Wing_L_FX",
+      "Wing_L_Finger1",
+      "Wing_L_Finger1W",
+      "Wing_L_Finger2",
+      "Wing_L_Finger2W",
+      "Wing_L_Finger3",
+      "Wing_L_Finger3X",
+      "Wing_L_Naill",
+      "Wing_L_NaillX",
+      "Wing_R",
+      "Wing_R_1U",
+      "Wing_R_2",
+      "Wing_R_3",
+      "Wing_R_B",
+      "Wing_R_Finger1",
+      "Wing_R_Finger2",
+      "Wing_R_Finger3",
+      "Wing_R_Naill",
+      "Wing_R_Root"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/vivi-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vivi",
+      "sha256": "e1398677fa48f5908bc1093f800d49c786ca997ef106a77f610cbdbb3d16d5de"
+    }
+  },
+  {
+    "id": 1,
+    "slug": "naia",
+    "name": "나이아",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/naia-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/naia/naia/Naia.webp",
+        "sha256": "ed1b5f4851c7769bc4a269d26c1c7c53c34a2683779c4cecbee038c50c54b76d",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/naia-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/naia/naia/Naia.webp",
+        "sha256": "0ebae16a39d17db56e14c0a3240edb73b3e879189711c94f88bc0125f2693a3e",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/naia",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-naia-naia",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/naia/naia/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/naia/naia/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1T",
+      "Attack2_1e",
+      "DDEAD",
+      "DEAD",
+      "Eye_Idle_L",
+      "Eye_Idle_R",
+      "Eyebrow_Idle_L",
+      "Eyebrow_Idle_R",
+      "IdleV",
+      "Mouth_Idle",
+      "MoveW",
+      "Point_Attack1",
+      "Point_Attack1_T",
+      "Point_Attack2",
+      "Point_SkillReady",
+      "Skill1_1",
+      "Skill1_2",
+      "Skill1_3k",
+      "Skill1_4",
+      "Victorye"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/naia-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/naia",
+      "sha256": "a80f867eb705e36425d6726cd801f402371ac5b9f34d10314e87c531015226cf"
+    }
+  },
+  {
+    "id": 2,
+    "slug": "erpin",
+    "name": "에르핀",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/erpin-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/erpin/erpin/Erpin.webp",
+        "sha256": "4527ccbe167d2f3478c811930cb7c2e7fdbf201c25d3c5af638fc184b0bd1278",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/erpin-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/erpin/erpin/Erpin.webp",
+        "sha256": "ac2f5f9ef64283d54e44a72a777559af8a3729af0a7ad7709168b2e1883dd378",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/erpin",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-erpin-erpin",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/erpin/erpin/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/erpin/erpin/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1m",
+      "Attack2_1",
+      "Attack2_1_Ac_1",
+      "Attack2_1_Ac_1z",
+      "Attack2_1_Ac_2",
+      "Attack2_1_Ac_3",
+      "Attack2_1_Ac_4",
+      "Attack2_1_Ac_5",
+      "Attack2_1_Ac_6",
+      "Attack2_2",
+      "Attack2_3",
+      "Attack2_4",
+      "Attack2_5",
+      "DEAd",
+      "Eye_Brow_L_Idle_1",
+      "Eye_Brow_L_Idle_2",
+      "Eye_Brow_R_Idle_1",
+      "Eye_Brow_R_Idle_2",
+      "Eye_L_Idle_1",
+      "Eye_L_Idle_3",
+      "Eye_Lashe_L_1_Idle_1",
+      "Eye_Lashe_R_1_Idle_1",
+      "Eye_R_Idle_1",
+      "Idlel",
+      "Mouth_Idle_1",
+      "Mouth_Idle_2",
+      "Movej",
+      "OW1_Skill1_1",
+      "OW1_Skill1_2",
+      "Point_Attack1",
+      "Point_Attack1_Shot",
+      "Point_Attack1_T",
+      "Point_SkillReady",
+      "Point_Wind",
+      "Skill1_1",
+      "Victoryu",
+      "Wing_0",
+      "Wing_1",
+      "Wing_1e",
+      "Wing_1eB2K",
+      "Wing_2",
+      "Wing_2e",
+      "Wing_2eA",
+      "Wing_3",
+      "Wing_3e",
+      "Wing_3eA"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/erpin-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/erpin",
+      "sha256": "f4b3a8668f355e875d7a931c1c8a63df03a0c858908c6eee9fe742a5e046d730"
+    }
+  },
+  {
+    "id": 3,
+    "slug": "id",
+    "name": "이드",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/id-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/ed/ed/Ed.webp",
+        "sha256": "681d0af33acd463c3e18271200b1b62cda574901d7a7bf8a3cb5aa3cf5b144bd",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/id-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/ed/ed/Ed.webp",
+        "sha256": "bc4b29711156679f629c073e8b5f62d882fec914f5456c931116fe9dd703dc30",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/ed",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-ed-ed",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ed/ed/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ed/ed/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack1_2",
+      "Attack1_3",
+      "Attack1_4",
+      "Attack2_1",
+      "EasterEgg_Victory",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "EyeLashe_L_Idle _2_Fx",
+      "EyeLashe_L_Idle_1",
+      "EyeLashe_L_Idle_2",
+      "EyeLashe_L_Idle_2_Fx",
+      "EyeLashe_R_Idle",
+      "EyeLashe_R_Idle_1",
+      "EyeLashe_R_Idle_2",
+      "Eye_L_Idle3",
+      "Eye_L_Idle_1",
+      "Eye_L_Idle_2",
+      "Eye_L_Idle_3",
+      "Eye_L_Idle_4",
+      "Eye_R_Idle3",
+      "Eye_R_Idle_1",
+      "Eye_R_Idle_2",
+      "Eye_R_Idle_3",
+      "Eye_R_Idle_4",
+      "Idle",
+      "Mouth_Idle1",
+      "Move",
+      "Nattah_Eye_L_Idle",
+      "Nattah_Eye_R_Idle",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_SkillReady",
+      "Skill1_1",
+      "Victory"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/id-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ed",
+      "sha256": "d589906c875678a12d7cf8118a6631cd7367c17b15a5320fc716ab753fc50dc4"
+    },
+    "outfit_correction": {
+      "authority": "User correction and two user-provided costume references; these attachments are not claimed to be official art.",
+      "source_urls": [
+        "https://x.com/trickcal_en/status/2035899334676353025",
+        "https://wikiwiki.jp/thetrickal/%E3%82%A4%E3%83%BC%E3%83%89",
+        "https://wiki.cheeky.tsuncloud.com/korea/spines/ed"
+      ],
+      "images": [
+        {
+          "path": "artifacts/id-bodysuit-correction/references/user-costume-side.png",
+          "sha256": "8f17c74d2ac27a1a00e64e2f7af971b6009930812eb05fb4711a12cf19d42b65"
+        },
+        {
+          "path": "artifacts/id-bodysuit-correction/references/user-costume-front.png",
+          "sha256": "423576c081d2068ae3d6a1788e6521a3459deab98fc236dfd2233b390e989f50"
+        }
+      ],
+      "finding": "Fitted sleeveless white/black one-piece bodysuit: white central panel, black sides, white neck band with thin crossed black halter straps, bare arms, white wrist bands, charcoal thigh-high stockings with narrow white side piping, white low shoes. Neutral chibi proportions and sleepy expression preserved. Side/rear and unseen details are fan-model interpretations."
+    }
+  },
+  {
+    "id": 4,
+    "slug": "aya",
+    "name": "아야",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/aya-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/aya/aya/Aya.webp",
+        "sha256": "4587d730aead0311b3438cec50b608448b6f044341005ad3c881c87b8182cce4",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/aya-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/aya/aya/Aya.webp",
+        "sha256": "bf01c0e5cc210eaaf35d463972a4ae41f2e8eb58324d34a5832db205dd2a219f",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/aya",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-aya-aya",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/aya/aya/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/aya/aya/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack2_1",
+      "BT_Wing_L",
+      "BT_Wing_L2",
+      "BT_Wing_L3",
+      "BT_Wing_L4",
+      "BT_Wing_R",
+      "BT_Wing_R2",
+      "BT_Wing_R3",
+      "BT_Wing_R4",
+      "EasterEgg_Victory",
+      "F_EyeBody_Idle_L",
+      "F_EyeBody_Idle_R",
+      "F_EyeHighlight_Idle_L",
+      "F_EyeHighlight_Idle_Lg",
+      "F_EyeHighlight_Idle_R",
+      "F_EyeHighlight_Idle_Rb",
+      "F_EyePupil_Idle_L",
+      "F_EyePupil_Idle_Lg",
+      "F_EyePupil_Idle_R",
+      "F_EyePupil_Idle_Rb",
+      "F_Eyebrow_Idle_L",
+      "F_Eyebrow_Idle_L2",
+      "F_Eyebrow_Idle_L3",
+      "F_Eyebrow_Idle_R",
+      "F_Eyebrow_Idle_R2",
+      "F_Eyebrow_Idle_R3",
+      "F_Eyeline1_Idle_L",
+      "F_Eyeline1_Idle_R",
+      "F_Eyeline2_Idle_L",
+      "F_Eyeline2_Idle_R",
+      "F_Mouth_Idle1",
+      "F_Mouth_Idle2",
+      "F_Mouth_Idle3",
+      "F_Mouth_Idle4",
+      "F_Mouth_Idle5",
+      "Idle",
+      "Move",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Attack3",
+      "Point_SkillReady",
+      "Point_Wind1",
+      "Point_Wind2",
+      "Point_Wind3",
+      "Point_Wind4",
+      "Skill1_1",
+      "Thigh_LVictory",
+      "Victory",
+      "VictoryBand1",
+      "VictoryBand2",
+      "VictoryBand3",
+      "VictoryBand4",
+      "Weapon_Attack",
+      "Weist_attack2",
+      "WinB"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/aya-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/aya",
+      "sha256": "cba0e64a692d81337589548067ea91bf7e21f597688210d940e93a31e4de9b92"
+    },
+    "parasol_correction": {
+      "source_url": "https://wikiwiki.jp/thetrickal/%E3%82%A2%E3%83%A4",
+      "image": "assets/references/aya-parasol-reference.webp",
+      "sha256": "80179baab463b84e59da2855b13b6243e203aee90b1d08759faa5c7e654fccfa",
+      "finding": "Two ankle-length white low twin tails attached beneath the pale-blue butterfly ties; separate from kimono and held flower-petal parasol. Supersedes the mistaken short-bob interpretation."
+    }
+  },
+  {
+    "id": 5,
+    "slug": "picora",
+    "name": "피코라",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/picora-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/picora/picora/Picora.webp",
+        "sha256": "abc8e3822ab045119d9427bf94976bb846d7d3cc5a0131b24d090461de2a942b",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/picora-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/picora/picora/Picora.webp",
+        "sha256": "279fd047648c16b635162414317913b97fc350a0d35615cbfa409a5df3e089df",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/picora",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-picora-picora",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack2_1d",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "EyeLashe_L_Idle",
+      "EyeLashe_R_Idle",
+      "Eye_L_Idle",
+      "Eye_R_Idle",
+      "IdleI",
+      "Mouth_Idle1",
+      "Mouth_Idle2",
+      "Move",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Attack2_T",
+      "Point_Attack3",
+      "Point_Attack3_T",
+      "Point_Attack4",
+      "Point_Attack4_T",
+      "Point_Attack5",
+      "Point_SkillReady",
+      "Skill1_1",
+      "Skill_Stciker1",
+      "Skill_Stciker18",
+      "Skill_Stciker2",
+      "Skill_Stciker3",
+      "Victoryf",
+      "Weapon1_Wing",
+      "Weapon1_WingW"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/picora-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/picora",
+      "sha256": "65711479b45be75ea066788ce06b844c591243808ad5e8820672e6e61a0abf89"
+    },
+    "shoulder_bag_review": {
+      "date": "2026-11-12",
+      "record": "artifacts/tripo-picora-shoulder-bag/research.json",
+      "sources": [
+        {
+          "kind": "user_supplied_visual",
+          "path": "artifacts/tripo-picora-shoulder-bag/references/user-picora-shoulder-bag.png",
+          "note": "사용자 첨부. 공식 게시 출처는 제공되지 않았으므로 공식 배포 이미지로 표기하지 않음.",
+          "sha256": "16f119881cf7161f1a6faeac42cd224ecdda2ff91c0373ff9256e676d9583f70"
+        },
+        {
+          "kind": "original_game_art_community_host",
+          "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/sprites/rawsprites/heroicons/picora/Picora.png",
+          "path": "artifacts/tripo-picora-shoulder-bag/references/picora-community-hosted-portrait.png",
+          "note": "추가로 내려받은 원작 캐릭터 아이콘. 동일 숄더백·끈·체리·리본의 착용 외형 대조.",
+          "sha256": "ca3d26464696affeb996435b00ded2547119b6d8b76d72543e95f2a254e3bf52"
+        },
+        {
+          "kind": "original_game_atlas_community_host",
+          "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/Picora.png",
+          "path": "artifacts/tripo-picora-shoulder-bag/references/picora-battle-atlas.png",
+          "note": "원작 전투 텍스처 아틀라스의 가방·장식 및 흰 격자 치마를 대조.",
+          "sha256": "dd03f978d6330fa684adc9a655722b8243b8ef43fe8c34db90490343fe8ff1e6"
+        },
+        {
+          "kind": "original_game_atlas_index_community_host",
+          "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.atlas",
+          "path": "artifacts/tripo-picora-shoulder-bag/references/picora-battle.atlas",
+          "note": "실제 파츠명 Bag, Bag_Ribbon, Bag_Stciker, Bag_Strip, Bag_Strip_B. 파일 원문 철자 유지.",
+          "sha256": "64fa6ca93c384475f158316c916813c3612a07816a2b36ba77740241e07a6298"
+        },
+        {
+          "kind": "community_character_page",
+          "url": "https://wiki.cheeky.tsuncloud.com/korea/apostles/picora",
+          "note": "피코라 식별 및 원작 아이콘 링크 확인."
+        },
+        {
+          "kind": "community_secondary_source",
+          "url": "https://wikiwiki.jp/thetrickal/%E3%83%94%E3%82%B3%E3%83%A9",
+          "note": "캐릭터 이름·패션/스티커 테마 및 별도 패션 파우치 유물 항목 확인. 유물 아이콘을 착용 가방과 같은 물건이라고 단정하지 않음."
+        },
+        {
+          "kind": "official_page_not_visually_verified",
+          "url": "https://game.naver.com/lounge/Trickcal/board/detail/3615706",
+          "note": "JavaScript 필요 화면만 열려 이번 가방 세부의 직접 근거로 사용하지 않음."
+        }
+      ],
+      "note": "사용자 첨부 + 추가 원작 아이콘/아틀라스 대조. 후면·두께는 제작용 해석."
+    }
+  },
+  {
+    "id": 6,
+    "slug": "chloe",
+    "name": "클로에",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/chloe-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/chloe/chloe/Chloe.webp",
+        "sha256": "74433f7c6920f7ba882bf4be56a425dac827a817ac7d53a8a79fb6f545c7b443",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/chloe-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/chloe/chloe/Chloe.webp",
+        "sha256": "fa47228e7486032818c1d5cb5d24e700bb5f65b6f215b9ba5724b1c1c31d6f58",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-chloe-chloe",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/chloe/chloe/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/chloe/chloe/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack1_1_SebastianForm",
+      "Attack2_1",
+      "DEAd",
+      "DEAdG",
+      "Die_SebastianForm",
+      "EasterEgg_Victory",
+      "F_eye_cover_idle_L",
+      "F_eye_cover_idle_L/",
+      "F_eye_cover_idle_R",
+      "F_eye_cover_idle_R0",
+      "Idle",
+      "Idle_SebastianForm",
+      "Mouth_idle",
+      "Mouth_idle2",
+      "Move",
+      "Move_SebastianForm",
+      "Point_Attack1",
+      "Point_Attack1_Slash",
+      "Point_Attack2",
+      "Point_Wind1",
+      "Skill1_1",
+      "Skill1_1_SebastianForm",
+      "Skill2_1",
+      "Victory",
+      "Victory_SebastianForm",
+      "eye_idle_L",
+      "eye_idle_R"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/chloe-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+      "sha256": "98975d8ef696b047a8438f0fc662ddecab55bb33d936ac82efac9cc1b72b55b7"
+    },
+    "structure_correction": {
+      "authority": "User clarified separate Chloe/bear structure. Sebastian attachment subsequently confirmed fan-made by the user; not authoritative for appearance or material.",
+      "references": [
+        {
+          "path": "artifacts/tripo-chloe-sebastian-correction/references/chloe-without-sebastian-user.png",
+          "sha256": "f2f470f62dd1c40f9303b73ea8b93c39edeb5872c4d4109f8d7f7f6f3cb818f3",
+          "role": "Fan-made structural explanation only; visual design superseded by official illustration checks."
+        },
+        {
+          "path": "artifacts/tripo-chloe-sebastian-correction/references/sebastian-user.png",
+          "sha256": "3476221ab72829e21d9d7412974a3e3832de488b54c43fe39bc0451419069cbf",
+          "role": "Fan-made structural explanation only; visual design superseded by official illustration checks."
+        }
+      ],
+      "finding": "Sebastian is a complete separate bear doll behind Chloe. Chloe supports his cheeks with both hands. The purple bow and mismatched long arms belong to the bear.",
+      "scope": "Corrected Tripo input pack; existing game models not rebuilt"
+    },
+    "sebastian_appearance_correction": {
+      "references": [
+        {
+          "path": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-basic.jpg",
+          "url": "https://x.com/trickcal_jp/status/1971582899796484364",
+          "image_url": "https://pbs.twimg.com/media/G1xtOIHWwAAPI2h.jpg",
+          "role": "Official published base illustration: colors, markings, outlines, ornament.",
+          "sha256": "d410865edb1cfb7577efe88ef6a27444ad695399808a23c82f8d783e6226f933"
+        },
+        {
+          "path": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-profile.jpg",
+          "url": "https://x.com/trickcal_jp/status/2058729771199316128",
+          "image_url": "https://pbs.twimg.com/media/HI6Cyh_acAAOiwl.jpg",
+          "role": "Official published character profile: corroborates normal/base appearance.",
+          "sha256": "0bf1d4706cb5f84c5613eca2b3027b4682a829bcde5c139b2d0cfd17a51a2219"
+        }
+      ],
+      "motion_reference": {
+        "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+        "host_role": "Community viewer displaying original game sprite; not an official website.",
+        "skin": "Normal",
+        "animation": "Idle_SebastianForm",
+        "frame": "8 / 40",
+        "observation": "Complete white bear torso and short simple legs, long asymmetric arms, plum ribbon; battle-state cheek stars are not the default heart marks."
+      },
+      "finding": "공식 소개 일러스트와 원작 Idle_SebastianForm 전신 대조. 양 볼 하트 선무늬·라벤더 하트형 바보털·민트/분홍 팔·보라 리본·옆 고리/술 장식을 반영하고 실사 봉제 질감과 노란 막대, 노출 금속 지퍼를 제거했습니다. 팬 제작 첨부는 구조 설명용 이력이며 외형·재질 기준이 아닙니다.",
+      "generated_record": "artifacts/tripo-sebastian-original-style/generation.json"
+    }
+  },
+  {
+    "id": 7,
+    "slug": "renua",
+    "name": "리뉴아",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/renua-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/renewaawaken/renewaawaken/RenewaAwaken.webp",
+        "sha256": "4b9965c735cf6340babeaae8d867b5cb4bf61346c2f574a775c64748a8d77005",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/renua-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/renewaawaken/renewaawaken/RenewaAwaken.webp",
+        "sha256": "f1b184b53ae230a816773e0840a8040eab85e4335284c77c1009fe5704b658d0",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-renewaawaken-renewaawaken",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/renewaawaken/renewaawaken/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/renewaawaken/renewaawaken/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack2_1",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "Eye_L_Idle",
+      "Eye_R_Idle",
+      "Eyehigh_Idle_L",
+      "Eyehigh_Idle_L3",
+      "Eyehigh_Idle_R",
+      "Eyehigh_Idle_R0",
+      "Idlec",
+      "Mouth_Idle",
+      "Mover",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Die",
+      "Point_SkillReady",
+      "Skill1_1",
+      "Skill_1_Halo_1",
+      "Skill_1_Halo_1_2",
+      "Skill_1_Halo_1_2_2",
+      "Skill_1_Halo_2",
+      "Skill_1_Halo_3",
+      "Skill_1_Halo_3_2yB",
+      "Skill_2_Halo_1",
+      "Skill_2_Halo_1_2mB",
+      "Skill_2_Halo_2",
+      "Skill_2_Halo_2_2",
+      "Skill_3_Halo_1",
+      "Skill_3_Halo_1_2uB",
+      "Skill_3_Halo_2",
+      "Skill_3_Halo_2_2tB",
+      "Skill_3_Halo_3",
+      "Skill_3_Halo_4",
+      "Twintail_L_1",
+      "Twintail_L_2",
+      "Twintail_R_1",
+      "Twintail_R_2",
+      "Victory"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/renua-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken",
+      "sha256": "c4e94423558f9aa56b12a5d2f0e3ec7ba57945d64a256d9435335c0463ef9a46"
+    }
+  },
+  {
+    "id": 8,
+    "slug": "mayo",
+    "name": "마요",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/mayo-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/mayo/mayo/Mayo.webp",
+        "sha256": "400734728e5a43d023b84ad0ccb7fd7d1473d75a7f482ecd215a4d6c38d3c296",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/mayo-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/mayo/mayo/Mayo.webp",
+        "sha256": "4049de8b68028c4193a00d539fe240f06c94f5394db397db48f5248bad9b3294",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/mayo",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-mayo-mayo",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/mayo/mayo/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/mayo/mayo/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack1_2Z",
+      "Attack2_1",
+      "Eye_L_Idle",
+      "Eye_R_Idle",
+      "IdleR",
+      "Mouth_Idle",
+      "Mouth_Idle_2",
+      "MoveR",
+      "Point_Attack1",
+      "Point_Attack1_Shot1",
+      "Point_Attack2",
+      "Point_Attack3",
+      "Point_Attack3_T",
+      "Point_Attack4",
+      "Point_SkillReady",
+      "S1_F_Eyebrow_Idle_L",
+      "S1_F_Eyebrow_Idle_R",
+      "Skill1_1e",
+      "Skill_Waepon_1",
+      "Skill_Waepon_2",
+      "Skill_Waepon_3",
+      "Skill_Waepon_4",
+      "Skill_Waepon_5",
+      "Uskill",
+      "Uskill_HoldIB",
+      "Uskill_Sight",
+      "Uskill_To_Hand_T",
+      "VictoryN",
+      "Weapon_Skill_2",
+      "Weapon_Skill_2_2",
+      "Wing",
+      "Wing2h",
+      "Wing_1_0g",
+      "Wing_1_1j",
+      "Wing_1_2kAm",
+      "Wing_2_0g",
+      "Wing_2_1h",
+      "Wing_Root ",
+      "Wingj"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/mayo-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/mayo",
+      "sha256": "55316ca99f93ea6cacd165cc74c7314946dffcfa7c8e0445787add125b64024c"
+    }
+  },
+  {
+    "id": 9,
+    "slug": "bella",
+    "name": "벨라",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/bella-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/vela/vela/Vela.webp",
+        "sha256": "767ba6b81633d05fddcd7d70c20c6ec4e189d8821b3803c51560eb5b394016bc",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/bella-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/vela/vela/Vela.webp",
+        "sha256": "f6cc65e008a4a8fac63cb0750d8e45d39ceefd54e80f3ede5441544377e0094d",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/vela",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-vela-vela",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vela/vela/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vela/vela/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack1_2",
+      "Attack2_1",
+      "Attack2_2",
+      "Eye_Brow_L_Idle",
+      "Eye_Brow_R_Idle",
+      "Eye_HighLight_L_Idle",
+      "Eye_HighLight_R_Idle",
+      "Eye_Idle_Fire_L",
+      "Eye_Idle_Fire_L_Purple",
+      "Eye_Idle_Fire_R",
+      "Eye_Idle_Fire_R_Blue",
+      "Eye_L_ Idle",
+      "Eye_L_ Idle_Purple",
+      "Eye_L_ Idle_de",
+      "Eye_Lashe_L_1_Idle",
+      "Eye_Lashe_R_1_Idle",
+      "Eye_R_Idle",
+      "Eye_R_Idle_Blue",
+      "Eye_R_Idle_de",
+      "FakeDie_1",
+      "FakeDie_2",
+      "FakeDie_Loop",
+      "Idle",
+      "Mouth_Idle",
+      "Move",
+      "Point_Attack1",
+      "Point_Skill2",
+      "Point_SkillReady",
+      "Skill1_1",
+      "Victory",
+      "attack_ghosting",
+      "attack_ghosting2"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/bella-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vela",
+      "sha256": "1b0a29a30899cc2a9a5130e1d88d95a56df4e26c5fbc4452930a738eabd542f9"
+    }
+  },
+  {
+    "id": 10,
+    "slug": "ui",
+    "name": "우이",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/ui-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/ui/ui/Ui.webp",
+        "sha256": "4c73bfb1bb88cb419aeaedee180f18a75b9011dc3edafd73436b29cb1bf9bfc5",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/ui-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/ui/ui/Ui.webp",
+        "sha256": "32d476c4d25d914e83b1ef55e490d6cbd8869cced330c2d52c074e6d3ab3bc6e",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/ui",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-ui-ui",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ui/ui/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ui/ui/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1",
+      "Attack2_1",
+      "Brow_Idle_L",
+      "Brow_Idle_R",
+      "DDEAD",
+      "DEAD",
+      "EasterEgg_Victory",
+      "Eru_Eye_L_Idle",
+      "Eru_Eye_R_Idle",
+      "Eye_L_Idle",
+      "Eye_R_Idle",
+      "FEye_Idle",
+      "Idleo",
+      "Lashe_L_Idle",
+      "Lashe_R_Idle",
+      "Mouth_Idle",
+      "Move",
+      "Point_Attack1",
+      "Point_Attack1_Shot",
+      "Point_Attack1_T",
+      "Point_Attack2",
+      "Point_Attack3",
+      "Point_Attack4",
+      "Skill1_1",
+      "Victoryy",
+      "dAdDEAD",
+      "sprint_Run_T"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/ui-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ui",
+      "sha256": "ca98d5ca1447a2cea7200c4f086c51112d2e57d33c0d5aebcc2fc2e4107900bf"
+    }
+  },
+  {
+    "id": 11,
+    "slug": "butter",
+    "name": "버터",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/butter-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/butter/butter/Butter.webp",
+        "sha256": "260713e54791fcb26912c6dfe9e44f29add9c1417129686e4ab25ce34b2bb7f7",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/butter-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/butter/butter/Butter.webp",
+        "sha256": "8bf5620c7a5ffb52d4941dc34a9a61d1df59d312c3205ce23285b532630e6d7e",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/butter",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-butter-butter",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/butter/butter/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/butter/butter/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1a",
+      "Attack2_1c",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "EyeLashe_L_Idle",
+      "EyeLashe_R_Idle",
+      "Eye_L_Idle",
+      "Eye_L_IdleAngry",
+      "Eye_R_Idle",
+      "Eye_R_IdleAngry",
+      "IdleV",
+      "Mouth_Idle",
+      "Move",
+      "OW1_Attack2_1",
+      "Point_Attack1",
+      "Point_Attack1_Shot",
+      "Point_Attack1_T",
+      "Point_Attack2",
+      "Point_Attack2_Shot",
+      "Point_Attack2_T",
+      "Point_Attack_OW1",
+      "Point_Attack_OW1_T",
+      "Point_Skill1",
+      "Point_Skill2",
+      "Point_Skill2_T",
+      "Point_Skill3",
+      "Point_SkillReady",
+      "Point_Skill_Shot",
+      "Skill1_1l",
+      "VictoryX"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/butter-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/butter",
+      "sha256": "88abcb4339ba08a60c350732fdbd6c9204e17325a6fa51a1bb7826ffd32b3348"
+    }
+  },
+  {
+    "id": 12,
+    "slug": "komi",
+    "name": "코미",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/komi-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/kommy/kommy/Kommy.webp",
+        "sha256": "9b211fb402b85cb4643bc1247baeab89d6192d3e2eb9ccd90c5eae01032bd1f0",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/komi-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/kommy/kommy/Kommy.webp",
+        "sha256": "66e6fb35750f18cbd7ce5ce97628903a24e0cec67141f91fa9c71407bf65725e",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/kommy",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-kommy-kommy",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/kommy/kommy/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/kommy/kommy/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1V",
+      "Attack2_1Y",
+      "EyeBottom_Idle_L",
+      "EyeBottom_Idle_R",
+      "EyeBrow_L_Idle",
+      "EyeBrow_R_Idle",
+      "EyeLashe_L_Idle",
+      "EyeLashe_R_Idle",
+      "Eye_L_Idle",
+      "Eye_R_Idle",
+      "IdleQ",
+      "Mouth_Idle",
+      "MoveK",
+      "OW2_Attack2_1",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Attack3",
+      "Point_SkillReady",
+      "Skill1_1z",
+      "VictoryX"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/komi-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/kommy",
+      "sha256": "585197d1b1da6b0db9218f68c3f00bd92e31df903ccb1ee0544775b8aaa796c1"
+    }
+  },
+  {
+    "id": 13,
+    "slug": "hilde",
+    "name": "힐데",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/hilde-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/hilde/hilde/Hilde.webp",
+        "sha256": "610048a1754d7aef6aad6c9e11a79eddd3497df1c7fa26d930d3968b582fb815",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/hilde-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/hilde/hilde/Hilde.webp",
+        "sha256": "f027dd3d1b65c10108f96a08f8f0ff6d5d801db9012de5d9ccd39da2254cafd9",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/hilde",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-hilde-hilde",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/hilde/hilde/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/hilde/hilde/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1p",
+      "Attack2_1",
+      "EyeLashe_L_Idle",
+      "EyeLashe_R_Idle",
+      "Eye_L_Idle",
+      "Eye_L_Idle2",
+      "Eye_R_Idle",
+      "Eye_R_Idle2",
+      "Eyebrow_L_Idle",
+      "Eyebrow_R_Idle",
+      "Idle",
+      "Mouth_Idle",
+      "Moveb",
+      "OW1_Skill1_1",
+      "Point_Attack1",
+      "Point_Attack2",
+      "Point_Attack2_T",
+      "Point_Attack3",
+      "Point_Attack4",
+      "Point_SkillReady",
+      "Point_Wind1",
+      "Point_Wind2",
+      "Point_Wind3",
+      "Point_Wind4",
+      "Skill1_1",
+      "Victoryh"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/hilde-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/hilde",
+      "sha256": "6893e9fd1810293285a842c0d99b17f7587e4de24ec05ed8abcd9535e0422166"
+    }
+  },
+  {
+    "id": 14,
+    "slug": "shion",
+    "name": "시온 더 다크불릿",
+    "retrieved": "2026-11-12",
+    "publisher": "EPID Games",
+    "host": "Cheeky community reference viewer",
+    "files": [
+      {
+        "path": "assets/references/shion-battle.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/ingame/hero/xxionx/xxionx/xXionx.webp",
+        "sha256": "99325b6650aa7edfb38cb95daf8f50be091098bee57d7c962430e2891d1186a2",
+        "kind": "2D texture atlas, reference only"
+      },
+      {
+        "path": "assets/references/shion-standing.webp",
+        "url": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/_thumbs/spines/spine/standing/xxionx/xxionx/xXionx.webp",
+        "sha256": "bcbd0c3cf179ca98783b05edc39e0277f1d9959f26ae402f49be033eaf6bef46",
+        "kind": "2D texture atlas, reference only"
+      }
+    ],
+    "motion_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/xxionx",
+    "standing_viewer": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-xxionx-xxionx",
+    "spine_sources": {
+      "skeleton": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/xxionx/xxionx/skeleton.skel",
+      "binary": true,
+      "atlas": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/xxionx/xxionx/skeleton.atlas"
+    },
+    "motion_strings": [
+      "Attack1_1m",
+      "Attack2_1",
+      "EasterEgg_Victory",
+      "Idle",
+      "Movel",
+      "Point_Attack1",
+      "Point_SkillReady",
+      "Point_Wind1",
+      "Point_Wind2",
+      "Point_Wind3",
+      "Skill1_1",
+      "Skill1_1_Loopw",
+      "Skill1_2",
+      "Victory",
+      "mouth_Idle"
+    ],
+    "fullbody_capture": {
+      "path": "assets/references/shion-fullbody.png",
+      "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/xxionx",
+      "sha256": "0ab6d7943bde190aa4d67b1f93642f5d8ffe45072d6cafe22faef89090247ef0"
+    }
+  }
+]

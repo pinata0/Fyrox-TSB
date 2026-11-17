@@ -1,0 +1,13 @@
+Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.
+
+Keep Chloe alone: pale-blonde high twin ponytails rooted to the scalp with burgundy bows, pointed elf ears, red/gold eyes and cheek marking. Preserve her yellow puff-sleeve outfit, white fluffy cuffs and double ruffled hem, burgundy neck bow with cream stripe and pink gem, white legwear and yellow/brown shoes.
+
+Keep Sebastian as a separate full-body doll, not Chloe's clothing. Do not add his bear head, ears, limbs, plush hood or purple ribbon to Chloe. Include only her own two arms and empty hands.
+
+Keep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.
+
+Use open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.
+
+NO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.
+
+Use a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.

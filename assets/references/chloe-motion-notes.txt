@@ -1,0 +1,4 @@
+Browser tab: 1, Title: "chloe · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~		46 text frame  29 / 52 name Idle time 0.967 / 1.733 s loop true timelines 133 timeScale 1.00× Speed
+The focused UI element is 1 AXWebArea chloe · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/chloe

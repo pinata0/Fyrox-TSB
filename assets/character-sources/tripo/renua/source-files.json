@@ -1,0 +1,64 @@
+{
+  "files": [
+    {
+      "kind": "rigged",
+      "original_archive": "tripo_convert_2ab5c5f6-e274-42f1-94a7-e90f1d503a0e.zip",
+      "archive": "assets/character-sources/tripo/renua/archives/renua-rigged-original.zip",
+      "archive_sha256": "2a750652f69b6ba67fe2ff9db57fbcf620c1be3b9d937d418f751ad580c9a9d9",
+      "fbx": "assets/character-sources/tripo/renua/rigged/renua-rigged.fbx",
+      "sha256": "0586c3026955c978db15146e4a01722bff94dcae18f2b4c0ba9049efe5a1d026",
+      "texture": "assets/character-sources/tripo/renua/rigged/renua-rigged.fbm/renua-rigged-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "hair",
+      "original_archive": "tripo_convert_a6d98d72-b1c5-432e-bc44-4edc6d7dcf60.zip",
+      "archive": "assets/character-sources/tripo/renua/archives/renua-hair-original.zip",
+      "archive_sha256": "238e5dd230bc45b9342c0da23f068f046611c51c73f678817184b5960e82773d",
+      "fbx": "assets/character-sources/tripo/renua/hair/renua-hair.fbx",
+      "sha256": "e61350c5aa70a3e94813343e05215829e70367f0f8b7f5f4796e3b081627376d",
+      "texture": "assets/character-sources/tripo/renua/hair/renua-hair.fbm/renua-hair-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "clothes",
+      "original_archive": "tripo_convert_ea228297-1d84-42cf-90b4-b3a962df6bc3.zip",
+      "archive": "assets/character-sources/tripo/renua/archives/renua-clothes-original.zip",
+      "archive_sha256": "1b01d63310f6bfafb40e4df90419d54976b1865663ed809ee7abe19acf69dda8",
+      "fbx": "assets/character-sources/tripo/renua/clothes/renua-clothes.fbx",
+      "sha256": "e20745f079ce604a93af3e5122347140f7de455a561dbdc4a57fd938de71c12e",
+      "texture": "assets/character-sources/tripo/renua/clothes/renua-clothes.fbm/renua-clothes-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "accessories",
+      "original_archive": "tripo_convert_509085f5-a4a0-482a-b9b4-05bbd55f59b5.zip",
+      "archive": "assets/character-sources/tripo/renua/archives/renua-accessories-original.zip",
+      "archive_sha256": "968cd799e7402b75faf0c65e24dda8272119cc0c374b47cba061418832cc085c",
+      "fbx": "assets/character-sources/tripo/renua/accessories/renua-accessories.fbx",
+      "sha256": "c70c12408064399cbbaa65e449f7101be59fd4a190292d04357a179a029c242d",
+      "texture": "assets/character-sources/tripo/renua/accessories/renua-accessories.fbm/renua-accessories-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "weapon",
+      "original_archive": "TSB-Renua #27.zip",
+      "archive": "assets/character-sources/tripo/renua/archives/renua-weapon-original.zip",
+      "archive_sha256": "63e30ab64e24d405d8b4f8cb017e4a400e4e9a3dc944d89eea9bd6b14b50f34f",
+      "fbx": "assets/character-sources/tripo/renua/weapon/renua-weapon.fbx",
+      "sha256": "9c3572200f8e8c29254d6e5c06da87433c2503ff4fb011861b503679e32877a3",
+      "texture": "assets/character-sources/tripo/renua/weapon/renua-weapon.fbm/renua-weapon-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "weapon"
+    }
+  ]
+}

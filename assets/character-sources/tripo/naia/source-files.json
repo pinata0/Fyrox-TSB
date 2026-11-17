@@ -1,0 +1,88 @@
+{
+  "files": [
+    {
+      "kind": "rigged",
+      "original_archive": "tripo_convert_ab9b5288-f7c8-4a06-8aab-2c3d04f1bfb1.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-rigged-original.zip",
+      "archive_sha256": "1eb2d814fd4ede381f5c7a735b7107963493ec1a538b727f58c3e44b5e41fb4d",
+      "fbx": "assets/character-sources/tripo/naia/rigged/naia-rigged.fbx",
+      "sha256": "94f03ec87d26df39a37eb62e66a3cb9ce0790237e5b1919ec40cc54c12ac69bc",
+      "texture": "assets/character-sources/tripo/naia/rigged/naia-rigged.fbm/naia-rigged-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "clothes",
+      "original_archive": "TSB-Naia #21.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-clothes-original.zip",
+      "archive_sha256": "60263d3fc34df21836a17b45a74bb080d9e7a2f082c7ef75de76cdd6c34290ed",
+      "fbx": "assets/character-sources/tripo/naia/clothes/naia-clothes.fbx",
+      "sha256": "7b7bca53da2ed06231f6bcde8c1a3282cd37a959613c7487c64803493a258096",
+      "texture": "assets/character-sources/tripo/naia/clothes/naia-clothes.fbm/naia-clothes-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "bracelet",
+      "original_archive": "TSB-Naia #22.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-bracelet-original.zip",
+      "archive_sha256": "2de281bba4c1a6c7f069f0411932e31cd995c5b7ba0532190a1b088a9114307f",
+      "fbx": "assets/character-sources/tripo/naia/bracelet/naia-bracelet.fbx",
+      "sha256": "6732649ae4b6d55a2e175515374a2674cef2792c5445d3dc320a61c10e4b2d30",
+      "texture": "assets/character-sources/tripo/naia/bracelet/naia-bracelet.fbm/naia-bracelet-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "sandals",
+      "original_archive": "TSB-Naia #23.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-sandals-original.zip",
+      "archive_sha256": "beab2003dacdee394866e26e28c9922c769be0469087b31bf05cc94b4e7714d9",
+      "fbx": "assets/character-sources/tripo/naia/sandals/naia-sandals.fbx",
+      "sha256": "537744c164712f0845960c24ba0268647300e9b24b0ac77ed916fe700f46893a",
+      "texture": "assets/character-sources/tripo/naia/sandals/naia-sandals.fbm/naia-sandals-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "weapon",
+      "original_archive": "TSB-Naia #44.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-weapon-original.zip",
+      "archive_sha256": "27a27a9def105cac6797c38ac1788d1fedc2a32324410efdf13c3e8bc05d4c14",
+      "fbx": "assets/character-sources/tripo/naia/weapon/naia-weapon.fbx",
+      "sha256": "8a3f98b8cff65d267fb129159ab8718cdbd630bac3c4d4bfdfda09a6aa957cba",
+      "texture": "assets/character-sources/tripo/naia/weapon/naia-weapon.fbm/naia-weapon-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "weapon"
+    },
+    {
+      "kind": "weapon-hat",
+      "original_archive": "TSB-Naia #45.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-weapon-hat-original.zip",
+      "archive_sha256": "6e4eb7b6cad6aafecf0a51afbc1a786f7951f1d5a74a1e314be3c989d454dba3",
+      "fbx": "assets/character-sources/tripo/naia/weapon-hat/naia-weapon-hat.fbx",
+      "sha256": "e8b913bb29ddb2d41ada0f6771173ebac027f100efacd36d897f55901470f7d9",
+      "texture": "assets/character-sources/tripo/naia/weapon-hat/naia-weapon-hat.fbm/naia-weapon-hat-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "weapon"
+    },
+    {
+      "kind": "head-hat",
+      "original_archive": "TSB-Naia #20.zip",
+      "archive": "assets/character-sources/tripo/naia/archives/naia-head-hat-original.zip",
+      "archive_sha256": "1c8a90d1a92dfdb5b683761262df3bb2a2f2f5713f65006264a4093091f0d1ea",
+      "fbx": "assets/character-sources/tripo/naia/head-hat/naia-head-hat.fbx",
+      "sha256": "bb2ae3acb953bade1a0b107520658383f5a32caf7e1bfe47e9281a025567efe3",
+      "texture": "assets/character-sources/tripo/naia/head-hat/naia-head-hat.fbm/naia-head-hat-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Browser tab: 1, Title: "naia · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/naia".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+~		45 button ▶ Play
+~		48 text frame  68 / 96 name Idle time 2.267 / 3.200 s loop true timelines 85 timeScale 1.00× Speed
+The focused UI element is 45 button ▶ Play

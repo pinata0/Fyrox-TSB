@@ -1,0 +1,88 @@
+{
+  "files": [
+    {
+      "kind": "rigged",
+      "original_archive": "tripo_convert_ff1036d4-917d-4d46-8c13-ba469fa7877f.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-rigged-original.zip",
+      "archive_sha256": "8840e1e8b8270ddbd418c46e0f99b762d1a4b83432cbf78986dfccf67c8e0593",
+      "fbx": "assets/character-sources/tripo/erpin/rigged/erpin-rigged.fbx",
+      "sha256": "226ad0087a219449fef585ce29f087492780a74e77a5d67afa7927d45d2ec846",
+      "texture": "assets/character-sources/tripo/erpin/rigged/erpin-rigged.fbm/erpin-rigged-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "hair",
+      "original_archive": "TSB-Erpin #23.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-hair-original.zip",
+      "archive_sha256": "a6dfa5aa3304ada2e975c637ef02133571f14a6938a1faff6163483fa95a7e85",
+      "fbx": "assets/character-sources/tripo/erpin/hair/erpin-hair.fbx",
+      "sha256": "7b2e6c1b90179219bde6dec94654db9190d770cd9af03b143b26808d7b9688fd",
+      "texture": "assets/character-sources/tripo/erpin/hair/erpin-hair.fbm/erpin-hair-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "clothes",
+      "original_archive": "TSB-Erpin #24.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-clothes-original.zip",
+      "archive_sha256": "12bf9d5de32f2f832a5d1d5a52fb08ed39bdd8787dce07bf8c715a8b5dc7a41f",
+      "fbx": "assets/character-sources/tripo/erpin/clothes/erpin-clothes.fbx",
+      "sha256": "1e8b2a15789e88329f8fecec230a8419c955cb38a654b07df5fb92a29478169b",
+      "texture": "assets/character-sources/tripo/erpin/clothes/erpin-clothes.fbm/erpin-clothes-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "cape",
+      "original_archive": "TSB-Erpin #25.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-cape-original.zip",
+      "archive_sha256": "308586323545a75fec3473ff051ae115d194288a57683b1d94d8c1954d7b29fe",
+      "fbx": "assets/character-sources/tripo/erpin/cape/erpin-cape.fbx",
+      "sha256": "fc5dba52b2d7a4b55c368d434e822e79a61d325589535897e790de2efd156701",
+      "texture": "assets/character-sources/tripo/erpin/cape/erpin-cape.fbm/erpin-cape-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "wings",
+      "original_archive": "TSB-Erpin #26.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-wings-original.zip",
+      "archive_sha256": "d5d006c13013a8c3c0d7ecde47f7e17d677892bfd622f2362f932bd4d52e9bf3",
+      "fbx": "assets/character-sources/tripo/erpin/wings/erpin-wings.fbx",
+      "sha256": "726da3cf3d79e1a07d2b141791b7326025df5651fafa17fc155b41f671257e4a",
+      "texture": "assets/character-sources/tripo/erpin/wings/erpin-wings.fbm/erpin-wings-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "accessories",
+      "original_archive": "TSB-Erpin #27.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-accessories-original.zip",
+      "archive_sha256": "01f4e2eeee34e7660eeca0bd3cbf8e365a02b57847c25b4492967d58ffcf4e5b",
+      "fbx": "assets/character-sources/tripo/erpin/accessories/erpin-accessories.fbx",
+      "sha256": "40e7e42fbec4e23f4e35cd8753b93710fa6b2256a041f499f7d4a8c0372f8f8d",
+      "texture": "assets/character-sources/tripo/erpin/accessories/erpin-accessories.fbm/erpin-accessories-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "character"
+    },
+    {
+      "kind": "weapon",
+      "original_archive": "TSB-Erpin #38.zip",
+      "archive": "assets/character-sources/tripo/erpin/archives/erpin-weapon-original.zip",
+      "archive_sha256": "e2bdb9b80b884346788e0169b5e9a3fa0046093f61a4f71e28b80bf463c6a5fe",
+      "fbx": "assets/character-sources/tripo/erpin/weapon/erpin-weapon.fbx",
+      "sha256": "482e36cfccae50c86fc3f8680260539f998acfbafe1d276604407407ccb43e10",
+      "texture": "assets/character-sources/tripo/erpin/weapon/erpin-weapon.fbm/erpin-weapon-basecolor.jpg",
+      "texture_links_updated": 4,
+      "active": true,
+      "attachment": "weapon"
+    }
+  ]
+}

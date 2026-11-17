@@ -1,0 +1,11 @@
+Use case: logo-brand.
+Asset type: production game title logo on a truly TRANSPARENT background, landscape layout approximately 1.7:1.
+Primary request: Create a polished Korean fan-game logo with the exact title "트릭컬 슈팅 볼따구".
+Reference image: existing Trickcal logo, STYLE/BRAND REFERENCE only. Keep its playful rounded chunky Korean lettering, pink/orange/sky-blue main colors, cream sticker outline, subtle chocolate-brown outer edge, tiny star accents. Create a cohesive new title lockup for this game.
+Exact required text, two lines:
+TOP LARGE LINE: "트릭컬"
+BOTTOM PROMINENT LINE: "슈팅 볼따구"
+Correct Hangul syllables: 트 / 릭 / 컬 ; 슈 / 팅 [space] 볼 / 따 / 구. The last word is exactly 볼따구, never 발따구. The bottom line is part of the illustrated logo, approximately one third of the total logo height, bold, clear, well-spaced, and easily legible at small game-menu size. This replaces the reference's "RE:VIVE" text entirely.
+Style: clean, professionally drawn cheerful cartoon game typography with charming slight letter tilt and rounded corners. Main title pink, warm apricot orange, and sky blue; subtitle warm ivory and soft mint with a dark warm-brown stroke for strong legibility. Shared cream outer sticker border binds both lines into one compact mark. Subtle highlights with restrained depth, a couple of small gold star accents only, simple silhouette.
+Composition: centered compact two-line lockup filling about 92% of the canvas with only a small transparent safety margin. All outlines and shadows stay inside canvas. Designed for upper-left corner of a gentle garden home screen.
+Constraints: alpha transparency everywhere outside the logo; no solid background, no checkerboard pattern painted into the image, no scene, no characters, no extra slogans, no English, no RE:VIVE, no watermark. Korean text accuracy and small-size readability are critical.

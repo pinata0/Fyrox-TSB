@@ -1,0 +1,60 @@
+[package]
+name = "trickcal-shooting-balddagu"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.87"
+default-run = "tsb"
+description = "Trickcal : Shooting Balddagu — a Fyrox competitive 2CP fan-game prototype"
+publish = false
+
+[features]
+default = ["desktop", "eos"]
+desktop = ["dep:fyrox", "dep:cpal", "dep:open", "dep:url", "dep:ureq", "dep:image"]
+eos = ["dep:cc"]
+
+[dependencies]
+image = { version = "=0.25.10", default-features = false, features = ["png", "jpeg", "webp"], optional = true }
+fyrox = { version = "=1.0.1", optional = true }
+cpal = { version = "=0.16.0", optional = true }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+hmac = "0.12"
+sha2 = "0.10"
+open = { version = "5.4", optional = true }
+url = { version = "2.5", optional = true }
+ureq = { version = "3", features = ["json"], optional = true }
+
+[build-dependencies]
+cc = { version = "=1.2.0", optional = true }
+
+[[bin]]
+name = "tsb"
+path = "src/main.rs"
+required-features = ["desktop"]
+
+[[bin]]
+name = "tsb-server"
+path = "src/bin/server.rs"
+
+[[bin]]
+name = "tsb-eos-check"
+path = "src/bin/eos_check.rs"
+required-features = ["eos"]
+
+[[bin]]
+name = "tsb-eos-peer-check"
+path = "src/bin/eos_peer_check.rs"
+required-features = ["eos"]
+
+[profile.dev]
+opt-level = 1
+debug = 0
+incremental = false
+
+[profile.dev.package."*"]
+opt-level = 2
+
+[profile.release]
+strip = true
+lto = "thin"
+

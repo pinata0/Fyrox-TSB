@@ -1,0 +1,58 @@
+{
+  "stage": "views_prepared_from_turnaround",
+  "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\vivi.png",
+  "source_sha256": "40d6b4734fe65445a2b6d217da6cd83c153aedeba810e6fa5ca6bb5d56eb39cf",
+  "crop_regions": {
+    "front": {
+      "source_pixel_box": [
+        32,
+        90,
+        671,
+        749
+      ],
+      "foreground_box": [
+        11,
+        38,
+        631,
+        654
+      ]
+    },
+    "left": {
+      "source_pixel_box": [
+        687,
+        103,
+        1104,
+        749
+      ],
+      "foreground_box": [
+        8,
+        25,
+        403,
+        641
+      ]
+    },
+    "back": {
+      "source_pixel_box": [
+        1146,
+        99,
+        1727,
+        749
+      ],
+      "foreground_box": [
+        0,
+        21,
+        572,
+        645
+      ]
+    }
+  },
+  "right_view": "mirrored authored left view; approximation",
+  "scale": 1.0897435897435896,
+  "status": "prepared_pending_visual_review",
+  "output_sha256": {
+    "front": "dc6654dadda9519190d6138da257236b2f0519240863700de55e74514ebce103",
+    "left": "7596d99e8dec2550064b264bfea4ddf3e439a8a874ba9f33757c654719787786",
+    "back": "664eb8410a15f16492f15bdc14fb0c16b82a7b95e3cbfc72cd7b8598abb55596",
+    "right": "d8b113c97272f5d6cef2f0c803c085f84964ff3817785fbbb4ce6d059a0abf07"
+  }
+}

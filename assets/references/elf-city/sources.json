@@ -1,0 +1,19 @@
+{
+  "research_date": "2026-11-13",
+  "concepts": "concept-1.png through concept-6.png are user-supplied visual references, not instructions or runtime textures.",
+  "layout": {
+    "url": "https://www.furiouspaul.com/overwatch/watchpoint-gibraltar/",
+    "author_credit_on_page": "Orhin_InsaLan",
+    "use": "Read full-map isometric, top-down, first section and hangar; adapted traversal to 2CP, not a 1:1 replica."
+  },
+  "story_sources": [
+    {"url":"https://www.gacha.gg/trickcal/story/elena-s-story","kind":"unofficial game-script archive","topic":"Research, administration and return to the elves' home planet"},
+    {"url":"https://www.gacha.gg/trickcal/story/chapter-5-watching-the-neighbors-crash-and-burn","kind":"unofficial game-script archive","topic":"City infrastructure and elemental energy labor conflict"},
+    {"url":"https://www.gacha.gg/trickcal/story/time-will-come-again","kind":"unofficial game-script archive","topic":"Core AI, research facility and Renewa's room"},
+    {"url":"https://www.gacha.gg/trickcal/story/selene-s-story","kind":"unofficial game-script archive","topic":"Monatium internet cafe and online culture"},
+    {"url":"https://www.gacha.gg/trickcal/story/allet-s-story","kind":"unofficial game-script archive","topic":"City hall, square and suppression unit"},
+    {"url":"https://www.gacha.gg/trickcal/story/a-bittersweet-garden-life","kind":"unofficial game-script archive","topic":"Ration blocks and civic administration"}
+  ],
+  "adaptations": ["Transit depot and M-041 train", "Mint PC cafe", "Night shift studio", "Civic gear/ear emblem", "90 by 92 metre competitive layout"],
+  "rights": "Trickcal names and setting belong to their respective owners. Newly authored geometry is for this existing non-commercial fan-game prototype."
+}

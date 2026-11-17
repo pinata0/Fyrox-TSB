@@ -1,0 +1,9177 @@
+{
+  "schema": 3,
+  "revision": "concept-spaces-v3",
+  "slug": "fairy-kingdom-castle",
+  "name": "FAIRY KINGDOM CASTLE",
+  "name_ko": "요정왕국 성",
+  "bounds": [
+    -22,
+    68,
+    -54,
+    38
+  ],
+  "upper_floor": 3.6,
+  "points": [
+    [
+      0,
+      0,
+      12
+    ],
+    [
+      46,
+      0,
+      15
+    ]
+  ],
+  "spawns": {
+    "attack_a": [
+      5,
+      0,
+      -45
+    ],
+    "attack_b": [
+      -13,
+      0,
+      26
+    ],
+    "defense_a": [
+      58,
+      0,
+      30
+    ],
+    "defense_b": [
+      58,
+      0,
+      30
+    ]
+  },
+  "spawn_half_size": [
+    6.5,
+    2.25,
+    3
+  ],
+  "blocks": [
+    {
+      "name": "Outer boundary",
+      "center": [
+        -22.5,
+        6,
+        -8
+      ],
+      "size": [
+        1,
+        12,
+        94
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Outer boundary",
+      "center": [
+        68.5,
+        6,
+        -8
+      ],
+      "size": [
+        1,
+        12,
+        94
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Outer boundary",
+      "center": [
+        23,
+        6,
+        -54.5
+      ],
+      "size": [
+        92,
+        12,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Outer boundary",
+      "center": [
+        23,
+        6,
+        38.5
+      ],
+      "size": [
+        92,
+        12,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Inaccessible garden escarpment",
+      "center": [
+        46.5,
+        7,
+        -29.5
+      ],
+      "size": [
+        43,
+        14,
+        49
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "West rear garden boundary",
+      "center": [
+        -13,
+        6,
+        35
+      ],
+      "size": [
+        18,
+        12,
+        6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Attack garden lodge exit",
+      "center": [
+        0.2749999999999999,
+        2.5,
+        -49.2
+      ],
+      "size": [
+        4.8500000000000005,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge exit lintel",
+      "center": [
+        5.0,
+        4.0,
+        -49.2
+      ],
+      "size": [
+        4.6,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge exit",
+      "center": [
+        9.725,
+        2.5,
+        -49.2
+      ],
+      "size": [
+        4.8500000000000005,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge exit",
+      "center": [
+        0.2749999999999999,
+        2.5,
+        -40.8
+      ],
+      "size": [
+        4.8500000000000005,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge exit lintel",
+      "center": [
+        5.0,
+        4.0,
+        -40.8
+      ],
+      "size": [
+        4.6,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge exit",
+      "center": [
+        9.725,
+        2.5,
+        -40.8
+      ],
+      "size": [
+        4.8500000000000005,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Attack garden lodge roof",
+      "center": [
+        5,
+        5.1,
+        -45
+      ],
+      "size": [
+        14.7,
+        0.3,
+        8.8
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Forward garden sanctuary side",
+      "center": [
+        -20.15,
+        2.5,
+        26
+      ],
+      "size": [
+        0.4,
+        5,
+        8.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit",
+      "center": [
+        -17.725,
+        2.5,
+        21.8
+      ],
+      "size": [
+        4.849999999999998,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit lintel",
+      "center": [
+        -13.0,
+        4.0,
+        21.8
+      ],
+      "size": [
+        4.600000000000001,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit",
+      "center": [
+        -8.274999999999999,
+        2.5,
+        21.8
+      ],
+      "size": [
+        4.85,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary bench",
+      "center": [
+        -18.5,
+        0.5,
+        26
+      ],
+      "size": [
+        1,
+        0.22,
+        2.5
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Forward garden sanctuary side",
+      "center": [
+        -5.85,
+        2.5,
+        26
+      ],
+      "size": [
+        0.4,
+        5,
+        8.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit",
+      "center": [
+        -17.725,
+        2.5,
+        30.2
+      ],
+      "size": [
+        4.849999999999998,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit lintel",
+      "center": [
+        -13.0,
+        4.0,
+        30.2
+      ],
+      "size": [
+        4.600000000000001,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary exit",
+      "center": [
+        -8.274999999999999,
+        2.5,
+        30.2
+      ],
+      "size": [
+        4.85,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Forward garden sanctuary bench",
+      "center": [
+        -7.5,
+        0.5,
+        26
+      ],
+      "size": [
+        1,
+        0.22,
+        2.5
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Forward garden sanctuary roof",
+      "center": [
+        -13,
+        5.1,
+        26
+      ],
+      "size": [
+        14.7,
+        0.3,
+        8.8
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Royal defense sanctuary side",
+      "center": [
+        50.85,
+        2.5,
+        30
+      ],
+      "size": [
+        0.4,
+        5,
+        8.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit",
+      "center": [
+        53.275000000000006,
+        2.5,
+        25.8
+      ],
+      "size": [
+        4.850000000000001,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit lintel",
+      "center": [
+        58.0,
+        4.0,
+        25.8
+      ],
+      "size": [
+        4.599999999999994,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit",
+      "center": [
+        62.725,
+        2.5,
+        25.8
+      ],
+      "size": [
+        4.8500000000000085,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary bench",
+      "center": [
+        52.5,
+        0.5,
+        30
+      ],
+      "size": [
+        1,
+        0.22,
+        2.5
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Royal defense sanctuary side",
+      "center": [
+        65.15,
+        2.5,
+        30
+      ],
+      "size": [
+        0.4,
+        5,
+        8.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit",
+      "center": [
+        53.275000000000006,
+        2.5,
+        34.2
+      ],
+      "size": [
+        4.850000000000001,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit lintel",
+      "center": [
+        58.0,
+        4.0,
+        34.2
+      ],
+      "size": [
+        4.599999999999994,
+        2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary exit",
+      "center": [
+        62.725,
+        2.5,
+        34.2
+      ],
+      "size": [
+        4.8500000000000085,
+        5,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal defense sanctuary bench",
+      "center": [
+        63.5,
+        0.5,
+        30
+      ],
+      "size": [
+        1,
+        0.22,
+        2.5
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Royal defense sanctuary roof",
+      "center": [
+        58,
+        5.1,
+        30
+      ],
+      "size": [
+        14.7,
+        0.3,
+        8.8
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Approach west house front",
+      "center": [
+        -16.0,
+        3.0,
+        -29
+      ],
+      "size": [
+        4,
+        6,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house front lintel",
+      "center": [
+        -12.0,
+        4.5,
+        -29
+      ],
+      "size": [
+        4,
+        3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house front",
+      "center": [
+        -8.0,
+        3.0,
+        -29
+      ],
+      "size": [
+        4,
+        6,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house rear",
+      "center": [
+        -16.0,
+        3.0,
+        -9
+      ],
+      "size": [
+        4,
+        6,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house rear lintel",
+      "center": [
+        -12.0,
+        4.5,
+        -9
+      ],
+      "size": [
+        4,
+        3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house rear",
+      "center": [
+        -8.0,
+        3.0,
+        -9
+      ],
+      "size": [
+        4,
+        6,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house west",
+      "center": [
+        -18,
+        3.0,
+        -19.0
+      ],
+      "size": [
+        0.4,
+        6,
+        20
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house east",
+      "center": [
+        -6,
+        3.0,
+        -23.5
+      ],
+      "size": [
+        0.4,
+        6,
+        11
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house east lintel",
+      "center": [
+        -6,
+        4.5,
+        -16.0
+      ],
+      "size": [
+        0.4,
+        3,
+        4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house east",
+      "center": [
+        -6,
+        3.0,
+        -11.5
+      ],
+      "size": [
+        0.4,
+        6,
+        5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Approach west house roof",
+      "center": [
+        -12,
+        6.1499999999999995,
+        -19
+      ],
+      "size": [
+        12.4,
+        0.3,
+        20.4
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Approach east gatehouse roof",
+      "center": [
+        16,
+        5.45,
+        -20
+      ],
+      "size": [
+        12.4,
+        0.3,
+        15.4
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "Garden herald plinth",
+      "center": [
+        -2,
+        0.8,
+        -32
+      ],
+      "size": [
+        2.2,
+        1.6,
+        2.2
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Garden herald plinth",
+      "center": [
+        9,
+        0.8,
+        -28
+      ],
+      "size": [
+        2.2,
+        1.6,
+        2.2
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Outer gate wall",
+      "center": [
+        -18.1,
+        3.1,
+        -8
+      ],
+      "size": [
+        7.800000000000001,
+        6.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Outer gate wall lintel",
+      "center": [
+        -12.0,
+        4.6,
+        -8
+      ],
+      "size": [
+        4.399999999999999,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Outer gate wall",
+      "center": [
+        -5.9,
+        3.1,
+        -8
+      ],
+      "size": [
+        7.800000000000001,
+        6.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Outer gate wall lintel",
+      "center": [
+        2.0,
+        5.6,
+        -8
+      ],
+      "size": [
+        8,
+        1.2000000000000002,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "arch": {
+        "spring": 3.0,
+        "rise": 2.0,
+        "segments": 64
+      }
+    },
+    {
+      "name": "Outer gate wall",
+      "center": [
+        15.5,
+        3.1,
+        -8
+      ],
+      "size": [
+        19,
+        6.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery slab",
+      "center": [
+        -11.3,
+        3.45,
+        12
+      ],
+      "size": [
+        8,
+        0.3,
+        11.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery roof",
+      "center": [
+        -12,
+        6.85,
+        12
+      ],
+      "size": [
+        6.8,
+        0.3,
+        11.8
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery outer wall",
+      "center": [
+        -15,
+        3.4,
+        12
+      ],
+      "size": [
+        0.3,
+        6.8,
+        11.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -14.1,
+        1.6,
+        6.4
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door lintel",
+      "center": [
+        -12.0,
+        3.15,
+        6.4
+      ],
+      "size": [
+        2.3999999999999986,
+        0.3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -9.9,
+        1.6,
+        6.4
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -14.1,
+        5.2,
+        6.4
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door lintel",
+      "center": [
+        -12.0,
+        6.75,
+        6.4
+      ],
+      "size": [
+        2.3999999999999986,
+        0.3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -9.9,
+        5.2,
+        6.4
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -14.1,
+        1.6,
+        17.6
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door lintel",
+      "center": [
+        -12.0,
+        3.15,
+        17.6
+      ],
+      "size": [
+        2.3999999999999986,
+        0.3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -9.9,
+        1.6,
+        17.6
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -14.1,
+        5.2,
+        17.6
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west gallery door lintel",
+      "center": [
+        -12.0,
+        6.75,
+        17.6
+      ],
+      "size": [
+        2.3999999999999986,
+        0.3,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west gallery door",
+      "center": [
+        -9.9,
+        5.2,
+        17.6
+      ],
+      "size": [
+        1.8000000000000007,
+        3.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west arcade wall",
+      "center": [
+        -9,
+        1.65,
+        8.55
+      ],
+      "size": [
+        0.3,
+        3.3,
+        4.3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west arcade wall",
+      "center": [
+        -9,
+        1.65,
+        15.45
+      ],
+      "size": [
+        0.3,
+        3.3,
+        4.3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west arcade lintel",
+      "center": [
+        -9,
+        2.95,
+        12
+      ],
+      "size": [
+        0.3,
+        0.7,
+        2.6
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window pier",
+      "center": [
+        -9,
+        5.2,
+        6.9
+      ],
+      "size": [
+        0.3,
+        3.2,
+        1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window pier",
+      "center": [
+        -9,
+        5.2,
+        10.05
+      ],
+      "size": [
+        0.3,
+        3.2,
+        1.3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window pier",
+      "center": [
+        -9,
+        5.2,
+        13.95
+      ],
+      "size": [
+        0.3,
+        3.2,
+        1.3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window pier",
+      "center": [
+        -9,
+        5.2,
+        17.1
+      ],
+      "size": [
+        0.3,
+        3.2,
+        1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window sill",
+      "center": [
+        -9,
+        3.925,
+        8.4
+      ],
+      "size": [
+        0.38,
+        0.65,
+        2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west window sill",
+      "center": [
+        -9,
+        3.925,
+        15.6
+      ],
+      "size": [
+        0.38,
+        0.65,
+        2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west parapet",
+      "center": [
+        -7.4,
+        3.925,
+        8.45
+      ],
+      "size": [
+        0.2,
+        0.65,
+        3.9
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west parapet",
+      "center": [
+        -7.4,
+        3.925,
+        14.5
+      ],
+      "size": [
+        0.2,
+        0.65,
+        1.8
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 00",
+      "center": [
+        -12,
+        0.15,
+        -5.100000000000001
+      ],
+      "size": [
+        2.6,
+        0.3,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A west stair step 01",
+      "center": [
+        -12,
+        0.3,
+        -4.100000000000001
+      ],
+      "size": [
+        2.6,
+        0.6,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 02",
+      "center": [
+        -12,
+        0.44999999999999996,
+        -3.1000000000000014
+      ],
+      "size": [
+        2.6,
+        0.8999999999999999,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 03",
+      "center": [
+        -12,
+        0.6,
+        -2.1000000000000014
+      ],
+      "size": [
+        2.6,
+        1.2,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 04",
+      "center": [
+        -12,
+        0.75,
+        -1.1000000000000014
+      ],
+      "size": [
+        2.6,
+        1.5,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 05",
+      "center": [
+        -12,
+        0.8999999999999999,
+        -0.10000000000000142
+      ],
+      "size": [
+        2.6,
+        1.7999999999999998,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 06",
+      "center": [
+        -12,
+        1.05,
+        0.8999999999999986
+      ],
+      "size": [
+        2.6,
+        2.1,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 07",
+      "center": [
+        -12,
+        1.2,
+        1.8999999999999986
+      ],
+      "size": [
+        2.6,
+        2.4,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 08",
+      "center": [
+        -12,
+        1.3499999999999999,
+        2.8999999999999986
+      ],
+      "size": [
+        2.6,
+        2.6999999999999997,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 09",
+      "center": [
+        -12,
+        1.5,
+        3.8999999999999986
+      ],
+      "size": [
+        2.6,
+        3.0,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 10",
+      "center": [
+        -12,
+        1.65,
+        4.899999999999999
+      ],
+      "size": [
+        2.6,
+        3.3,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A west stair step 11",
+      "center": [
+        -12,
+        1.7999999999999998,
+        5.899999999999999
+      ],
+      "size": [
+        2.6,
+        3.5999999999999996,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent high ground",
+      "center": [
+        12,
+        3.45,
+        0.5
+      ],
+      "size": [
+        5,
+        0.3,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A crescent high ground",
+      "center": [
+        12,
+        3.45,
+        1.5
+      ],
+      "size": [
+        7,
+        0.3,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A crescent high ground",
+      "center": [
+        12,
+        3.45,
+        2.5
+      ],
+      "size": [
+        8,
+        0.3,
+        1
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A crescent high ground",
+      "center": [
+        12,
+        3.45,
+        4.5
+      ],
+      "size": [
+        8,
+        0.3,
+        3
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A crescent support",
+      "center": [
+        9,
+        1.65,
+        1.5
+      ],
+      "size": [
+        0.75,
+        3.3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent upper column",
+      "center": [
+        9,
+        5.1,
+        1.5
+      ],
+      "size": [
+        0.75,
+        3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent support",
+      "center": [
+        9,
+        1.65,
+        5.2
+      ],
+      "size": [
+        0.75,
+        3.3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent upper column",
+      "center": [
+        9,
+        5.1,
+        5.2
+      ],
+      "size": [
+        0.75,
+        3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent support",
+      "center": [
+        15,
+        1.65,
+        1.5
+      ],
+      "size": [
+        0.75,
+        3.3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent upper column",
+      "center": [
+        15,
+        5.1,
+        1.5
+      ],
+      "size": [
+        0.75,
+        3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent support",
+      "center": [
+        15,
+        1.65,
+        5.2
+      ],
+      "size": [
+        0.75,
+        3.3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent upper column",
+      "center": [
+        15,
+        5.1,
+        5.2
+      ],
+      "size": [
+        0.75,
+        3,
+        0.75
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 00",
+      "center": [
+        23.5,
+        0.15,
+        4
+      ],
+      "size": [
+        0.65,
+        0.3,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A crescent stair step 01",
+      "center": [
+        22.85,
+        0.3,
+        4
+      ],
+      "size": [
+        0.65,
+        0.6,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 02",
+      "center": [
+        22.2,
+        0.44999999999999996,
+        4
+      ],
+      "size": [
+        0.65,
+        0.8999999999999999,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 03",
+      "center": [
+        21.55,
+        0.6,
+        4
+      ],
+      "size": [
+        0.65,
+        1.2,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 04",
+      "center": [
+        20.9,
+        0.75,
+        4
+      ],
+      "size": [
+        0.65,
+        1.5,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 05",
+      "center": [
+        20.25,
+        0.8999999999999999,
+        4
+      ],
+      "size": [
+        0.65,
+        1.7999999999999998,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 06",
+      "center": [
+        19.6,
+        1.05,
+        4
+      ],
+      "size": [
+        0.65,
+        2.1,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 07",
+      "center": [
+        18.95,
+        1.2,
+        4
+      ],
+      "size": [
+        0.65,
+        2.4,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 08",
+      "center": [
+        18.3,
+        1.3499999999999999,
+        4
+      ],
+      "size": [
+        0.65,
+        2.6999999999999997,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 09",
+      "center": [
+        17.65,
+        1.5,
+        4
+      ],
+      "size": [
+        0.65,
+        3.0,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 10",
+      "center": [
+        17.0,
+        1.65,
+        4
+      ],
+      "size": [
+        0.65,
+        3.3,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A crescent stair step 11",
+      "center": [
+        16.35,
+        1.7999999999999998,
+        4
+      ],
+      "size": [
+        0.65,
+        3.5999999999999996,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A keep west balcony",
+      "center": [
+        9,
+        3.45,
+        14
+      ],
+      "size": [
+        3,
+        0.3,
+        9
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A keep rear balcony",
+      "center": [
+        14,
+        3.45,
+        20
+      ],
+      "size": [
+        13,
+        0.3,
+        3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A keep east balcony",
+      "center": [
+        19,
+        3.45,
+        14
+      ],
+      "size": [
+        3,
+        0.3,
+        9
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A keep front balcony",
+      "center": [
+        14,
+        3.45,
+        8.25
+      ],
+      "size": [
+        13,
+        0.3,
+        2.5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A balcony link",
+      "center": [
+        12,
+        3.45,
+        6.5
+      ],
+      "size": [
+        4,
+        0.3,
+        1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "A keep arcade support",
+      "center": [
+        8.2,
+        1.65,
+        10
+      ],
+      "size": [
+        0.65,
+        3.3,
+        0.65
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "A keep arcade support",
+      "center": [
+        8.2,
+        1.65,
+        18
+      ],
+      "size": [
+        0.65,
+        3.3,
+        0.65
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Connector wayside pavilion",
+      "center": [
+        23,
+        3.3,
+        13
+      ],
+      "size": [
+        4,
+        6.6,
+        10
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Connector pavilion roof",
+      "center": [
+        23,
+        6.75,
+        13
+      ],
+      "size": [
+        4.5,
+        0.3,
+        10.5
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "B west entrance",
+      "center": [
+        28,
+        3.6,
+        8.5
+      ],
+      "size": [
+        0.4,
+        7.2,
+        7
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B west entrance lintel",
+      "center": [
+        28,
+        5.1,
+        15.0
+      ],
+      "size": [
+        0.4,
+        4.2,
+        6
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B west entrance",
+      "center": [
+        28,
+        3.6,
+        21.5
+      ],
+      "size": [
+        0.4,
+        7.2,
+        7
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall",
+      "center": [
+        29.5,
+        3.6,
+        25
+      ],
+      "size": [
+        3,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall lintel",
+      "center": [
+        33.0,
+        5.1,
+        25
+      ],
+      "size": [
+        4,
+        4.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall",
+      "center": [
+        36.65,
+        3.6,
+        25
+      ],
+      "size": [
+        3.299999999999997,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall",
+      "center": [
+        43.85,
+        3.6,
+        25
+      ],
+      "size": [
+        4.299999999999997,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall lintel",
+      "center": [
+        48.0,
+        5.1,
+        25
+      ],
+      "size": [
+        4,
+        4.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall",
+      "center": [
+        52.0,
+        3.6,
+        25
+      ],
+      "size": [
+        4,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north inner wall closed upper doorway",
+      "center": [
+        40.0,
+        3.6,
+        25
+      ],
+      "size": [
+        3.4000000000000057,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall",
+      "center": [
+        28.5,
+        3.6,
+        5
+      ],
+      "size": [
+        1,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall lintel",
+      "center": [
+        31.0,
+        5.1,
+        5
+      ],
+      "size": [
+        4,
+        4.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall",
+      "center": [
+        35.65,
+        3.6,
+        5
+      ],
+      "size": [
+        5.299999999999997,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall",
+      "center": [
+        45.35,
+        3.6,
+        5
+      ],
+      "size": [
+        7.299999999999997,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall lintel",
+      "center": [
+        51.0,
+        5.1,
+        5
+      ],
+      "size": [
+        4,
+        4.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall",
+      "center": [
+        53.5,
+        3.6,
+        5
+      ],
+      "size": [
+        1,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south inner wall closed upper doorway",
+      "center": [
+        40.0,
+        3.6,
+        5
+      ],
+      "size": [
+        3.4000000000000057,
+        7.2,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B throne wall",
+      "center": [
+        54,
+        4.5,
+        6.0
+      ],
+      "size": [
+        0.4,
+        9,
+        2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B throne wall lintel",
+      "center": [
+        54,
+        6.0,
+        8.75
+      ],
+      "size": [
+        0.4,
+        6,
+        3.5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B throne wall",
+      "center": [
+        54,
+        4.5,
+        15.25
+      ],
+      "size": [
+        0.4,
+        9,
+        9.5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B throne wall lintel",
+      "center": [
+        54,
+        6.0,
+        21.75
+      ],
+      "size": [
+        0.4,
+        6,
+        3.5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B throne wall",
+      "center": [
+        54,
+        4.5,
+        24.25
+      ],
+      "size": [
+        0.4,
+        9,
+        1.5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room outside",
+      "center": [
+        38.0,
+        4.0,
+        35
+      ],
+      "size": [
+        28,
+        8,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room entry",
+      "center": [
+        24,
+        3.6,
+        26.5
+      ],
+      "size": [
+        0.4,
+        7.2,
+        3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room entry lintel",
+      "center": [
+        24,
+        5.1,
+        30.0
+      ],
+      "size": [
+        0.4,
+        4.2,
+        4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room entry",
+      "center": [
+        24,
+        3.6,
+        33.5
+      ],
+      "size": [
+        0.4,
+        7.2,
+        3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room east",
+      "center": [
+        52,
+        3.6,
+        30.0
+      ],
+      "size": [
+        0.4,
+        7.2,
+        10
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room baffle",
+      "center": [
+        38,
+        2.75,
+        27.5
+      ],
+      "size": [
+        0.4,
+        5.5,
+        5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room baffle lintel",
+      "center": [
+        38,
+        4.25,
+        32.0
+      ],
+      "size": [
+        0.4,
+        2.5,
+        4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north room baffle",
+      "center": [
+        38,
+        2.75,
+        34.5
+      ],
+      "size": [
+        0.4,
+        5.5,
+        1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B north library roof",
+      "center": [
+        38,
+        8.15,
+        30
+      ],
+      "size": [
+        28.4,
+        0.3,
+        10.4
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "B south passage outside",
+      "center": [
+        39.0,
+        3.5,
+        -4
+      ],
+      "size": [
+        30,
+        7,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage entry",
+      "center": [
+        24,
+        3.5,
+        -2.5
+      ],
+      "size": [
+        0.4,
+        7,
+        3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage entry lintel",
+      "center": [
+        24,
+        5.0,
+        1.9
+      ],
+      "size": [
+        0.4,
+        4,
+        5.8
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage entry",
+      "center": [
+        24,
+        3.5,
+        4.9
+      ],
+      "size": [
+        0.4,
+        7,
+        0.20000000000000018
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage turn",
+      "center": [
+        46,
+        3.0,
+        -3.5
+      ],
+      "size": [
+        0.4,
+        6,
+        1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage turn lintel",
+      "center": [
+        46,
+        4.5,
+        -1.5
+      ],
+      "size": [
+        0.4,
+        3,
+        3
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage turn",
+      "center": [
+        46,
+        3.0,
+        2.5
+      ],
+      "size": [
+        0.4,
+        6,
+        5
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage end",
+      "center": [
+        54,
+        3.5,
+        0.5
+      ],
+      "size": [
+        0.4,
+        7,
+        9
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "B south passage roof",
+      "center": [
+        39,
+        7.1499999999999995,
+        0.5
+      ],
+      "size": [
+        30.4,
+        0.3,
+        9.4
+      ],
+      "color": [
+        76,
+        167,
+        158
+      ],
+      "phaseable": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        32,
+        5,
+        7.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        32,
+        5,
+        22.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        37,
+        5,
+        7.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        37,
+        5,
+        22.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        42,
+        5,
+        7.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        42,
+        5,
+        22.5
+      ],
+      "size": [
+        1.2,
+        10,
+        1.2
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        35,
+        5,
+        10
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        35,
+        5,
+        20
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        45,
+        5,
+        10
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        45,
+        5,
+        20
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        50,
+        5,
+        10
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "B temple column",
+      "center": [
+        50,
+        5,
+        20
+      ],
+      "size": [
+        1.1,
+        10,
+        1.1
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Royal planter",
+      "center": [
+        -3,
+        0.75,
+        22
+      ],
+      "size": [
+        2.6,
+        1.5,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal planter",
+      "center": [
+        21,
+        0.75,
+        -2
+      ],
+      "size": [
+        2.6,
+        1.5,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Royal planter",
+      "center": [
+        59,
+        0.75,
+        16
+      ],
+      "size": [
+        2.6,
+        1.5,
+        2.6
+      ],
+      "color": [
+        158,
+        189,
+        184
+      ],
+      "phaseable": true
+    },
+    {
+      "name": "Bedroom window pier",
+      "center": [
+        -2.15,
+        2.5,
+        -48.1
+      ],
+      "size": [
+        0.4,
+        5,
+        2.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window pier",
+      "center": [
+        -2.15,
+        2.5,
+        -41.9
+      ],
+      "size": [
+        0.4,
+        5,
+        2.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window sill",
+      "center": [
+        -2.15,
+        0.6,
+        -45
+      ],
+      "size": [
+        0.4,
+        1.2,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window header",
+      "center": [
+        -2.15,
+        4.85,
+        -45
+      ],
+      "size": [
+        0.4,
+        0.3,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": true
+    },
+    {
+      "name": "Bedroom glass barrier",
+      "center": [
+        -2.15,
+        2.9,
+        -45
+      ],
+      "size": [
+        0.12,
+        3.4,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Bedroom window pier",
+      "center": [
+        12.15,
+        2.5,
+        -48.1
+      ],
+      "size": [
+        0.4,
+        5,
+        2.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window pier",
+      "center": [
+        12.15,
+        2.5,
+        -41.9
+      ],
+      "size": [
+        0.4,
+        5,
+        2.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window sill",
+      "center": [
+        12.15,
+        0.6,
+        -45
+      ],
+      "size": [
+        0.4,
+        1.2,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Bedroom window header",
+      "center": [
+        12.15,
+        4.85,
+        -45
+      ],
+      "size": [
+        0.4,
+        0.3,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": true
+    },
+    {
+      "name": "Bedroom glass barrier",
+      "center": [
+        12.15,
+        2.9,
+        -45
+      ],
+      "size": [
+        0.12,
+        3.4,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture bedroom-bed-000",
+      "center": [
+        1.0,
+        0.8,
+        -47.3
+      ],
+      "size": [
+        2.2,
+        1.6,
+        3.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture bedroom-bedside-001",
+      "center": [
+        3.3,
+        0.65,
+        -47.4
+      ],
+      "size": [
+        1.0,
+        1.3,
+        1.0
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Cafe south frontage",
+      "center": [
+        12.0,
+        2.65,
+        -27.5
+      ],
+      "size": [
+        4,
+        5.3,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe south frontage",
+      "center": [
+        16.0,
+        4.15,
+        -27.5
+      ],
+      "size": [
+        4,
+        2.3,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe south frontage",
+      "center": [
+        20.0,
+        2.65,
+        -27.5
+      ],
+      "size": [
+        4,
+        5.3,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe north wall",
+      "center": [
+        16.0,
+        2.65,
+        -12.5
+      ],
+      "size": [
+        12,
+        5.3,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe west doorway",
+      "center": [
+        10,
+        2.65,
+        -24.75
+      ],
+      "size": [
+        0.4,
+        5.3,
+        5.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe west doorway",
+      "center": [
+        10,
+        4.15,
+        -20.0
+      ],
+      "size": [
+        0.4,
+        2.3,
+        4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe west doorway",
+      "center": [
+        10,
+        2.65,
+        -15.25
+      ],
+      "size": [
+        0.4,
+        5.3,
+        5.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe east wall",
+      "center": [
+        22,
+        2.65,
+        -20.0
+      ],
+      "size": [
+        0.4,
+        5.3,
+        15.0
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe raised interior",
+      "center": [
+        16,
+        0.3,
+        -20
+      ],
+      "size": [
+        12,
+        0.6,
+        15
+      ],
+      "color": [
+        152,
+        110,
+        69
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe terrace",
+      "center": [
+        7.75,
+        0.3,
+        -20
+      ],
+      "size": [
+        4.5,
+        0.6,
+        11
+      ],
+      "color": [
+        152,
+        110,
+        69
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe terrace step",
+      "center": [
+        4.25,
+        0.1,
+        -20
+      ],
+      "size": [
+        0.5,
+        0.2,
+        4.4
+      ],
+      "color": [
+        185,
+        147,
+        96
+      ],
+      "phaseable": false,
+      "render": true
+    },
+    {
+      "name": "Cafe terrace step",
+      "center": [
+        4.75,
+        0.2,
+        -20
+      ],
+      "size": [
+        0.5,
+        0.4,
+        4.4
+      ],
+      "color": [
+        185,
+        147,
+        96
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe terrace step",
+      "center": [
+        5.25,
+        0.30000000000000004,
+        -20
+      ],
+      "size": [
+        0.5,
+        0.6000000000000001,
+        4.4
+      ],
+      "color": [
+        185,
+        147,
+        96
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Cafe front step",
+      "center": [
+        16,
+        0.1,
+        -28.25
+      ],
+      "size": [
+        4,
+        0.2,
+        0.5
+      ],
+      "color": [
+        185,
+        147,
+        96
+      ],
+      "phaseable": false,
+      "render": true
+    },
+    {
+      "name": "Cafe front step",
+      "center": [
+        16,
+        0.2,
+        -27.75
+      ],
+      "size": [
+        4,
+        0.4,
+        0.5
+      ],
+      "color": [
+        185,
+        147,
+        96
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Furniture cafe-cafe_counter-008",
+      "center": [
+        16.0,
+        1.25,
+        -14.0
+      ],
+      "size": [
+        7.0,
+        1.3,
+        1.3
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-cafe_table-009",
+      "center": [
+        7.7,
+        1.25,
+        -24.0
+      ],
+      "size": [
+        1.5,
+        1.3,
+        1.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-010",
+      "center": [
+        7.7,
+        1.2999999999999998,
+        -25.25
+      ],
+      "size": [
+        0.7500000000000001,
+        1.4,
+        0.7500000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-011",
+      "center": [
+        7.7,
+        1.2999999999999998,
+        -22.75
+      ],
+      "size": [
+        0.75,
+        1.4,
+        0.75
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-cafe_table-012",
+      "center": [
+        7.7,
+        1.25,
+        -16.0
+      ],
+      "size": [
+        1.5,
+        1.3,
+        1.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-013",
+      "center": [
+        7.7,
+        1.2999999999999998,
+        -17.25
+      ],
+      "size": [
+        0.7500000000000001,
+        1.4,
+        0.7500000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-014",
+      "center": [
+        7.7,
+        1.2999999999999998,
+        -14.75
+      ],
+      "size": [
+        0.75,
+        1.4,
+        0.75
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-cafe_table-015",
+      "center": [
+        14.0,
+        1.25,
+        -24.0
+      ],
+      "size": [
+        1.5,
+        1.3,
+        1.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-016",
+      "center": [
+        14.0,
+        1.2999999999999998,
+        -25.25
+      ],
+      "size": [
+        0.7500000000000001,
+        1.4,
+        0.7500000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-017",
+      "center": [
+        14.0,
+        1.2999999999999998,
+        -22.75
+      ],
+      "size": [
+        0.75,
+        1.4,
+        0.75
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-cafe_table-018",
+      "center": [
+        19.0,
+        1.25,
+        -18.0
+      ],
+      "size": [
+        1.5,
+        1.3,
+        1.5
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-019",
+      "center": [
+        19.0,
+        1.2999999999999998,
+        -19.25
+      ],
+      "size": [
+        0.7500000000000001,
+        1.4,
+        0.7500000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-chair-020",
+      "center": [
+        19.0,
+        1.2999999999999998,
+        -16.75
+      ],
+      "size": [
+        0.75,
+        1.4,
+        0.75
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture cafe-menu_board-021",
+      "center": [
+        3.9,
+        0.85,
+        -26.5
+      ],
+      "size": [
+        0.9522581896420921,
+        1.7,
+        0.756908877880547
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture street-flowerpot-022",
+      "center": [
+        -5.3,
+        0.5,
+        -25.0
+      ],
+      "size": [
+        0.8,
+        1,
+        0.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture street-flowerpot-023",
+      "center": [
+        -5.3,
+        0.5,
+        -11.0
+      ],
+      "size": [
+        0.8,
+        1,
+        0.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture street-flowerpot-024",
+      "center": [
+        8.0,
+        0.5,
+        -29.0
+      ],
+      "size": [
+        0.8,
+        1,
+        0.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture street-flowerpot-025",
+      "center": [
+        23.0,
+        0.5,
+        -25.0
+      ],
+      "size": [
+        0.8,
+        1,
+        0.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture street-flowerpot-026",
+      "center": [
+        23.0,
+        0.5,
+        -14.0
+      ],
+      "size": [
+        0.8,
+        1,
+        0.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Cafe rail proxy",
+      "center": [
+        7.75,
+        1.1,
+        -25.5
+      ],
+      "size": [
+        4.5,
+        1,
+        0.18
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Cafe rail proxy",
+      "center": [
+        7.75,
+        1.1,
+        -14.5
+      ],
+      "size": [
+        4.5,
+        1,
+        0.18
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Cafe edge rail proxy",
+      "center": [
+        5.55,
+        1.1,
+        -23.9
+      ],
+      "size": [
+        0.18,
+        1,
+        3.1999999999999993
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Cafe edge rail proxy",
+      "center": [
+        5.55,
+        1.1,
+        -16.1
+      ],
+      "size": [
+        0.18,
+        1,
+        3.1999999999999993
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Study arched partition",
+      "center": [
+        -16.0,
+        2.9,
+        -19
+      ],
+      "size": [
+        4,
+        5.8,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Study arched partition",
+      "center": [
+        -12.0,
+        4.4,
+        -19
+      ],
+      "size": [
+        4,
+        2.8,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Study arched partition",
+      "center": [
+        -8.0,
+        2.9,
+        -19
+      ],
+      "size": [
+        4,
+        5.8,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Furniture study-bed-027",
+      "center": [
+        -8.0,
+        0.8,
+        -12.7
+      ],
+      "size": [
+        2.2,
+        1.6,
+        3.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture study-bookshelf-028",
+      "center": [
+        -16.9,
+        1.7,
+        -12.0
+      ],
+      "size": [
+        0.6500000000000002,
+        3.4,
+        2.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture study-bookshelf-029",
+      "center": [
+        -16.9,
+        1.7,
+        -16.0
+      ],
+      "size": [
+        0.6500000000000002,
+        3.4,
+        2.8
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture study-desk-030",
+      "center": [
+        -15.8,
+        0.7,
+        -22.0
+      ],
+      "size": [
+        1.4000000000000001,
+        1.4,
+        3.0
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture study-satchel-031",
+      "center": [
+        -14.4,
+        0.45,
+        -23.3
+      ],
+      "size": [
+        0.7,
+        0.9,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture square-village_tree-035",
+      "center": [
+        16.0,
+        4,
+        -35.0
+      ],
+      "size": [
+        2.6,
+        8,
+        2.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture square-clock_plinth-036",
+      "center": [
+        16.0,
+        0.6,
+        -38.0
+      ],
+      "size": [
+        1.4,
+        1.2,
+        1.0
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture square-street_lamp-037",
+      "center": [
+        11.4,
+        1.7,
+        -36.5
+      ],
+      "size": [
+        0.35,
+        3.4,
+        0.35
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture square-street_lamp-038",
+      "center": [
+        20.6,
+        1.7,
+        -36.5
+      ],
+      "size": [
+        0.35,
+        3.4,
+        0.35
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Atrium west door",
+      "center": [
+        10.5,
+        5.8,
+        9.85
+      ],
+      "size": [
+        0.4,
+        11.6,
+        0.6999999999999993
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium west door",
+      "center": [
+        10.5,
+        7.3,
+        11.5
+      ],
+      "size": [
+        0.4,
+        8.6,
+        2.6000000000000014
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium west door",
+      "center": [
+        10.5,
+        5.8,
+        15.65
+      ],
+      "size": [
+        0.4,
+        11.6,
+        5.699999999999999
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium east door",
+      "center": [
+        17.5,
+        5.8,
+        12.65
+      ],
+      "size": [
+        0.4,
+        11.6,
+        6.300000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium east door",
+      "center": [
+        17.5,
+        7.3,
+        16.950000000000003
+      ],
+      "size": [
+        0.4,
+        8.6,
+        2.3000000000000007
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium east door",
+      "center": [
+        17.5,
+        5.8,
+        18.3
+      ],
+      "size": [
+        0.4,
+        11.6,
+        0.3999999999999986
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium front wall",
+      "center": [
+        14.0,
+        5.8,
+        9.5
+      ],
+      "size": [
+        7.0,
+        11.6,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Atrium rear wall",
+      "center": [
+        14.0,
+        5.8,
+        18.5
+      ],
+      "size": [
+        7.0,
+        11.6,
+        0.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Furniture atrium-atrium_tree-039",
+      "center": [
+        14.0,
+        3.1,
+        14.0
+      ],
+      "size": [
+        1.6,
+        6.2,
+        1.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -38.85
+      ],
+      "size": [
+        3.357082066318903,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -38.15
+      ],
+      "size": [
+        5.556077753235639,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -37.45
+      ],
+      "size": [
+        6.822756041366275,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -36.75
+      ],
+      "size": [
+        7.636098480245,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -36.05
+      ],
+      "size": [
+        8.133265027035575,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -35.35
+      ],
+      "size": [
+        8.370782520170978,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -34.65
+      ],
+      "size": [
+        8.370782520170978,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -33.95
+      ],
+      "size": [
+        8.133265027035575,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -33.25
+      ],
+      "size": [
+        7.636098480245,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -32.55
+      ],
+      "size": [
+        6.822756041366276,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -31.85
+      ],
+      "size": [
+        5.556077753235639,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        16,
+        0.11,
+        -31.15
+      ],
+      "size": [
+        3.357082066318902,
+        0.22,
+        0.7000000000000001
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        12.533333333333333
+      ],
+      "size": [
+        1.2788884062167252,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        12.8
+      ],
+      "size": [
+        2.116601048851673,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        13.066666666666666
+      ],
+      "size": [
+        2.5991451586157237,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        13.333333333333334
+      ],
+      "size": [
+        2.9089898972361907,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        13.6
+      ],
+      "size": [
+        3.0983866769659336,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        13.866666666666667
+      ],
+      "size": [
+        3.1888695314937063,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        14.133333333333333
+      ],
+      "size": [
+        3.1888695314937063,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        14.4
+      ],
+      "size": [
+        3.0983866769659336,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        14.666666666666668
+      ],
+      "size": [
+        2.9089898972361907,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        14.933333333333334
+      ],
+      "size": [
+        2.5991451586157237,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        15.2
+      ],
+      "size": [
+        2.1166010488516727,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Circular planter curb",
+      "center": [
+        14,
+        0.11,
+        15.466666666666667
+      ],
+      "size": [
+        1.2788884062167252,
+        0.22,
+        0.26666666666666666
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Furniture guardian_hall-guardian-040",
+      "center": [
+        25.1,
+        1.3,
+        26.8
+      ],
+      "size": [
+        0.8000000000000002,
+        2.6,
+        1.25
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture guardian_hall-guardian-041",
+      "center": [
+        25.1,
+        1.3,
+        33.5
+      ],
+      "size": [
+        0.8000000000000002,
+        2.6,
+        1.25
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture guardian_hall-guardian-042",
+      "center": [
+        36.8,
+        1.3,
+        26.8
+      ],
+      "size": [
+        0.8000000000000002,
+        2.6,
+        1.25
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture guardian_hall-guardian-043",
+      "center": [
+        36.8,
+        1.3,
+        33.5
+      ],
+      "size": [
+        0.8000000000000002,
+        2.6,
+        1.25
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture guardian_hall-altar-044",
+      "center": [
+        36.6,
+        0.7,
+        28.1
+      ],
+      "size": [
+        0.9000000000000001,
+        1.4,
+        1.7
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture north_library-bookshelf-045",
+      "center": [
+        42.0,
+        1.7,
+        34.45
+      ],
+      "size": [
+        2.8,
+        3.4,
+        0.65
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture north_library-bookshelf-046",
+      "center": [
+        48.0,
+        1.7,
+        34.45
+      ],
+      "size": [
+        2.8,
+        3.4,
+        0.65
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Throne dais step",
+      "center": [
+        49.9,
+        0.15,
+        15
+      ],
+      "size": [
+        0.6,
+        0.3,
+        4.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": false,
+      "render": false
+    },
+    {
+      "name": "Throne dais step",
+      "center": [
+        50.5,
+        0.3,
+        15
+      ],
+      "size": [
+        0.6,
+        0.6,
+        4.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Throne dais step",
+      "center": [
+        51.1,
+        0.44999999999999996,
+        15
+      ],
+      "size": [
+        0.6,
+        0.8999999999999999,
+        4.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Throne dais step",
+      "center": [
+        51.699999999999996,
+        0.6,
+        15
+      ],
+      "size": [
+        0.6,
+        1.2,
+        4.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Throne dais landing",
+      "center": [
+        52.6,
+        0.6,
+        15
+      ],
+      "size": [
+        1.2,
+        1.2,
+        4.2
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture throne-throne-052",
+      "center": [
+        52.6,
+        2.4,
+        15.0
+      ],
+      "size": [
+        1.2000000000000002,
+        2.4,
+        1.9
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture throne-royal_side_table-053",
+      "center": [
+        52.5,
+        1.7999999999999998,
+        16.5
+      ],
+      "size": [
+        0.85,
+        1.2,
+        0.85
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture throne-guardian-054",
+      "center": [
+        52.9,
+        1.3,
+        10.5
+      ],
+      "size": [
+        0.9000000000000001,
+        2.6,
+        1.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Furniture throne-guardian-055",
+      "center": [
+        52.9,
+        1.3,
+        19.5
+      ],
+      "size": [
+        0.9000000000000001,
+        2.6,
+        1.4
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Royal hall ceiling",
+      "center": [
+        41,
+        11.9,
+        15
+      ],
+      "size": [
+        26,
+        0.3,
+        20
+      ],
+      "color": [
+        223,
+        228,
+        229
+      ],
+      "phaseable": false,
+      "render": true
+    },
+    {
+      "name": "Royal hall upper wall",
+      "center": [
+        41,
+        9.55,
+        5
+      ],
+      "size": [
+        26,
+        4.7,
+        0.4
+      ],
+      "color": [
+        223,
+        228,
+        229
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Royal hall upper wall",
+      "center": [
+        41,
+        9.55,
+        25
+      ],
+      "size": [
+        26,
+        4.7,
+        0.4
+      ],
+      "color": [
+        223,
+        228,
+        229
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Royal hall east upper wall",
+      "center": [
+        54,
+        10.45,
+        15
+      ],
+      "size": [
+        0.4,
+        2.9,
+        20
+      ],
+      "color": [
+        223,
+        228,
+        229
+      ],
+      "phaseable": true,
+      "render": true
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        10.78,
+        5.35,
+        10
+      ],
+      "size": [
+        0.6,
+        10.7,
+        0.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        10.78,
+        5.35,
+        18
+      ],
+      "size": [
+        0.6,
+        10.7,
+        0.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        17.22,
+        5.35,
+        10
+      ],
+      "size": [
+        0.6,
+        10.7,
+        0.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        17.22,
+        5.35,
+        18
+      ],
+      "size": [
+        0.6,
+        10.7,
+        0.6
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        26,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        32,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        38,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        44,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        50,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        53,
+        2.7,
+        -3.58
+      ],
+      "size": [
+        0.48,
+        5.4,
+        0.48
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        24.7,
+        3.95,
+        25.4
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        24.7,
+        3.95,
+        34.5
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        31,
+        3.95,
+        25.4
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        31,
+        3.95,
+        34.5
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        37.4,
+        3.95,
+        25.4
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        37.4,
+        3.95,
+        34.5
+      ],
+      "size": [
+        0.64,
+        7.9,
+        0.64
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        53.35,
+        5.6,
+        6
+      ],
+      "size": [
+        0.74,
+        11.2,
+        0.74
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        53.35,
+        5.6,
+        11
+      ],
+      "size": [
+        0.74,
+        11.2,
+        0.74
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        53.35,
+        5.6,
+        19
+      ],
+      "size": [
+        0.74,
+        11.2,
+        0.74
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Engaged pillar proxy",
+      "center": [
+        53.35,
+        5.6,
+        24
+      ],
+      "size": [
+        0.74,
+        11.2,
+        0.74
+      ],
+      "color": [
+        228,
+        232,
+        224
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.9975909124103448,
+        4.0,
+        -8
+      ],
+      "size": [
+        0.00481817517931038,
+        2.0,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.9879603657547387,
+        4.049067674327418,
+        -8
+      ],
+      "size": [
+        0.014442918131901905,
+        1.9018646513451638,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.9687224732739557,
+        4.098017140329561,
+        -8
+      ],
+      "size": [
+        0.024032866829663657,
+        1.8039657193408787,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.9399235807360231,
+        4.146730474455362,
+        -8
+      ],
+      "size": [
+        0.033564918246202335,
+        1.7065390510892766,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.901633067195549,
+        4.195090322016128,
+        -8
+      ],
+      "size": [
+        0.043016108834745825,
+        1.6098193559677436,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.8539431778535054,
+        4.242980179903264,
+        -8
+      ],
+      "size": [
+        0.0523636698493406,
+        1.5140396401934724,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.7969688018304595,
+        4.290284677254462,
+        -8
+      ],
+      "size": [
+        0.06158508219675207,
+        1.4194306454910754,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.7308471953886153,
+        4.33688985339222,
+        -8
+      ],
+      "size": [
+        0.07065813068693627,
+        1.32622029321556,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.65573765126946,
+        4.38268343236509,
+        -8
+      ],
+      "size": [
+        0.0795609575513736,
+        1.2346331352698203,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.5718211149435968,
+        4.427555093430282,
+        -8
+      ],
+      "size": [
+        0.08827211510035315,
+        1.1448898131394358,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.4792997486972546,
+        4.471396736825998,
+        -8
+      ],
+      "size": [
+        0.09677061739233173,
+        1.0572065263480046,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.3783964446056345,
+        4.514102744193222,
+        -8
+      ],
+      "size": [
+        0.10503599079090753,
+        0.9717945116135569,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.2693542875663804,
+        4.555570233019602,
+        -8
+      ],
+      "size": [
+        0.11304832328760117,
+        0.8888595339607956,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.1524359696867639,
+        4.595699304492433,
+        -8
+      ],
+      "size": [
+        0.1207883124716318,
+        0.8086013910151335,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -1.0279231574353922,
+        4.634393284163646,
+        -8
+      ],
+      "size": [
+        0.1282373120311111,
+        0.7312134316727086,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.8961158130830134,
+        4.671558954847018,
+        -8
+      ],
+      "size": [
+        0.13537737667364658,
+        0.6568820903059631,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.7573314720671318,
+        4.707106781186548,
+        -8
+      ],
+      "size": [
+        0.14219130535811697,
+        0.5857864376269051,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.6119044780213274,
+        4.740951125354959,
+        -8
+      ],
+      "size": [
+        0.14866268273349137,
+        0.5180977492900816,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.4601851773121579,
+        4.773010453362737,
+        -8
+      ],
+      "size": [
+        0.15477591868484808,
+        0.45397909327452624,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.30253907502407174,
+        4.803207531480645,
+        -8
+      ],
+      "size": [
+        0.16051628589132472,
+        0.39358493703871034,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        -0.1393459544256479,
+        4.831469612302545,
+        -8
+      ],
+      "size": [
+        0.1658699553055225,
+        0.3370607753949093,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.02900103796156106,
+        4.857728610000272,
+        -8
+      ],
+      "size": [
+        0.1708240294688954,
+        0.2845427799994553,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.20209633948744,
+        4.881921264348355,
+        -8
+      ],
+      "size": [
+        0.17536657358286245,
+        0.23615747130329012,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.37952294840925593,
+        4.903989293123443,
+        -8
+      ],
+      "size": [
+        0.17948664426076943,
+        0.1920214137531131,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.5608534284853803,
+        4.923879532511287,
+        -8
+      ],
+      "size": [
+        0.18317431589147914,
+        0.15224093497742608,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.7456509387066352,
+        4.94154406518302,
+        -8
+      ],
+      "size": [
+        0.18642070455103088,
+        0.11691186963395861,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        0.9334702856845474,
+        4.9569403357322095,
+        -8
+      ],
+      "size": [
+        0.1892179894047934,
+        0.08611932853558191,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        1.1238589961612153,
+        4.970031253194544,
+        -8
+      ],
+      "size": [
+        0.1915594315485426,
+        0.05993749361091183,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        1.3163584070570198,
+        4.98078528040323,
+        -8
+      ],
+      "size": [
+        0.19343939024306633,
+        0.03842943919353914,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        1.5105047704301549,
+        4.989176509964781,
+        -8
+      ],
+      "size": [
+        0.1948533365032039,
+        0.02164698007043775,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        1.7058303706860423,
+        4.995184726672196,
+        -8
+      ],
+      "size": [
+        0.19579786400857058,
+        0.009630546655606587,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        1.9018646513451636,
+        4.998795456205173,
+        -8
+      ],
+      "size": [
+        0.19627069730967225,
+        0.002409087589654746,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        2.0981353486548358,
+        4.998795456205173,
+        -8
+      ],
+      "size": [
+        0.19627069730967228,
+        0.002409087589654746,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        2.2941696293139575,
+        4.995184726672197,
+        -8
+      ],
+      "size": [
+        0.19579786400857055,
+        0.009630546655605698,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        2.4894952295698447,
+        4.989176509964781,
+        -8
+      ],
+      "size": [
+        0.19485333650320397,
+        0.02164698007043775,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        2.6836415929429798,
+        4.98078528040323,
+        -8
+      ],
+      "size": [
+        0.19343939024306622,
+        0.03842943919353914,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        2.876141003838784,
+        4.970031253194544,
+        -8
+      ],
+      "size": [
+        0.1915594315485427,
+        0.05993749361091183,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.066529714315452,
+        4.9569403357322095,
+        -8
+      ],
+      "size": [
+        0.18921798940479317,
+        0.08611932853558191,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.254349061293364,
+        4.94154406518302,
+        -8
+      ],
+      "size": [
+        0.1864207045510311,
+        0.11691186963395861,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.439146571514619,
+        4.923879532511287,
+        -8
+      ],
+      "size": [
+        0.18317431589147914,
+        0.15224093497742608,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.6204770515907434,
+        4.903989293123443,
+        -8
+      ],
+      "size": [
+        0.17948664426076855,
+        0.1920214137531131,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.797903660512559,
+        4.881921264348355,
+        -8
+      ],
+      "size": [
+        0.17536657358286334,
+        0.23615747130329012,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        3.9709989620384385,
+        4.857728610000272,
+        -8
+      ],
+      "size": [
+        0.1708240294688954,
+        0.2845427799994553,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.139345954425647,
+        4.831469612302545,
+        -8
+      ],
+      "size": [
+        0.16586995530552162,
+        0.3370607753949093,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.302539075024071,
+        4.803207531480645,
+        -8
+      ],
+      "size": [
+        0.1605162858913256,
+        0.39358493703871034,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.460185177312157,
+        4.773010453362737,
+        -8
+      ],
+      "size": [
+        0.15477591868484808,
+        0.45397909327452624,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.611904478021327,
+        4.740951125354959,
+        -8
+      ],
+      "size": [
+        0.14866268273349226,
+        0.5180977492900816,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.757331472067132,
+        4.707106781186548,
+        -8
+      ],
+      "size": [
+        0.14219130535811608,
+        0.5857864376269051,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        4.8961158130830125,
+        4.671558954847018,
+        -8
+      ],
+      "size": [
+        0.1353773766736457,
+        0.6568820903059631,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.027923157435392,
+        4.634393284163646,
+        -8
+      ],
+      "size": [
+        0.12823731203111244,
+        0.7312134316727086,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.152435969686763,
+        4.595699304492434,
+        -8
+      ],
+      "size": [
+        0.12078831247163135,
+        0.8086013910151326,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.26935428756638,
+        4.555570233019602,
+        -8
+      ],
+      "size": [
+        0.11304832328760206,
+        0.8888595339607956,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.3783964446056345,
+        4.514102744193222,
+        -8
+      ],
+      "size": [
+        0.10503599079090664,
+        0.971794511613556,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.479299748697254,
+        4.471396736825998,
+        -8
+      ],
+      "size": [
+        0.09677061739233173,
+        1.0572065263480042,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.571821114943597,
+        4.427555093430282,
+        -8
+      ],
+      "size": [
+        0.0882721151003536,
+        1.1448898131394358,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.65573765126946,
+        4.38268343236509,
+        -8
+      ],
+      "size": [
+        0.0795609575513736,
+        1.2346331352698203,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.730847195388614,
+        4.33688985339222,
+        -8
+      ],
+      "size": [
+        0.07065813068693583,
+        1.3262202932155596,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.7969688018304595,
+        4.290284677254462,
+        -8
+      ],
+      "size": [
+        0.061585082196752516,
+        1.419430645491075,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.853943177853505,
+        4.242980179903264,
+        -8
+      ],
+      "size": [
+        0.0523636698493406,
+        1.514039640193472,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.901633067195549,
+        4.195090322016129,
+        -8
+      ],
+      "size": [
+        0.043016108834745825,
+        1.6098193559677427,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.939923580736023,
+        4.146730474455362,
+        -8
+      ],
+      "size": [
+        0.033564918246202335,
+        1.7065390510892762,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.968722473273956,
+        4.098017140329561,
+        -8
+      ],
+      "size": [
+        0.024032866829663213,
+        1.8039657193408782,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.987960365754739,
+        4.049067674327418,
+        -8
+      ],
+      "size": [
+        0.01444291813190235,
+        1.9018646513451642,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    },
+    {
+      "name": "Outer gate arch collision",
+      "center": [
+        5.997590912410345,
+        4.0,
+        -8
+      ],
+      "size": [
+        0.00481817517931038,
+        1.9999999999999996,
+        0.4
+      ],
+      "color": [
+        231,
+        235,
+        220
+      ],
+      "phaseable": true,
+      "render": false
+    }
+  ],
+  "routes": [
+    {
+      "name": "A main choke",
+      "kind": "main",
+      "points": [
+        [
+          5,
+          0,
+          -45
+        ],
+        [
+          5,
+          0,
+          -34
+        ],
+        [
+          2,
+          0,
+          -30
+        ],
+        [
+          2,
+          0,
+          -8
+        ],
+        [
+          2,
+          0,
+          -1
+        ],
+        [
+          0,
+          0,
+          12
+        ]
+      ]
+    },
+    {
+      "name": "A west house flank",
+      "kind": "flank",
+      "points": [
+        [
+          5,
+          0,
+          -34
+        ],
+        [
+          -12,
+          0,
+          -34
+        ],
+        [
+          -12,
+          0,
+          -29
+        ],
+        [
+          -12,
+          0,
+          -9
+        ],
+        [
+          -12,
+          0,
+          -6.6
+        ],
+        [
+          -19,
+          0,
+          -6.6
+        ],
+        [
+          -19,
+          0,
+          20
+        ],
+        [
+          -3,
+          0,
+          20
+        ],
+        [
+          0,
+          0,
+          12
+        ]
+      ]
+    },
+    {
+      "name": "A west upper room",
+      "kind": "high",
+      "points": [
+        [
+          -12.0,
+          0,
+          -6.300000000000002
+        ],
+        [
+          -12.0,
+          3.5999999999999996,
+          6.599999999999998
+        ],
+        [
+          -12,
+          3.6,
+          12
+        ],
+        [
+          -8,
+          3.6,
+          12
+        ],
+        [
+          -5,
+          0,
+          12
+        ],
+        [
+          0,
+          0,
+          12
+        ]
+      ]
+    },
+    {
+      "name": "A crescent and keep",
+      "kind": "high",
+      "points": [
+        [
+          24.28,
+          0,
+          4.0
+        ],
+        [
+          15.895,
+          3.5999999999999996,
+          4.0
+        ],
+        [
+          12,
+          3.6,
+          4
+        ],
+        [
+          12,
+          3.6,
+          8
+        ],
+        [
+          9,
+          3.6,
+          8
+        ],
+        [
+          9,
+          3.6,
+          14
+        ],
+        [
+          9,
+          3.6,
+          20
+        ]
+      ]
+    },
+    {
+      "name": "A to B turning street",
+      "kind": "main",
+      "points": [
+        [
+          0,
+          0,
+          12
+        ],
+        [
+          4,
+          0,
+          23
+        ],
+        [
+          22,
+          0,
+          23
+        ],
+        [
+          26,
+          0,
+          21
+        ],
+        [
+          26,
+          0,
+          15
+        ],
+        [
+          30,
+          0,
+          15
+        ],
+        [
+          46,
+          0,
+          15
+        ]
+      ]
+    },
+    {
+      "name": "B north library flank",
+      "kind": "flank",
+      "points": [
+        [
+          22,
+          0,
+          23
+        ],
+        [
+          22,
+          0,
+          30
+        ],
+        [
+          26,
+          0,
+          30
+        ],
+        [
+          34,
+          0,
+          32
+        ],
+        [
+          42,
+          0,
+          32
+        ],
+        [
+          48,
+          0,
+          28
+        ],
+        [
+          48,
+          0,
+          24
+        ],
+        [
+          46,
+          0,
+          15
+        ]
+      ]
+    },
+    {
+      "name": "B south bent corridor",
+      "kind": "flank",
+      "points": [
+        [
+          2,
+          0,
+          -1
+        ],
+        [
+          19,
+          0,
+          0
+        ],
+        [
+          26,
+          0,
+          0
+        ],
+        [
+          42,
+          0,
+          0
+        ],
+        [
+          44,
+          0,
+          -1.5
+        ],
+        [
+          48,
+          0,
+          -1.5
+        ],
+        [
+          51,
+          0,
+          2
+        ],
+        [
+          51,
+          0,
+          7
+        ],
+        [
+          52,
+          0,
+          9
+        ],
+        [
+          52,
+          0,
+          12
+        ],
+        [
+          46,
+          0,
+          12
+        ],
+        [
+          46,
+          0,
+          15
+        ]
+      ]
+    },
+    {
+      "name": "Cafe terrace and interior",
+      "kind": "visit",
+      "points": [
+        [
+          2,
+          0,
+          -20
+        ],
+        [
+          5.9,
+          0.6,
+          -20
+        ],
+        [
+          8,
+          0.6,
+          -20
+        ],
+        [
+          16,
+          0.6,
+          -20
+        ]
+      ]
+    },
+    {
+      "name": "Study visit",
+      "kind": "visit",
+      "points": [
+        [
+          -12,
+          0,
+          -26
+        ],
+        [
+          -12,
+          0,
+          -14
+        ],
+        [
+          -14.2,
+          0,
+          -14
+        ]
+      ]
+    },
+    {
+      "name": "Village green ring",
+      "kind": "visit",
+      "points": [
+        [
+          5,
+          0,
+          -39
+        ],
+        [
+          21.5,
+          0,
+          -39
+        ],
+        [
+          21.5,
+          0,
+          -31
+        ],
+        [
+          7,
+          0,
+          -31
+        ]
+      ]
+    },
+    {
+      "name": "Atrium indoor dogleg",
+      "kind": "visit",
+      "points": [
+        [
+          6,
+          0,
+          11.5
+        ],
+        [
+          12,
+          0,
+          11.5
+        ],
+        [
+          12,
+          0,
+          16
+        ],
+        [
+          16,
+          0,
+          17
+        ],
+        [
+          19,
+          0,
+          17
+        ]
+      ]
+    },
+    {
+      "name": "Guardian hall visit",
+      "kind": "visit",
+      "points": [
+        [
+          26,
+          0,
+          30
+        ],
+        [
+          30,
+          0,
+          28
+        ],
+        [
+          34.5,
+          0,
+          28
+        ]
+      ]
+    },
+    {
+      "name": "Throne dais ascent",
+      "kind": "visit",
+      "points": [
+        [
+          48,
+          0,
+          15
+        ],
+        [
+          51.5,
+          1.2,
+          15
+        ]
+      ]
+    }
+  ],
+  "stairs": [
+    {
+      "name": "A west stair",
+      "start": [
+        -12.0,
+        0,
+        -6.300000000000002
+      ],
+      "end": [
+        -12.0,
+        3.5999999999999996,
+        6.599999999999998
+      ],
+      "height": 3.5999999999999996
+    },
+    {
+      "name": "A crescent stair",
+      "start": [
+        24.28,
+        0,
+        4.0
+      ],
+      "end": [
+        15.895,
+        3.5999999999999996,
+        4.0
+      ],
+      "height": 3.5999999999999996
+    }
+  ],
+  "roofs": [
+    {
+      "name": "Attack garden lodge",
+      "x": 5,
+      "z": -45,
+      "w": 14.7,
+      "d": 8.8,
+      "y": 5.25,
+      "style": "timber"
+    },
+    {
+      "name": "Forward garden sanctuary",
+      "x": -13,
+      "z": 26,
+      "w": 14.7,
+      "d": 8.8,
+      "y": 5.25,
+      "style": "timber"
+    },
+    {
+      "name": "Royal defense sanctuary",
+      "x": 58,
+      "z": 30,
+      "w": 14.7,
+      "d": 8.8,
+      "y": 5.25,
+      "style": "palace"
+    },
+    {
+      "name": "Approach west house",
+      "x": -12,
+      "z": -19,
+      "w": 12.4,
+      "d": 20.4,
+      "y": 6.3,
+      "style": "timber"
+    },
+    {
+      "name": "Approach east gatehouse",
+      "x": 16,
+      "z": -20,
+      "w": 12.4,
+      "d": 15.4,
+      "y": 5.6,
+      "style": "cafe"
+    },
+    {
+      "name": "A west gallery",
+      "x": -12,
+      "z": 12,
+      "w": 6.8,
+      "d": 11.8,
+      "y": 7,
+      "style": "palace"
+    },
+    {
+      "name": "A royal keep",
+      "x": 14,
+      "z": 14,
+      "w": 7.5,
+      "d": 9.5,
+      "y": 11.9,
+      "style": "atrium"
+    },
+    {
+      "name": "Connector pavilion",
+      "x": 23,
+      "z": 13,
+      "w": 4.5,
+      "d": 10.5,
+      "y": 6.9,
+      "style": "palace"
+    },
+    {
+      "name": "B north library",
+      "x": 38,
+      "z": 30,
+      "w": 28.4,
+      "d": 10.4,
+      "y": 8.3,
+      "style": "palace"
+    },
+    {
+      "name": "B south passage",
+      "x": 39,
+      "z": 0.5,
+      "w": 30.4,
+      "d": 9.4,
+      "y": 7.3,
+      "style": "palace"
+    }
+  ],
+  "gates": [
+    {
+      "name": "Outer crown gate",
+      "x": 2,
+      "z": -8,
+      "axis": "z",
+      "opening": 8,
+      "height": 6.2,
+      "arch": {
+        "spring": 3.0,
+        "rise": 2.0,
+        "segments": 64
+      }
+    },
+    {
+      "name": "Inner crown gate",
+      "x": 28,
+      "z": 15,
+      "axis": "x",
+      "opening": 6,
+      "height": 7.2
+    }
+  ],
+  "footprint": [
+    [
+      -22,
+      -54
+    ],
+    [
+      25,
+      -54
+    ],
+    [
+      25,
+      -5
+    ],
+    [
+      68,
+      -5
+    ],
+    [
+      68,
+      38
+    ],
+    [
+      -4,
+      38
+    ],
+    [
+      -4,
+      32
+    ],
+    [
+      -22,
+      32
+    ]
+  ],
+  "reference": {
+    "plan": "../../references/fairy-kingdom-castle/anubis-layout.jpg",
+    "attribution": "Joe Iz Gaming plan; Orhin_InsaLan A/B 3D diagrams",
+    "method": "Rotated topology reconstruction; TSB-adjusted dimensions, not a metric scan."
+  },
+  "props": [
+    {
+      "id": "bedroom-bed-000",
+      "kind": "bed",
+      "position": [
+        1,
+        0,
+        -47.3
+      ],
+      "turn": 0,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "mint"
+    },
+    {
+      "id": "bedroom-bedside-001",
+      "kind": "bedside",
+      "position": [
+        3.3,
+        0,
+        -47.4
+      ],
+      "turn": 0,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": ""
+    },
+    {
+      "id": "bedroom-flowerpot-002",
+      "kind": "flowerpot",
+      "position": [
+        11.85,
+        1.2,
+        -46.4
+      ],
+      "turn": 0,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": ""
+    },
+    {
+      "id": "bedroom-arched_window-003",
+      "kind": "arched_window",
+      "position": [
+        -1.92,
+        1.2,
+        -45
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "curtain"
+    },
+    {
+      "id": "bedroom-arched_window-004",
+      "kind": "arched_window",
+      "position": [
+        11.92,
+        1.2,
+        -45
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "curtain"
+    },
+    {
+      "id": "bedroom-oval_rug-005",
+      "kind": "oval_rug",
+      "position": [
+        6,
+        0.035,
+        -46.3
+      ],
+      "turn": 0,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "mint"
+    },
+    {
+      "id": "bedroom-wall_frame-006",
+      "kind": "wall_frame",
+      "position": [
+        1.2,
+        2.7,
+        -48.96
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "tree"
+    },
+    {
+      "id": "bedroom-wall_frame-007",
+      "kind": "wall_frame",
+      "position": [
+        8.5,
+        2.8,
+        -48.96
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        2
+      ],
+      "space": "bedroom",
+      "variant": "crown"
+    },
+    {
+      "id": "cafe-cafe_counter-008",
+      "kind": "cafe_counter",
+      "position": [
+        16,
+        0.6,
+        -14
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-cafe_table-009",
+      "kind": "cafe_table",
+      "position": [
+        7.7,
+        0.6,
+        -24
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-010",
+      "kind": "chair",
+      "position": [
+        7.7,
+        0.6,
+        -25.25
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-011",
+      "kind": "chair",
+      "position": [
+        7.7,
+        0.6,
+        -22.75
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-cafe_table-012",
+      "kind": "cafe_table",
+      "position": [
+        7.7,
+        0.6,
+        -16
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-013",
+      "kind": "chair",
+      "position": [
+        7.7,
+        0.6,
+        -17.25
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-014",
+      "kind": "chair",
+      "position": [
+        7.7,
+        0.6,
+        -14.75
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-cafe_table-015",
+      "kind": "cafe_table",
+      "position": [
+        14,
+        0.6,
+        -24
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-016",
+      "kind": "chair",
+      "position": [
+        14,
+        0.6,
+        -25.25
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-017",
+      "kind": "chair",
+      "position": [
+        14,
+        0.6,
+        -22.75
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-cafe_table-018",
+      "kind": "cafe_table",
+      "position": [
+        19,
+        0.6,
+        -18
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-019",
+      "kind": "chair",
+      "position": [
+        19,
+        0.6,
+        -19.25
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-chair-020",
+      "kind": "chair",
+      "position": [
+        19,
+        0.6,
+        -16.75
+      ],
+      "turn": 0,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "cafe-menu_board-021",
+      "kind": "menu_board",
+      "position": [
+        3.9,
+        0,
+        -26.5
+      ],
+      "turn": -0.2,
+      "reference": [
+        6
+      ],
+      "space": "cafe",
+      "variant": ""
+    },
+    {
+      "id": "street-flowerpot-022",
+      "kind": "flowerpot",
+      "position": [
+        -5.3,
+        0,
+        -25
+      ],
+      "turn": 0,
+      "reference": [
+        4,
+        6
+      ],
+      "space": "street",
+      "variant": ""
+    },
+    {
+      "id": "street-flowerpot-023",
+      "kind": "flowerpot",
+      "position": [
+        -5.3,
+        0,
+        -11
+      ],
+      "turn": 0,
+      "reference": [
+        4,
+        6
+      ],
+      "space": "street",
+      "variant": ""
+    },
+    {
+      "id": "street-flowerpot-024",
+      "kind": "flowerpot",
+      "position": [
+        8,
+        0,
+        -29
+      ],
+      "turn": 0,
+      "reference": [
+        4,
+        6
+      ],
+      "space": "street",
+      "variant": ""
+    },
+    {
+      "id": "street-flowerpot-025",
+      "kind": "flowerpot",
+      "position": [
+        23,
+        0,
+        -25
+      ],
+      "turn": 0,
+      "reference": [
+        4,
+        6
+      ],
+      "space": "street",
+      "variant": ""
+    },
+    {
+      "id": "street-flowerpot-026",
+      "kind": "flowerpot",
+      "position": [
+        23,
+        0,
+        -14
+      ],
+      "turn": 0,
+      "reference": [
+        4,
+        6
+      ],
+      "space": "street",
+      "variant": ""
+    },
+    {
+      "id": "study-bed-027",
+      "kind": "bed",
+      "position": [
+        -8,
+        0,
+        -12.7
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": "rose"
+    },
+    {
+      "id": "study-bookshelf-028",
+      "kind": "bookshelf",
+      "position": [
+        -16.9,
+        0,
+        -12
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "study-bookshelf-029",
+      "kind": "bookshelf",
+      "position": [
+        -16.9,
+        0,
+        -16
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "study-desk-030",
+      "kind": "desk",
+      "position": [
+        -15.8,
+        0,
+        -22
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "study-satchel-031",
+      "kind": "satchel",
+      "position": [
+        -14.4,
+        0,
+        -23.3
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "study-oval_rug-032",
+      "kind": "oval_rug",
+      "position": [
+        -11.8,
+        0.035,
+        -14.8
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": "green"
+    },
+    {
+      "id": "study-study_arch-033",
+      "kind": "study_arch",
+      "position": [
+        -12,
+        0,
+        -18.74
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "study-pinboard-034",
+      "kind": "pinboard",
+      "position": [
+        -17.72,
+        2.7,
+        -23.5
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        5
+      ],
+      "space": "study",
+      "variant": ""
+    },
+    {
+      "id": "square-village_tree-035",
+      "kind": "village_tree",
+      "position": [
+        16,
+        0,
+        -35
+      ],
+      "turn": 0,
+      "reference": [
+        7
+      ],
+      "space": "square",
+      "variant": ""
+    },
+    {
+      "id": "square-clock_plinth-036",
+      "kind": "clock_plinth",
+      "position": [
+        16,
+        0,
+        -38
+      ],
+      "turn": 0,
+      "reference": [
+        7
+      ],
+      "space": "square",
+      "variant": ""
+    },
+    {
+      "id": "square-street_lamp-037",
+      "kind": "street_lamp",
+      "position": [
+        11.4,
+        0,
+        -36.5
+      ],
+      "turn": 0,
+      "reference": [
+        7
+      ],
+      "space": "square",
+      "variant": ""
+    },
+    {
+      "id": "square-street_lamp-038",
+      "kind": "street_lamp",
+      "position": [
+        20.6,
+        0,
+        -36.5
+      ],
+      "turn": 0,
+      "reference": [
+        7
+      ],
+      "space": "square",
+      "variant": ""
+    },
+    {
+      "id": "atrium-atrium_tree-039",
+      "kind": "atrium_tree",
+      "position": [
+        14,
+        0,
+        14
+      ],
+      "turn": 0,
+      "reference": [
+        3
+      ],
+      "space": "atrium",
+      "variant": ""
+    },
+    {
+      "id": "guardian_hall-guardian-040",
+      "kind": "guardian",
+      "position": [
+        25.1,
+        0,
+        26.8
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        8
+      ],
+      "space": "guardian_hall",
+      "variant": ""
+    },
+    {
+      "id": "guardian_hall-guardian-041",
+      "kind": "guardian",
+      "position": [
+        25.1,
+        0,
+        33.5
+      ],
+      "turn": -1.5707963267948966,
+      "reference": [
+        8
+      ],
+      "space": "guardian_hall",
+      "variant": ""
+    },
+    {
+      "id": "guardian_hall-guardian-042",
+      "kind": "guardian",
+      "position": [
+        36.8,
+        0,
+        26.8
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        8
+      ],
+      "space": "guardian_hall",
+      "variant": ""
+    },
+    {
+      "id": "guardian_hall-guardian-043",
+      "kind": "guardian",
+      "position": [
+        36.8,
+        0,
+        33.5
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        8
+      ],
+      "space": "guardian_hall",
+      "variant": ""
+    },
+    {
+      "id": "guardian_hall-altar-044",
+      "kind": "altar",
+      "position": [
+        36.6,
+        0,
+        28.1
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        8
+      ],
+      "space": "guardian_hall",
+      "variant": ""
+    },
+    {
+      "id": "north_library-bookshelf-045",
+      "kind": "bookshelf",
+      "position": [
+        42,
+        0,
+        34.45
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "north_library",
+      "variant": ""
+    },
+    {
+      "id": "north_library-bookshelf-046",
+      "kind": "bookshelf",
+      "position": [
+        48,
+        0,
+        34.45
+      ],
+      "turn": 0,
+      "reference": [
+        5
+      ],
+      "space": "north_library",
+      "variant": ""
+    },
+    {
+      "id": "corridor-sconce-047",
+      "kind": "sconce",
+      "position": [
+        27,
+        2.7,
+        -3.72
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        1
+      ],
+      "space": "corridor",
+      "variant": ""
+    },
+    {
+      "id": "corridor-sconce-048",
+      "kind": "sconce",
+      "position": [
+        33,
+        2.7,
+        -3.72
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        1
+      ],
+      "space": "corridor",
+      "variant": ""
+    },
+    {
+      "id": "corridor-sconce-049",
+      "kind": "sconce",
+      "position": [
+        39,
+        2.7,
+        -3.72
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        1
+      ],
+      "space": "corridor",
+      "variant": ""
+    },
+    {
+      "id": "corridor-sconce-050",
+      "kind": "sconce",
+      "position": [
+        45,
+        2.7,
+        -3.72
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        1
+      ],
+      "space": "corridor",
+      "variant": ""
+    },
+    {
+      "id": "corridor-sconce-051",
+      "kind": "sconce",
+      "position": [
+        51,
+        2.7,
+        -3.72
+      ],
+      "turn": 3.141592653589793,
+      "reference": [
+        1
+      ],
+      "space": "corridor",
+      "variant": ""
+    },
+    {
+      "id": "throne-throne-052",
+      "kind": "throne",
+      "position": [
+        52.6,
+        1.2,
+        15
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        9
+      ],
+      "space": "throne",
+      "variant": ""
+    },
+    {
+      "id": "throne-royal_side_table-053",
+      "kind": "royal_side_table",
+      "position": [
+        52.5,
+        1.2,
+        16.5
+      ],
+      "turn": 0,
+      "reference": [
+        9
+      ],
+      "space": "throne",
+      "variant": ""
+    },
+    {
+      "id": "throne-guardian-054",
+      "kind": "guardian",
+      "position": [
+        52.9,
+        0,
+        10.5
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        8,
+        9
+      ],
+      "space": "throne",
+      "variant": ""
+    },
+    {
+      "id": "throne-guardian-055",
+      "kind": "guardian",
+      "position": [
+        52.9,
+        0,
+        19.5
+      ],
+      "turn": 1.5707963267948966,
+      "reference": [
+        8,
+        9
+      ],
+      "space": "throne",
+      "variant": ""
+    }
+  ],
+  "lights": [
+    {
+      "position": [
+        7.5,
+        3.7,
+        -45
+      ],
+      "color": [
+        255,
+        239,
+        194
+      ],
+      "radius": 10,
+      "intensity": 2.0
+    },
+    {
+      "position": [
+        16,
+        4.5,
+        -20
+      ],
+      "color": [
+        255,
+        222,
+        172
+      ],
+      "radius": 12,
+      "intensity": 2.1
+    },
+    {
+      "position": [
+        -11,
+        3.8,
+        -14
+      ],
+      "color": [
+        255,
+        233,
+        183
+      ],
+      "radius": 10,
+      "intensity": 1.9
+    },
+    {
+      "position": [
+        -11,
+        3.8,
+        -25
+      ],
+      "color": [
+        245,
+        225,
+        191
+      ],
+      "radius": 9,
+      "intensity": 1.3
+    },
+    {
+      "position": [
+        14,
+        9.7,
+        14
+      ],
+      "color": [
+        244,
+        255,
+        210
+      ],
+      "radius": 12,
+      "intensity": 2.3
+    },
+    {
+      "position": [
+        30,
+        5.6,
+        29.5
+      ],
+      "color": [
+        226,
+        244,
+        255
+      ],
+      "radius": 12,
+      "intensity": 2.2
+    },
+    {
+      "position": [
+        45,
+        4,
+        30
+      ],
+      "color": [
+        255,
+        234,
+        195
+      ],
+      "radius": 10,
+      "intensity": 1.7
+    },
+    {
+      "position": [
+        30,
+        5.2,
+        -0.8
+      ],
+      "color": [
+        234,
+        245,
+        255
+      ],
+      "radius": 9,
+      "intensity": 1.5
+    },
+    {
+      "position": [
+        49,
+        5.2,
+        1
+      ],
+      "color": [
+        234,
+        245,
+        255
+      ],
+      "radius": 9,
+      "intensity": 1.5
+    },
+    {
+      "position": [
+        44,
+        8.2,
+        15
+      ],
+      "color": [
+        250,
+        243,
+        221
+      ],
+      "radius": 18,
+      "intensity": 2.1
+    },
+    {
+      "position": [
+        51,
+        6.2,
+        15
+      ],
+      "color": [
+        255,
+        229,
+        186
+      ],
+      "radius": 12,
+      "intensity": 1.7
+    }
+  ],
+  "spaces": [
+    {
+      "id": "corridor",
+      "reference": [
+        1
+      ]
+    },
+    {
+      "id": "bedroom",
+      "reference": [
+        2
+      ]
+    },
+    {
+      "id": "atrium",
+      "reference": [
+        3
+      ]
+    },
+    {
+      "id": "street",
+      "reference": [
+        4
+      ]
+    },
+    {
+      "id": "study",
+      "reference": [
+        5
+      ]
+    },
+    {
+      "id": "cafe",
+      "reference": [
+        6
+      ]
+    },
+    {
+      "id": "square",
+      "reference": [
+        7
+      ]
+    },
+    {
+      "id": "guardian_hall",
+      "reference": [
+        8
+      ]
+    },
+    {
+      "id": "throne",
+      "reference": [
+        9
+      ]
+    }
+  ]
+}

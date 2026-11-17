@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "character": "komi",
+  "status": "requested_not_implemented",
+  "coordinate_note": "L/R are anatomical character sides",
+  "face_geometry_note": "NO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.",
+  "facial_morphs": [
+    {
+      "name": "eyeBlink_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeBlink_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeSquint_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeSquint_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeWide_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "eyeWide_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "browUp_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browUp_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browDown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "browDown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "mouthSmile_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthSmile_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthFrown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "mouthFrown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "cheekPuff_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekPuff_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekStretch_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekStretch_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekSquash_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "cheekSquash_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "jawOpen",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 벌리기 / open jaw and mouth cavity"
+    },
+    {
+      "name": "mouthPucker",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 오므리기 / pucker lips"
+    },
+    {
+      "name": "mouthWide",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 가로로 넓히기 / widen lips without moving cheeks excessively"
+    }
+  ],
+  "gaze_bones": [
+    "Eye.L",
+    "Eye.R"
+  ],
+  "secondary_chains": "Ear.{L/R}.01-02; Tail.01-05; HairBack.{L/R}.01-05; HairFront.{L/R}.01-02",
+  "secondary_note": "고양이 귀 좌우 2본, 가늘고 긴 꼬리 5본, 긴 머리 좌우 5본. 귀를 누이거나 꼬리를 휘는 동작을 별도로 제어합니다.",
+  "prop_rig": "베개 PropRoot와 pillowSquash/pillowStretch 모프, 필요한 경우 가장자리 보조 본을 추가합니다. 프릴은 눌림에 따라 움직이고 손과 베개를 용접하지 않습니다.",
+  "runtime_status": "Fyrox morph import, control and secondary-motion simulation not implemented or verified by this input-pack task"
+}

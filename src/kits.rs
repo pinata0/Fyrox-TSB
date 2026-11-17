@@ -1,0 +1,242 @@
+//! FPS tuning of researched base-form skills. See docs/CHARACTER_KITS.md.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum AttackMode {
+    Melee,
+    Ray,
+    Projectile,
+}
+#[derive(Debug, Clone, Copy)]
+pub struct Kit {
+    pub weapon: &'static str,
+    pub mode: AttackMode,
+    pub damage: f32,
+    pub interval: f32,
+    pub range: f32,
+    pub magazine: u8,
+    pub skill: &'static str,
+    pub skill_ko: &'static str,
+    pub cooldown: f32,
+    pub ultimate: &'static str,
+    pub ultimate_ko: &'static str,
+    pub help: &'static str,
+}
+macro_rules! kit {
+    ($w:expr,$m:ident,$d:expr,$i:expr,$r:expr,$mag:expr,$e:expr,$ek:expr,$cd:expr,$q:expr,$qk:expr,$h:expr) => {
+        Kit { weapon:$w,mode:AttackMode::$m,damage:$d,interval:$i,range:$r,magazine:$mag,skill:$e,skill_ko:$ek,cooldown:$cd,ultimate:$q,ultimate_ko:$qk,help:$h }
+    }
+}
+pub const KITS: [Kit; 15] = [
+    kit!(
+        "MERCURY BLADES",
+        Melee,
+        26.0,
+        0.7,
+        3.8,
+        0,
+        "Mercury Guard",
+        "소녀에게 오시려구요?",
+        12.0,
+        "Quicksilver Lance",
+        "퀵실버랜스",
+        "E shield bursts when broken / Q spear weakens and taunts"
+    ),
+    kit!(
+        "WATER GUN",
+        Projectile,
+        13.0,
+        0.38,
+        36.0,
+        24,
+        "Wash Away",
+        "그게 씻은거야?",
+        10.0,
+        "Tidal Blessing",
+        "물의 세례를 받아라!",
+        "E: hold LMB for healing water (rooted); release to move +30% / Q tidal wave"
+    ),
+    kit!(
+        "MAGIC STAFF",
+        Projectile,
+        20.0,
+        0.55,
+        36.0,
+        20,
+        "Magic Rampage",
+        "마력탄 폭주",
+        10.0,
+        "Royal Charge",
+        "돌겨어어어!!! 억...?",
+        "LMB mobile staff bolt / hold RMB eat cake to heal; release or another action cancels / E four explosive orbs / Q staff charge"
+    ),
+    kit!(
+        "QUAD LASER",
+        Ray,
+        28.0,
+        0.8,
+        25.0,
+        40,
+        "Blurred Boundary",
+        "흐릿한 경계",
+        16.0,
+        "Our Universe",
+        "너와 나의 우주",
+        "E shield + lethal-hit wards / Q pulses and ally skill boost"
+    ),
+    kit!(
+        "FLOWER PARASOL",
+        Melee,
+        28.0,
+        0.7,
+        4.2,
+        0,
+        "Snow Butterfly",
+        "싸락나비",
+        9.0,
+        "Blooming Snow",
+        "만개설화",
+        "E returning butterfly weakens skills / Q chained frost blooms"
+    ),
+    kit!(
+        "STICKER WAND",
+        Projectile,
+        17.0,
+        0.5,
+        32.0,
+        18,
+        "Limited Stickers",
+        "한정 스티커",
+        11.0,
+        "Fashion Star",
+        "너도 될 수 있다 패션피플",
+        "E heal three wounded allies / Q aimed ally gains guard + taunt"
+    ),
+    kit!(
+        "SEBASTIAN ARMS",
+        Melee,
+        27.0,
+        0.8,
+        3.8,
+        0,
+        "Merry Go Round",
+        "메리 고 라운드",
+        14.0,
+        "Petit Sebastian",
+        "쁘띠 세바스티안",
+        "E shield + empowered combo / Q seven explosive dolls"
+    ),
+    kit!(
+        "ARC CANNON",
+        Projectile,
+        15.0,
+        0.4,
+        40.0,
+        30,
+        "Temporal Echo",
+        "시공의 메아리",
+        12.0,
+        "Time Break",
+        "타임 브레이크",
+        "E five shots strip buffs and guard / Q haste allies, stop foes"
+    ),
+    kit!(
+        "NEEDLE LAUNCHER",
+        Projectile,
+        12.0,
+        0.35,
+        40.0,
+        18,
+        "Collection Rule",
+        "수집의 법칙임.",
+        9.0,
+        "Mine To Collect",
+        "그 수집품 내꺼임.",
+        "E three poison darts / Q eight poison darts; aim the volley"
+    ),
+    kit!(
+        "GHOST LANTERN",
+        Melee,
+        24.0,
+        0.7,
+        4.5,
+        0,
+        "Boundary Ghost",
+        "경계선상의 유령",
+        15.0,
+        "Proof of Existence",
+        "앳된 존재의 증명",
+        "E flame path + ally buffs / Q steal flames to heal allies"
+    ),
+    kit!(
+        "ERU SPIRIT",
+        Projectile,
+        16.0,
+        0.45,
+        34.0,
+        20,
+        "Frog Rain",
+        "개굴비",
+        12.0,
+        "As You Say",
+        "말하는대로!",
+        "E rain heals and restores skills / Q rescue, refresh and morph"
+    ),
+    kit!(
+        "SLINGSHOT",
+        Projectile,
+        20.0,
+        0.65,
+        38.0,
+        12,
+        "Butter Fly",
+        "버터 플라이!",
+        10.0,
+        "Stone Strike",
+        "새쭁! 쓔튜라이크!",
+        "E ricochet stone / Q giant boulder; stones fall with gravity"
+    ),
+    kit!(
+        "PILLOW",
+        Melee,
+        30.0,
+        0.8,
+        3.5,
+        0,
+        "Fluffy Time",
+        "푹신푹신 타임",
+        12.0,
+        "Special Feed",
+        "엘프산 특제 사료",
+        "E sleep, heal and resist debuffs / Q giant pillow rampage"
+    ),
+    kit!(
+        "SYRINGE GUN",
+        Projectile,
+        14.0,
+        0.4,
+        38.0,
+        24,
+        "Phytoncide Pulse",
+        "피톤치드 파동",
+        10.0,
+        "Overtreatment",
+        "과잉진료",
+        "Third attack heals / E pulse + regeneration / Q ally attack haste"
+    ),
+    kit!(
+        "DARK RIFLE",
+        Ray,
+        28.0,
+        0.85,
+        60.0,
+        6,
+        "Magic Marksman",
+        "마.탄.의.사.수",
+        12.0,
+        "Final Explosion",
+        "종.말.의.폭.발",
+        "Fourth shot grants magic ammo / E five shots / Q explosion"
+    ),
+];
+pub fn kit(id: u8) -> &'static Kit {
+    &KITS[id as usize]
+}

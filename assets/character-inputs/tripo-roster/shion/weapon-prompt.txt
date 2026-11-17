@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Shion's large dark gray/navy stylized rifle from the reference. Very long chunky rectangular front barrel shroud with small vertical vents, long straight receiver, compact scope on top, large angular box magazine below, skeletal angular rear stock with an open cutout, and small lower front support/bipod structure. Copy the silhouette, muted navy-gray panels and dark outlines. Entire stock and muzzle visible. No character, hands, bullets, muzzle flash or real-world logos.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

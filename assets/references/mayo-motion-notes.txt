@@ -1,0 +1,162 @@
+Browser tab: 1, Title: "mayo · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/mayo".
+1 AXWebArea mayo · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/mayo
+	2 container
+		3 link Description: Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		4 link Description: Planner, Value: planner.cheeky.tsuncloud.com/korea
+		5 link Description: Story, Value: story.cheeky.tsuncloud.com/korea
+		6 link Description: Schedule, Value: schedule.cheeky.tsuncloud.com/korea
+		7 link Description: Trickcal Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		8 link Description: Apostles, Value: wiki.cheeky.tsuncloud.com/korea/apostles
+		9 link Description: Monsters, Value: wiki.cheeky.tsuncloud.com/korea/monsters
+		10 link Description: Cards, Value: wiki.cheeky.tsuncloud.com/korea/cards
+		11 link Description: Stages, Value: wiki.cheeky.tsuncloud.com/korea/stages
+		12 link Description: MyHome, Value: wiki.cheeky.tsuncloud.com/korea/myhome
+		13 link Description: Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		14 link Description: Events, Value: wiki.cheeky.tsuncloud.com/korea/event
+		15 link Description: History, Value: wiki.cheeky.tsuncloud.com/korea/history
+		16 switch Spoilers, Help: Show unreleased / spoiler content, Value: 0
+		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/mayo
+		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/mayo
+	19 container
+		20 link Description: ← Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		21 heading mayo, Value: 1
+			22 text mayo
+		23 text hero · Apostles
+		24 button Open in lightbox
+		26 button Attack, Help: Play a Attack animation
+		27 button Experience, Help: Play a Experience animation
+		28 text Skin
+		29 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
+			30 menu
+				31 default
+				32 (selected) Normal
+		33 text Animation
+		34 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
+			35 menu
+				36 Die
+				37 Groggy
+				38 (selected) Idle
+				39 Move
+				40 Skill1_1
+				41 Spawn
+				42 Ultimate1_1
+				43 Victory
+		44 text ANIMATION INSPECTOR frames @  30  fps
+		45 button ⏸ Pause
+		46 button ◀ −1f, Help: Step back one frame
+		47 button +1f ▶, Help: Step forward one frame
+		48 text frame  98 / 154 name Idle time 3.284 / 5.133 s loop true timelines 82 timeScale 1.00× Speed
+		49 button 0.25×
+			50 text 0.25
+			51 text ×
+		52 button 0.5×
+			53 text 0.5
+			54 text ×
+		55 button 1×
+			56 text 1
+			57 text ×
+		58 button 1.5×
+			59 text 1.5
+			60 text ×
+		61 button 2×
+			62 text 2
+			63 text ×
+		64 stepper (settable, integer) 1
+		65 text | fps
+		66 button 30
+		67 button 60
+		68 text Animations (fastest → slowest)
+		69 button Move 24f · 0.80s
+			70 text Move
+			71 text 24
+			72 text f
+			73 text  · 
+			74 text 0.80
+			75 text s
+		76 button Groggy 32f · 1.07s
+			77 text Groggy
+			78 text 32
+			79 text f
+			80 text  · 
+			81 text 1.07
+			82 text s
+		83 button Spawn 40f · 1.33s
+			84 text Spawn
+			85 text 40
+			86 text f
+			87 text  · 
+			88 text 1.33
+			89 text s
+		90 button Attack1_1 44f · 1.47s
+			91 text Attack1_1
+			92 text 44
+			93 text f
+			94 text  · 
+			95 text 1.47
+			96 text s
+		97 button Attack1_2 44f · 1.47s
+			98 text Attack1_2
+			99 text 44
+			100 text f
+			101 text  · 
+			102 text 1.47
+			103 text s
+		104 button Attack2_1 44f · 1.47s
+			105 text Attack2_1
+			106 text 44
+			107 text f
+			108 text  · 
+			109 text 1.47
+			110 text s
+		111 button Die 56f · 1.87s
+			112 text Die
+			113 text 56
+			114 text f
+			115 text  · 
+			116 text 1.87
+			117 text s
+		118 button Experience_1 60f · 2.00s
+			119 text Experience_1
+			120 text 60
+			121 text f
+			122 text  · 
+			123 text 2.00
+			124 text s
+		125 button Skill1_1 60f · 2.00s
+			126 text Skill1_1
+			127 text 60
+			128 text f
+			129 text  · 
+			130 text 2.00
+			131 text s
+		132 button Victory 70f · 2.33s
+			133 text Victory
+			134 text 70
+			135 text f
+			136 text  · 
+			137 text 2.33
+			138 text s
+		139 button Experience_2 100f · 3.33s
+			140 text Experience_2
+			141 text 100
+			142 text f
+			143 text  · 
+			144 text 3.33
+			145 text s
+		146 button Ultimate1_1 100f · 3.33s
+			147 text Ultimate1_1
+			148 text 100
+			149 text f
+			150 text  · 
+			151 text 3.33
+			152 text s
+		153 button Idle 154f · 5.13s
+			154 text Idle
+			155 text 154
+			156 text f
+			157 text  · 
+			158 text 5.13
+			159 text s
+	25 text Fan-made; not affiliated with the game publishers.
+
+The focused UI element is 1 AXWebArea mayo · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/mayo

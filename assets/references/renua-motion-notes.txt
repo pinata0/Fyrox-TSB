@@ -1,0 +1,114 @@
+Browser tab: 1, Title: "renewaawaken · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
++		26 text Skin
++		27 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
++			28 menu
++				29 default
++				30 (selected) Normal
++		31 text Animation
++		32 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
++			33 menu
++				34 Die
++				35 Groggy
++				36 (selected) Idle
++				37 Move
++				38 Skill1_1
++				39 Spawn
++				40 Ultimate1_1
++				41 Victory
++		42 text ANIMATION INSPECTOR frames @  30  fps
++		43 button ⏸ Pause
++		44 button ◀ −1f, Help: Step back one frame
++		45 button +1f ▶, Help: Step forward one frame
++		46 text frame  54 / 60 name Idle time 1.820 / 2.000 s loop true timelines 99 timeScale 1.00× Speed
++		47 button 0.25×
++			48 text 0.25
++			49 text ×
++		50 button 0.5×
++			51 text 0.5
++			52 text ×
++		53 button 1×
++			54 text 1
++			55 text ×
++		56 button 1.5×
++			57 text 1.5
++			58 text ×
++		59 button 2×
++			60 text 2
++			61 text ×
++		62 stepper (settable, integer) 1
++		63 text | fps
++		64 button 30
++		65 button 60
++		66 text Animations (fastest → slowest)
++		67 button Move 30f · 1.00s
++			68 text Move
++			69 text 30
++			70 text f
++			71 text  · 
++			72 text 1.00
++			73 text s
++		74 button Groggy 40f · 1.33s
++			75 text Groggy
++			76 text 40
++			77 text f
++			78 text  · 
++			79 text 1.33
++			80 text s
++		81 button Idle 60f · 2.00s
++			82 text Idle
++			83 text 60
++			84 text f
++			85 text  · 
++			86 text 2.00
++			87 text s
++		88 button Spawn 79f · 2.63s
++			89 text Spawn
++			90 text 79
++			91 text f
++			92 text  · 
++			93 text 2.63
++			94 text s
++		95 button Attack1_1 81f · 2.70s
++			96 text Attack1_1
++			97 text 81
++			98 text f
++			99 text  · 
++			100 text 2.70
++			101 text s
++		102 button Die 81f · 2.70s
++			103 text Die
++			104 text 81
++			105 text f
++			106 text  · 
++			107 text 2.70
++			108 text s
++		109 button Attack2_1 86f · 2.87s
++			110 text Attack2_1
++			111 text 86
++			112 text f
++			113 text  · 
++			114 text 2.87
++			115 text s
++		116 button Skill1_1 149f · 4.97s
++			117 text Skill1_1
++			118 text 149
++			119 text f
++			120 text  · 
++			121 text 4.97
++			122 text s
++		123 button Victory 290f · 9.67s
++			124 text Victory
++			125 text 290
++			126 text f
++			127 text  · 
++			128 text 9.67
++			129 text s
++		130 button Ultimate1_1 481f · 16.03s
++			131 text Ultimate1_1
++			132 text 481
++			133 text f
++			134 text  · 
++			135 text 16.03
++			136 text s
+The focused UI element is 1 AXWebArea renewaawaken · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken

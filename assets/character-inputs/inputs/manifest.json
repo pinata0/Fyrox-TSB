@@ -1,0 +1,206 @@
+{
+  "created_at": "2026-11-12T15:35:18.817419+09:00",
+  "operation": "front ROI crop only",
+  "characters": [
+    {
+      "slug": "vivi",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\vivi.png",
+      "source_sha256": "40d6b4734fe65445a2b6d217da6cd83c153aedeba810e6fa5ca6bb5d56eb39cf",
+      "pixel_box": [
+        32,
+        90,
+        671,
+        749
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\vivi.png",
+      "input_sha256": "59034e4c7aa9a68133895dc15ae3e1fdb66c7d6ecb1b8fc68af0812dede7b85c",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "naia",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\naia.png",
+      "source_sha256": "2663d1eb65cea54b66edb9a743fe5477ad68511530dc24e4ee32d16b4848a07e",
+      "pixel_box": [
+        31,
+        72,
+        538,
+        865
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\naia.png",
+      "input_sha256": "240f19d95fd94c214df46d4086dd9485383e80043d718dc9c6ca550ecc0e8504",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "erpin",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\erpin.png",
+      "source_sha256": "53f77968de6c38a1776195be417d4ba9cc0d8b23b98e832a88cb922c5d380943",
+      "pixel_box": [
+        248,
+        111,
+        662,
+        710
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\erpin.png",
+      "input_sha256": "506a272eab1cf32f0e45a680c6bba16327b53b23e89e9eac7d4335b75ea22116",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "id",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\id-bodysuit-correction\\images\\mounted-front.png",
+      "source_sha256": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+      "input": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\character-inputs\\inputs\\id.png",
+      "input_sha256": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+      "status": "generated_reviewed",
+      "operation": "image_gen bodysuit correction from user costume references; complete mounted assembly; no crop"
+    },
+    {
+      "slug": "aya",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\aya-twintail-correction\\images\\front.png",
+      "source_sha256": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+      "input": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\character-inputs\\inputs\\aya.png",
+      "input_sha256": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+      "status": "generated_reviewed",
+      "operation": "image_gen ankle-length twin-tail correction; no crop"
+    },
+    {
+      "slug": "picora",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\picora.png",
+      "source_sha256": "2fb9926bceee1826fb7d02bfe28e7e076d910dc2a33b937a6ce73270d91d3d1a",
+      "pixel_box": [
+        243,
+        129,
+        646,
+        727
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\picora.png",
+      "input_sha256": "c0199de9dbd34f6113cee60f3f7b59de8ea2378be7c55618b770932c45e47559",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "chloe",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\chloe.png",
+      "source_sha256": "a2d9a6adda8c55607d4183dee04017e67b3c10039eab3551fff84e4378a63374",
+      "pixel_box": [
+        284,
+        67,
+        754,
+        742
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\chloe.png",
+      "input_sha256": "4a8963812f6fc778d44dc34f9917c2b018841f3f6df3b582cf872f94742c605a",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "renua",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\renua.png",
+      "source_sha256": "c673b8653f83c725b3e7f897e1755fbd970fab2c76cd8536534d515503501c09",
+      "pixel_box": [
+        302,
+        67,
+        688,
+        741
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\renua.png",
+      "input_sha256": "ee5e0d03c1c2ee167f015fbb2eaaf705d3a964ee1789e6fcd1e143b685144dc9",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "mayo",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\mayo.png",
+      "source_sha256": "462b14c00caff916b7dbcf66b4e2d62ea812f4021be439fe9422422059c71b31",
+      "pixel_box": [
+        293,
+        89,
+        690,
+        767
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\mayo.png",
+      "input_sha256": "dbcb11a8022b78b84ddd594a321de1833f28b4d5f9f019fc510e7b44d67b5b6f",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "bella",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\bella.png",
+      "source_sha256": "604163038998758b12df7533515c5b54046c144189d6cd59f5b0dd72551680e3",
+      "pixel_box": [
+        57,
+        115,
+        605,
+        739
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\bella.png",
+      "input_sha256": "fa5b4fa9dde433a3538d0428a4123bb455a28118b5879ef29495fa46c42c7e3f",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "ui",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\ui.png",
+      "source_sha256": "c208d1b3c77b56262caf7c90656513d9952a8bdf193e9cfe0efc836da9a50bfe",
+      "pixel_box": [
+        44,
+        120,
+        536,
+        765
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\ui.png",
+      "input_sha256": "499886b6550b6d2e3327fc41f26090027b8bf80f1d167d3b624b6a7c7baee365",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "butter",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\butter.png",
+      "source_sha256": "49aef99ccc60b637d3f3ef172fd1d66d0eaa3772a2d4b6156e60df7f19be43fa",
+      "pixel_box": [
+        236,
+        89,
+        633,
+        781
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\butter.png",
+      "input_sha256": "444ec3b177cb4cd82bc8d48e149f3b56d2214e9df104f00ba64ecb2510602893",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "komi",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\komi.png",
+      "source_sha256": "b6fd6b06653cb933905fbe1539e4f06db6042826398f3ee66de522e38ec6aaa1",
+      "pixel_box": [
+        291,
+        89,
+        704,
+        734
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\komi.png",
+      "input_sha256": "f78b0c4e0fbf7feae3bbb79a2e27867a62cb8ed403fd493f693a273bbfc20858",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "hilde",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\hilde.png",
+      "source_sha256": "47c77764574a7be10efa87bef7be4de7a04da935c3fbd243cd2c54bdf9c1262b",
+      "pixel_box": [
+        248,
+        89,
+        648,
+        757
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\hilde.png",
+      "input_sha256": "2e04bbdf412aae30127a8e95de9fcd7033d144a2db156cda073c54204e7c7136",
+      "status": "cropped_not_generated"
+    },
+    {
+      "slug": "shion",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\shion.png",
+      "source_sha256": "297b7a95b9f73b4fe737f24d7ac631d7d761f21622c031baca44420752301eeb",
+      "pixel_box": [
+        253,
+        86,
+        693,
+        653
+      ],
+      "input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\shion.png",
+      "input_sha256": "3b8ec00e468e7e91a8cf7f51c98d5a1a0fceded1f4630d93a9ffe8da407024a3",
+      "status": "cropped_not_generated"
+    }
+  ]
+}

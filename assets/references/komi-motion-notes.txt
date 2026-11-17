@@ -1,0 +1,171 @@
+Browser tab: 1, Title: "kommy · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/kommy".
+1 AXWebArea kommy · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/kommy
+	2 container
+		3 link Description: Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		4 link Description: Planner, Value: planner.cheeky.tsuncloud.com/korea
+		5 link Description: Story, Value: story.cheeky.tsuncloud.com/korea
+		6 link Description: Schedule, Value: schedule.cheeky.tsuncloud.com/korea
+		7 link Description: Trickcal Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		8 link Description: Apostles, Value: wiki.cheeky.tsuncloud.com/korea/apostles
+		9 link Description: Monsters, Value: wiki.cheeky.tsuncloud.com/korea/monsters
+		10 link Description: Cards, Value: wiki.cheeky.tsuncloud.com/korea/cards
+		11 link Description: Stages, Value: wiki.cheeky.tsuncloud.com/korea/stages
+		12 link Description: MyHome, Value: wiki.cheeky.tsuncloud.com/korea/myhome
+		13 link Description: Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		14 link Description: Events, Value: wiki.cheeky.tsuncloud.com/korea/event
+		15 link Description: History, Value: wiki.cheeky.tsuncloud.com/korea/history
+		16 switch Spoilers, Help: Show unreleased / spoiler content, Value: 0
+		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/kommy
+		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/kommy
+	19 container
+		20 link Description: ← Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		21 heading kommy, Value: 1
+			22 text kommy
+		23 text hero · Apostles
+		24 button Open in lightbox
+		26 button Attack, Help: Play a Attack animation
+		27 button Experience, Help: Play a Experience animation
+		28 button OW, Help: Play a OW animation
+		29 text Skin
+		30 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
+			31 menu
+				32 default
+				33 (selected) Normal
+				34 Weapon
+		35 text Animation
+		36 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
+			37 menu
+				38 Die
+				39 Groggy
+				40 (selected) Idle
+				41 Move
+				42 Skill1_1
+				43 Spawn
+				44 Ultimate1_1
+				45 Victory
+		46 text ANIMATION INSPECTOR frames @  30  fps
+		47 button ⏸ Pause
+		48 button ◀ −1f, Help: Step back one frame
+		49 button +1f ▶, Help: Step forward one frame
+		50 text frame  62 / 177 name Idle time 2.085 / 5.900 s loop true timelines 81 timeScale 1.00× Speed
+		51 button 0.25×
+			52 text 0.25
+			53 text ×
+		54 button 0.5×
+			55 text 0.5
+			56 text ×
+		57 button 1×
+			58 text 1
+			59 text ×
+		60 button 1.5×
+			61 text 1.5
+			62 text ×
+		63 button 2×
+			64 text 2
+			65 text ×
+		66 stepper (settable, integer) 1
+		67 text | fps
+		68 button 30
+		69 button 60
+		70 text Animations (fastest → slowest)
+		71 button Move 28f · 0.93s
+			72 text Move
+			73 text 28
+			74 text f
+			75 text  · 
+			76 text 0.93
+			77 text s
+		78 button Groggy 32f · 1.07s
+			79 text Groggy
+			80 text 32
+			81 text f
+			82 text  · 
+			83 text 1.07
+			84 text s
+		85 button Spawn 40f · 1.33s
+			86 text Spawn
+			87 text 40
+			88 text f
+			89 text  · 
+			90 text 1.33
+			91 text s
+		92 button Attack1_1 42f · 1.40s
+			93 text Attack1_1
+			94 text 42
+			95 text f
+			96 text  · 
+			97 text 1.40
+			98 text s
+		99 button Attack2_1 50f · 1.67s
+			100 text Attack2_1
+			101 text 50
+			102 text f
+			103 text  · 
+			104 text 1.67
+			105 text s
+		106 button OW2_Attack2_1 50f · 1.67s
+			107 text OW2_Attack2_1
+			108 text 50
+			109 text f
+			110 text  · 
+			111 text 1.67
+			112 text s
+		113 button Die 56f · 1.87s
+			114 text Die
+			115 text 56
+			116 text f
+			117 text  · 
+			118 text 1.87
+			119 text s
+		120 button Victory 65f · 2.17s
+			121 text Victory
+			122 text 65
+			123 text f
+			124 text  · 
+			125 text 2.17
+			126 text s
+		127 button Experience_2 132f · 4.40s
+			128 text Experience_2
+			129 text 132
+			130 text f
+			131 text  · 
+			132 text 4.40
+			133 text s
+		134 button OW1_Ultimate1_1 132f · 4.40s
+			135 text OW1_Ultimate1_1
+			136 text 132
+			137 text f
+			138 text  · 
+			139 text 4.40
+			140 text s
+		141 button Ultimate1_1 132f · 4.40s
+			142 text Ultimate1_1
+			143 text 132
+			144 text f
+			145 text  · 
+			146 text 4.40
+			147 text s
+		148 button Idle 177f · 5.90s
+			149 text Idle
+			150 text 177
+			151 text f
+			152 text  · 
+			153 text 5.90
+			154 text s
+		155 button Experience_1 185f · 6.17s
+			156 text Experience_1
+			157 text 185
+			158 text f
+			159 text  · 
+			160 text 6.17
+			161 text s
+		162 button Skill1_1 185f · 6.17s
+			163 text Skill1_1
+			164 text 185
+			165 text f
+			166 text  · 
+			167 text 6.17
+			168 text s
+	25 text Fan-made; not affiliated with the game publishers.
+
+The focused UI element is 1 AXWebArea kommy · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/kommy

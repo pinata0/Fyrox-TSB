@@ -1,0 +1,192 @@
+{
+  "operation": "upstream rm_anime_bg; no 3D generation",
+  "characters": [
+    {
+      "slug": "aya",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\aya-twintail-correction\\images\\front.png",
+      "source_sha256": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+      "masked_input": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\character-inputs\\inputs-masked\\aya.png",
+      "sha256": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+      "operation": "image_gen ankle-length twin-tail correction; no crop",
+      "status": "generated_reviewed"
+    },
+    {
+      "slug": "bella",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\bella.png",
+      "source_sha256": "fa5b4fa9dde433a3538d0428a4123bb455a28118b5879ef29495fa46c42c7e3f",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\bella.png",
+      "foreground_box": [
+        6,
+        12,
+        546,
+        624
+      ],
+      "sha256": "1276196e3d7054f8318126b8335bdbcdee3225106b914f7787783c9f0ac50838"
+    },
+    {
+      "slug": "butter",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\butter.png",
+      "source_sha256": "444ec3b177cb4cd82bc8d48e149f3b56d2214e9df104f00ba64ecb2510602893",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\butter.png",
+      "foreground_box": [
+        0,
+        40,
+        388,
+        692
+      ],
+      "sha256": "7f3c16e677b2ad740042eb1d5dc2f8545b7ca2368c9e96d464e23adab036b0b1"
+    },
+    {
+      "slug": "chloe",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\chloe.png",
+      "source_sha256": "4a8963812f6fc778d44dc34f9917c2b018841f3f6df3b582cf872f94742c605a",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\chloe.png",
+      "foreground_box": [
+        0,
+        10,
+        469,
+        675
+      ],
+      "sha256": "839ea8dd866000719cfa82417af8b33c279d43f3e2967afb8556dababb2f7f40"
+    },
+    {
+      "slug": "erpin",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\erpin.png",
+      "source_sha256": "506a272eab1cf32f0e45a680c6bba16327b53b23e89e9eac7d4335b75ea22116",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\erpin.png",
+      "foreground_box": [
+        4,
+        6,
+        400,
+        586
+      ],
+      "sha256": "14fe041f02416b28fd589f3243c8624003a8debe960ec6956afae66d0c49a9c1"
+    },
+    {
+      "slug": "hilde",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\hilde.png",
+      "source_sha256": "2e04bbdf412aae30127a8e95de9fcd7033d144a2db156cda073c54204e7c7136",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\hilde.png",
+      "foreground_box": [
+        15,
+        4,
+        360,
+        668
+      ],
+      "sha256": "4c251aad0cd19ae3638419ecee8edd5384c1db4a1bf260addc86e2112d8a4ee1"
+    },
+    {
+      "slug": "id",
+      "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\id-bodysuit-correction\\images\\mounted-front.png",
+      "source_sha256": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+      "masked_input": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\character-inputs\\inputs-masked\\id.png",
+      "sha256": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+      "operation": "image_gen bodysuit correction from user costume references; complete mounted assembly; no crop",
+      "status": "generated_reviewed"
+    },
+    {
+      "slug": "komi",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\komi.png",
+      "source_sha256": "f78b0c4e0fbf7feae3bbb79a2e27867a62cb8ed403fd493f693a273bbfc20858",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\komi.png",
+      "foreground_box": [
+        20,
+        29,
+        387,
+        645
+      ],
+      "sha256": "4f00f0af60d61269452a88e0b66cd1025796acb955f4c2c547ce6bf46c9cf19d"
+    },
+    {
+      "slug": "mayo",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\mayo.png",
+      "source_sha256": "dbcb11a8022b78b84ddd594a321de1833f28b4d5f9f019fc510e7b44d67b5b6f",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\mayo.png",
+      "foreground_box": [
+        11,
+        22,
+        364,
+        678
+      ],
+      "sha256": "115e5e9c6d17e115db041d4291f0eeda7bed6ddd1219e2648dab84a2878d8c19"
+    },
+    {
+      "slug": "naia",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\naia.png",
+      "source_sha256": "240f19d95fd94c214df46d4086dd9485383e80043d718dc9c6ca550ecc0e8504",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\naia.png",
+      "foreground_box": [
+        31,
+        23,
+        507,
+        772
+      ],
+      "sha256": "45112d5d498a07ad9819875c80ff92037121b87d301ad57ec8d39c239b351fd0"
+    },
+    {
+      "slug": "picora",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\picora.png",
+      "source_sha256": "c0199de9dbd34f6113cee60f3f7b59de8ea2378be7c55618b770932c45e47559",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\picora.png",
+      "foreground_box": [
+        9,
+        13,
+        394,
+        589
+      ],
+      "sha256": "d94f6bb8ee2cfa37f0c4adc12dad96b1cb4f3628a91ad97e6d07888b84d83047"
+    },
+    {
+      "slug": "renua",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\renua.png",
+      "source_sha256": "ee5e0d03c1c2ee167f015fbb2eaaf705d3a964ee1789e6fcd1e143b685144dc9",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\renua.png",
+      "foreground_box": [
+        8,
+        11,
+        363,
+        642
+      ],
+      "sha256": "cccd585b41ac9ee3ce08d75db7416fa79d3274bd45ccee594aa29b6e9c5b55cc"
+    },
+    {
+      "slug": "shion",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\shion.png",
+      "source_sha256": "3b8ec00e468e7e91a8cf7f51c98d5a1a0fceded1f4630d93a9ffe8da407024a3",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\shion.png",
+      "foreground_box": [
+        12,
+        10,
+        426,
+        567
+      ],
+      "sha256": "5d8c11f1e2088363df3c4c1dbfe08d952abd60fb823f4202465d24b186a076a5"
+    },
+    {
+      "slug": "ui",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\ui.png",
+      "source_sha256": "499886b6550b6d2e3327fc41f26090027b8bf80f1d167d3b624b6a7c7baee365",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\ui.png",
+      "foreground_box": [
+        38,
+        10,
+        490,
+        645
+      ],
+      "sha256": "b65a4107ce936462e15d9af9c8219aab4cb7c7368ed677fd53b4c3bbc6a1ce21"
+    },
+    {
+      "slug": "vivi",
+      "source": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs\\vivi.png",
+      "source_sha256": "59034e4c7aa9a68133895dc15ae3e1fdb66c7d6ecb1b8fc68af0812dede7b85c",
+      "masked_input": "C:\\Users\\user\\Tool\\Work\\CharacterGen\\jobs\\fyrox-tsb\\inputs-masked\\vivi.png",
+      "foreground_box": [
+        11,
+        38,
+        631,
+        654
+      ],
+      "sha256": "19556cffde16b7bf6c3a5247c5b2bca65d6654cda96738ffe5e5b792ba71ec1a"
+    }
+  ]
+}

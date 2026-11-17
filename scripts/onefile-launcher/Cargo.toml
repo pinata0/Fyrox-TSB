@@ -1,0 +1,17 @@
+[package]
+name = "tsb-onefile"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+flate2 = "=1.1.11"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "=0.10.9"
+
+[profile.release]
+strip = true
+lto = true
+opt-level = "s"
+panic = "abort"

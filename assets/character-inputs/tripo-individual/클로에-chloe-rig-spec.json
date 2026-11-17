@@ -1,0 +1,236 @@
+{
+  "schema_version": 1,
+  "character": "chloe",
+  "status": "requested_not_implemented",
+  "coordinate_note": "L/R are anatomical character sides",
+  "face_geometry_note": "NO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.",
+  "facial_morphs": [
+    {
+      "name": "eyeBlink_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeBlink_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeSquint_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeSquint_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeWide_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "eyeWide_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "browUp_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browUp_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browDown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "browDown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "mouthSmile_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthSmile_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthFrown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "mouthFrown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "cheekPuff_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekPuff_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekStretch_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekStretch_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekSquash_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "cheekSquash_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "jawOpen",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 벌리기 / open jaw and mouth cavity"
+    },
+    {
+      "name": "mouthPucker",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 오므리기 / pucker lips"
+    },
+    {
+      "name": "mouthWide",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 가로로 넓히기 / widen lips without moving cheeks excessively"
+    }
+  ],
+  "gaze_bones": [
+    "Eye.L",
+    "Eye.R"
+  ],
+  "secondary_chains": "TwinTail.{L/R}.01-04; HairFront.{L/R}.01-02; Ear.{L/R}.01; HairBow.{L/R}.01; Skirt.{L/R}.01-02",
+  "secondary_note": "클로에는 자신의 머리카락·요정 귀·머리 리본·옷자락만 제어합니다. 세바스티안은 독립 리그이며 두 인형 팔은 곰의 어깨에 연결합니다. 기본 자세에서는 클로에가 뒤쪽 세바스티안의 양 볼을 손으로 받칩니다.",
+  "prop_rig": "클로에와 세바스티안은 별도 전신·별도 리그입니다. 클로에에게 곰 머리·곰 귀·인형 팔·보라 망토를 붙이지 않습니다. 세바스티안은 SebastianRoot, Spine/Head, 두 다리, 양쪽 어깨에서 이어지는 Arm.Mint.01-05와 Arm.Pink.01-05, Ear.Mint/Pink, Ribbon.L/R, HeartTuft.01-03, SideOrnament.01-02, Tassel.01-03 체인을 가집니다. 라벤더 하트형 바보털은 곰 머리에, 옆 고리와 술 장식은 분홍 귀 옆에 고정하고 작은 움직임을 허용합니다. 인형 팔 늘림/눌림과 볼 눌림은 인형 자체의 모프로 만듭니다. 양 볼의 하트 선무늬와 퀼팅 선은 변형되는 표면을 따라 움직여야 하며 떠 있는 장식으로 만들지 않습니다. 기본 자세: 클로에 상체/등의 CarryAnchor를 기준으로 세바스티안의 전신을 뒤에 배치하고, 세바스티안 머리의 양 볼 아래에 CheekSupport.L/R 접촉점을 둡니다. 클로에 양팔을 올려 손바닥 IK를 두 접촉점에 맞춥니다. 곰의 보라 리본은 곰 가슴에 남고 클로에 의상이 아닙니다. CarryAnchor와 곰 자세를 먼저 계산한 후 손 IK를 풀어 순환 제약을 피합니다. 곰을 클로에 Head 본에 용접하거나 후드처럼 스킨하지 않습니다. 전투/독립 동작에서도 곰의 팔은 곰의 어깨에 붙어 있습니다. 이 전신에는 양팔이 이미 있으므로 이전 팔 단독 모델을 중복 조립하지 않습니다.",
+  "runtime_status": "Fyrox morph import, control and secondary-motion simulation not implemented or verified by this input-pack task",
+  "companion_rig": {
+    "name": "Sebastian",
+    "root": "SebastianRoot",
+    "body_chains": [
+      "Spine.01-02",
+      "Head",
+      "Leg.{L/R}.01-02",
+      "Arm.Mint.01-05",
+      "Arm.Pink.01-05"
+    ],
+    "secondary_chains": [
+      "Ear.Mint.01-02",
+      "Ear.Pink.01-02",
+      "Ribbon.{L/R}.01-03",
+      "HeartTuft.01-03",
+      "SideOrnament.01-02",
+      "Tassel.01-03"
+    ],
+    "morphs": [
+      "cheekCompress_L",
+      "cheekCompress_R",
+      "armStretch_Mint",
+      "armStretch_Pink",
+      "armSquash_Mint",
+      "armSquash_Pink"
+    ],
+    "contact_targets": [
+      "CheekSupport.L",
+      "CheekSupport.R"
+    ],
+    "carry_anchor": "Chloe CarryAnchor on upper back/chest, not on the head",
+    "attachment": "Position the whole bear behind Chloe; solve Chloe hand IK to the underside of the bear cheeks after the carry root and bear head pose; avoid cyclic constraints.",
+    "note": "Bear arms attach to bear shoulders; no hood sockets or loose-arm duplication. Button eyes may use optional squash/scale controls; do not force Chloe humanoid face morphs onto the toy.",
+    "appearance_note": "Lavender heart-loop tuft is rooted to the bear head with limited sway. The side band/loop and tassel attach beside the pink ear. Coral outline-heart cheek markings and quilting must follow the bear surface during cheek and arm morphs without becoming detached decals. No woven/fuzzy normal map or yellow crown rod."
+  }
+}

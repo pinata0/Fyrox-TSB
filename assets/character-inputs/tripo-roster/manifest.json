@@ -1,0 +1,917 @@
+{
+  "schema_version": 3,
+  "target_tool": "Meshy",
+  "updated": "2026-11-15",
+  "count": 15,
+  "prop_count": 18,
+  "status": "generation_inputs_and_rig_spec_only",
+  "entries": [
+    {
+      "slug": "vivi",
+      "name": "비비",
+      "note": "머리카락은 두피에, 날개는 등에 연결하고 각 윤곽이 읽히는지 확인하세요. 수은 칼날은 별도 파일입니다.",
+      "motion_note": "긴 머리·앞머리, 뾰족귀의 미세 움직임, 양쪽 날개 관절. 뿔은 머리에 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vivi",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "머리카락은 두피에, 날개는 등에 연결하고 각 윤곽이 읽히는지 확인하세요. 수은 칼날은 별도 파일입니다.",
+          "image": {
+            "file": "vivi/front.png",
+            "source": "assets/character-inputs/inputs-masked/vivi.png",
+            "sha256": "19556cffde16b7bf6c3a5247c5b2bca65d6654cda96738ffe5e5b792ba71ec1a",
+            "size": [
+              639,
+              659
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "vivi/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the very long silver-white hair with dark roots, swept-back dark horns, pointed ears, red-orange eyes, red diamond earrings, black neck bow, white petal-shaped outer gown over a layered burgundy dress, and dark angular dragon wings behind the shoulders.\n\nKeep the wings rooted to the upper back and the hair rooted to the scalp, with readable wing, hair and arm silhouettes. Preserve the layered dress without turning it into a solid block around the legs.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "수은 칼날",
+          "kind": "projectile",
+          "note": "공격 모션 Attack1_1 23/57에서 수은 칼날 확인. 단일 날의 뒤쪽·두께는 제작용 해석.",
+          "image": {
+            "file": "vivi/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/vivi-weapon.png",
+            "sha256": "9b20a5b2cba718a3ca0abec98f5b4bcbebb0e2bb69dbe4a0f9c5559fbfda306b",
+            "size": [
+              1774,
+              887
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "vivi/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne floating mercury blade shard used by Vivi. A long tapered silver angular lance-like blade with a dark gray underside, a raised faceted central ridge, a sharply pointed long tip and short jagged flared rear. It is a summoned metal shard, no human sword handle, no crossguard. One blade only; later duplicate it for the multi-blade attack. Use the angular silver-gray blade styling in the reference, not her dark dragon wings.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/비비-vivi-prompt.txt",
+        "assets/character-inputs/tripo-individual/비비-vivi-rig-spec.json",
+        "assets/character-inputs/tripo-individual/비비-vivi-rigging.txt",
+        "assets/character-inputs/tripo-individual/비비-vivi-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/비비-vivi-weapon.png",
+        "assets/character-inputs/tripo-individual/비비-vivi-사용방법.txt",
+        "assets/character-inputs/tripo-individual/비비-vivi.png"
+      ]
+    },
+    {
+      "slug": "naia",
+      "name": "나이아",
+      "note": "본체는 빈손으로 생성하고 돌고래 물총을 별도 생성해 연결합니다. 물줄기 효과는 선택 입력입니다.",
+      "motion_note": "양쪽 땋은 머리와 앞머리. 모자와 꽃은 머리에 고정하고 머리카락 관통을 확인합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/naia",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "본체는 빈손으로 생성하고 돌고래 물총을 별도 생성해 연결합니다. 물줄기 효과는 선택 입력입니다.",
+          "image": {
+            "file": "naia/front.png",
+            "source": "assets/character-inputs/inputs-masked/naia.png",
+            "sha256": "45112d5d498a07ad9819875c80ff92037121b87d301ad57ec8d39c239b351fd0",
+            "size": [
+              507,
+              793
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "naia/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the pale lavender-blue hair, long twin braids with pink tips, aqua eyes, wide tan sunhat with a yellow flower and green leaves, light aqua floral top and short flared skirt, white waistband, shell bracelet, and blue sandals.\n\nBoth braids grow continuously from the hairstyle at the scalp; their hanging lengths retain a readable outline beside the arms and legs. Preserve the exact hat silhouette and outfit coverage. Generate empty hands for later gripping; her dolphin-shaped water gun is supplied as a separate prop input.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "돌고래 물총",
+          "kind": "prop",
+          "note": "공식 카드의 작은 꽃 밀짚모자를 포함한 외형 기준. 작은 모자는 분리 액세서리로 요청. 등쪽 두께·노즐 구멍은 3D 제작용 해석.",
+          "image": {
+            "file": "naia/weapon.png",
+            "source": "artifacts/tripo-naia-dolphin-correction/images/naia-weapon.png",
+            "sha256": "79d570154e0d434c42977322a7bc2b2f244aac006b8807623cdaca5b7696da65",
+            "size": [
+              1536,
+              1024
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "naia/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne hand-held DOLPHIN-SHAPED WATER GUN used by Naia. Match the blue curved dolphin toy in the reference: slate/indigo-blue body, long rounded snout with a small water outlet, a dark eye, broad white inner belly stripe, small dorsal fin and two tail flukes. Keep the miniature tan straw hat with a yellow flower and green leaves shown in the official artifact-card illustration as a separate removable accessory. The dolphin body itself is the toy; do not add a pistol grip, trigger guard, rifle barrel, hose, or external tank. Preserve its solid toy-like curved silhouette and smooth stylized surface. No water stream, character or hand in this mesh.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        },
+        {
+          "key": "effect-water",
+          "label": "물줄기 효과 · 선택",
+          "kind": "effect",
+          "note": "돌고래 물총의 주둥이 노즐에서 나오는 물줄기용 형태입니다. 물총 본체와 별도이며 최종 입자·투명도·흐름은 엔진에서 제작합니다.",
+          "image": {
+            "file": "naia/effect-water.png",
+            "source": "artifacts/tripo-naia-dolphin-correction/images/naia-effect-water.png",
+            "sha256": "190befaea9577a21edd39b5284f147586d1a36bfcf4d93a23eddb741cf3117b2",
+            "size": [
+              1536,
+              1024
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "naia/effect-water-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne separate aqua-blue water projectile emitted from the snout nozzle of Naia's dolphin water gun. Rounded teardrop volume, short tapering flowing tail and soft white-blue highlights. This is an optional proxy for later water VFX, separate from the dolphin water-gun prop. No toy body, handle, hands or character in this effect mesh.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape. This is an optional 3D effect proxy; transparency, emission and animated particles will be set up later. Do not convert it into a hand-held gun or lantern.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/나이아-naia-effect-water-prompt.txt",
+        "assets/character-inputs/tripo-individual/나이아-naia-effect-water.png",
+        "assets/character-inputs/tripo-individual/나이아-naia-prompt.txt",
+        "assets/character-inputs/tripo-individual/나이아-naia-rig-spec.json",
+        "assets/character-inputs/tripo-individual/나이아-naia-rigging.txt",
+        "assets/character-inputs/tripo-individual/나이아-naia-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/나이아-naia-weapon.png",
+        "assets/character-inputs/tripo-individual/나이아-naia-사용방법.txt",
+        "assets/character-inputs/tripo-individual/나이아-naia.png"
+      ]
+    },
+    {
+      "slug": "erpin",
+      "name": "에르핀",
+      "note": "왕관·날개·붉은 망토를 유지합니다. 지팡이는 별도 파일입니다.",
+      "motion_note": "긴 머리·앞쪽 땋은 머리·작은 날개·망토, 뾰족귀 미세 움직임. 왕관은 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/erpin",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "왕관·날개·붉은 망토를 유지합니다. 지팡이는 별도 파일입니다.",
+          "image": {
+            "file": "erpin/front.png",
+            "source": "assets/character-inputs/inputs-masked/erpin.png",
+            "sha256": "14fe041f02416b28fd589f3243c8624003a8debe960ec6956afae66d0c49a9c1",
+            "size": [
+              414,
+              599
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "erpin/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the long golden-blonde hair with one front braid, small gold crown with a blue diamond, red-orange eyes with star highlights, pointed ears, white royal outfit with gold trim and blue gems, red cape with fluffy white ends, white legwear, and small white wings.\n\nKeep the braid rooted to the scalp, the wings attached to the back and the cape fastened at the shoulders. Preserve their readable outlines beside the arms, the open face and the crown.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "왕실 지팡이",
+          "kind": "prop",
+          "note": "원작 전신 캡처의 지팡이 확인. 링 안 보석과 장식은 별도 부품.",
+          "image": {
+            "file": "erpin/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/erpin-weapon.png",
+            "sha256": "4048d9322b070825486bed6604c533221ecc0971c536c3465dce8a41cbd7f202",
+            "size": [
+              1024,
+              1536
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "erpin/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nErpin's tall royal staff visible to the left of the character: slim white shaft with gold fittings and a diamond-shaped bottom finial; large circular gold-rimmed dark open ring head topped by a small angular crown-like outline; the ring contains a floating elongated blue-pink diamond crystal and two small crystal fragments. Keep the ring hole visibly empty around the central crystal, with long white/gold hanging side prongs. No character's crown, wings or hands.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/에르핀-erpin-prompt.txt",
+        "assets/character-inputs/tripo-individual/에르핀-erpin-rig-spec.json",
+        "assets/character-inputs/tripo-individual/에르핀-erpin-rigging.txt",
+        "assets/character-inputs/tripo-individual/에르핀-erpin-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/에르핀-erpin-weapon.png",
+        "assets/character-inputs/tripo-individual/에르핀-erpin-사용방법.txt",
+        "assets/character-inputs/tripo-individual/에르핀-erpin.png"
+      ]
+    },
+    {
+      "slug": "id",
+      "name": "이드",
+      "note": "밝은 피부와 흰 머리·눈썹·속눈썹, 금색 반개안, 코 없는 얼굴을 유지합니다. 승인된 흰색·검은색 민소매 보디수트와 짙은 회색 스타킹을 보존합니다. 본체·초승달 탑승 장치·나타는 각각 입력합니다.",
+      "motion_note": "풍성한 긴 머리는 여러 덩어리로, 긴 뾰족귀는 작은 각도로 움직입니다. 졸린 표정은 눈 감기/가늘게 뜨기 모프로 만듭니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ed",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 흰 눈썹·속눈썹 · 코 없음",
+          "kind": "body",
+          "note": "밝은 피부와 흰 머리·눈썹·속눈썹, 금색 반개안, 코 없는 얼굴을 유지합니다. 승인된 흰색·검은색 민소매 보디수트와 짙은 회색 스타킹을 보존합니다. 본체·초승달 탑승 장치·나타는 각각 입력합니다.",
+          "image": {
+            "file": "id/front.png",
+            "source": "artifacts/id-meshy-palette-crescents/images/id-body.png",
+            "sha256": "5e0b2a6432996badee65a5e47a0e644a5635b855cbd16ad80687ef30a28c79c0",
+            "size": [
+              1254,
+              1254
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "id/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nPreserve very pale pink-white skin; WHITE hair, eyebrows and eyelashes; long fluffy hair with a curled ahoge; pointed elf ears; and half-lidded OPEN golden eyes. Keep the fitted sleeveless white-and-black bodysuit, white central panel, black sides, white neck band, crossed black halter straps, bare arms, white wrist bands, charcoal thigh-high stockings with white piping, and white low shoes.\n\nGenerate the standing character only, with connected hair and limbs. The crescent mount and Nata robot are separate assets.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "초승달 부유 장치",
+          "kind": "mount",
+          "note": "원작 초승달 장치. 별도 손총을 추가하지 않음.",
+          "image": {
+            "file": "id/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/id-weapon.png",
+            "sha256": "f040bc8f3457318701919d6715bc805dec2691e106a523547fd6201f8baabdf0",
+            "size": [
+              1312,
+              1199
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "id/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nEd/Id's EMPTY dark gray crescent moon mechanical pod from the reference. Remove the girl AND the small round companion robot. Preserve the thick C-shaped crescent outer shell, pale padded inner seat, circular white outer panels/lights, trim seams, upward curling tips, visible shell thickness and open interior. Three-quarter front view. No extra gun, no human, no hair, no pillow shaped like a person.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        },
+        {
+          "key": "prop-robot",
+          "label": "나타 · 초승달 로봇",
+          "kind": "companion",
+          "note": "사용자 제공 나타 이미지 기준: 왼쪽에서 이어진 C자 흰 초승달 외장, 원형 화면, 수평 고리·긴 궤도선·천체 장식. 본체 및 탑승 장치와 별도 입력.",
+          "image": {
+            "file": "id/prop-robot.png",
+            "source": "artifacts/id-meshy-palette-crescents/images/id-prop-robot.png",
+            "sha256": "815a373d83be7e88aeaba8b5b741faf69b0c907a375aef8cee7b98df3faf6dd4",
+            "size": [
+              1312,
+              1199
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "id/prop-robot-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Nata, Ed/Id's small hovering companion robot, matching the supplied user reference. The main WHITE HOUSING is one continuous thick C-SHAPED CRESCENT: its upper and lower horns are joined by the broad LEFT body, and the open concave side faces RIGHT. Preserve the tapered right-pointing tips and the visible gap around the face. Do not replace this with a white sphere, helmet, complete donut or two detached upper/lower jaws. A dark circular face display sits inside the crescent opening toward the right, framed by a thin pale bezel. Use the reference face with two white inverted-V eyes and small white cheek dots, with no mouth or nose; its fine dot pattern is a flat screen texture, not raised geometry. Preserve the slender horizontal elliptical equatorial rail, small round inset details on the crescent, long sweeping white orbital arc and small upper-right ring. Match the celestial ornaments and their arrangement: left diamond, ring and crescent; right diamond, ring, low ringed planet and outer crescent, suspended by thin lines. The long orbital arc is not a short U-shaped antenna. Preserve the crescent and rail as one assembled prop; keep thin hanging ornaments readable. Use pale white, cool gray and charcoal with neutral shading. No girl, large seat/pod, gun, hands, text or surrounding glow. Do not fill the open crescent or ring spaces with extra geometry. Keep unseen rear construction simple and consistent with the front silhouette.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/이드-id-prompt.txt",
+        "assets/character-inputs/tripo-individual/이드-id-prop-robot-prompt.txt",
+        "assets/character-inputs/tripo-individual/이드-id-prop-robot.png",
+        "assets/character-inputs/tripo-individual/이드-id-rig-spec.json",
+        "assets/character-inputs/tripo-individual/이드-id-rigging.txt",
+        "assets/character-inputs/tripo-individual/이드-id-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/이드-id-weapon.png",
+        "assets/character-inputs/tripo-individual/이드-id-사용방법.txt",
+        "assets/character-inputs/tripo-individual/이드-id.png"
+      ]
+    },
+    {
+      "slug": "aya",
+      "name": "아야",
+      "note": "발목 길이 흰 양갈래를 유지한 빈손 본체와 꽃잎 양산을 분리했습니다. 양산을 든 기존 그림은 조립 참고용입니다.",
+      "motion_note": "양쪽 나비 묶음 아래에서 발목까지 이어지는 머리를 좌우 6본 체인으로 분리합니다. 기모노·양산과 충돌을 확인합니다. 가려진 눈도 눈꺼풀을 만듭니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/aya",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "발목 길이 흰 양갈래를 유지한 빈손 본체와 꽃잎 양산을 분리했습니다. 양산을 든 기존 그림은 조립 참고용입니다.",
+          "image": {
+            "file": "aya/front.png",
+            "source": "artifacts/tripo-animation-inputs/images/aya-body.png",
+            "sha256": "af43a58402b5a57f3ba63788285018b7bb30fb5634cac0447fd1647b845941f0",
+            "size": [
+              1254,
+              1254
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "aya/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the warm brown skin, gold eyes, and ANKLE-LENGTH WHITE LOW TWIN TAILS. The hair is tied on BOTH sides below the ears with pale blue butterfly ties, then forms TWO distinct thick flowing tails reaching the ANKLES with gently curled tips. Keep the swept bangs covering one eye and black forehead patch, blue gem earring, white kimono with gray wave patterns and gold trim, dark obi with flower clasp, and sandals.\n\nGenerate the standing girl with EMPTY HANDS. The open flower-petal parasol is a separate prop job. Keep BOTH ankle-length white twin tails continuously rooted to the scalp below the ears, running through the blue butterfly ties into the long flowing lengths. Preserve their readable outlines beside sleeves, kimono hem and legs. Do not shorten them or merge them into a back curtain. Preserve the swept bangs over one eye.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "꽃잎 양산",
+          "kind": "prop",
+          "note": "사용자 정정한 꽃잎 양산 기준. 본체와 별도 생성해 손에 연결.",
+          "image": {
+            "file": "aya/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/aya-weapon.png",
+            "sha256": "ff2a171a18eaf8907f950e1d219b3dc92cfe63b1e9c57386cc2c3448c41d91db",
+            "size": [
+              1312,
+              1199
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "aya/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Aya's open WHITE FLOWER-PETAL PARASOL from the reference: overlapping large white curled flower petals forming the canopy, pale blue-gray underside, clearly visible pale ribs and center hub, long straight white shaft ending in simple grip. Keep the full shaft and grip. Three-quarter side view reveals open underside and canopy silhouette, not a top-down flower. No character, hair, butterfly hair ties, kimono, sword, or hands.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "assembly": "aya/assembly-reference.png",
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/아야-aya-assembly-reference.png",
+        "assets/character-inputs/tripo-individual/아야-aya-prompt.txt",
+        "assets/character-inputs/tripo-individual/아야-aya-rig-spec.json",
+        "assets/character-inputs/tripo-individual/아야-aya-rigging.txt",
+        "assets/character-inputs/tripo-individual/아야-aya-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/아야-aya-weapon.png",
+        "assets/character-inputs/tripo-individual/아야-aya-사용방법.txt",
+        "assets/character-inputs/tripo-individual/아야-aya.png"
+      ]
+    },
+    {
+      "slug": "picora",
+      "name": "피코라",
+      "note": "가방·흰 어깨끈·분홍 리본·체리 장식을 착용한 이 이미지를 본체 기본 입력으로 사용합니다. 피코라 입력은 가방 착용 본체와 별도 지팡이 두 가지입니다.",
+      "motion_note": "가방 착용 상태의 본체를 함께 생성합니다. 머리카락 뿌리와 어깨끈 부착을 유지하고, 가방·끈·체리 장식은 생성 후 보조 본과 가중치로 흔들림을 조정합니다. 별도 가방 모델을 추가 조립하지 않습니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/picora",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 가방 착용 · 코 없음",
+          "kind": "body",
+          "note": "가방·흰 어깨끈·분홍 리본·체리 장식을 착용한 이 이미지를 본체 기본 입력으로 사용합니다. 피코라 입력은 가방 착용 본체와 별도 지팡이 두 가지입니다.",
+          "image": {
+            "file": "picora/front.png",
+            "source": "artifacts/tripo-picora-shoulder-bag/images/picora-assembly.png",
+            "sha256": "d7f362934fdbc85e7063a1fc1d8495eebf0403f12e34a5cbc9fe340c7cda7862",
+            "size": [
+              1029,
+              1529
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "picora/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the turquoise hair with pink-lavender accents, round candy-like twin buns and curled side strands, aqua-pink eyes, colorful candy hairpins, tiny wing-heart clips, white blouse, pink vest, pink bow, teal frilled skirt, mismatched pink-white stockings, and pink-white boots. Include her ONE cream-and-pale-yellow shoulder bag worn at the hip on image-right (character L), with its white shoulder strap, pink bag bow and double-cherry strap charm.\n\nPreserve the intentional asymmetry of stockings and shoes, including the wing-and-teal-bow ornament on the striped side, and the white grid on the teal pleated skirt. Keep small hair ornaments readable. Generate the character already wearing exactly ONE bag, including its white strap, pink bow and double-cherry charm, as part of this complete body model. The strap passes over the shoulder on the same side as the bag and attaches to the bag at both ends; preserve the reference placement. The cherries belong to the bag strap, not the skirt. Keep both hands empty. Only the staff is generated in a separate job; do not add a second bag or loose duplicate strap or charm.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "장식 지팡이",
+          "kind": "prop",
+          "note": "원작 캡처의 갈고리형 지팡이·스티커·키링 확인.",
+          "image": {
+            "file": "picora/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/picora-weapon.png",
+            "sha256": "6cd832689ad8b7f36a1996c0949b8b7029dc06e959b730dddf00e6b2a7987c61",
+            "size": [
+              2032,
+              774
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "picora/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Picora's ornate dark brown curled hook staff from the reference: large candy-cane-like curled C-shaped head with pastel mint, pink, yellow and white stickers/patches; long slim brown shaft with pink wrap near the grip; hanging keychain ornaments near the neck including a pink rectangular star tag, beads, turquoise bow and white wing-shaped charm. Preserve visible exact staff construction; no sticker book, no character, no hands.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/피코라-picora-prompt.txt",
+        "assets/character-inputs/tripo-individual/피코라-picora-rig-spec.json",
+        "assets/character-inputs/tripo-individual/피코라-picora-rigging.txt",
+        "assets/character-inputs/tripo-individual/피코라-picora-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/피코라-picora-weapon.png",
+        "assets/character-inputs/tripo-individual/피코라-picora-사용방법.txt",
+        "assets/character-inputs/tripo-individual/피코라-picora.png"
+      ]
+    },
+    {
+      "slug": "chloe",
+      "name": "클로에",
+      "note": "사용자 첨부 클로에 단독 그림 기준입니다. 곰 머리·인형 귀·인형 팔·보라 리본을 전부 제외했습니다. 세바스티안은 팔·다리가 포함된 별도 전신 입력입니다. 기본 조립 자세에서는 클로에가 양손으로 곰의 볼 아래를 받칩니다.",
+      "motion_note": "클로에는 자신의 머리카락·요정 귀·머리 리본·옷자락만 제어합니다. 세바스티안은 독립 리그이며 두 인형 팔은 곰의 어깨에 연결합니다. 기본 자세에서는 클로에가 뒤쪽 세바스티안의 양 볼을 손으로 받칩니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "사용자 첨부 클로에 단독 그림 기준입니다. 곰 머리·인형 귀·인형 팔·보라 리본을 전부 제외했습니다. 세바스티안은 팔·다리가 포함된 별도 전신 입력입니다. 기본 조립 자세에서는 클로에가 양손으로 곰의 볼 아래를 받칩니다.",
+          "image": {
+            "file": "chloe/front.png",
+            "source": "artifacts/tripo-chloe-sebastian-correction/images/chloe-body.png",
+            "sha256": "d7e113c7db0f3b24b3882103e9c3f5003925702e990679e1c0c54c04924a81c8",
+            "size": [
+              1191,
+              1321
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "chloe/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep Chloe alone: pale-blonde high twin ponytails rooted to the scalp with burgundy bows, pointed elf ears, red/gold eyes and cheek marking. Preserve her yellow puff-sleeve outfit, white fluffy cuffs and double ruffled hem, burgundy neck bow with cream stripe and pink gem, white legwear and yellow/brown shoes.\n\nKeep Sebastian as a separate full-body doll, not Chloe's clothing. Do not add his bear head, ears, limbs, plush hood or purple ribbon to Chloe. Include only her own two arms and empty hands.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "prop-sebastian",
+          "label": "세바스티안 · 곰 인형 전신",
+          "kind": "companion",
+          "note": "공식 소개 일러스트와 원작 Idle_SebastianForm 전신 대조. 양 볼 하트 선무늬·라벤더 하트형 바보털·민트/분홍 팔·보라 리본·옆 고리/술 장식을 반영하고 실사 봉제 질감과 노란 막대, 노출 금속 지퍼를 제거했습니다. 팬 제작 첨부는 구조 설명용 이력이며 외형·재질 기준이 아닙니다.",
+          "image": {
+            "file": "chloe/prop-sebastian.png",
+            "source": "artifacts/tripo-sebastian-original-style/images/sebastian.png",
+            "sha256": "8e8ea17b4065a2f0086e5fedc6d8cfd67cc84b918a04ec68ab31705d58947293",
+            "size": [
+              1230,
+              1278
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "chloe/prop-sebastian-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne COMPLETE independent stuffed bear companion, SEBASTIAN, based on the original normal/base design. Preserve the clean WHITE head and compact white torso, thin dark-brown DASHED forehead stitches, small glossy dark-brown button eyes, shallow white muzzle and rounded triangular brown nose. Each round salmon-pink cheek has ONE CORAL OUTLINE HEART marking, two hearts total. The prominent crown tuft is a LAVENDER/LILAC HEART-SHAPED LOOP with an open center, never a yellow/olive rod or straight tab. Keep the pale mint/aqua ear and very long padded arm on image-left, and soft pink ear and very long arm on image-right with thin curved diamond quilting lines and small pale cream-yellow stitch dots. Preserve pale piping on the mint arm, the PLUM/LAVENDER-purple neck bow with drooping loops and two long notched tails, and the small side ornament beside the image-right ear: colored band, mint rectangular loop, white cap and pink tassel. Match the original game sprite's short simple white legs and rounded flat feet; do not add separate teddy shoes, paw pads or exposed metal zipper hardware. Both long arms attach to the BEAR TORSO at the shoulders. Keep arm/torso and foot gaps for rigging. Translate the clean 2D reference into smooth stylized matte 3D forms with flat pastel colors and restrained cel shading. Keep the cheek hearts and quilting as clear surface markings that follow deformation; no realistic woven fabric, fur, felt grain, thick upholstery, photorealistic shading or metallic rivets. Preserve the open hole in the heart tuft. The bear is separate from Chloe, not a hood, hat or pair of loose arms; no girl or human hands. Unseen back surfaces, depth and final assembly scale remain modeling interpretations.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/클로에-chloe-prompt.txt",
+        "assets/character-inputs/tripo-individual/클로에-chloe-prop-sebastian-prompt.txt",
+        "assets/character-inputs/tripo-individual/클로에-chloe-prop-sebastian.png",
+        "assets/character-inputs/tripo-individual/클로에-chloe-rig-spec.json",
+        "assets/character-inputs/tripo-individual/클로에-chloe-rigging.txt",
+        "assets/character-inputs/tripo-individual/클로에-chloe-사용방법.txt",
+        "assets/character-inputs/tripo-individual/클로에-chloe.png"
+      ]
+    },
+    {
+      "slug": "renua",
+      "name": "리뉴아",
+      "note": "뒤쪽 원형 판·금색 헤일로를 제거한 본체입니다. 머리 양옆 장식과 의상은 유지하며 공격 마법진은 별도 입력입니다.",
+      "motion_note": "짧은 머리와 코트 자락·술의 작은 움직임. 머리 양옆 관자 장식·귀 장식은 고정합니다. 뒤쪽 헤일로는 본체에서 제외합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "뒤쪽 원형 판·금색 헤일로를 제거한 본체입니다. 머리 양옆 장식과 의상은 유지하며 공격 마법진은 별도 입력입니다.",
+          "image": {
+            "file": "renua/front.png",
+            "source": "artifacts/meshy-input-refresh/images/renua-no-halo.png",
+            "sha256": "0038f2240b670900683265211984ca04d06feb69e3443d9678515e8be21b9ba7",
+            "size": [
+              949,
+              1658
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "renua/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the short silver-white bob with a dark gray forelock, ahoge, pale gold eyes, pointed ears, dark temple fins, gold ear discs, white high-collared top, dark navy shorts, navy thigh-high boots, and oversized navy-and-cream coat with gold trim and white tassels.\n\nUse the supplied halo-free reference. Do not generate the large circular halo, gray disk, gold rings, floating ring ornament or diamond/star points behind the head. Preserve the dark temple fins, gold-and-turquoise ear discs and dangling gold tags attached at the sides of the head. Keep a clear silhouette of the bob and ahoge. No attack magic circle in the body model.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "시계 모양 마법진",
+          "kind": "effect",
+          "note": "각성 리뉴아 Attack1_1 23/81의 금색 시계형 공격 마법진 확인. 3D 실물 장비가 아닌 효과용 해석.",
+          "image": {
+            "file": "renua/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/renua-weapon.png",
+            "sha256": "2102118309ba5c68d600d3af335065fb4a370996f4b83ae6fb6f14bfe443c3f1",
+            "size": [
+              1536,
+              1024
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "renua/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne floating GOLDEN CLOCK-LIKE MAGIC CIRCLE used by awakened Renua. Front three-quarter view of concentric thin gold rings, inner eccentric orbital circles, small clock-like radial ticks and angular diamond arrow ornaments at top and bottom; empty open spaces, NO filled plate, NO gun barrel or pistol grip. A clean solid-ribbon volume study for her original summoned magic circle effect. Match fine gold geometry of her halo in the reference but make the attack circle a separate object. No character, no actual halo duplicated around a head.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape. This is an optional 3D effect proxy; transparency, emission and animated particles will be set up later. Do not convert it into a hand-held gun or lantern.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/리뉴아-renua-prompt.txt",
+        "assets/character-inputs/tripo-individual/리뉴아-renua-rig-spec.json",
+        "assets/character-inputs/tripo-individual/리뉴아-renua-rigging.txt",
+        "assets/character-inputs/tripo-individual/리뉴아-renua-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/리뉴아-renua-weapon.png",
+        "assets/character-inputs/tripo-individual/리뉴아-renua-사용방법.txt",
+        "assets/character-inputs/tripo-individual/리뉴아-renua.png"
+      ]
+    },
+    {
+      "slug": "mayo",
+      "name": "마요",
+      "note": "졸린 인상이지만 눈은 뜬 상태입니다. 배낭과 작은 요정 날개를 유지합니다.",
+      "motion_note": "낮은 포니테일·앞머리·뾰족귀·작은 날개. 배낭은 몸통에, 모자는 머리에 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/mayo",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "졸린 인상이지만 눈은 뜬 상태입니다. 배낭과 작은 요정 날개를 유지합니다.",
+          "image": {
+            "file": "mayo/front.png",
+            "source": "assets/character-inputs/inputs-masked/mayo.png",
+            "sha256": "115e5e9c6d17e115db041d4291f0eeda7bed6ddd1219e2648dab84a2878d8c19",
+            "size": [
+              397,
+              678
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "mayo/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the muted brown-violet hair with a pale golden streak and long low ponytail, half-lidded light blue eyes OPEN, pointed ears, blue-white cap with a tiny wing pin, white high collar, dusty blue dress with rounded blue apron panel and white hem, brown backpack, small fairy wings, white socks, and brown loafers.\n\nKeep the backpack worn against the back with its straps in place, and the wings attached at their roots behind the torso. Preserve their readable outlines beside the arms. Do not close her eyes.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "침 발사관",
+          "kind": "prop",
+          "note": "원작 Attack1_1 20/44에서 입으로 부는 파랑·갈색 짧은 관 확인.",
+          "image": {
+            "file": "mayo/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/mayo-weapon.png",
+            "sha256": "dba7e645aed7f2dd6fd2552bac4d681b3bc83ed4749bf2ac302ef5368b8e05cb",
+            "size": [
+              1536,
+              1024
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "mayo/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nOne short straight hollow blowpipe used by Mayo, held to her lips in the original attack. Narrow cylindrical blue-gray tube with brown rims at the open ends, a small white outlined diamond motif around its middle, simple dark mouth opening. Slight three-quarter side view clearly shows the hollow end. It is a mouth-blown dart tube, NOT a firearm: no pistol handle, tank, trigger, stock, magazine or syringe. White and muted blue palette matches her uniform. No darts or hands or character.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/마요-mayo-prompt.txt",
+        "assets/character-inputs/tripo-individual/마요-mayo-rig-spec.json",
+        "assets/character-inputs/tripo-individual/마요-mayo-rigging.txt",
+        "assets/character-inputs/tripo-individual/마요-mayo-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/마요-mayo-weapon.png",
+        "assets/character-inputs/tripo-individual/마요-mayo-사용방법.txt",
+        "assets/character-inputs/tripo-individual/마요-mayo.png"
+      ]
+    },
+    {
+      "slug": "bella",
+      "name": "벨라",
+      "note": "긴 치마를 유지합니다. 팔을 치마에서 떼고, 치마를 다리와 한 덩어리로 만들지 않도록 요청했습니다.",
+      "motion_note": "긴 머리·땋은 머리·유령 리본과 긴 치마를 별도 제어합니다. 치마의 원래 가림 범위는 유지합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vela",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "긴 치마를 유지합니다. 팔을 치마에서 떼고, 치마를 다리와 한 덩어리로 만들지 않도록 요청했습니다.",
+          "image": {
+            "file": "bella/front.png",
+            "source": "assets/character-inputs/inputs-masked/bella.png",
+            "sha256": "1276196e3d7054f8318126b8335bdbcdee3225106b914f7787783c9f0ac50838",
+            "size": [
+              548,
+              624
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "bella/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the long flowing silver-white hair with blue-violet tips and side braid, lavender-blue eyes, blue gem choker, navy gown with pale blue layered petal panels, white ruffled sleeves, and flowing spectral ribbon shapes. Preserve the closed floor-length skirt shown in the reference.\n\nAngle the empty hands slightly away from the skirt. Keep an articulated body underneath; do not split or shorten the visible skirt to expose the legs. No separate ghost-flame companions.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "도깨비불",
+          "kind": "effect",
+          "note": "원작 도깨비불. 랜턴을 추가하지 않음. 최종 발광·투명·파티클은 엔진에서 설정.",
+          "image": {
+            "file": "bella/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/bella-weapon.png",
+            "sha256": "a5a26851397aa081fb1428d213ed45070986384fd7ea7ecfb8f55722361955a0",
+            "size": [
+              1024,
+              1536
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "bella/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY ONE of Bella's floating ghost flames shown in the reference. Compact curling blue/cyan flame with a pale near-white inner core and violet purple curled outer tip, a single continuous wispy teardrop form. Clean solid-looking volume suitable for a proxy mesh; soft internal color gradients but no outer glow cloud. No face unless actually in the reference, no lantern, handle, cage, skull, base, or character.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape. This is an optional 3D effect proxy; transparency, emission and animated particles will be set up later. Do not convert it into a hand-held gun or lantern.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/벨라-bella-prompt.txt",
+        "assets/character-inputs/tripo-individual/벨라-bella-rig-spec.json",
+        "assets/character-inputs/tripo-individual/벨라-bella-rigging.txt",
+        "assets/character-inputs/tripo-individual/벨라-bella-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/벨라-bella-weapon.png",
+        "assets/character-inputs/tripo-individual/벨라-bella-사용방법.txt",
+        "assets/character-inputs/tripo-individual/벨라-bella.png"
+      ]
+    },
+    {
+      "slug": "ui",
+      "name": "우이",
+      "note": "본체 A포즈를 새로 생성했습니다. 가려졌던 다리·장화는 제작용 해석입니다. 원래 큰 개구리 탑승형도 아래에 있습니다.",
+      "motion_note": "긴 땋은 머리와 앞머리·우비 자락. 모자 위 작은 개구리는 모자 장식이며 큰 탑승 개구리와 구분합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ui",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "본체 A포즈를 새로 생성했습니다. 가려졌던 다리·장화는 제작용 해석입니다. 원래 큰 개구리 탑승형도 아래에 있습니다.",
+          "image": {
+            "file": "ui/front.png",
+            "source": "artifacts/tripo-animation-inputs/images/ui-body.png",
+            "sha256": "74a1644b03d27644ab7b86f847046f1236734d00972442272453f97818f9f0d8",
+            "size": [
+              1254,
+              1254
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "ui/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the mint-green hair and long thick braid tied with a yellow bow, leaf-green eyes, rosy cheeks, pink hair clips, tan straw hat with tiny frog ornament, pink flower and white bow, yellow raincoat with pink flower buttons and blue badge, cream leggings, and yellow rain boots shown in this standing reference.\n\nGenerate the standing girl only. Keep the tiny frog ON THE HAT, but do not include the large frog mount or clover wand.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "네잎클로버 지팡이",
+          "kind": "prop",
+          "note": "원작 손에 든 네잎클로버 소품.",
+          "image": {
+            "file": "ui/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/ui-weapon.png",
+            "sha256": "c5924126323539cc46d8ac34083773fc023496db5d1f84086ea13f1ae95a4d55",
+            "size": [
+              1024,
+              1536
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "ui/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Ui's green four-leaf clover wand from the reference: long slim slightly curved green stem, four broad heart-shaped green leaflets joined at the top, simple lighter vein pattern, small yellow ribbon with white dots tied below the clover head. Preserve all FOUR leaves. No girl, hat, frog, hands or scenery.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        },
+        {
+          "key": "prop-frog",
+          "label": "개구리 탑승물",
+          "kind": "mount",
+          "note": "원작 개구리 탑승물 분리 입력.",
+          "image": {
+            "file": "ui/prop-frog.png",
+            "source": "artifacts/tripo-animation-inputs/images/ui-prop-frog.png",
+            "sha256": "b810684ab1e793b6580a1ff520d3c8c487b57fea93cba98846dbcca4de6508d4",
+            "size": [
+              1448,
+              1086
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "ui/prop-frog-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Ui's large friendly green frog mount from the reference, EMPTY without the girl. Rounded plump light-green body, protruding little eyes, wide curved smile, round pink cheeks, yellow cloth sash with pink flower clasp, webbed feet, small zipper pull on the side as shown. Preserve squat proportions and seated shape. No tiny frog sitting on top, no hat, hair, clover wand, girl or humanoid legs.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "assembly": "ui/assembly-reference.png",
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/우이-ui-assembly-reference.png",
+        "assets/character-inputs/tripo-individual/우이-ui-prompt.txt",
+        "assets/character-inputs/tripo-individual/우이-ui-prop-frog-prompt.txt",
+        "assets/character-inputs/tripo-individual/우이-ui-prop-frog.png",
+        "assets/character-inputs/tripo-individual/우이-ui-rig-spec.json",
+        "assets/character-inputs/tripo-individual/우이-ui-rigging.txt",
+        "assets/character-inputs/tripo-individual/우이-ui-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/우이-ui-weapon.png",
+        "assets/character-inputs/tripo-individual/우이-ui-사용방법.txt",
+        "assets/character-inputs/tripo-individual/우이-ui.png"
+      ]
+    },
+    {
+      "slug": "butter",
+      "name": "버터",
+      "note": "버터 재생성용: 눈을 뜨고 입을 편하게 다문 본체와 새총을 별도 입력합니다.",
+      "motion_note": "강아지 귀 좌우 3본, 꼬리 5본, 긴 머리 좌우 4본을 권장합니다. 귀·머리카락·꼬리는 각 뿌리 연결을 유지하면서 가중치를 구분하고 리본과 가방은 작은 보조 움직임만 줍니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/butter",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "버터 재생성용: 눈을 뜨고 입을 편하게 다문 본체와 새총을 별도 입력합니다.",
+          "image": {
+            "file": "butter/front.png",
+            "source": "artifacts/tripo-animation-inputs/images/butter-body.png",
+            "sha256": "efbc698dcacd898449a51bfa80000eef9960398b4f21e6c69a773db461f05a93",
+            "size": [
+              950,
+              1656
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "butter/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the long sandy-blonde hair, curled ahoge, floppy puppy ears, large yellow top bow and small yellow ear bows, open aqua-blue eyes and round cheeks. Preserve the dark collar and gold bell, white short sleeves, yellow apron dress with chest bow and front pocket, pale pink lower hem, yellow-brown striped knee socks, pale beige shoes, brown shoulder strap and puppy-face hip pouch, and fluffy cream-tipped puppy tail.\n\nKeep the floppy ears and hair continuously rooted to the head, the tail attached at its base to the lower back and the arms connected at the shoulders. Preserve their characteristic outlines and keep the pouch worn on its shoulder strap. Ears grow from the head, not from a hat. Use a relaxed closed mouth.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "새총",
+          "kind": "prop",
+          "note": "원작 전신 캡처의 노란 Y자 새총·목의 리본·갈색 손잡이 확인.",
+          "image": {
+            "file": "butter/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/butter-weapon.png",
+            "sha256": "e4ae156d3aa6faf4d8a28364f36293676f308e8d3df10bbc3be5959de23ddfca",
+            "size": [
+              1130,
+              1392
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "butter/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Butter's distinctive slingshot held in the reference. Rounded golden-yellow Y-shaped fork, short dark brown handle, small yellow bow tied at the neck of the handle, two reddish-brown elastic bands fixed at the tips, small central pouch. Preserve the clear empty U opening and simple chibi scale. One complete slingshot, three-quarter front view, natural relaxed bands. No stone, human hand, character, dog-face purse or extra bow beside the object.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/버터-butter-prompt.txt",
+        "assets/character-inputs/tripo-individual/버터-butter-rig-spec.json",
+        "assets/character-inputs/tripo-individual/버터-butter-rigging.txt",
+        "assets/character-inputs/tripo-individual/버터-butter-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/버터-butter-weapon.png",
+        "assets/character-inputs/tripo-individual/버터-butter-사용방법.txt",
+        "assets/character-inputs/tripo-individual/버터-butter.png"
+      ]
+    },
+    {
+      "slug": "komi",
+      "name": "코미",
+      "note": "붙어 보이는 두 발은 살짝 벌리도록 요청했습니다. 베개는 별도 파일입니다.",
+      "motion_note": "고양이 귀 좌우 2본, 가늘고 긴 꼬리 5본, 긴 머리 좌우 5본. 귀를 누이거나 꼬리를 휘는 동작을 별도로 제어합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/kommy",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "붙어 보이는 두 발은 살짝 벌리도록 요청했습니다. 베개는 별도 파일입니다.",
+          "image": {
+            "file": "komi/front.png",
+            "source": "assets/character-inputs/inputs-masked/komi.png",
+            "sha256": "4f00f0af60d61269452a88e0b66cd1025796acb955f4c2c547ce6bf46c9cf19d",
+            "size": [
+              413,
+              645
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "komi/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the very long white hair fading to pastel pink, triangular white cat ears with pink interiors, thin white-pink cat tail, half-lidded golden eyes, relaxed mouth with a tiny fang inside, white pajama T-shirt with pink trim, pink shorts with white hems, and soft pink slippers.\n\nStand with the feet slightly apart and both legs naturally connected at the hips. Keep the cat tail attached at its base to the lower back, with a readable outline beside the hair and legs. No pillow.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "분홍 물방울 베개",
+          "kind": "deformable_prop",
+          "note": "원작 전신 캡처의 분홍 물방울·프릴 베개.",
+          "image": {
+            "file": "komi/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/komi-weapon.png",
+            "sha256": "ae391840aa26ef3c39c1b4e9943ac76a3befe2d970794cf75f06f519750aab23",
+            "size": [
+              1312,
+              1199
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "komi/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Komi's pink pillow from the reference. A soft plump rectangular pillow with white polka dots, pale pink/white ruffled borders on the two short ends and simple seam around the perimeter. Slight three-quarter view showing thickness and rounded corners. No cat, character, hands, bed, extra pillow or decorative face.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape. Use enough continuous surface geometry for later soft bending, stretching and compression while preserving seams.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/코미-komi-prompt.txt",
+        "assets/character-inputs/tripo-individual/코미-komi-rig-spec.json",
+        "assets/character-inputs/tripo-individual/코미-komi-rigging.txt",
+        "assets/character-inputs/tripo-individual/코미-komi-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/코미-komi-weapon.png",
+        "assets/character-inputs/tripo-individual/코미-komi-사용방법.txt",
+        "assets/character-inputs/tripo-individual/코미-komi.png"
+      ]
+    },
+    {
+      "slug": "hilde",
+      "name": "힐데",
+      "note": "안경·명찰·니트·가운을 유지합니다. 의료 주사기총은 별도 파일입니다.",
+      "motion_note": "높은 포니테일·앞머리·뾰족귀와 가운 자락. 안경은 머리에 고정하며 볼 모핑에 늘어나지 않게 합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/hilde",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "안경·명찰·니트·가운을 유지합니다. 의료 주사기총은 별도 파일입니다.",
+          "image": {
+            "file": "hilde/front.png",
+            "source": "assets/character-inputs/inputs-masked/hilde.png",
+            "sha256": "4c251aad0cd19ae3638419ecee8edd5384c1db4a1bf260addc86e2112d8a4ee1",
+            "size": [
+              400,
+              668
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "hilde/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the charcoal-gray high ponytail and ahoge, pointed ears, lime-green eyes, round wire glasses, lime cross-shaped hairpin, cream cable-knit high collar, white rolled sleeves and lab-coat panels, charcoal apron with pocket and ID badge, brown trousers, and black flat shoes.\n\nKeep the glasses aligned naturally in front of the eyes with the temples supported at the ears; preserve the spectacle bridge without adding a nose beneath it. Keep the lab coat worn on the body, with its hanging panels readable beside the legs. No medical gun or case.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "의료 주사기총",
+          "kind": "prop",
+          "note": "원작 전신 캡처의 의료 총 형상·약액 창·십자 표식.",
+          "image": {
+            "file": "hilde/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/hilde-weapon.png",
+            "sha256": "5e362d3a06bb64123dd802664be84e1999fb0315ec65daeaddff041068493f4c",
+            "size": [
+              1536,
+              1024
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "hilde/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Hilde's medical injector gun held in the reference. Short chunky dark charcoal rectangular cylindrical upper barrel with a large pale yellow-green medicine window, a small lime medical plus symbol near its front, pale silver frame and short pale pistol grip, small dark round muzzle. Copy the stylized clinical shape; do not turn it into a giant exposed needle syringe or a realistic firearm. No medical case, hand, character, numbers or labels.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/힐데-hilde-prompt.txt",
+        "assets/character-inputs/tripo-individual/힐데-hilde-rig-spec.json",
+        "assets/character-inputs/tripo-individual/힐데-hilde-rigging.txt",
+        "assets/character-inputs/tripo-individual/힐데-hilde-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/힐데-hilde-weapon.png",
+        "assets/character-inputs/tripo-individual/힐데-hilde-사용방법.txt",
+        "assets/character-inputs/tripo-individual/힐데-hilde.png"
+      ]
+    },
+    {
+      "slug": "shion",
+      "name": "시온",
+      "note": "정면 이미지 기준 왼쪽 눈은 청록색, 오른쪽은 별 동공의 보라색입니다. 저격총은 별도 파일입니다.",
+      "motion_note": "옆 포니테일·앞머리·리본·어깨 망토. 작은 가면은 머리 옆에 고정하고 눈을 덮지 않게 합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/xxionx",
+      "jobs": [
+        {
+          "key": "body",
+          "label": "본체 · 코 없음 · 머리카락과 인체 연결",
+          "kind": "body",
+          "note": "정면 이미지 기준 왼쪽 눈은 청록색, 오른쪽은 별 동공의 보라색입니다. 저격총은 별도 파일입니다.",
+          "image": {
+            "file": "shion/front.png",
+            "source": "assets/character-inputs/inputs-masked/shion.png",
+            "sha256": "5d8c11f1e2088363df3c4c1dbfe08d952abd60fb823f4202465d24b186a076a5",
+            "size": [
+              440,
+              567
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "shion/prompt.txt",
+          "prompt": "Create ONE complete, fully assembled full-body stylized 3D game character from the reference, including the hair, head, body and worn outfit together in the same model. Preserve the cute chibi proportions, oversized head, round cheeks, small body and short limbs.\n\nKeep the dark navy hair, straight bangs, long side ponytail with blue tips and large blue bow, small dark dragon mask on the side of the head, cyan eye on image-left and violet eye with yellow star pupil on image-right, charcoal shoulder mantle, blue chest jewel, dark star-patterned dress, blue sleeves, opaque blue leggings, and blue boots.\n\nPreserve the eye-color sides exactly as shown. The mask must remain beside the face, not cover it. No sniper rifle.\n\nKeep the head, neck, torso, arms, hands, legs and feet continuously connected at their natural anatomical joints. Build a cohesive hairstyle rooted firmly into the scalp: bangs, side locks, braids and ponytails connect through their roots to the head, with no floating hair or gaps at the hairline. Define hair locks with sculpted contours and grooves while preserving their root connections. Any ears, horns, wings or tail shown in the reference attach at their natural roots. Keep clothing fitted on the body. No detached body parts, disassembled character, exploded view or separate hair asset.\n\nUse open eyes and a relaxed closed mouth. Preserve eye colors and characteristic markings, with natural eyelids, a clear lip line and cheeks continuous with the face.\n\nNO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.\n\nUse a neutral A-pose with empty hands and natural clearance between the arms and torso and between the legs, while keeping shoulders, wrists, hips and ankles connected. Hanging hair may clear the limbs and clothing while remaining firmly rooted to the head. Preserve clothing coverage and smooth stylized matte colors. Generate the complete character body with hair and outfit; weapons, mounts and separately supplied props remain separate input jobs. No scenery, text, pedestal or extra characters.\n"
+        },
+        {
+          "key": "weapon",
+          "label": "저격총",
+          "kind": "prop",
+          "note": "원작 전신 캡처의 큰 직선형 총열·조준경·탄창·개머리판 확인.",
+          "image": {
+            "file": "shion/weapon.png",
+            "source": "artifacts/tripo-animation-inputs/images/shion-weapon.png",
+            "sha256": "ccd076f88a0d72c5b86c9c1617bbd965e99d432ce7d5060a3b297342928437fe",
+            "size": [
+              2172,
+              724
+            ],
+            "mode": "RGBA",
+            "transparent_corner": true
+          },
+          "prompt_file": "shion/weapon-prompt.txt",
+          "prompt": "Create ONE separate stylized 3D game asset from the attached reference.\n\nONLY Shion's large dark gray/navy stylized rifle from the reference. Very long chunky rectangular front barrel shroud with small vertical vents, long straight receiver, compact scope on top, large angular box magazine below, skeletal angular rear stock with an open cutout, and small lower front support/bipod structure. Copy the silhouette, muted navy-gray panels and dark outlines. Entire stock and muzzle visible. No character, hands, bullets, muzzle flash or real-world logos.\n\nKeep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.\n"
+        }
+      ],
+      "individual_files": [
+        "assets/character-inputs/tripo-individual/시온-shion-prompt.txt",
+        "assets/character-inputs/tripo-individual/시온-shion-rig-spec.json",
+        "assets/character-inputs/tripo-individual/시온-shion-rigging.txt",
+        "assets/character-inputs/tripo-individual/시온-shion-weapon-prompt.txt",
+        "assets/character-inputs/tripo-individual/시온-shion-weapon.png",
+        "assets/character-inputs/tripo-individual/시온-shion-사용방법.txt",
+        "assets/character-inputs/tripo-individual/시온-shion.png"
+      ]
+    }
+  ]
+}

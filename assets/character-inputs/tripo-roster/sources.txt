@@ -1,0 +1,66 @@
+2026-11-12 / 원작 무기·소품 입력 자료 조사
+사용자 선택: FPS 각색 무기가 아닌 원작 대표 무기·소품.
+기존 assets/references/*-fullbody.png의 원작 Spine 캡처 15명과 원작 공격 모션을 대조.
+나이아 정정: Attack1_1의 한 프레임만 보고 물총을 누락했던 판단을 철회. Attack2_1 12/60에서 파란 돌고래 모양 물총을 확인. 공식 2026-11-03 카드 공지의 나이아의 돌고래 물총 아이콘과 대조. 돌고래 물총을 실물 소품으로, 물줄기는 선택 효과로 분리한다.
+각성 리뉴아 Attack1_1 23/81: 금색 동심원·시계 눈금·다이아 장식의 공격 마법진. 총이 아닌 효과용 형태.
+마요 Attack1_1 20/44: 입으로 부는 짧은 파랑·갈색 침 발사관, 중앙 다이아 문양.
+클로에 구조 정정: 세바스티안은 별도 곰 인형 전신이며 긴 민트색/분홍색 팔은 곰 몸통의 어깨에 붙는다. 기본 입력은 클로에 단독 + 세바스티안 전신이다.
+비비 Attack1_1 23/57: 손잡이 없는 뾰족한 은회색 수은 칼날 여러 개. 단일 날을 제작해 복제.
+모션 URL: https://wiki.cheeky.tsuncloud.com/korea/spines/{naia,renewaawaken,mayo,chloe,vivi}
+원작을 기준으로 한 제작용 재해석이며 미확인 후면·두께·연결부는 새로 구성했다.
+
+Tripo 공식 안내 확인:
+https://www.tripo3d.ai/features/ai-auto-rigging
+https://www.tripo3d.ai/blog/what-is-rigging
+https://www.tripo3d.ai/blog/vrm-model-generator
+자동 리깅 안내는 골격·스킨 웨이트·모션을 설명한다. 여기서 요청하는 정확한 이름의 얼굴 모프 및 추가 본의 자동 생성은 보장할 수 없다.
+생성용 프롬프트에는 형태·분리·변형 준비를, 리깅 사양에는 후속 구현·검수 요구를 기록한다.
+
+나이아 정정 근거:
+https://game.naver.com/lounge/Trickcal/board/detail/8404614
+https://gagether.wiki/ko/games/trickcal/items/quick-trickcal-kr-8404614
+공식 카드의 작은 꽃 밀짚모자를 포함한 외형 기준. 작은 모자는 분리 액세서리로 요청. 등쪽 두께·노즐 구멍은 3D 제작용 해석.
+
+
+
+피코라 숄더백 누락 정정 / 2026-11-12
+사용자 첨부 외에 원작 캐릭터 아이콘과 전투 아틀라스를 추가 확인. Bag, Bag_Ribbon, Bag_Stciker, Bag_Strip, Bag_Strip_B 파츠가 독립 등록되어 있다.
+크림색 가방·분홍 전면 곡선/옆면·흰 상단 장식·분홍 리본·흰 긴 끈·체리 장식을 반영한다. 같은 쪽 어깨와 골반을 잇는 숄더백이며 가슴 대각선 크로스백이 아니다. 체리는 가방 끈에 포함하고 본체에서는 제거한다.
+가방은 prop-bag, 지팡이는 weapon, 본체는 front로 분리한다. assembly-reference와 turnaround-reference는 조립 참고이며 단일 생성창에 입력하지 않는다. 미확인 후면·두께·연결부·추가 본은 제작용 해석/요청이다.
+추가 원작 아이콘: https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/sprites/rawsprites/heroicons/picora/Picora.png
+원작 아틀라스: https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/Picora.png
+원작 파츠명: https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.atlas
+상세 근거/해시: artifacts/tripo-picora-shoulder-bag/research.json
+
+클로에 / 세바스티안 구조 정정 — 2026-11-12 (Asia/Seoul)
+
+구조 정정의 출발점: 사용자 첨부의 클로에/세바스티안 분리 설명. 세바스티안 첨부는 팬 제작임이 확인되어 외형/재질 기준에서는 제외했다.
+세바스티안의 색·무늬·화풍은 아래 공식 게시 일러스트와 원작 게임 동작을 우선한다. 클로에 단독 첨부의 출처는 별도로 단정하지 않는다.
+
+확인한 자료:
+https://wiki.cheeky.tsuncloud.com/korea/apostles/chloe
+https://wiki.cheeky.tsuncloud.com/korea/spines/chloe
+https://wikiwiki.jp/thetrickal/%E3%82%AF%E3%83%AD%E3%82%A8/%E9%9F%93%E5%9B%BD%E7%89%88
+https://namu.moe/w/%ED%81%B4%EB%A1%9C%EC%97%90(%ED%8A%B8%EB%A6%AD%EC%BB%AC%20%EB%A6%AC%EB%B0%94%EC%9D%B4%EB%B8%8C)
+참고 원본: assets/references/chloe-fullbody.png (기존 원작 Spine 캡처).
+
+정정:
+- 클로에와 세바스티안은 별개의 대상이다. 머리 위 큰 곰 얼굴은 후드/모자나 의상이 아니다.
+- 기본 자세에서 세바스티안의 몸은 클로에 뒤에 있고, 클로에는 자신의 양팔을 들어 곰의 두 볼 아래를 받친다.
+- 보라색 부분은 세바스티안의 목 리본이다. 클로에에게 보라 망토로 추가하면 안 된다.
+- 긴 민트색/분홍 퀼팅 파츠는 세바스티안 자신의 양팔이다. 인형 몸통의 어깨에 연결된다.
+- 클로에 단독: 금발 높은 양갈래, 붉은 리본, 황색/흰색 복장, 흰 다리옷. 곰 머리·곰 귀·인형 팔·보라 리본 없음.
+- 세바스티안 단독: 흰 머리·몸통, 분홍 볼 위 산호색 하트 선무늬, 라벤더 하트형 바보털, 민트/분홍 귀와 긴 팔, 자주보라 리본, 옆 고리/술 장식, 짧은 흰 다리. 팬 모델의 회색 봉제 질감·노란 막대·노출 금속 지퍼를 따르지 않는다.
+
+제작 해석:
+- 클로에의 손이 보이는 중립 A포즈는 리깅용으로 재구성했다.
+- 세바스티안 다리는 원작 Idle_SebastianForm 전신의 짧고 단순한 흰 다리를 참고했다. 후면/두께/실제 스케일은 후속 모델링 때 조정한다.
+- 기본 입력은 클로에 본체 + 양팔을 포함한 세바스티안 전신의 두 작업이다. 이전 민트 팔/분홍 팔 단독 입력은 이력 폴더로 옮겨 중복 조립을 방지한다.
+
+세바스티안 원작 화풍·색 정정 / 2026-11-12
+공식 게시 기본 일러스트: https://x.com/trickcal_jp/status/1971582899796484364
+공식 캐릭터 소개: https://x.com/trickcal_jp/status/2058729771199316128
+원작 전신 동작: https://wiki.cheeky.tsuncloud.com/korea/spines/chloe (Normal / Idle_SebastianForm / 8 of 40)
+공식 소개 일러스트와 원작 Idle_SebastianForm 전신 대조. 양 볼 하트 선무늬·라벤더 하트형 바보털·민트/분홍 팔·보라 리본·옆 고리/술 장식을 반영하고 실사 봉제 질감과 노란 막대, 노출 금속 지퍼를 제거했습니다. 팬 제작 첨부는 구조 설명용 이력이며 외형·재질 기준이 아닙니다.
+기본 볼 표시는 하트이고 전투 형태의 별 표시는 이번 기본 입력에 사용하지 않는다. 투명 배경 2D 셀 채색으로 생성했으며 표정/보조 본은 후속 제작 요청 사양이다.
+상세 조사·원본·생성 기록: artifacts/tripo-sebastian-original-style/

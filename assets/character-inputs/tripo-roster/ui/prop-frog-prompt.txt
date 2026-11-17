@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Ui's large friendly green frog mount from the reference, EMPTY without the girl. Rounded plump light-green body, protruding little eyes, wide curved smile, round pink cheeks, yellow cloth sash with pink flower clasp, webbed feet, small zipper pull on the side as shown. Preserve squat proportions and seated shape. No tiny frog sitting on top, no hat, hair, clover wand, girl or humanoid legs.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

@@ -1,0 +1,10 @@
+Use case: precise-object-edit
+Asset type: existing game home-screen background illustration, wide landscape, preserve the edit target's 1672x941 framing.
+Input images: Image 1 is the exact EDIT TARGET (elias-picnic-soft.png). Image 2 is a character DESIGN REFERENCE ONLY (erpin-fullbody.png); ignore all website UI, dark background, text and layout in image 2.
+Primary request: Repair duplicate Erpin props in Image 1, changing only the erroneous objects around the blonde fairy queen's head. There must be exactly ONE crown on Erpin's head and exactly ONE staff in the entire illustration.
+Specific corrections:
+1. KEEP the single complete tall golden staff leaning against the tree on the far right behind the white-haired cat girl, with its circular head and floating diamond crystal, exactly where it is.
+2. REMOVE the entire extra circular gold-and-white staff-head / halo shape directly BEHIND and ABOVE Erpin's blonde head (around x=1020..1250, y=190..350 of the 1672x941 target). Remove every leftover arc, fin, spike, duplicate diamond or shaft from this extra staff. Naturally reconstruct the distant garden/sky behind it.
+3. Replace the doubled, stacked, overlapping gold crown pieces immediately on top of Erpin's hair with ONE coherent small golden tiara/crown seated naturally on her head. Match the simple small crown and central diamond ornament in the character reference. Exactly one small crown, no second crown layer, no large halo or circular headdress.
+Invariants: preserve all three characters' identities, faces, hairstyles, expressions, poses, clothes, hands, fairy wing, food, picnic blanket, tree, castle, world tree, garden and left-side negative space. Erpin still holds her dessert with both hands. Butter and Komi must remain unchanged. Preserve the existing gentle pastel colors, flat hand-painted shading, delicate linework, camera position and image composition. Keep the crown modest in scale like the reference and avoid any new decorative structures.
+Do not redesign the scene, do not add characters or props, no UI, no words, no logo, no watermark. Opaque full-bleed landscape illustration.

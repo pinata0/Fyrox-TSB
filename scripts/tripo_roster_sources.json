@@ -1,0 +1,36 @@
+{
+  "naia": {
+    "id": 1,
+    "parts": {
+      "rigged": "tripo_convert_ab9b5288-f7c8-4a06-8aab-2c3d04f1bfb1",
+      "clothes": "TSB-Naia #21",
+      "bracelet": "TSB-Naia #22",
+      "sandals": "TSB-Naia #23",
+      "weapon": "TSB-Naia #44",
+      "weapon-hat": "TSB-Naia #45",
+      "head-hat": "TSB-Naia #20"
+    }
+  },
+  "erpin": {
+    "id": 2,
+    "parts": {
+      "rigged": "tripo_convert_ff1036d4-917d-4d46-8c13-ba469fa7877f",
+      "hair": "TSB-Erpin #23",
+      "clothes": "TSB-Erpin #24",
+      "cape": "TSB-Erpin #25",
+      "wings": "TSB-Erpin #26",
+      "accessories": "TSB-Erpin #27",
+      "weapon": "TSB-Erpin #38"
+    }
+  },
+  "renua": {
+    "id": 7,
+    "parts": {
+      "rigged": "tripo_convert_2ab5c5f6-e274-42f1-94a7-e90f1d503a0e",
+      "hair": "tripo_convert_a6d98d72-b1c5-432e-bc44-4edc6d7dcf60",
+      "clothes": "tripo_convert_ea228297-1d84-42cf-90b4-b3a962df6bc3",
+      "accessories": "tripo_convert_509085f5-a4a0-482a-b9b4-05bbd55f59b5",
+      "weapon": "TSB-Renua #27"
+    }
+  }
+}

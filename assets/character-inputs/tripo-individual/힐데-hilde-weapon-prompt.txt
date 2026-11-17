@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Hilde's medical injector gun held in the reference. Short chunky dark charcoal rectangular cylindrical upper barrel with a large pale yellow-green medicine window, a small lime medical plus symbol near its front, pale silver frame and short pale pistol grip, small dark round muzzle. Copy the stylized clinical shape; do not turn it into a giant exposed needle syringe or a realistic firearm. No medical case, hand, character, numbers or labels.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

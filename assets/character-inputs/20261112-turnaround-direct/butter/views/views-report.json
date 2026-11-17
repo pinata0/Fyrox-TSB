@@ -1,0 +1,58 @@
+{
+  "stage": "views_prepared_from_turnaround",
+  "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\butter.png",
+  "source_sha256": "49aef99ccc60b637d3f3ef172fd1d66d0eaa3772a2d4b6156e60df7f19be43fa",
+  "crop_regions": {
+    "front": {
+      "source_pixel_box": [
+        236,
+        89,
+        633,
+        781
+      ],
+      "foreground_box": [
+        0,
+        40,
+        388,
+        692
+      ]
+    },
+    "left": {
+      "source_pixel_box": [
+        727,
+        98,
+        1027,
+        780
+      ],
+      "foreground_box": [
+        1,
+        30,
+        290,
+        682
+      ]
+    },
+    "back": {
+      "source_pixel_box": [
+        1100,
+        98,
+        1506,
+        780
+      ],
+      "foreground_box": [
+        6,
+        31,
+        399,
+        682
+      ]
+    }
+  },
+  "right_view": "mirrored authored left view; approximation",
+  "scale": 1.0429447852760736,
+  "status": "prepared_pending_visual_review",
+  "output_sha256": {
+    "front": "80d2e490bc472a391b08226e2a1abbfcbda5580789a2e6942f79773ef7e3aec9",
+    "left": "7f13abfaa96b62a849b67cb15cef90b07eba753c2b1b53fbf0ce4156c77d149a",
+    "back": "797c72e7c1760b17db11f02850d9fbb2f578c3de4fbbb6eef0438747e268a1ec",
+    "right": "10fd3d7935f2501591db9f9d1f0ba58664b1790fba190f566cc7d001e24c342a"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "slug": "elf-city",
+  "objects": 7452,
+  "vertices": 108149,
+  "triangles": 185282,
+  "collision_blocks": 189,
+  "stairs": 4,
+  "materials": 19,
+  "elena_banner_texture": "elena-banner.png",
+  "export_chunks": 356
+}

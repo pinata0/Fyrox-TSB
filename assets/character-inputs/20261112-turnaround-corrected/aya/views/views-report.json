@@ -1,0 +1,12 @@
+{
+  "stage": "reviewed_twintail_and_parasol_correction",
+  "source": "artifacts/aya-twintail-correction/images/generation.json",
+  "operation": "independently authored views; no mirrored side",
+  "note": "Two ankle-length low twin tails in every view. Side and back are fan-model interpretations.",
+  "output_sha256": {
+    "front": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+    "left": "08bd56c1876132619f8e8542b3f72e313462c830d5ffbdfca88e27155d394a2d",
+    "right": "81a63e96d197ea86a399f8c3bdfae9408fa652726d50e95892bc70d5870b450c",
+    "back": "773e5a723c26d09833ac8f9c642e302cbd12d959ba859d9605c2be12d468547f"
+  }
+}

@@ -1,0 +1,408 @@
+{
+  "schema_version": 3,
+  "updated": "2026-11-15",
+  "scope": "Meshy reference-image prompts and Image to 3D inputs with downstream rig specifications; not a delivered rig or game-model update",
+  "characters": [
+    {
+      "slug": "vivi",
+      "name": "비비",
+      "identity": "Keep the very long silver-white hair with dark roots, swept-back dark horns, pointed ears, red-orange eyes, red diamond earrings, black neck bow, white petal-shaped outer gown over a layered burgundy dress, and dark angular dragon wings behind the shoulders.",
+      "extra": "Keep the wings rooted to the upper back and the hair rooted to the scalp, with readable wing, hair and arm silhouettes. Preserve the layered dress without turning it into a solid block around the legs.",
+      "note": "머리카락은 두피에, 날개는 등에 연결하고 각 윤곽이 읽히는지 확인하세요. 수은 칼날은 별도 파일입니다.",
+      "source": "assets/character-inputs/inputs-masked/vivi.png",
+      "secondary_bones": "HairBack.{L/R}.01-04; HairFront.{L/R}.01-02; Ear.{L/R}.01; Wing.{L/R}.01-03",
+      "motion_note": "긴 머리·앞머리, 뾰족귀의 미세 움직임, 양쪽 날개 관절. 뿔은 머리에 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vivi",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "수은 칼날",
+          "kind": "projectile",
+          "description": "One floating mercury blade shard used by Vivi. A long tapered silver angular lance-like blade with a dark gray underside, a raised faceted central ridge, a sharply pointed long tip and short jagged flared rear. It is a summoned metal shard, no human sword handle, no crossguard. One blade only; later duplicate it for the multi-blade attack. Use the angular silver-gray blade styling in the reference, not her dark dragon wings.",
+          "note": "공격 모션 Attack1_1 23/57에서 수은 칼날 확인. 단일 날의 뒤쪽·두께는 제작용 해석.",
+          "reference": "assets/references/vivi-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/vivi-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "naia",
+      "name": "나이아",
+      "identity": "Keep the pale lavender-blue hair, long twin braids with pink tips, aqua eyes, wide tan sunhat with a yellow flower and green leaves, light aqua floral top and short flared skirt, white waistband, shell bracelet, and blue sandals.",
+      "extra": "Both braids grow continuously from the hairstyle at the scalp; their hanging lengths retain a readable outline beside the arms and legs. Preserve the exact hat silhouette and outfit coverage. Generate empty hands for later gripping; her dolphin-shaped water gun is supplied as a separate prop input.",
+      "note": "본체는 빈손으로 생성하고 돌고래 물총을 별도 생성해 연결합니다. 물줄기 효과는 선택 입력입니다.",
+      "source": "assets/character-inputs/inputs-masked/naia.png",
+      "secondary_bones": "Braid.{L/R}.01-04; HairFront.{L/R}.01-02",
+      "motion_note": "양쪽 땋은 머리와 앞머리. 모자와 꽃은 머리에 고정하고 머리카락 관통을 확인합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/naia",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "돌고래 물총",
+          "kind": "prop",
+          "description": "One hand-held DOLPHIN-SHAPED WATER GUN used by Naia. Match the blue curved dolphin toy in the reference: slate/indigo-blue body, long rounded snout with a small water outlet, a dark eye, broad white inner belly stripe, small dorsal fin and two tail flukes. Keep the miniature tan straw hat with a yellow flower and green leaves shown in the official artifact-card illustration as a separate removable accessory. The dolphin body itself is the toy; do not add a pistol grip, trigger guard, rifle barrel, hose, or external tank. Preserve its solid toy-like curved silhouette and smooth stylized surface. No water stream, character or hand in this mesh.",
+          "note": "공식 카드의 작은 꽃 밀짚모자를 포함한 외형 기준. 작은 모자는 분리 액세서리로 요청. 등쪽 두께·노즐 구멍은 3D 제작용 해석.",
+          "reference": "https://game.naver.com/lounge/Trickcal/board/detail/8404614",
+          "source": "artifacts/tripo-naia-dolphin-correction/images/naia-weapon.png"
+        },
+        {
+          "key": "effect-water",
+          "label": "물줄기 효과 · 선택",
+          "kind": "effect",
+          "description": "One separate aqua-blue water projectile emitted from the snout nozzle of Naia's dolphin water gun. Rounded teardrop volume, short tapering flowing tail and soft white-blue highlights. This is an optional proxy for later water VFX, separate from the dolphin water-gun prop. No toy body, handle, hands or character in this effect mesh.",
+          "note": "돌고래 물총의 주둥이 노즐에서 나오는 물줄기용 형태입니다. 물총 본체와 별도이며 최종 입자·투명도·흐름은 엔진에서 제작합니다.",
+          "reference": "https://game.naver.com/lounge/Trickcal/board/detail/8404614",
+          "source": "artifacts/tripo-naia-dolphin-correction/images/naia-effect-water.png"
+        }
+      ]
+    },
+    {
+      "slug": "erpin",
+      "name": "에르핀",
+      "identity": "Keep the long golden-blonde hair with one front braid, small gold crown with a blue diamond, red-orange eyes with star highlights, pointed ears, white royal outfit with gold trim and blue gems, red cape with fluffy white ends, white legwear, and small white wings.",
+      "extra": "Keep the braid rooted to the scalp, the wings attached to the back and the cape fastened at the shoulders. Preserve their readable outlines beside the arms, the open face and the crown.",
+      "note": "왕관·날개·붉은 망토를 유지합니다. 지팡이는 별도 파일입니다.",
+      "source": "assets/character-inputs/inputs-masked/erpin.png",
+      "secondary_bones": "HairBack.{L/R}.01-04; Braid.01-03; Ear.{L/R}.01; Wing.{L/R}.01-02; Cape.{L/R}.01-03",
+      "motion_note": "긴 머리·앞쪽 땋은 머리·작은 날개·망토, 뾰족귀 미세 움직임. 왕관은 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/erpin",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "왕실 지팡이",
+          "kind": "prop",
+          "description": "Erpin's tall royal staff visible to the left of the character: slim white shaft with gold fittings and a diamond-shaped bottom finial; large circular gold-rimmed dark open ring head topped by a small angular crown-like outline; the ring contains a floating elongated blue-pink diamond crystal and two small crystal fragments. Keep the ring hole visibly empty around the central crystal, with long white/gold hanging side prongs. No character's crown, wings or hands.",
+          "note": "원작 전신 캡처의 지팡이 확인. 링 안 보석과 장식은 별도 부품.",
+          "reference": "assets/references/erpin-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/erpin-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "id",
+      "name": "이드",
+      "identity": "Preserve very pale pink-white skin; WHITE hair, eyebrows and eyelashes; long fluffy hair with a curled ahoge; pointed elf ears; and half-lidded OPEN golden eyes. Keep the fitted sleeveless white-and-black bodysuit, white central panel, black sides, white neck band, crossed black halter straps, bare arms, white wrist bands, charcoal thigh-high stockings with white piping, and white low shoes.",
+      "extra": "Generate the standing character only, with connected hair and limbs. The crescent mount and Nata robot are separate assets.",
+      "note": "밝은 피부와 흰 머리·눈썹·속눈썹, 금색 반개안, 코 없는 얼굴을 유지합니다. 승인된 흰색·검은색 민소매 보디수트와 짙은 회색 스타킹을 보존합니다. 본체·초승달 탑승 장치·나타는 각각 입력합니다.",
+      "source": "artifacts/id-meshy-palette-crescents/images/id-body.png",
+      "secondary_bones": "HairBack.{L/R}.01-05; HairFront.{L/R}.01-02; Ear.{L/R}.01-02",
+      "motion_note": "풍성한 긴 머리는 여러 덩어리로, 긴 뾰족귀는 작은 각도로 움직입니다. 졸린 표정은 눈 감기/가늘게 뜨기 모프로 만듭니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ed",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "초승달 부유 장치",
+          "kind": "mount",
+          "description": "Ed/Id's EMPTY dark gray crescent moon mechanical pod from the reference. Remove the girl AND the small round companion robot. Preserve the thick C-shaped crescent outer shell, pale padded inner seat, circular white outer panels/lights, trim seams, upward curling tips, visible shell thickness and open interior. Three-quarter front view. No extra gun, no human, no hair, no pillow shaped like a person.",
+          "note": "원작 초승달 장치. 별도 손총을 추가하지 않음.",
+          "reference": "assets/references/id-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/id-weapon.png"
+        },
+        {
+          "key": "prop-robot",
+          "label": "나타 · 초승달 로봇",
+          "kind": "companion",
+          "description": "ONLY Nata, Ed/Id's small hovering companion robot, matching the supplied user reference. The main WHITE HOUSING is one continuous thick C-SHAPED CRESCENT: its upper and lower horns are joined by the broad LEFT body, and the open concave side faces RIGHT. Preserve the tapered right-pointing tips and the visible gap around the face. Do not replace this with a white sphere, helmet, complete donut or two detached upper/lower jaws. A dark circular face display sits inside the crescent opening toward the right, framed by a thin pale bezel. Use the reference face with two white inverted-V eyes and small white cheek dots, with no mouth or nose; its fine dot pattern is a flat screen texture, not raised geometry. Preserve the slender horizontal elliptical equatorial rail, small round inset details on the crescent, long sweeping white orbital arc and small upper-right ring. Match the celestial ornaments and their arrangement: left diamond, ring and crescent; right diamond, ring, low ringed planet and outer crescent, suspended by thin lines. The long orbital arc is not a short U-shaped antenna. Preserve the crescent and rail as one assembled prop; keep thin hanging ornaments readable. Use pale white, cool gray and charcoal with neutral shading. No girl, large seat/pod, gun, hands, text or surrounding glow. Do not fill the open crescent or ring spaces with extra geometry. Keep unseen rear construction simple and consistent with the front silhouette.",
+          "note": "사용자 제공 나타 이미지 기준: 왼쪽에서 이어진 C자 흰 초승달 외장, 원형 화면, 수평 고리·긴 궤도선·천체 장식. 본체 및 탑승 장치와 별도 입력.",
+          "reference": "artifacts/id-meshy-palette-crescents/references/nata-user-reference.png",
+          "source": "artifacts/id-meshy-palette-crescents/images/id-prop-robot.png"
+        }
+      ],
+      "body_label": "본체 · 흰 눈썹·속눈썹 · 코 없음",
+      "reference_generation_record": "artifacts/id-meshy-palette-crescents/generation.json"
+    },
+    {
+      "slug": "aya",
+      "name": "아야",
+      "identity": "Keep the warm brown skin, gold eyes, and ANKLE-LENGTH WHITE LOW TWIN TAILS. The hair is tied on BOTH sides below the ears with pale blue butterfly ties, then forms TWO distinct thick flowing tails reaching the ANKLES with gently curled tips. Keep the swept bangs covering one eye and black forehead patch, blue gem earring, white kimono with gray wave patterns and gold trim, dark obi with flower clasp, and sandals.",
+      "extra": "Generate the standing girl with EMPTY HANDS. The open flower-petal parasol is a separate prop job. Keep BOTH ankle-length white twin tails continuously rooted to the scalp below the ears, running through the blue butterfly ties into the long flowing lengths. Preserve their readable outlines beside sleeves, kimono hem and legs. Do not shorten them or merge them into a back curtain. Preserve the swept bangs over one eye.",
+      "note": "발목 길이 흰 양갈래를 유지한 빈손 본체와 꽃잎 양산을 분리했습니다. 양산을 든 기존 그림은 조립 참고용입니다.",
+      "source": "artifacts/tripo-animation-inputs/images/aya-body.png",
+      "secondary_bones": "TwinTail.{L/R}.01-06; HairFront.{L/R}.01-02; Sleeve.{L/R}.01-02",
+      "motion_note": "양쪽 나비 묶음 아래에서 발목까지 이어지는 머리를 좌우 6본 체인으로 분리합니다. 기모노·양산과 충돌을 확인합니다. 가려진 눈도 눈꺼풀을 만듭니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/aya",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "꽃잎 양산",
+          "kind": "prop",
+          "description": "ONLY Aya's open WHITE FLOWER-PETAL PARASOL from the reference: overlapping large white curled flower petals forming the canopy, pale blue-gray underside, clearly visible pale ribs and center hub, long straight white shaft ending in simple grip. Keep the full shaft and grip. Three-quarter side view reveals open underside and canopy silhouette, not a top-down flower. No character, hair, butterfly hair ties, kimono, sword, or hands.",
+          "note": "사용자 정정한 꽃잎 양산 기준. 본체와 별도 생성해 손에 연결.",
+          "reference": "assets/character-inputs/inputs-masked/aya.png",
+          "source": "artifacts/tripo-animation-inputs/images/aya-weapon.png"
+        }
+      ],
+      "assembly_source": "artifacts/tripo-animation-inputs/images/aya-assembly-reference.png"
+    },
+    {
+      "slug": "picora",
+      "name": "피코라",
+      "identity": "Keep the turquoise hair with pink-lavender accents, round candy-like twin buns and curled side strands, aqua-pink eyes, colorful candy hairpins, tiny wing-heart clips, white blouse, pink vest, pink bow, teal frilled skirt, mismatched pink-white stockings, and pink-white boots. Include her ONE cream-and-pale-yellow shoulder bag worn at the hip on image-right (character L), with its white shoulder strap, pink bag bow and double-cherry strap charm.",
+      "extra": "Preserve the intentional asymmetry of stockings and shoes, including the wing-and-teal-bow ornament on the striped side, and the white grid on the teal pleated skirt. Keep small hair ornaments readable. Generate the character already wearing exactly ONE bag, including its white strap, pink bow and double-cherry charm, as part of this complete body model. The strap passes over the shoulder on the same side as the bag and attaches to the bag at both ends; preserve the reference placement. The cherries belong to the bag strap, not the skirt. Keep both hands empty. Only the staff is generated in a separate job; do not add a second bag or loose duplicate strap or charm.",
+      "note": "가방·흰 어깨끈·분홍 리본·체리 장식을 착용한 이 이미지를 본체 기본 입력으로 사용합니다. 피코라 입력은 가방 착용 본체와 별도 지팡이 두 가지입니다.",
+      "source": "artifacts/tripo-picora-shoulder-bag/images/picora-assembly.png",
+      "secondary_bones": "HairSide.{L/R}.01-03; HairFront.{L/R}.01-02; Bag.01; Strap.Front.01-03; Strap.Back.01-03; CherryCharm.01-02",
+      "motion_note": "가방 착용 상태의 본체를 함께 생성합니다. 머리카락 뿌리와 어깨끈 부착을 유지하고, 가방·끈·체리 장식은 생성 후 보조 본과 가중치로 흔들림을 조정합니다. 별도 가방 모델을 추가 조립하지 않습니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/picora",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "장식 지팡이",
+          "kind": "prop",
+          "description": "ONLY Picora's ornate dark brown curled hook staff from the reference: large candy-cane-like curled C-shaped head with pastel mint, pink, yellow and white stickers/patches; long slim brown shaft with pink wrap near the grip; hanging keychain ornaments near the neck including a pink rectangular star tag, beads, turquoise bow and white wing-shaped charm. Preserve visible exact staff construction; no sticker book, no character, no hands.",
+          "note": "원작 캡처의 갈고리형 지팡이·스티커·키링 확인.",
+          "reference": "assets/references/picora-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/picora-weapon.png"
+        }
+      ],
+      "reference_generation_record": "artifacts/picora-worn-bag-unified/reference-selection.json",
+      "body_label": "본체 · 가방 착용 · 코 없음"
+    },
+    {
+      "slug": "chloe",
+      "name": "클로에",
+      "identity": "Keep Chloe alone: pale-blonde high twin ponytails rooted to the scalp with burgundy bows, pointed elf ears, red/gold eyes and cheek marking. Preserve her yellow puff-sleeve outfit, white fluffy cuffs and double ruffled hem, burgundy neck bow with cream stripe and pink gem, white legwear and yellow/brown shoes.",
+      "extra": "Keep Sebastian as a separate full-body doll, not Chloe's clothing. Do not add his bear head, ears, limbs, plush hood or purple ribbon to Chloe. Include only her own two arms and empty hands.",
+      "note": "사용자 첨부 클로에 단독 그림 기준입니다. 곰 머리·인형 귀·인형 팔·보라 리본을 전부 제외했습니다. 세바스티안은 팔·다리가 포함된 별도 전신 입력입니다. 기본 조립 자세에서는 클로에가 양손으로 곰의 볼 아래를 받칩니다.",
+      "source": "artifacts/tripo-chloe-sebastian-correction/images/chloe-body.png",
+      "secondary_bones": "TwinTail.{L/R}.01-04; HairFront.{L/R}.01-02; Ear.{L/R}.01; HairBow.{L/R}.01; Skirt.{L/R}.01-02",
+      "motion_note": "클로에는 자신의 머리카락·요정 귀·머리 리본·옷자락만 제어합니다. 세바스티안은 독립 리그이며 두 인형 팔은 곰의 어깨에 연결합니다. 기본 자세에서는 클로에가 뒤쪽 세바스티안의 양 볼을 손으로 받칩니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+      "props": [
+        {
+          "key": "prop-sebastian",
+          "label": "세바스티안 · 곰 인형 전신",
+          "kind": "companion",
+          "description": "One COMPLETE independent stuffed bear companion, SEBASTIAN, based on the original normal/base design. Preserve the clean WHITE head and compact white torso, thin dark-brown DASHED forehead stitches, small glossy dark-brown button eyes, shallow white muzzle and rounded triangular brown nose. Each round salmon-pink cheek has ONE CORAL OUTLINE HEART marking, two hearts total. The prominent crown tuft is a LAVENDER/LILAC HEART-SHAPED LOOP with an open center, never a yellow/olive rod or straight tab. Keep the pale mint/aqua ear and very long padded arm on image-left, and soft pink ear and very long arm on image-right with thin curved diamond quilting lines and small pale cream-yellow stitch dots. Preserve pale piping on the mint arm, the PLUM/LAVENDER-purple neck bow with drooping loops and two long notched tails, and the small side ornament beside the image-right ear: colored band, mint rectangular loop, white cap and pink tassel. Match the original game sprite's short simple white legs and rounded flat feet; do not add separate teddy shoes, paw pads or exposed metal zipper hardware. Both long arms attach to the BEAR TORSO at the shoulders. Keep arm/torso and foot gaps for rigging. Translate the clean 2D reference into smooth stylized matte 3D forms with flat pastel colors and restrained cel shading. Keep the cheek hearts and quilting as clear surface markings that follow deformation; no realistic woven fabric, fur, felt grain, thick upholstery, photorealistic shading or metallic rivets. Preserve the open hole in the heart tuft. The bear is separate from Chloe, not a hood, hat or pair of loose arms; no girl or human hands. Unseen back surfaces, depth and final assembly scale remain modeling interpretations.",
+          "note": "공식 소개 일러스트와 원작 Idle_SebastianForm 전신 대조. 양 볼 하트 선무늬·라벤더 하트형 바보털·민트/분홍 팔·보라 리본·옆 고리/술 장식을 반영하고 실사 봉제 질감과 노란 막대, 노출 금속 지퍼를 제거했습니다. 팬 제작 첨부는 구조 설명용 이력이며 외형·재질 기준이 아닙니다.",
+          "reference": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-basic.jpg",
+          "source": "artifacts/tripo-sebastian-original-style/images/sebastian.png",
+          "reference_generation_record": "artifacts/tripo-sebastian-original-style/generation.json"
+        }
+      ],
+      "companion_rig": {
+        "name": "Sebastian",
+        "root": "SebastianRoot",
+        "body_chains": [
+          "Spine.01-02",
+          "Head",
+          "Leg.{L/R}.01-02",
+          "Arm.Mint.01-05",
+          "Arm.Pink.01-05"
+        ],
+        "secondary_chains": [
+          "Ear.Mint.01-02",
+          "Ear.Pink.01-02",
+          "Ribbon.{L/R}.01-03",
+          "HeartTuft.01-03",
+          "SideOrnament.01-02",
+          "Tassel.01-03"
+        ],
+        "morphs": [
+          "cheekCompress_L",
+          "cheekCompress_R",
+          "armStretch_Mint",
+          "armStretch_Pink",
+          "armSquash_Mint",
+          "armSquash_Pink"
+        ],
+        "contact_targets": [
+          "CheekSupport.L",
+          "CheekSupport.R"
+        ],
+        "carry_anchor": "Chloe CarryAnchor on upper back/chest, not on the head",
+        "attachment": "Position the whole bear behind Chloe; solve Chloe hand IK to the underside of the bear cheeks after the carry root and bear head pose; avoid cyclic constraints.",
+        "note": "Bear arms attach to bear shoulders; no hood sockets or loose-arm duplication. Button eyes may use optional squash/scale controls; do not force Chloe humanoid face morphs onto the toy.",
+        "appearance_note": "Lavender heart-loop tuft is rooted to the bear head with limited sway. The side band/loop and tassel attach beside the pink ear. Coral outline-heart cheek markings and quilting must follow the bear surface during cheek and arm morphs without becoming detached decals. No woven/fuzzy normal map or yellow crown rod."
+      }
+    },
+    {
+      "slug": "renua",
+      "name": "리뉴아",
+      "identity": "Keep the short silver-white bob with a dark gray forelock, ahoge, pale gold eyes, pointed ears, dark temple fins, gold ear discs, white high-collared top, dark navy shorts, navy thigh-high boots, and oversized navy-and-cream coat with gold trim and white tassels.",
+      "extra": "Use the supplied halo-free reference. Do not generate the large circular halo, gray disk, gold rings, floating ring ornament or diamond/star points behind the head. Preserve the dark temple fins, gold-and-turquoise ear discs and dangling gold tags attached at the sides of the head. Keep a clear silhouette of the bob and ahoge. No attack magic circle in the body model.",
+      "note": "뒤쪽 원형 판·금색 헤일로를 제거한 본체입니다. 머리 양옆 장식과 의상은 유지하며 공격 마법진은 별도 입력입니다.",
+      "source": "artifacts/meshy-input-refresh/images/renua-no-halo.png",
+      "secondary_bones": "HairBob.{L/R}.01-02; HairFront.01-02; Ear.{L/R}.01; Coat.{L/R}.01-03; Tassel.{L/R}.01-02",
+      "motion_note": "짧은 머리와 코트 자락·술의 작은 움직임. 머리 양옆 관자 장식·귀 장식은 고정합니다. 뒤쪽 헤일로는 본체에서 제외합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/renewaawaken",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "시계 모양 마법진",
+          "kind": "effect",
+          "description": "One floating GOLDEN CLOCK-LIKE MAGIC CIRCLE used by awakened Renua. Front three-quarter view of concentric thin gold rings, inner eccentric orbital circles, small clock-like radial ticks and angular diamond arrow ornaments at top and bottom; empty open spaces, NO filled plate, NO gun barrel or pistol grip. A clean solid-ribbon volume study for her original summoned magic circle effect. Match fine gold geometry of her halo in the reference but make the attack circle a separate object. No character, no actual halo duplicated around a head.",
+          "note": "각성 리뉴아 Attack1_1 23/81의 금색 시계형 공격 마법진 확인. 3D 실물 장비가 아닌 효과용 해석.",
+          "reference": "assets/references/renua-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/renua-weapon.png"
+        }
+      ],
+      "reference_generation_record": "artifacts/meshy-input-refresh/generation.json"
+    },
+    {
+      "slug": "mayo",
+      "name": "마요",
+      "identity": "Keep the muted brown-violet hair with a pale golden streak and long low ponytail, half-lidded light blue eyes OPEN, pointed ears, blue-white cap with a tiny wing pin, white high collar, dusty blue dress with rounded blue apron panel and white hem, brown backpack, small fairy wings, white socks, and brown loafers.",
+      "extra": "Keep the backpack worn against the back with its straps in place, and the wings attached at their roots behind the torso. Preserve their readable outlines beside the arms. Do not close her eyes.",
+      "note": "졸린 인상이지만 눈은 뜬 상태입니다. 배낭과 작은 요정 날개를 유지합니다.",
+      "source": "assets/character-inputs/inputs-masked/mayo.png",
+      "secondary_bones": "Ponytail.01-04; HairFront.{L/R}.01-02; Ear.{L/R}.01; Wing.{L/R}.01-02",
+      "motion_note": "낮은 포니테일·앞머리·뾰족귀·작은 날개. 배낭은 몸통에, 모자는 머리에 고정합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/mayo",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "침 발사관",
+          "kind": "prop",
+          "description": "One short straight hollow blowpipe used by Mayo, held to her lips in the original attack. Narrow cylindrical blue-gray tube with brown rims at the open ends, a small white outlined diamond motif around its middle, simple dark mouth opening. Slight three-quarter side view clearly shows the hollow end. It is a mouth-blown dart tube, NOT a firearm: no pistol handle, tank, trigger, stock, magazine or syringe. White and muted blue palette matches her uniform. No darts or hands or character.",
+          "note": "원작 Attack1_1 20/44에서 입으로 부는 파랑·갈색 짧은 관 확인.",
+          "reference": "assets/references/mayo-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/mayo-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "bella",
+      "name": "벨라",
+      "identity": "Keep the long flowing silver-white hair with blue-violet tips and side braid, lavender-blue eyes, blue gem choker, navy gown with pale blue layered petal panels, white ruffled sleeves, and flowing spectral ribbon shapes. Preserve the closed floor-length skirt shown in the reference.",
+      "extra": "Angle the empty hands slightly away from the skirt. Keep an articulated body underneath; do not split or shorten the visible skirt to expose the legs. No separate ghost-flame companions.",
+      "note": "긴 치마를 유지합니다. 팔을 치마에서 떼고, 치마를 다리와 한 덩어리로 만들지 않도록 요청했습니다.",
+      "source": "assets/character-inputs/inputs-masked/bella.png",
+      "secondary_bones": "HairBack.{L/R}.01-05; Braid.01-03; Ribbon.{L/R}.01-04; Skirt.{L/R}.01-03",
+      "motion_note": "긴 머리·땋은 머리·유령 리본과 긴 치마를 별도 제어합니다. 치마의 원래 가림 범위는 유지합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/vela",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "도깨비불",
+          "kind": "effect",
+          "description": "ONLY ONE of Bella's floating ghost flames shown in the reference. Compact curling blue/cyan flame with a pale near-white inner core and violet purple curled outer tip, a single continuous wispy teardrop form. Clean solid-looking volume suitable for a proxy mesh; soft internal color gradients but no outer glow cloud. No face unless actually in the reference, no lantern, handle, cage, skull, base, or character.",
+          "note": "원작 도깨비불. 랜턴을 추가하지 않음. 최종 발광·투명·파티클은 엔진에서 설정.",
+          "reference": "assets/references/bella-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/bella-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "ui",
+      "name": "우이",
+      "identity": "Keep the mint-green hair and long thick braid tied with a yellow bow, leaf-green eyes, rosy cheeks, pink hair clips, tan straw hat with tiny frog ornament, pink flower and white bow, yellow raincoat with pink flower buttons and blue badge, cream leggings, and yellow rain boots shown in this standing reference.",
+      "extra": "Generate the standing girl only. Keep the tiny frog ON THE HAT, but do not include the large frog mount or clover wand.",
+      "note": "본체 A포즈를 새로 생성했습니다. 가려졌던 다리·장화는 제작용 해석입니다. 원래 큰 개구리 탑승형도 아래에 있습니다.",
+      "source": "artifacts/tripo-animation-inputs/images/ui-body.png",
+      "secondary_bones": "Braid.01-05; HairFront.{L/R}.01-02; Coat.{L/R}.01-02",
+      "motion_note": "긴 땋은 머리와 앞머리·우비 자락. 모자 위 작은 개구리는 모자 장식이며 큰 탑승 개구리와 구분합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/ui",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "네잎클로버 지팡이",
+          "kind": "prop",
+          "description": "ONLY Ui's green four-leaf clover wand from the reference: long slim slightly curved green stem, four broad heart-shaped green leaflets joined at the top, simple lighter vein pattern, small yellow ribbon with white dots tied below the clover head. Preserve all FOUR leaves. No girl, hat, frog, hands or scenery.",
+          "note": "원작 손에 든 네잎클로버 소품.",
+          "reference": "assets/references/ui-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/ui-weapon.png"
+        },
+        {
+          "key": "prop-frog",
+          "label": "개구리 탑승물",
+          "kind": "mount",
+          "description": "ONLY Ui's large friendly green frog mount from the reference, EMPTY without the girl. Rounded plump light-green body, protruding little eyes, wide curved smile, round pink cheeks, yellow cloth sash with pink flower clasp, webbed feet, small zipper pull on the side as shown. Preserve squat proportions and seated shape. No tiny frog sitting on top, no hat, hair, clover wand, girl or humanoid legs.",
+          "note": "원작 개구리 탑승물 분리 입력.",
+          "reference": "assets/references/ui-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/ui-prop-frog.png"
+        }
+      ],
+      "assembly_source": "artifacts/tripo-animation-inputs/images/ui-assembly-reference.png"
+    },
+    {
+      "slug": "butter",
+      "name": "버터",
+      "identity": "Keep the long sandy-blonde hair, curled ahoge, floppy puppy ears, large yellow top bow and small yellow ear bows, open aqua-blue eyes and round cheeks. Preserve the dark collar and gold bell, white short sleeves, yellow apron dress with chest bow and front pocket, pale pink lower hem, yellow-brown striped knee socks, pale beige shoes, brown shoulder strap and puppy-face hip pouch, and fluffy cream-tipped puppy tail.",
+      "extra": "Keep the floppy ears and hair continuously rooted to the head, the tail attached at its base to the lower back and the arms connected at the shoulders. Preserve their characteristic outlines and keep the pouch worn on its shoulder strap. Ears grow from the head, not from a hat. Use a relaxed closed mouth.",
+      "note": "버터 재생성용: 눈을 뜨고 입을 편하게 다문 본체와 새총을 별도 입력합니다.",
+      "source": "artifacts/tripo-animation-inputs/images/butter-body.png",
+      "secondary_bones": "Ear.{L/R}.01-03; Tail.01-05; HairBack.{L/R}.01-04; HairFront.{L/R}.01-02; Bow.{L/R}.01; Pouch.01",
+      "motion_note": "강아지 귀 좌우 3본, 꼬리 5본, 긴 머리 좌우 4본을 권장합니다. 귀·머리카락·꼬리는 각 뿌리 연결을 유지하면서 가중치를 구분하고 리본과 가방은 작은 보조 움직임만 줍니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/butter",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "새총",
+          "kind": "prop",
+          "description": "ONLY Butter's distinctive slingshot held in the reference. Rounded golden-yellow Y-shaped fork, short dark brown handle, small yellow bow tied at the neck of the handle, two reddish-brown elastic bands fixed at the tips, small central pouch. Preserve the clear empty U opening and simple chibi scale. One complete slingshot, three-quarter front view, natural relaxed bands. No stone, human hand, character, dog-face purse or extra bow beside the object.",
+          "note": "원작 전신 캡처의 노란 Y자 새총·목의 리본·갈색 손잡이 확인.",
+          "reference": "assets/references/butter-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/butter-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "komi",
+      "name": "코미",
+      "identity": "Keep the very long white hair fading to pastel pink, triangular white cat ears with pink interiors, thin white-pink cat tail, half-lidded golden eyes, relaxed mouth with a tiny fang inside, white pajama T-shirt with pink trim, pink shorts with white hems, and soft pink slippers.",
+      "extra": "Stand with the feet slightly apart and both legs naturally connected at the hips. Keep the cat tail attached at its base to the lower back, with a readable outline beside the hair and legs. No pillow.",
+      "note": "붙어 보이는 두 발은 살짝 벌리도록 요청했습니다. 베개는 별도 파일입니다.",
+      "source": "assets/character-inputs/inputs-masked/komi.png",
+      "secondary_bones": "Ear.{L/R}.01-02; Tail.01-05; HairBack.{L/R}.01-05; HairFront.{L/R}.01-02",
+      "motion_note": "고양이 귀 좌우 2본, 가늘고 긴 꼬리 5본, 긴 머리 좌우 5본. 귀를 누이거나 꼬리를 휘는 동작을 별도로 제어합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/kommy",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "분홍 물방울 베개",
+          "kind": "deformable_prop",
+          "description": "ONLY Komi's pink pillow from the reference. A soft plump rectangular pillow with white polka dots, pale pink/white ruffled borders on the two short ends and simple seam around the perimeter. Slight three-quarter view showing thickness and rounded corners. No cat, character, hands, bed, extra pillow or decorative face.",
+          "note": "원작 전신 캡처의 분홍 물방울·프릴 베개.",
+          "reference": "assets/references/komi-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/komi-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "hilde",
+      "name": "힐데",
+      "identity": "Keep the charcoal-gray high ponytail and ahoge, pointed ears, lime-green eyes, round wire glasses, lime cross-shaped hairpin, cream cable-knit high collar, white rolled sleeves and lab-coat panels, charcoal apron with pocket and ID badge, brown trousers, and black flat shoes.",
+      "extra": "Keep the glasses aligned naturally in front of the eyes with the temples supported at the ears; preserve the spectacle bridge without adding a nose beneath it. Keep the lab coat worn on the body, with its hanging panels readable beside the legs. No medical gun or case.",
+      "note": "안경·명찰·니트·가운을 유지합니다. 의료 주사기총은 별도 파일입니다.",
+      "source": "assets/character-inputs/inputs-masked/hilde.png",
+      "secondary_bones": "Ponytail.01-04; HairFront.01-02; Ear.{L/R}.01; Coat.{L/R}.01-03",
+      "motion_note": "높은 포니테일·앞머리·뾰족귀와 가운 자락. 안경은 머리에 고정하며 볼 모핑에 늘어나지 않게 합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/hilde",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "의료 주사기총",
+          "kind": "prop",
+          "description": "ONLY Hilde's medical injector gun held in the reference. Short chunky dark charcoal rectangular cylindrical upper barrel with a large pale yellow-green medicine window, a small lime medical plus symbol near its front, pale silver frame and short pale pistol grip, small dark round muzzle. Copy the stylized clinical shape; do not turn it into a giant exposed needle syringe or a realistic firearm. No medical case, hand, character, numbers or labels.",
+          "note": "원작 전신 캡처의 의료 총 형상·약액 창·십자 표식.",
+          "reference": "assets/references/hilde-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/hilde-weapon.png"
+        }
+      ]
+    },
+    {
+      "slug": "shion",
+      "name": "시온",
+      "identity": "Keep the dark navy hair, straight bangs, long side ponytail with blue tips and large blue bow, small dark dragon mask on the side of the head, cyan eye on image-left and violet eye with yellow star pupil on image-right, charcoal shoulder mantle, blue chest jewel, dark star-patterned dress, blue sleeves, opaque blue leggings, and blue boots.",
+      "extra": "Preserve the eye-color sides exactly as shown. The mask must remain beside the face, not cover it. No sniper rifle.",
+      "note": "정면 이미지 기준 왼쪽 눈은 청록색, 오른쪽은 별 동공의 보라색입니다. 저격총은 별도 파일입니다.",
+      "source": "assets/character-inputs/inputs-masked/shion.png",
+      "secondary_bones": "Ponytail.01-05; HairFront.{L/R}.01-02; Bow.01-02; Mantle.{L/R}.01-02",
+      "motion_note": "옆 포니테일·앞머리·리본·어깨 망토. 작은 가면은 머리 옆에 고정하고 눈을 덮지 않게 합니다.",
+      "reference_url": "https://wiki.cheeky.tsuncloud.com/korea/spines/xxionx",
+      "props": [
+        {
+          "key": "weapon",
+          "label": "저격총",
+          "kind": "prop",
+          "description": "ONLY Shion's large dark gray/navy stylized rifle from the reference. Very long chunky rectangular front barrel shroud with small vertical vents, long straight receiver, compact scope on top, large angular box magazine below, skeletal angular rear stock with an open cutout, and small lower front support/bipod structure. Copy the silhouette, muted navy-gray panels and dark outlines. Entire stock and muzzle visible. No character, hands, bullets, muzzle flash or real-world logos.",
+          "note": "원작 전신 캡처의 큰 직선형 총열·조준경·탄창·개머리판 확인.",
+          "reference": "assets/references/shion-fullbody.png",
+          "source": "artifacts/tripo-animation-inputs/images/shion-weapon.png"
+        }
+      ]
+    }
+  ],
+  "target_tool": "Meshy"
+}

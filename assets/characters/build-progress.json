@@ -1,0 +1,59 @@
+[
+  {
+    "id": 3,
+    "slug": "id",
+    "blend": "assets/characters/id.blend",
+    "model": "assets/characters/id.fbx",
+    "vertices": 11396,
+    "triangles": 22356,
+    "bones": 20,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Select": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/id.png"
+  }
+]

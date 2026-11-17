@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+One separate aqua-blue water projectile emitted from the snout nozzle of Naia's dolphin water gun. Rounded teardrop volume, short tapering flowing tail and soft white-blue highlights. This is an optional proxy for later water VFX, separate from the dolphin water-gun prop. No toy body, handle, hands or character in this effect mesh.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape. This is an optional 3D effect proxy; transparency, emission and animated particles will be set up later. Do not convert it into a hand-held gun or lantern.

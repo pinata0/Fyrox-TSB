@@ -1,0 +1,201 @@
+{
+  "schema_version": 1,
+  "character": "shion",
+  "status": "requested_not_implemented",
+  "coordinate_note": "L/R are anatomical character sides",
+  "face_geometry_note": "NO NOSE: keep a smooth, gently rounded facial surface between the eyes and mouth. Do not generate a nose, nose bridge, nose tip, nostrils, nose bump, nose line, nose dot, or nose-shaped shading in either geometry or texture. Preserve the eyes, mouth, cheeks and original facial proportions.",
+  "facial_morphs": [
+    {
+      "name": "eyeBlink_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeBlink_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball"
+    },
+    {
+      "name": "eyeSquint_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeSquint_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 가늘게 뜨기 / narrow the eye opening"
+    },
+    {
+      "name": "eyeWide_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "eyeWide_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈 크게 뜨기 / widen the eye opening"
+    },
+    {
+      "name": "browUp_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browUp_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 올리기 / raise eyebrow"
+    },
+    {
+      "name": "browDown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "browDown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "눈썹 내리기 / lower eyebrow"
+    },
+    {
+      "name": "mouthSmile_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthSmile_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 올리기 / raise mouth corner"
+    },
+    {
+      "name": "mouthFrown_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "mouthFrown_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입꼬리 내리기 / lower mouth corner"
+    },
+    {
+      "name": "cheekPuff_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekPuff_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 부풀리기 / inflate cheek volume"
+    },
+    {
+      "name": "cheekStretch_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekStretch_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 옆으로 늘리기 / pull cheek outward laterally"
+    },
+    {
+      "name": "cheekSquash_L",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "cheekSquash_R",
+      "range": [
+        0,
+        1
+      ],
+      "action": "볼 누르기·줄이기 / compress cheek inward locally"
+    },
+    {
+      "name": "jawOpen",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 벌리기 / open jaw and mouth cavity"
+    },
+    {
+      "name": "mouthPucker",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 오므리기 / pucker lips"
+    },
+    {
+      "name": "mouthWide",
+      "range": [
+        0,
+        1
+      ],
+      "action": "입 가로로 넓히기 / widen lips without moving cheeks excessively"
+    }
+  ],
+  "gaze_bones": [
+    "Eye.L",
+    "Eye.R"
+  ],
+  "secondary_chains": "Ponytail.01-05; HairFront.{L/R}.01-02; Bow.01-02; Mantle.{L/R}.01-02",
+  "secondary_note": "옆 포니테일·앞머리·리본·어깨 망토. 작은 가면은 머리 옆에 고정하고 눈을 덮지 않게 합니다.",
+  "prop_rig": "저격총 PropRoot/Grip, 보조 손 SupportGrip, Muzzle 기준점. 원작 외형을 유지하고 필요할 때만 탄창·지지대를 별도 파츠로 둡니다.",
+  "runtime_status": "Fyrox morph import, control and secondary-motion simulation not implemented or verified by this input-pack task"
+}

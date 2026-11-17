@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Aya's open WHITE FLOWER-PETAL PARASOL from the reference: overlapping large white curled flower petals forming the canopy, pale blue-gray underside, clearly visible pale ribs and center hub, long straight white shaft ending in simple grip. Keep the full shaft and grip. Three-quarter side view reveals open underside and canopy silhouette, not a top-down flower. No character, hair, butterfly hair ties, kimono, sword, or hands.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

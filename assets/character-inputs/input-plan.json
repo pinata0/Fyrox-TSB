@@ -1,0 +1,97 @@
+{
+  "project": "C:/Users/user/projects/Fyrox-TSB",
+  "source_directory": "assets/turnarounds",
+  "crop_note": "Normalized front-view rectangles selected after visual review; no artwork is redrawn.",
+  "characters": {
+    "vivi": [
+      0.018,
+      0.1,
+      0.383,
+      0.835
+    ],
+    "naia": [
+      0.02,
+      0.07,
+      0.35,
+      0.845
+    ],
+    "erpin": [
+      0.14,
+      0.125,
+      0.373,
+      0.8
+    ],
+    "picora": [
+      0.137,
+      0.145,
+      0.364,
+      0.82
+    ],
+    "chloe": [
+      0.16,
+      0.075,
+      0.425,
+      0.837
+    ],
+    "renua": [
+      0.17,
+      0.075,
+      0.388,
+      0.835
+    ],
+    "mayo": [
+      0.165,
+      0.1,
+      0.389,
+      0.865
+    ],
+    "bella": [
+      0.032,
+      0.13,
+      0.341,
+      0.833
+    ],
+    "ui": [
+      0.025,
+      0.135,
+      0.302,
+      0.862
+    ],
+    "butter": [
+      0.133,
+      0.1,
+      0.357,
+      0.88
+    ],
+    "komi": [
+      0.164,
+      0.1,
+      0.397,
+      0.827
+    ],
+    "hilde": [
+      0.14,
+      0.1,
+      0.365,
+      0.853
+    ],
+    "shion": [
+      0.132,
+      0.105,
+      0.361,
+      0.797
+    ]
+  },
+  "generated_replacements": {
+    "aya": {
+      "path": "artifacts/aya-twintail-correction/images/front.png",
+      "sha256": "49791db0696a63231bd2e83b7f9982c5dfbc7f7732bc379a19c566fa15694707",
+      "reason": "Ankle-length white twin tails and held flower parasol; use this file directly."
+    },
+    "id": {
+      "path": "artifacts/id-bodysuit-correction/images/mounted-front.png",
+      "sha256": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+      "reason": "Fitted sleeveless bodysuit correction; mounted reference. Tripo standalone input uses images/front.png."
+    }
+  }
+}

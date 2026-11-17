@@ -1,0 +1,33 @@
+{
+  "slug": "aya",
+  "kind": "weapon",
+  "vertices": 6424,
+  "triangles": 12905,
+  "bounds": [
+    [
+      -0.7486751079559326,
+      -0.38909193873405457,
+      -0.05728700011968613
+    ],
+    [
+      0.4602830111980438,
+      0.8228397965431213,
+      1.305712342262268
+    ]
+  ],
+  "source_dimensions": [
+    1.6779914498329163,
+    1.7575027346611023,
+    1.9025497436523438
+  ],
+  "fold_morphs": [
+    "parasolFold",
+    "parasolSpread"
+  ],
+  "blade_meshes": [
+    "Aya_Blade_1",
+    "Aya_Blade_2",
+    "Aya_Blade_3"
+  ],
+  "bounds_state": "open parasol, blades hidden"
+}

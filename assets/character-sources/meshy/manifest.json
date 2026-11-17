@@ -1,0 +1,619 @@
+{
+  "date": "2026-11-15",
+  "entries": [
+    {
+      "slug": "picora",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Candy_Girl_Triangle_Remesh_20261114_character.glb",
+      "source": "assets/character-sources/meshy/picora/picora-source.glb",
+      "sha256": "d9020d7d148572a5fd675049b7ad9c53f60babecba36f0c68585e92b597b73f9"
+    },
+    {
+      "slug": "komi",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_chibi_cat_girl_remeshed_20261114_character.glb",
+      "source": "assets/character-sources/meshy/komi/komi-source.glb",
+      "sha256": "8ee9b7dd61429e750812ef3166963cc8b38067c500eb22bd8816f5db57d68b7c"
+    },
+    {
+      "slug": "bella",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Character_Remesh_20261114_character.glb",
+      "source": "assets/character-sources/meshy/bella/bella-source.glb",
+      "sha256": "026b42e12a392b3cf64eb74d651a8dd5ed742bdd7ad7160a6a1e0ec4f9aa3fda"
+    },
+    {
+      "slug": "vivi",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Dragon_Girl_Triangle_Remesh_20261114_character.glb",
+      "source": "assets/character-sources/meshy/vivi/vivi-source.glb",
+      "sha256": "c9a02ed84b886077cb2644fabeafcd62d067b3237392b9fea6354ea0d2b8c1cc"
+    },
+    {
+      "slug": "shion",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_chibi_dragon_mask_remesh_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/shion/shion-source.glb",
+      "sha256": "f88b3b02061b468d1719450b0d705b06ac91a38c52fccd65e79ddfab89c796a5"
+    },
+    {
+      "slug": "id",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Elf_Remesh_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/id/id-source.glb",
+      "sha256": "5f365099214e7583f2c7683411d85fc4f62cc5dd57b0d0ba4af69e06608683ad"
+    },
+    {
+      "slug": "hilde",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Elf_Triangle_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/hilde/hilde-source.glb",
+      "sha256": "7daac4d711babdfc975269ed08b32e3416daa04bc2d3a47c5ac867eabc6aee32"
+    },
+    {
+      "slug": "mayo",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Fairy_Remesh_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/mayo/mayo-source.glb",
+      "sha256": "3d827796b801c8e9f105410baf72c9ad11ad72a77b6234244c84f0a443a4e6ea"
+    },
+    {
+      "slug": "ui",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Frog_Raincoat_Girl_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/ui/ui-source.glb",
+      "sha256": "7af708c6f565904e13fc912ebf15c3a0e1739c03378b58e61546e9f3453de333"
+    },
+    {
+      "slug": "aya",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Kimono_Girl_Remesh_20261114_character.glb",
+      "source": "assets/character-sources/meshy/aya/aya-source.glb",
+      "sha256": "0f97c64b7d497144ee9678ab76ef727e43f490fca3314dba924d6adec278070a"
+    },
+    {
+      "slug": "erpin",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_chibi_royal_character_remesh_20261114_character.glb",
+      "source": "assets/character-sources/meshy/erpin/erpin-source.glb",
+      "sha256": "08d0f16253ccce27e28c4f3583545b2faa7c3757ac57097f9f47605d14c5e8a4"
+    },
+    {
+      "slug": "naia",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chibi_Sunhat_Girl_Remesh_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/naia/naia-source.glb",
+      "sha256": "1a73ab80f3e09b70a18a7d1563093e5576f4bc839cd7f6246f54cd378c497e29"
+    },
+    {
+      "slug": "chloe",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_Chloe_Chibi_Triangle_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/chloe/chloe-source.glb",
+      "sha256": "bdd9007bebd0e0b98e0bd04a5f3c3cfe6424b27b6c3a674896c1a24930748187"
+    },
+    {
+      "slug": "ui-frog",
+      "kind": "companion",
+      "original": "assets/temp/Meshy_AI_FrogMount_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/ui-frog/ui-frog-source.glb",
+      "sha256": "14474a99a29d217c6baffef637a16a44839cd28e22beb13eb3ae22f769105027"
+    },
+    {
+      "slug": "butter",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_puppy_girl_remesh_tri_100k_20261114_character.glb",
+      "source": "assets/character-sources/meshy/butter/butter-source.glb",
+      "sha256": "6a829d7c1ca6d099b506d8b8641cae8d051efeb56b46ecd77e26591e2533a544"
+    },
+    {
+      "slug": "renua",
+      "kind": "character",
+      "original": "assets/temp/Meshy_AI_RemeshedChibiCharacter_20261114_character.glb",
+      "source": "assets/character-sources/meshy/renua/renua-source.glb",
+      "sha256": "711f92d378f1d66eb5e5c6c2f779dcf3c600383d29ba8b6c434fbdcc13f93fb6"
+    },
+    {
+      "slug": "chloe-sebastian",
+      "kind": "companion",
+      "original": "assets/temp/Meshy_AI_sebastian_bear_remeshed_20261114_character.glb",
+      "source": "assets/character-sources/meshy/chloe-sebastian/chloe-sebastian-source.glb",
+      "sha256": "1f9ccaac6bf98c18d906e5b2281387372b495dfc52dfd288eb024f3f46ef9f45"
+    },
+    {
+      "slug": "ui",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_clover_wand_remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/ui/weapon/ui-weapon.fbx",
+      "sha256": "9b2b2312e84ad337d58e2b8dee799d8e8c2aba111d41b6b772b7b187d76177c4",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon.fbx",
+          "sha256": "2b70569968404e444ee1f9d0bd68f4869d51cc0b0460b4208470112554ed14d4"
+        },
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon-basecolor.png",
+          "sha256": "944266e069811d03c6fb82ca28a4be9fe17d108032d64ad47897d204bd9bdb74"
+        },
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon_metallic.png",
+          "sha256": "3b0d58d0530980a4b415be525129e894d2d2562daa3cde1749265a9bc0213b34"
+        },
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon_metallic_roughness.png",
+          "sha256": "065dcac0f1d611618db908ba02285b4b669fc6c125564d0b132281c40c94849e"
+        },
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon_normal.png",
+          "sha256": "9d5d5010f6ff4f0ae4a5230b22e4dee76bb31484f4eb6e8ce718ca5e7001845f"
+        },
+        {
+          "path": "assets/character-sources/meshy/ui/weapon/ui-weapon_roughness.png",
+          "sha256": "59cf4b8fab38f782703776b99d2878be4c43135cd540e049cbb0f69cf3140d7c"
+        }
+      ]
+    },
+    {
+      "slug": "id",
+      "kind": "mount",
+      "original": "assets/temp/Meshy_AI_crescent_moon_pod_chair_remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/id/mount/id-mount.fbx",
+      "sha256": "81e9d0b2fba58ee0fccf1a729bcd2d4346bd528d6b0ec3e88cfef1dc814c9693",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount.fbx",
+          "sha256": "fdd26c16bddfe3e179a52d637522a0d478f2c539f94cd43c833fb46552458e23"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount-basecolor.png",
+          "sha256": "00df0edc9a59a192f645b90da778f2c709cc10ae59e0e0a411cb71f65b5cd727"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount_metallic.png",
+          "sha256": "a487efa1ff53553051ebe25199738fbd6ba4d0932f7544029a66ff1bc80bed97"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount_metallic_roughness.png",
+          "sha256": "b9ad1999e4ccb1b210995cd334925fc43378b47f1209c30be3bf7e11b7e7cc7d"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount_normal.png",
+          "sha256": "231e4ddf5c0492ffdb74fde3dc600a5ec3daf701a4fc350d4fab30d85524a9c7"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/mount/id-mount_roughness.png",
+          "sha256": "a51598720701647fb8acd43d14f5dede235283d753cc3035bc1e1d8e14905441"
+        }
+      ]
+    },
+    {
+      "slug": "picora",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_curled_staff_triangle_30k_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/picora/weapon/picora-weapon.fbx",
+      "sha256": "32fd09a3b073bd3a4b44129b5b0ec0c9f2e26371772515fe104bc1df949ca29c",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon.fbx",
+          "sha256": "a58024786ec3a63d34450db59409018af53ebb6e2ba53f3d6cffc286e618ad29"
+        },
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon-basecolor.png",
+          "sha256": "bc356bc9f03b63d9fced3ad8c4bd2d519a449ae3d6dc4cc4fc06879f4374194c"
+        },
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon_metallic.png",
+          "sha256": "3f5f09cb3a40999a716b74cb591735a34ff2bd02d649a808818dae4d1e77cb3a"
+        },
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon_metallic_roughness.png",
+          "sha256": "617d2929ade6e9dc15e0c4262569a0f13e00bf333dc22946df362f934572eaf3"
+        },
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon_normal.png",
+          "sha256": "0dc96374d33f341b062c1a0691d44a0bec6c5e328ae6450aa6634f5cf4f39941"
+        },
+        {
+          "path": "assets/character-sources/meshy/picora/weapon/picora-weapon_roughness.png",
+          "sha256": "81cc8bbc0b079b28727306007e72ddcc2356eb5fcca2a8116ea0c5c933d3a71f"
+        }
+      ]
+    },
+    {
+      "slug": "naia",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_dolphin_water_gun_remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/naia/weapon/naia-weapon.fbx",
+      "sha256": "a066ea900841532efaf1d8c320776f4d7514d70453ce9d0c3e5eb5f9eb229f3b",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon.fbx",
+          "sha256": "108f55a04d7c40503897766cdace0c76dac0e1dd7ba4a24722a0f75a8412f884"
+        },
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon-basecolor.png",
+          "sha256": "c12ae6d071655aaaaf8ba5db02344bf2576784fcb4438aa217a7f4407af72319"
+        },
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon_metallic.png",
+          "sha256": "5664eee0252c6d8effa7f136cf2bb27170eb653e690b1c7a01379e15b897e933"
+        },
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon_metallic_roughness.png",
+          "sha256": "54fa0a1767a2f9f3b0e468bfa274e1d72f74f4668d6b96c38a1a16d0a53e7e4e"
+        },
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon_normal.png",
+          "sha256": "4c9404924cc496491c0023fa03d7905fce17b781a9d5f35bec46e68875461ee6"
+        },
+        {
+          "path": "assets/character-sources/meshy/naia/weapon/naia-weapon_roughness.png",
+          "sha256": "9bb4a5a4e10fd593e4668d4e7f5c057c04639cd28b57bcb843ece0c9126c8699"
+        }
+      ]
+    },
+    {
+      "slug": "bella",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_Ghost_Flame_Remesh_30k_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/bella/weapon/bella-weapon.fbx",
+      "sha256": "b294c2e798c04d5cc1804106a31c3f2054e195b5e4d472331b5dabd36cfe8925",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon.fbx",
+          "sha256": "4a1663893eecdb65bc0eb61e220a1508de01483891d350c816695355c881e802"
+        },
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon-basecolor.png",
+          "sha256": "91f3049f8a593e7f5eeefca6977665e27faf6beab982d12b7a6b238b40817883"
+        },
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon_metallic.png",
+          "sha256": "3a08e756fe851649ab22e77d14797834531f4a8b3124177da560f5f64f93336c"
+        },
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon_metallic_roughness.png",
+          "sha256": "e24a93e33f18d06e59da17be3edc81253a6eb719338f5f4933aea647e2edd118"
+        },
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon_normal.png",
+          "sha256": "846444009705f8043c8ec58931260991e5c47db230160da031ab929232e8d0e2"
+        },
+        {
+          "path": "assets/character-sources/meshy/bella/weapon/bella-weapon_roughness.png",
+          "sha256": "8181d6add57ef3ed5ebbc990e714cf771827b83f2bf30af6dd2aded7f6ecd30a"
+        }
+      ]
+    },
+    {
+      "slug": "hilde",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_medical_injector_gun_remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/hilde/weapon/hilde-weapon.fbx",
+      "sha256": "75d622a8a71e2a9ee7063eeb6231168ba396d4f39c971951e6abb22332d79216",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon.fbx",
+          "sha256": "e3fe64718267e3aa3425259965995292b574d8de8585f042ccd432dacec43453"
+        },
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon-basecolor.png",
+          "sha256": "d9c21f7cd58834adb843c3610ff29b47ac60f483638065adb18ec2354ac17726"
+        },
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon_metallic.png",
+          "sha256": "1ca38daf540b594c92b00ed73d8983ddcb3f209e1873088863c872d3ad8195ad"
+        },
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon_metallic_roughness.png",
+          "sha256": "7c03c7d5238657e4cd5ac3f5c1aa3eee9849fde47b0e3c6d41d5c9fe5c8bde71"
+        },
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon_normal.png",
+          "sha256": "911ca3f710da61d2f414cbd0321d16975c3f596c8d73f54e6f5862a48cee2d46"
+        },
+        {
+          "path": "assets/character-sources/meshy/hilde/weapon/hilde-weapon_roughness.png",
+          "sha256": "7fe1a333164d1ad97ea7d1272c1512810b52f9ea0d0511168aa57add73ff9ade"
+        }
+      ]
+    },
+    {
+      "slug": "vivi",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_Mercury_Blade_Remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/vivi/weapon/vivi-weapon.fbx",
+      "sha256": "114a990b91ea169d7da52d120f61a970119b4b5383f499997e7a97456ef7732a",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon.fbx",
+          "sha256": "96ec36f8a93a56824d48ffec82b41b4772b4f1483aa9bbedc91435d19bcfe563"
+        },
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon-basecolor.png",
+          "sha256": "6d685dfef33604188fc6851a4c4ec9ab47c61bf796325924d041ee0d6a4ab25d"
+        },
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon_metallic.png",
+          "sha256": "06efb05d6caf926e5a4dbedd5d7064d87ee0cf50d139f26dc0d3ad8b21bb9671"
+        },
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon_metallic_roughness.png",
+          "sha256": "1767f1f736f6f929b88a27df74bcfc35f13c274d0ec58de5cf9f95d58f691ca7"
+        },
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon_normal.png",
+          "sha256": "6733e1b49ab7571bfdcb97c20db581dc6bc8e00db02ff1dffbc27feb9234850b"
+        },
+        {
+          "path": "assets/character-sources/meshy/vivi/weapon/vivi-weapon_roughness.png",
+          "sha256": "2c1093a52efcbc7b7443634fe6217fa66bca7529b600fa171313b8bdc6065853"
+        }
+      ]
+    },
+    {
+      "slug": "aya",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_Parasol_Triangle_Remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/aya/weapon/aya-weapon.fbx",
+      "sha256": "282889b6dd9045499075feb4aa779b3234314938a83b76c7463d5d479ba6e1a7",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon.fbx",
+          "sha256": "8d126ccb1efad733cfc1eb24ab5230e60d901c4b486452ae90564215f6507bd2"
+        },
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon-basecolor.png",
+          "sha256": "a2ea944710ec28d0429b71596a6c31b1169f1667c58a8f286f70831551476079"
+        },
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon_metallic.png",
+          "sha256": "6df5151dbb1936f7ad0b5db3011d8289c4f96457e891665043a8e0cfa3495f6c"
+        },
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon_metallic_roughness.png",
+          "sha256": "76ed0a05f6c562dcef3317dc1013851c8aee3d04068227fce4cac41770c99d2d"
+        },
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon_normal.png",
+          "sha256": "ef72a95630586240d81c186014eb7b02fe23eb5d4617c9580aeaf60d6b4af77b"
+        },
+        {
+          "path": "assets/character-sources/meshy/aya/weapon/aya-weapon_roughness.png",
+          "sha256": "5376128811b02728dd03b680ce80f2c8c5f7fb29a818ac1e1fc5e21610891411"
+        }
+      ]
+    },
+    {
+      "slug": "komi",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_Pink_Ruffled_Pillow_Remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/komi/weapon/komi-weapon.fbx",
+      "sha256": "20c01f786479965e8faddde2c5ddb603a3cd8c5d6e88c43426e5b87bc3ad42d0",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon.fbx",
+          "sha256": "917b9f8f870e4767ea1922cda406b45148f8657793450a23470226c6840aa7f2"
+        },
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon-basecolor.png",
+          "sha256": "25c97ef8da541e3538077d6f6e09ec8f9ca31c0da8ef462cad5357b3377ea100"
+        },
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon_metallic.png",
+          "sha256": "4f7c75e4a90596b084c080303dfda30c7d8f1863b29d6a413fc413a0d291b840"
+        },
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon_metallic_roughness.png",
+          "sha256": "a6ba6e920e2782a35ec82b8ee1a08a70ee75110016ff6473ba034d9d92eb3fd0"
+        },
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon_normal.png",
+          "sha256": "904badc5728b805864208de90b7cc476a3defbf682136c7ca892fc143b8dfbd0"
+        },
+        {
+          "path": "assets/character-sources/meshy/komi/weapon/komi-weapon_roughness.png",
+          "sha256": "9dc53caaf3e373223373007dee4eae56991578c38720dc40cf030dbc4885d0fd"
+        }
+      ]
+    },
+    {
+      "slug": "butter",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_remeshed_butter_slingshot_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/butter/weapon/butter-weapon.fbx",
+      "sha256": "85d2393b4a3b58801eca1e6a3d68e4a15b4bf8219514d611c014e4eef442fc56",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon.fbx",
+          "sha256": "b111a8d8e076a298c5ae1c8e29510b3a8ece6dd11ff148b38c0252f598594b03"
+        },
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon-basecolor.png",
+          "sha256": "8411768c01d833127d89b36049873c8b2eb3c5ed16be5d2203936a1a5506798d"
+        },
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon_metallic.png",
+          "sha256": "c9c793f2eb70191c1649e37b453da816438ea7fab8752e2d508b62e9645cc125"
+        },
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon_metallic_roughness.png",
+          "sha256": "432fdc98aec2bf4b2ab63a7773b52dd9eb3998fb924688e35d2efe528802cff0"
+        },
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon_normal.png",
+          "sha256": "3937274dea12f55550b4ed214a3cdd461d3b4b8e8afeae9a5988b8089697fda4"
+        },
+        {
+          "path": "assets/character-sources/meshy/butter/weapon/butter-weapon_roughness.png",
+          "sha256": "d612b5bf53b135b17b5127ca3da811c01181535a084b3350e5e594551636ef31"
+        }
+      ]
+    },
+    {
+      "slug": "renua",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_Remeshed_Magic_Circle_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/renua/weapon/renua-weapon.fbx",
+      "sha256": "fbadd6da54c5d41b2f8e14c065e721a1827f957d82861bc6a89bf7c750a40386",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon.fbx",
+          "sha256": "cdc52ea16bd612ded009471156058980c22d11a0f5998e61a4724fb7edb16afe"
+        },
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon-basecolor.png",
+          "sha256": "13db4d2f2d83a01fc8e4a3892fed988d907f38000b0e987f425cd791198c5da5"
+        },
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon_metallic.png",
+          "sha256": "99a4f99e8c7f5198d796eb19121be19a2457e9a136a5de551b07c3cac16799c0"
+        },
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon_metallic_roughness.png",
+          "sha256": "3db2dbd29546f701c882f178da06aef39fe3cee57bcf944add51ac40a6b29cfe"
+        },
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon_normal.png",
+          "sha256": "43cdb8c4a276435840f53e83fbbb3668cf004282fd6dcfaf5d560b77167bc2f0"
+        },
+        {
+          "path": "assets/character-sources/meshy/renua/weapon/renua-weapon_roughness.png",
+          "sha256": "d3629a5b50666ab6c6ac84c9a80b3cdd1b5327a6e7dcd33b9568ccc4df64cd78"
+        }
+      ]
+    },
+    {
+      "slug": "id",
+      "kind": "robot",
+      "original": "assets/temp/Meshy_AI_Remeshed_Robot_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/id/robot/id-robot.fbx",
+      "sha256": "52b3d894adf50db1e6fbc3df3e09822bd419601cb3df116bea9adad8b92c771f",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot.fbx",
+          "sha256": "0adc82b89e19f7abcf97f1f4c42b1700b471ea53bc7d96b77e836df4965dddc3"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot-basecolor.png",
+          "sha256": "e9337fb63cb5668eca17210ca80e8571166afe97e8579a600f8b1aaff5338532"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot_metallic.png",
+          "sha256": "f7118f36c1d52b25e272061b29465552fec594158623e5395090e200f9fc14b0"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot_metallic_roughness.png",
+          "sha256": "d8887c7400e72e5b2d3f43b43c104873fce1b5546cd6f9cea8bec08192c7f9e3"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot_normal.png",
+          "sha256": "951e894ef1fee461f2cd5afffa9d6d7d02e01cf4a2b415ffeeed38b200602dcf"
+        },
+        {
+          "path": "assets/character-sources/meshy/id/robot/id-robot_roughness.png",
+          "sha256": "202996a75f070e44d5216ebdbbc4a45ac9a921e92e9ad6cabd80b759cd735bc0"
+        }
+      ]
+    },
+    {
+      "slug": "erpin",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_RoyalStaff_Remesh_30k_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/erpin/weapon/erpin-weapon.fbx",
+      "sha256": "01a4f85d7fb7f0baac031edc5b3bd428c1bb392630179378f7f60b0662e97aad",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon.fbx",
+          "sha256": "59ee16a99910e23d801d93ea7d00ec0255064a549c29a70fc7f6423c49fba70a"
+        },
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon-basecolor.png",
+          "sha256": "1a7fe5c03e46aef751642f73da4b59bdc87e8684f712bb0f4b1c6c79e8beb597"
+        },
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon_metallic.png",
+          "sha256": "8e2de204a69b61c3389e7bfd5e52bf0b9717d58d664309d6a322f129bf6b5e5b"
+        },
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon_metallic_roughness.png",
+          "sha256": "50b5681613154d415827c96e26029ca74fe0c90ac2ac146b9335ca2ee600a585"
+        },
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon_normal.png",
+          "sha256": "0cda143e448b1e5630b7ff55433d6b0232780f55fecc40557577cc8e5b6e891f"
+        },
+        {
+          "path": "assets/character-sources/meshy/erpin/weapon/erpin-weapon_roughness.png",
+          "sha256": "4fadbdd50b608166d1643060fb419296ecf22637f48668ed5a1135201ab6e4e3"
+        }
+      ]
+    },
+    {
+      "slug": "mayo",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_stylized_blowpipe_remeshed_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/mayo/weapon/mayo-weapon.fbx",
+      "sha256": "013e0b07821815c393f5239806eea8f0a7b33f120ee0213ca4a3d9df851562da",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon.fbx",
+          "sha256": "81badb385294bf63627fbdf7d72c0f0e779e75121bdf49fbf0de4f130b3f869f"
+        },
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon-basecolor.png",
+          "sha256": "701d34d9fa59ea05968f4d635f602db8b93f6b44c647e71476b9fdff6fdd3f8b"
+        },
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon_metallic.png",
+          "sha256": "9ed2f18e29562b5ce48a913b00f87bc2f47faa317c0bcfa9799d670537ac3677"
+        },
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon_metallic_roughness.png",
+          "sha256": "a380c46de839baba98d9cb2f1ca43777ab81d3ddf7850f486c28d045fe0aaaab"
+        },
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon_normal.png",
+          "sha256": "7ac26f0315c339a07b83cc30863d999ef274140ca3b9ad461bea0f8ef8fb2a5c"
+        },
+        {
+          "path": "assets/character-sources/meshy/mayo/weapon/mayo-weapon_roughness.png",
+          "sha256": "7ea4e03ef8b1af50881379cb07f347a743dcd0d1015c7e36277f421e91e2284a"
+        }
+      ]
+    },
+    {
+      "slug": "shion",
+      "kind": "weapon",
+      "original": "assets/temp/Meshy_AI_stylized_sniper_rifle_remesh_20261114_texture_remesh_tri_fbx.zip",
+      "source": "assets/character-sources/meshy/shion/weapon/shion-weapon.fbx",
+      "sha256": "30800643fe303117c52fc028dc0769fe9d094e749b85c49a55b63eb6d417e877",
+      "files": [
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon.fbx",
+          "sha256": "3efb77e245acb6ecec09d0c001cdd935080cd30ff9f7d57aa72a08675df2a662"
+        },
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon-basecolor.png",
+          "sha256": "78a30dcff954b1bfa6266fda93d5aa1778e19eeb30e74be75baf527548a021b4"
+        },
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon_metallic.png",
+          "sha256": "563bc12a94809d85af9d20bd86deeefe9d80fd499968e5e009e3ba2c58b67961"
+        },
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon_metallic_roughness.png",
+          "sha256": "73f762467786ed8c194db83b42628f549ab234dd0e3e59d88aa23f01144e3ccd"
+        },
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon_normal.png",
+          "sha256": "49002a722268ce0ffb01a1c5944320e60b22f5f16aad0c87ba5305d622b3b32b"
+        },
+        {
+          "path": "assets/character-sources/meshy/shion/weapon/shion-weapon_roughness.png",
+          "sha256": "7e10fc212b7a1fa815a51a35e1400148bef66490ac522b26cb8b8e9742517fbe"
+        }
+      ]
+    }
+  ]
+}

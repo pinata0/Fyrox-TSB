@@ -1,0 +1,163 @@
+Browser tab: 1, Title: "ui · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/ui".
+1 AXWebArea ui · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/ui
+	2 container
+		3 link Description: Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		4 link Description: Planner, Value: planner.cheeky.tsuncloud.com/korea
+		5 link Description: Story, Value: story.cheeky.tsuncloud.com/korea
+		6 link Description: Schedule, Value: schedule.cheeky.tsuncloud.com/korea
+		7 link Description: Trickcal Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		8 link Description: Apostles, Value: wiki.cheeky.tsuncloud.com/korea/apostles
+		9 link Description: Monsters, Value: wiki.cheeky.tsuncloud.com/korea/monsters
+		10 link Description: Cards, Value: wiki.cheeky.tsuncloud.com/korea/cards
+		11 link Description: Stages, Value: wiki.cheeky.tsuncloud.com/korea/stages
+		12 link Description: MyHome, Value: wiki.cheeky.tsuncloud.com/korea/myhome
+		13 link Description: Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		14 link Description: Events, Value: wiki.cheeky.tsuncloud.com/korea/event
+		15 link Description: History, Value: wiki.cheeky.tsuncloud.com/korea/history
+		16 switch Spoilers, Help: Show unreleased / spoiler content, Value: 0
+		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/ui
+		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/ui
+	19 container
+		20 link Description: ← Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		21 heading ui, Value: 1
+			22 text ui
+		23 text hero · Apostles
+		24 button Open in lightbox
+		26 button Attack, Help: Play a Attack animation
+		27 button Experience, Help: Play a Experience animation
+		28 text Skin
+		29 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
+			30 menu
+				31 default
+				32 (selected) Normal
+		33 text Animation
+		34 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
+			35 menu
+				36 Die
+				37 EasterEgg_Victory
+				38 Groggy
+				39 (selected) Idle
+				40 Move
+				41 Skill1_1
+				42 Spawn
+				43 Ultimate1_1
+				44 Victory
+		45 text ANIMATION INSPECTOR frames @  30  fps
+		46 button ⏸ Pause
+		47 button ◀ −1f, Help: Step back one frame
+		48 button +1f ▶, Help: Step forward one frame
+		49 text frame  18 / 40 name Idle time 0.618 / 1.333 s loop true timelines 111 timeScale 1.00× Speed
+		50 button 0.25×
+			51 text 0.25
+			52 text ×
+		53 button 0.5×
+			54 text 0.5
+			55 text ×
+		56 button 1×
+			57 text 1
+			58 text ×
+		59 button 1.5×
+			60 text 1.5
+			61 text ×
+		62 button 2×
+			63 text 2
+			64 text ×
+		65 stepper (settable, integer) 1
+		66 text | fps
+		67 button 30
+		68 button 60
+		69 text Animations (fastest → slowest)
+		70 button Move 24f · 0.80s
+			71 text Move
+			72 text 24
+			73 text f
+			74 text  · 
+			75 text 0.80
+			76 text s
+		77 button Groggy 40f · 1.33s
+			78 text Groggy
+			79 text 40
+			80 text f
+			81 text  · 
+			82 text 1.33
+			83 text s
+		84 button Idle 40f · 1.33s
+			85 text Idle
+			86 text 40
+			87 text f
+			88 text  · 
+			89 text 1.33
+			90 text s
+		91 button Spawn 40f · 1.33s
+			92 text Spawn
+			93 text 40
+			94 text f
+			95 text  · 
+			96 text 1.33
+			97 text s
+		98 button Attack1_1 45f · 1.50s
+			99 text Attack1_1
+			100 text 45
+			101 text f
+			102 text  · 
+			103 text 1.50
+			104 text s
+		105 button Die 55f · 1.83s
+			106 text Die
+			107 text 55
+			108 text f
+			109 text  · 
+			110 text 1.83
+			111 text s
+		112 button Experience_1 65f · 2.17s
+			113 text Experience_1
+			114 text 65
+			115 text f
+			116 text  · 
+			117 text 2.17
+			118 text s
+		119 button Skill1_1 65f · 2.17s
+			120 text Skill1_1
+			121 text 65
+			122 text f
+			123 text  · 
+			124 text 2.17
+			125 text s
+		126 button Attack2_1 80f · 2.67s
+			127 text Attack2_1
+			128 text 80
+			129 text f
+			130 text  · 
+			131 text 2.67
+			132 text s
+		133 button Experience_2 127f · 4.23s
+			134 text Experience_2
+			135 text 127
+			136 text f
+			137 text  · 
+			138 text 4.23
+			139 text s
+		140 button Ultimate1_1 127f · 4.23s
+			141 text Ultimate1_1
+			142 text 127
+			143 text f
+			144 text  · 
+			145 text 4.23
+			146 text s
+		147 button EasterEgg_Victory 400f · 13.33s
+			148 text EasterEgg_Victory
+			149 text 400
+			150 text f
+			151 text  · 
+			152 text 13.33
+			153 text s
+		154 button Victory 500f · 16.67s
+			155 text Victory
+			156 text 500
+			157 text f
+			158 text  · 
+			159 text 16.67
+			160 text s
+	25 text Fan-made; not affiliated with the game publishers.
+
+The focused UI element is 1 AXWebArea ui · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/ui

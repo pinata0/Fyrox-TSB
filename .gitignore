@@ -1,0 +1,9 @@
+/target/
+*.log
+/artifacts/
+/data/resources.registry
+*.tsb-session.json
+/eos.local.json
+/release/
+/scripts/onefile-launcher/target/
+

@@ -1,0 +1,40 @@
+{
+  "accessed": "2026-11-15",
+  "publisher": "EPID Games",
+  "host": "gacha.gg (unofficial game-art archive)",
+  "character_page": "https://www.gacha.gg/trickcal/characters/elena",
+  "background_page": "https://www.gacha.gg/trickcal/story/elena-s-story",
+  "lore_page": "https://d.namu.moe/w/오르(트릭컬 리바이브)",
+  "evidence": "Original city-hall background shows a large vertical Elena portrait above the entrance. Orr story synopsis identifies Orr as the portrait artist.",
+  "adaptation": "The map uses the intact full-body standing illustration, not a low-resolution crop of the painting embedded in the background. Placement follows that background; the standing pose is not the identical painted portrait.",
+  "files": [
+    {
+      "path": "assets/references/elf-city/elena-fullbody.webp",
+      "url": "https://www.gacha.gg/img/trickcal/dm/chars/elena-standing.webp",
+      "size": [
+        433,
+        697
+      ],
+      "sha256": "f0328f57faf9226cae8cc6028b68bc3cbeb34765351bf57ba4572c83763c0382"
+    },
+    {
+      "path": "assets/references/elf-city/cityhall-original.webp",
+      "url": "https://www.gacha.gg/img/trickcal/dm/scenes/elf_cityhall_night.webp",
+      "size": [
+        1593,
+        1019
+      ],
+      "sha256": "3ab50e9c76a6b648e5d4c94770ba580a295d41410328eba60f7db5bab6c91875"
+    }
+  ],
+  "runtime": {
+    "path": "assets/maps/elf-city/elena-banner.png",
+    "size": [
+      433,
+      697
+    ],
+    "sha256": "9b30b47caa3c69e6fb74df3e013358fa5fe413c5672756d04d13c50fc49a9fd5",
+    "conversion": "Lossless RGBA PNG, original dimensions and alpha; no crop or redraw"
+  },
+  "rights": "Original Trickcal artwork belongs to EPID Games. No ownership or license transfer is implied."
+}

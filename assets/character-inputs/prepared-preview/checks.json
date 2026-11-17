@@ -1,0 +1,141 @@
+[
+  {
+    "slug": "aya",
+    "shape": [
+      1254,
+      1254,
+      4
+    ],
+    "border_clear": true,
+    "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\aya-twintail-correction\\images\\front.png",
+    "correction": "held flower parasol; two ankle-length low white twin tails"
+  },
+  {
+    "slug": "bella",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "butter",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "chloe",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "erpin",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "hilde",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "id",
+    "shape": [
+      1254,
+      1254,
+      4
+    ],
+    "border_clear": true,
+    "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\artifacts\\id-bodysuit-correction\\images\\mounted-front.png",
+    "correction": "Fitted sleeveless white/black one-piece bodysuit: white central panel, black sides, white neck band with thin crossed black halter straps, bare arms, white wrist bands, charcoal thigh-high stockings with narrow white side piping, white low shoes. Neutral chibi proportions and sleepy expression preserved. Side/rear and unseen details are fan-model interpretations."
+  },
+  {
+    "slug": "komi",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "mayo",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "naia",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "picora",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "renua",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "shion",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "ui",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  },
+  {
+    "slug": "vivi",
+    "shape": [
+      768,
+      512,
+      3
+    ],
+    "border_clear": true
+  }
+]

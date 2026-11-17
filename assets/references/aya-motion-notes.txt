@@ -1,0 +1,56 @@
+Browser tab: 1, Title: "aya · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/aya".
+The following is a diff from the previous accessibility tree with ~ and + representing changed and added elements, respectively. Removed elements are summarized by ID range.
+Removed element IDs: 144-165
+~1 AXWebArea aya · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/aya
+~		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/aya
+~		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/aya
+~		21 heading aya, Value: 1
+~			22 text aya
+~		43 button ⏸ Pause
+~		46 text frame  5 / 40 name Idle time 0.167 / 1.333 s loop true timelines 123 timeScale 1.00× Speed
+~		67 button Move 24f · 0.80s
+~			68 text Move
+~			69 text 24
+~			72 text 0.80
+~		74 button Groggy 40f · 1.33s
+~			75 text Groggy
+~			76 text 40
+~			79 text 1.33
+~		81 button Idle 40f · 1.33s
+~			82 text Idle
+~			83 text 40
+~			86 text 1.33
+~		88 button Attack1_1 45f · 1.50s
+~			89 text Attack1_1
+~			90 text 45
+~			93 text 1.50
+~		95 button Spawn 55f · 1.83s
+~			96 text Spawn
+~			97 text 55
+~			100 text 1.83
+~		102 button Die 75f · 2.50s
+~			103 text Die
+~			104 text 75
+~			107 text 2.50
+~		109 button Attack2_1 88f · 2.93s
+~			110 text Attack2_1
+~			111 text 88
+~			114 text 2.93
+~		116 button Skill1_1 94f · 3.13s
+~			117 text Skill1_1
+~			118 text 94
+~			121 text 3.13
+~		123 button Ultimate1_1 110f · 3.67s
+~			124 text Ultimate1_1
+~			125 text 110
+~			128 text 3.67
+~		130 button Victory 115f · 3.83s
+~			131 text Victory
+~			132 text 115
+~			135 text 3.83
+~		137 button EasterEgg_Victory 400f · 13.33s
+~			138 text EasterEgg_Victory
+~			139 text 400
+~			142 text 13.33
++	144 text Fan-made; not affiliated with the game publishers.
+The focused UI element is 1 AXWebArea aya · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/aya

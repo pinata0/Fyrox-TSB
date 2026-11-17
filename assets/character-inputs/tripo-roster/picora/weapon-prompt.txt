@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Picora's ornate dark brown curled hook staff from the reference: large candy-cane-like curled C-shaped head with pastel mint, pink, yellow and white stickers/patches; long slim brown shaft with pink wrap near the grip; hanging keychain ornaments near the neck including a pink rectangular star tag, beads, turquoise bow and white wing-shaped charm. Preserve visible exact staff construction; no sticker book, no character, no hands.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

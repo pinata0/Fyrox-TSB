@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+One hand-held DOLPHIN-SHAPED WATER GUN used by Naia. Match the blue curved dolphin toy in the reference: slate/indigo-blue body, long rounded snout with a small water outlet, a dark eye, broad white inner belly stripe, small dorsal fin and two tail flukes. Keep the miniature tan straw hat with a yellow flower and green leaves shown in the official artifact-card illustration as a separate removable accessory. The dolphin body itself is the toy; do not add a pistol grip, trigger guard, rifle barrel, hose, or external tank. Preserve its solid toy-like curved silhouette and smooth stylized surface. No water stream, character or hand in this mesh.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

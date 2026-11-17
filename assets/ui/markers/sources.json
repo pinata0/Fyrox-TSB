@@ -1,0 +1,292 @@
+{
+  "accessed": "2026-11-13",
+  "source": "Trickcal game UI markers hosted by Prydwen",
+  "rights": "Trickcal artwork belongs to EPID Games; no ownership or license transfer is implied.",
+  "markers": [
+    {
+      "file": "assets/ui/markers/personality-pure.png",
+      "label": "순수",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/element_innocence.webp",
+      "source_file": "assets/references/trait-markers/element_innocence.webp",
+      "source_sha256": "5412e42e9b2f81a05e978a4b9ade34ec8a0401835d2d22bf0074cc791d1bb3c8",
+      "png_sha256": "baf42345ad6953cea15f7b11a525b61da5c97705783c1cad50607657f7cd6d19",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 349,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/personality-cool.png",
+      "label": "냉정",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/element_composed.webp",
+      "source_file": "assets/references/trait-markers/element_composed.webp",
+      "source_sha256": "a9f22157d22064bc042f450ebebe5b3a8a15ca1079920a14452cb6069564e1ac",
+      "png_sha256": "1be07cc04b56759bbd20248cd6458d494ceb57ced2aa0849791f8a652590c9e2",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 347,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/personality-mad.png",
+      "label": "광기",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/element_madness.webp",
+      "source_file": "assets/references/trait-markers/element_madness.webp",
+      "source_sha256": "23919c4d925aabbf38cf5dd466be208cb107fb1b84b0f20245071046b31734b0",
+      "png_sha256": "6180c745c4f1b7c78321029f97714c5897809f4e26878eee14af730867f17481",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 346,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/personality-lively.png",
+      "label": "활발",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/element_vivacious.webp",
+      "source_file": "assets/references/trait-markers/element_vivacious.webp",
+      "source_sha256": "e9f89a9e5e01b71027717f8b340b1dd9a4137d986c3472d58283ae6ecc115265",
+      "png_sha256": "c7b0e179692256ded83558fb7850ce20b50b9698e5efb61c3b298ab231683c8c",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 347,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/personality-gloomy.png",
+      "label": "우울",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/element_depressed.webp",
+      "source_file": "assets/references/trait-markers/element_depressed.webp",
+      "source_sha256": "f2f886995acf3ffaedd98ce370ed0098d7bcbb0e4c48e4643382385b0f3ac09d",
+      "png_sha256": "32d0b4e6de68e4f8862e2dcbad0ffd34b115b2d549169c3de270c24ff2746306",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 345,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-fairy.png",
+      "label": "요정",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_sprites.webp",
+      "source_file": "assets/references/trait-markers/race_sprites.webp",
+      "source_sha256": "205f79e358830e70d54fe1aed30d47d26c1703c1ecae0bf04d9b4a478d44a166",
+      "png_sha256": "00c6f6e12b9c1d296aa6db19ceed3ed79d0366ee51aa5ef7665bdcc2278a50ea",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 213,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-beast.png",
+      "label": "수인",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_werebeast.webp",
+      "source_file": "assets/references/trait-markers/race_werebeast.webp",
+      "source_sha256": "5627e7aa6216a5657d95ad4b9d6fa92ec6885dd4f4b6bc5e1f272adc331cd3de",
+      "png_sha256": "68dbe3bedbf1a4ef9d4d747c9ea29ca640257d429c9bc49d91f66774150db4f3",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 214,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-elf.png",
+      "label": "엘프",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_elves.webp",
+      "source_file": "assets/references/trait-markers/race_elves.webp",
+      "source_sha256": "9189250e0922290f57207638259ce842e4b81e87f6eda67a73e29b9fb1548950",
+      "png_sha256": "9628605574c8ae9526a0ea7e2956f4e396b9664c08decd2a105adcf7afc09522",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 211,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-spirit.png",
+      "label": "정령",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_elementals.webp",
+      "source_file": "assets/references/trait-markers/race_elementals.webp",
+      "source_sha256": "25858ed68ca16495d1b85cf7868f99645b91ec901c808c57f8da7a6a11eee996",
+      "png_sha256": "eea516550f514f85234364a5b9d1a7fb9d490c606f4564f838db33f7f81ed207",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 212,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-ghost.png",
+      "label": "유령",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_phantoms.webp",
+      "source_file": "assets/references/trait-markers/race_phantoms.webp",
+      "source_sha256": "f2072a0d6dca30c1044e7fb06f09797150319ec608638068e4858ed3463ee0e0",
+      "png_sha256": "bd3a5ef496799ffba1c64057bfe85768f9b39799c7392f92e21b22681110e4d1",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 209,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-dragon.png",
+      "label": "용족",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_dragons.webp",
+      "source_file": "assets/references/trait-markers/race_dragons.webp",
+      "source_sha256": "e40d2e326c54512498977b05ba1e10ded19bc59e1fd76b13f5959a9988d7e403",
+      "png_sha256": "6a27541ea1a2e49fdb34c09b1f49ea928d34215847ec608b66fffd0cbb0df3cd",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 212,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/race-witch.png",
+      "label": "마녀",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/race_witches.webp",
+      "source_file": "assets/references/trait-markers/race_witches.webp",
+      "source_sha256": "cefb4c854a91b1e6b089fad6728be01e397b735dc5229728d7b4500887a79d3a",
+      "png_sha256": "d999acb4079cbd758eed5c0753bc21f557d6ca744e7c14e226f71bff0b10fdfd",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 206,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/position-front.png",
+      "label": "전열",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/position_front.webp",
+      "source_file": "assets/references/trait-markers/position_front.webp",
+      "source_sha256": "1a7ba7a4168f1a849a36131788f48c7588ee3ee057f568866e67e4921e66a467",
+      "png_sha256": "e79a2ad2fd5ce0ac207adb08dcc571ad28f274c705a570a8880dd2c1a2e225f2",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 246,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/position-middle.png",
+      "label": "중열",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/position_middle.webp",
+      "source_file": "assets/references/trait-markers/position_middle.webp",
+      "source_sha256": "9e448e467fb65c71434a51cff5a75fb7bca8441072e1e621ac4e8de191cc5805",
+      "png_sha256": "866eb40b55aae8b0d60f91bffd0fa62321f93a9f50a842fa59ff87de3070ac1a",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 237,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    },
+    {
+      "file": "assets/ui/markers/position-rear.png",
+      "label": "후열",
+      "page": "https://www.prydwen.gg/trickcal/characters/",
+      "image": "https://cdn.prydwen.gg/images/trickcal/icons/position_back.webp",
+      "source_file": "assets/references/trait-markers/position_back.webp",
+      "source_sha256": "3e2604fc62e0150eaf646345ce0ed64ecd19be82e8e9670b040d69342c6fd005",
+      "png_sha256": "f29c807efd30aad6ad58b3e78cba55cff2a55c89536aacae5783bc9f7a5a097f",
+      "size": [
+        40,
+        40
+      ],
+      "alpha_range": [
+        0,
+        255
+      ],
+      "transparent_pixels": 236,
+      "processing": "Existing original transparency preserved; lossless RGBA PNG conversion; no redraw, crop or recoloring."
+    }
+  ]
+}

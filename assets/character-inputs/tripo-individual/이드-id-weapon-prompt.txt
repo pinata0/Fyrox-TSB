@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+Ed/Id's EMPTY dark gray crescent moon mechanical pod from the reference. Remove the girl AND the small round companion robot. Preserve the thick C-shaped crescent outer shell, pale padded inner seat, circular white outer panels/lights, trim seams, upward curling tips, visible shell thickness and open interior. Three-quarter front view. No extra gun, no human, no hair, no pillow shaped like a person.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

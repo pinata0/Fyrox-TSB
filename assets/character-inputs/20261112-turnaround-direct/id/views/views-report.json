@@ -1,0 +1,12 @@
+{
+  "stage": "reviewed_bodysuit_correction",
+  "source": "artifacts/id-bodysuit-correction/generation.json",
+  "operation": "independently generated and reviewed views",
+  "note": "User-provided costume references; side/back and unseen footwear are fan-model interpretations.",
+  "output_sha256": {
+    "front": "abcd85e4fcc399ddbdd2abb6508e1ca4cfac24bc4131b4c7bb2f663c3277ab2d",
+    "left": "46ffa49df162c18f80627afee9f31dab5666ce093af9fa329be414ce58c576dc",
+    "right": "89ec5e04e27a8679e7dcb3e222db8e0a3b1fd9fe6ba32f0eb46474f8bb167a23",
+    "back": "dfc5e8a178add13fdd6b9aa0a389a80385fb05ac43b3829840091de8659fb11f"
+  }
+}

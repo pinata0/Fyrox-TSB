@@ -1,0 +1,155 @@
+Browser tab: 1, Title: "picora · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/picora".
+1 AXWebArea picora · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/picora
+	2 container
+		3 link Description: Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		4 link Description: Planner, Value: planner.cheeky.tsuncloud.com/korea
+		5 link Description: Story, Value: story.cheeky.tsuncloud.com/korea
+		6 link Description: Schedule, Value: schedule.cheeky.tsuncloud.com/korea
+		7 link Description: Trickcal Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		8 link Description: Apostles, Value: wiki.cheeky.tsuncloud.com/korea/apostles
+		9 link Description: Monsters, Value: wiki.cheeky.tsuncloud.com/korea/monsters
+		10 link Description: Cards, Value: wiki.cheeky.tsuncloud.com/korea/cards
+		11 link Description: Stages, Value: wiki.cheeky.tsuncloud.com/korea/stages
+		12 link Description: MyHome, Value: wiki.cheeky.tsuncloud.com/korea/myhome
+		13 link Description: Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		14 link Description: Events, Value: wiki.cheeky.tsuncloud.com/korea/event
+		15 link Description: History, Value: wiki.cheeky.tsuncloud.com/korea/history
+		16 switch Spoilers, Help: Show unreleased / spoiler content, Value: 0
+		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/picora
+		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/picora
+	19 container
+		20 link Description: ← Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		21 heading picora, Value: 1
+			22 text picora
+		23 text hero · Apostles
+		24 button Open in lightbox
+		25 button Attack, Help: Play a Attack animation
+		26 button Experience, Help: Play a Experience animation
+		27 text Skin
+		28 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
+			29 menu
+				30 default
+				31 (selected) Normal
+		32 text Animation
+		33 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
+			34 menu
+				35 Die
+				36 Groggy
+				37 (selected) Idle
+				38 Move
+				39 Skill1_1
+				40 Spawn
+				41 Ultimate1_1
+				42 Victory
+		43 text ANIMATION INSPECTOR frames @  30  fps
+		44 button ⏸ Pause
+		45 button ◀ −1f, Help: Step back one frame
+		46 button +1f ▶, Help: Step forward one frame
+		47 text frame  5 / 36 name Idle time 0.167 / 1.200 s loop true timelines 73 timeScale 1.00× Speed
+		48 button 0.25×
+			49 text 0.25
+			50 text ×
+		51 button 0.5×
+			52 text 0.5
+			53 text ×
+		54 button 1×
+			55 text 1
+			56 text ×
+		57 button 1.5×
+			58 text 1.5
+			59 text ×
+		60 button 2×
+			61 text 2
+			62 text ×
+		63 stepper (settable, integer) 1
+		64 text | fps
+		65 button 30
+		66 button 60
+		67 text Animations (fastest → slowest)
+		68 button Move 28f · 0.93s
+			69 text Move
+			70 text 28
+			71 text f
+			72 text  · 
+			73 text 0.93
+			74 text s
+		75 button Idle 36f · 1.20s
+			76 text Idle
+			77 text 36
+			78 text f
+			79 text  · 
+			80 text 1.20
+			81 text s
+		82 button Groggy 40f · 1.33s
+			83 text Groggy
+			84 text 40
+			85 text f
+			86 text  · 
+			87 text 1.33
+			88 text s
+		89 button Attack1_1 47f · 1.57s
+			90 text Attack1_1
+			91 text 47
+			92 text f
+			93 text  · 
+			94 text 1.57
+			95 text s
+		96 button Spawn 47f · 1.57s
+			97 text Spawn
+			98 text 47
+			99 text f
+			100 text  · 
+			101 text 1.57
+			102 text s
+		103 button Attack2_1 52f · 1.73s
+			104 text Attack2_1
+			105 text 52
+			106 text f
+			107 text  · 
+			108 text 1.73
+			109 text s
+		110 button Experience_2 60f · 2.00s
+			111 text Experience_2
+			112 text 60
+			113 text f
+			114 text  · 
+			115 text 2.00
+			116 text s
+		117 button Ultimate1_1 60f · 2.00s
+			118 text Ultimate1_1
+			119 text 60
+			120 text f
+			121 text  · 
+			122 text 2.00
+			123 text s
+		124 button Die 64f · 2.13s
+			125 text Die
+			126 text 64
+			127 text f
+			128 text  · 
+			129 text 2.13
+			130 text s
+		131 button Experience_1 66f · 2.20s
+			132 text Experience_1
+			133 text 66
+			134 text f
+			135 text  · 
+			136 text 2.20
+			137 text s
+		138 button Skill1_1 66f · 2.20s
+			139 text Skill1_1
+			140 text 66
+			141 text f
+			142 text  · 
+			143 text 2.20
+			144 text s
+		145 button Victory 200f · 6.67s
+			146 text Victory
+			147 text 200
+			148 text f
+			149 text  · 
+			150 text 6.67
+			151 text s
+	152 text Fan-made; not affiliated with the game publishers.
+
+The focused UI element is 1 AXWebArea picora · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/picora

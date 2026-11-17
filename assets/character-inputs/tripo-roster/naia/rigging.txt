@@ -1,0 +1,64 @@
+나이아 / naia — 표정·보조 본·소품 사양
+
+이 파일은 생성 후 구현·검수용 리깅 사양입니다. prompt.txt는 Meshy용 본체 외형 지시이며 Images에서 참고 이미지를 제작·수정할 때 사용합니다.
+프롬프트에 요청해도 아래 모프·추가 본이 자동으로 만들어진다고 보장할 수 없습니다.
+자동 리깅 결과를 먼저 확인하고 없는 기능은 Blender 등에서 보완합니다.
+생성 단계에서는 머리카락·머리·몸·팔다리가 제자리에 연결된 전신 외형을 우선합니다. 머리 뿌리·목·어깨·골반에 틈이 생기지 않는지 확인합니다.
+재질별 서브메시나 메시 객체가 여러 개인 것만으로 외형 불량은 아닙니다. 연결부가 떨어져 보이는지와 리깅 시 함께 움직이는지를 검사합니다.
+
+얼굴 / FACE
+- 15명 캐릭터 얼굴에는 코·콧대·콧구멍을 만들지 않습니다. 코를 나타내는 점·선·음영도 제외합니다. 세바스티안 인형의 코와 돌고래 물총의 주둥이 등 독립 소품의 고유 형태는 유지합니다.
+- 좌우는 화면 기준이 아니라 캐릭터 자신의 해부학적 L/R입니다. 모든 값은 0..1, 0은 중립입니다.
+- 눈: Eye.L/R 회전으로 시선 이동. 눈꺼풀은 얼굴의 연속된 메시로 만들고 각 눈을 독립적으로 완전히 닫을 수 있어야 합니다. 홍채/눈동자를 납작한 얼굴 그림으로 고정하지 않습니다.
+- 입: 좌우 입꼬리를 독립적으로 올리고 내립니다. 입 안, 치아/작은 송곳니, 필요 시 혀를 별도 메시로 만들고 턱 움직임에 맞춥니다. jawOpen 모프와 턱 본을 중복 적용하지 않습니다.
+- 볼: 부풀림, 옆으로 당김, 안으로 눌림을 좌우 각각 만듭니다. 얼굴 전체 크기를 바꾸거나 볼을 별도 떠 있는 구체로 만들지 않습니다. 최대 변형량은 작게 시작해 캐릭터 비율에 맞게 조정합니다.
+- 눈썹·속눈썹·블러시가 얼굴과 함께 움직여야 합니다. 안경·가면·왕관 같은 단단한 장식은 볼 모프로 늘리지 않습니다.
+- 중립 메시를 정리/리토폴로지한 뒤 동일 정점 수와 순서를 유지하며 shape key를 제작합니다. 표정마다 별도로 생성한 3D 모델은 그대로 모프 타깃으로 쓸 수 없습니다.
+- Each listed morph must remain independently controllable. Use additive shapes and corrective shapes for combinations that intersect. No pre-baked single facial expression.
+
+몸·귀·꼬리·머리 / BODY AND SECONDARY MOTION
+- Humanoid body rig with pelvis/spine/chest/neck/head, paired arms/hands/fingers and legs/feet. Preserve reference proportions and costume coverage.
+- 이름의 {L/R}는 좌우 각각, 01-04는 뿌리에서 끝까지 네 개의 연속 본을 의미합니다. 아래 체인 길이는 제작 권장값이며 자동 생성된 실제 본 목록이 아닙니다.
+- 체인 뿌리는 머리/골반/옷의 해당 부위에 고정하고 끝으로 갈수록 부드럽게 변형합니다. 귀와 머리, 꼬리와 치마가 서로 같은 가중치 덩어리가 되지 않게 합니다.
+- 동물 귀는 눕힘·세움·작은 떨림, 꼬리는 휘기·흔들기, 머리카락은 회전 시 지연과 복귀를 지원합니다. 뾰족한 사람형 귀는 작은 움직임만 줍니다. 없는 꼬리나 동물 귀를 새로 추가하지 않습니다.
+- 머리·어깨·몸통·치마 충돌을 고려합니다. 강성·감쇠·회전 제한·충돌체 등 물리 설정은 게임 엔진에서 별도 구현/조정합니다. 본이 존재하는 것만으로 자동 흔들림이 생기지는 않습니다.
+- Hand.R/Hand.L에 Grip.R/Grip.L 소켓을 두고 분리된 무기/소품의 PropRoot를 연결합니다. 손가락과 무기를 한 메시로 용접하지 않습니다. 좌우 손 선택은 원작 조립 참고를 따릅니다.
+
+내보내기·검수 / DELIVERY
+- 편집 가능한 .blend 원본, 텍스처, 본/모프 이름 목록을 보관합니다. FBX 또는 GLB는 스킨·모프 보존 여부를 재가져와 확인합니다.
+- 본 프로젝트 Fyrox의 해당 파일 형식에서 모프·추가 본을 읽고 구동하는 경로는 이 입력 자료 작업에서 검증하지 않았습니다. 게임 적용 시 임포터와 런타임 연결을 별도로 확인합니다.
+- 각 모프를 0/0.5/1로 확인: 눈 완전 닫힘, 입 안 구멍/관통, 볼 변형 중 얼굴 실루엣 유지. blink+smile, jawOpen+cheekStretch 조합도 검사합니다.
+- 고개 좌우 회전, 팔 올리기, 귀 눕힘, 꼬리 굽힘, 머리 체인 곡률을 확인하고 소품을 쥔 자세에서 관통을 검사합니다.
+- 아래 항목은 제작 요청입니다. 이 패키지에는 완성된 3D 리그나 작동하는 모프 파일이 들어 있지 않습니다.
+
+필수 얼굴 모프 / REQUIRED MORPHS
+eyeBlink_L (0..1): 눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball
+eyeBlink_R (0..1): 눈꺼풀을 완전히 닫기 / close eyelids fully without collapsing the eyeball
+eyeSquint_L (0..1): 눈 가늘게 뜨기 / narrow the eye opening
+eyeSquint_R (0..1): 눈 가늘게 뜨기 / narrow the eye opening
+eyeWide_L (0..1): 눈 크게 뜨기 / widen the eye opening
+eyeWide_R (0..1): 눈 크게 뜨기 / widen the eye opening
+browUp_L (0..1): 눈썹 올리기 / raise eyebrow
+browUp_R (0..1): 눈썹 올리기 / raise eyebrow
+browDown_L (0..1): 눈썹 내리기 / lower eyebrow
+browDown_R (0..1): 눈썹 내리기 / lower eyebrow
+mouthSmile_L (0..1): 입꼬리 올리기 / raise mouth corner
+mouthSmile_R (0..1): 입꼬리 올리기 / raise mouth corner
+mouthFrown_L (0..1): 입꼬리 내리기 / lower mouth corner
+mouthFrown_R (0..1): 입꼬리 내리기 / lower mouth corner
+cheekPuff_L (0..1): 볼 부풀리기 / inflate cheek volume
+cheekPuff_R (0..1): 볼 부풀리기 / inflate cheek volume
+cheekStretch_L (0..1): 볼 옆으로 늘리기 / pull cheek outward laterally
+cheekStretch_R (0..1): 볼 옆으로 늘리기 / pull cheek outward laterally
+cheekSquash_L (0..1): 볼 누르기·줄이기 / compress cheek inward locally
+cheekSquash_R (0..1): 볼 누르기·줄이기 / compress cheek inward locally
+jawOpen (0..1): 입 벌리기 / open jaw and mouth cavity
+mouthPucker (0..1): 입 오므리기 / pucker lips
+mouthWide (0..1): 입 가로로 넓히기 / widen lips without moving cheeks excessively
+
+캐릭터별 보조 본 / SECONDARY CHAINS
+Braid.{L/R}.01-04; HairFront.{L/R}.01-02
+양쪽 땋은 머리와 앞머리. 모자와 꽃은 머리에 고정하고 머리카락 관통을 확인합니다.
+
+소품 연결·동작 / PROP RIG
+돌고래 물총은 단단한 PropRoot, 손으로 쥐는 몸통 아래/꼬리 부근에 Grip을 두고 원작 손 자세에 맞춥니다. 주둥이 끝에 WaterMuzzle을 두어 그 위치에서 물줄기 효과를 발사합니다. 돌고래 몸 자체가 물총이므로 별도 권총 손잡이나 총열을 추가하지 않습니다. 작은 꽃 밀짚모자는 분리 액세서리로 두어 표시를 선택할 수 있게 합니다. effect-water는 물총과 별개의 선택 효과 입력이며 입자·투명도·흐름은 엔진에서 제작합니다.

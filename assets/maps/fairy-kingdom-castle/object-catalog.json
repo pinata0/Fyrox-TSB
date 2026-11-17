@@ -1,0 +1,905 @@
+[
+  {
+    "id": "bedroom-bed-000",
+    "kind": "bed",
+    "position": [
+      1,
+      0,
+      -47.3
+    ],
+    "turn": 0,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "mint",
+    "mesh_objects": 14
+  },
+  {
+    "id": "bedroom-bedside-001",
+    "kind": "bedside",
+    "position": [
+      3.3,
+      0,
+      -47.4
+    ],
+    "turn": 0,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "",
+    "mesh_objects": 16
+  },
+  {
+    "id": "bedroom-flowerpot-002",
+    "kind": "flowerpot",
+    "position": [
+      11.85,
+      1.2,
+      -46.4
+    ],
+    "turn": 0,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "bedroom-arched_window-003",
+    "kind": "arched_window",
+    "position": [
+      -1.92,
+      1.2,
+      -45
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "curtain",
+    "mesh_objects": 27
+  },
+  {
+    "id": "bedroom-arched_window-004",
+    "kind": "arched_window",
+    "position": [
+      11.92,
+      1.2,
+      -45
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "curtain",
+    "mesh_objects": 27
+  },
+  {
+    "id": "bedroom-oval_rug-005",
+    "kind": "oval_rug",
+    "position": [
+      6,
+      0.035,
+      -46.3
+    ],
+    "turn": 0,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "mint",
+    "mesh_objects": 9
+  },
+  {
+    "id": "bedroom-wall_frame-006",
+    "kind": "wall_frame",
+    "position": [
+      1.2,
+      2.7,
+      -48.96
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "tree",
+    "mesh_objects": 4
+  },
+  {
+    "id": "bedroom-wall_frame-007",
+    "kind": "wall_frame",
+    "position": [
+      8.5,
+      2.8,
+      -48.96
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      2
+    ],
+    "space": "bedroom",
+    "variant": "crown",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-cafe_counter-008",
+    "kind": "cafe_counter",
+    "position": [
+      16,
+      0.6,
+      -14
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 40
+  },
+  {
+    "id": "cafe-cafe_table-009",
+    "kind": "cafe_table",
+    "position": [
+      7.7,
+      0.6,
+      -24
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 13
+  },
+  {
+    "id": "cafe-chair-010",
+    "kind": "chair",
+    "position": [
+      7.7,
+      0.6,
+      -25.25
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-chair-011",
+    "kind": "chair",
+    "position": [
+      7.7,
+      0.6,
+      -22.75
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-cafe_table-012",
+    "kind": "cafe_table",
+    "position": [
+      7.7,
+      0.6,
+      -16
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 13
+  },
+  {
+    "id": "cafe-chair-013",
+    "kind": "chair",
+    "position": [
+      7.7,
+      0.6,
+      -17.25
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-chair-014",
+    "kind": "chair",
+    "position": [
+      7.7,
+      0.6,
+      -14.75
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-cafe_table-015",
+    "kind": "cafe_table",
+    "position": [
+      14,
+      0.6,
+      -24
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 13
+  },
+  {
+    "id": "cafe-chair-016",
+    "kind": "chair",
+    "position": [
+      14,
+      0.6,
+      -25.25
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-chair-017",
+    "kind": "chair",
+    "position": [
+      14,
+      0.6,
+      -22.75
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-cafe_table-018",
+    "kind": "cafe_table",
+    "position": [
+      19,
+      0.6,
+      -18
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 13
+  },
+  {
+    "id": "cafe-chair-019",
+    "kind": "chair",
+    "position": [
+      19,
+      0.6,
+      -19.25
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-chair-020",
+    "kind": "chair",
+    "position": [
+      19,
+      0.6,
+      -16.75
+    ],
+    "turn": 0,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 10
+  },
+  {
+    "id": "cafe-menu_board-021",
+    "kind": "menu_board",
+    "position": [
+      3.9,
+      0,
+      -26.5
+    ],
+    "turn": -0.2,
+    "reference": [
+      6
+    ],
+    "space": "cafe",
+    "variant": "",
+    "mesh_objects": 13
+  },
+  {
+    "id": "street-flowerpot-022",
+    "kind": "flowerpot",
+    "position": [
+      -5.3,
+      0,
+      -25
+    ],
+    "turn": 0,
+    "reference": [
+      4,
+      6
+    ],
+    "space": "street",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "street-flowerpot-023",
+    "kind": "flowerpot",
+    "position": [
+      -5.3,
+      0,
+      -11
+    ],
+    "turn": 0,
+    "reference": [
+      4,
+      6
+    ],
+    "space": "street",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "street-flowerpot-024",
+    "kind": "flowerpot",
+    "position": [
+      8,
+      0,
+      -29
+    ],
+    "turn": 0,
+    "reference": [
+      4,
+      6
+    ],
+    "space": "street",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "street-flowerpot-025",
+    "kind": "flowerpot",
+    "position": [
+      23,
+      0,
+      -25
+    ],
+    "turn": 0,
+    "reference": [
+      4,
+      6
+    ],
+    "space": "street",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "street-flowerpot-026",
+    "kind": "flowerpot",
+    "position": [
+      23,
+      0,
+      -14
+    ],
+    "turn": 0,
+    "reference": [
+      4,
+      6
+    ],
+    "space": "street",
+    "variant": "",
+    "mesh_objects": 58
+  },
+  {
+    "id": "study-bed-027",
+    "kind": "bed",
+    "position": [
+      -8,
+      0,
+      -12.7
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "rose",
+    "mesh_objects": 14
+  },
+  {
+    "id": "study-bookshelf-028",
+    "kind": "bookshelf",
+    "position": [
+      -16.9,
+      0,
+      -12
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 90
+  },
+  {
+    "id": "study-bookshelf-029",
+    "kind": "bookshelf",
+    "position": [
+      -16.9,
+      0,
+      -16
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 90
+  },
+  {
+    "id": "study-desk-030",
+    "kind": "desk",
+    "position": [
+      -15.8,
+      0,
+      -22
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 41
+  },
+  {
+    "id": "study-satchel-031",
+    "kind": "satchel",
+    "position": [
+      -14.4,
+      0,
+      -23.3
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "study-oval_rug-032",
+    "kind": "oval_rug",
+    "position": [
+      -11.8,
+      0.035,
+      -14.8
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "green",
+    "mesh_objects": 9
+  },
+  {
+    "id": "study-study_arch-033",
+    "kind": "study_arch",
+    "position": [
+      -12,
+      0,
+      -18.74
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 1
+  },
+  {
+    "id": "study-pinboard-034",
+    "kind": "pinboard",
+    "position": [
+      -17.72,
+      2.7,
+      -23.5
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      5
+    ],
+    "space": "study",
+    "variant": "",
+    "mesh_objects": 15
+  },
+  {
+    "id": "square-village_tree-035",
+    "kind": "village_tree",
+    "position": [
+      16,
+      0,
+      -35
+    ],
+    "turn": 0,
+    "reference": [
+      7
+    ],
+    "space": "square",
+    "variant": "",
+    "mesh_objects": 85
+  },
+  {
+    "id": "square-clock_plinth-036",
+    "kind": "clock_plinth",
+    "position": [
+      16,
+      0,
+      -38
+    ],
+    "turn": 0,
+    "reference": [
+      7
+    ],
+    "space": "square",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "square-street_lamp-037",
+    "kind": "street_lamp",
+    "position": [
+      11.4,
+      0,
+      -36.5
+    ],
+    "turn": 0,
+    "reference": [
+      7
+    ],
+    "space": "square",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "square-street_lamp-038",
+    "kind": "street_lamp",
+    "position": [
+      20.6,
+      0,
+      -36.5
+    ],
+    "turn": 0,
+    "reference": [
+      7
+    ],
+    "space": "square",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "atrium-atrium_tree-039",
+    "kind": "atrium_tree",
+    "position": [
+      14,
+      0,
+      14
+    ],
+    "turn": 0,
+    "reference": [
+      3
+    ],
+    "space": "atrium",
+    "variant": "",
+    "mesh_objects": 85
+  },
+  {
+    "id": "guardian_hall-guardian-040",
+    "kind": "guardian",
+    "position": [
+      25.1,
+      0,
+      26.8
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      8
+    ],
+    "space": "guardian_hall",
+    "variant": "",
+    "mesh_objects": 27
+  },
+  {
+    "id": "guardian_hall-guardian-041",
+    "kind": "guardian",
+    "position": [
+      25.1,
+      0,
+      33.5
+    ],
+    "turn": -1.5707963267948966,
+    "reference": [
+      8
+    ],
+    "space": "guardian_hall",
+    "variant": "",
+    "mesh_objects": 27
+  },
+  {
+    "id": "guardian_hall-guardian-042",
+    "kind": "guardian",
+    "position": [
+      36.8,
+      0,
+      26.8
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      8
+    ],
+    "space": "guardian_hall",
+    "variant": "",
+    "mesh_objects": 27
+  },
+  {
+    "id": "guardian_hall-guardian-043",
+    "kind": "guardian",
+    "position": [
+      36.8,
+      0,
+      33.5
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      8
+    ],
+    "space": "guardian_hall",
+    "variant": "",
+    "mesh_objects": 27
+  },
+  {
+    "id": "guardian_hall-altar-044",
+    "kind": "altar",
+    "position": [
+      36.6,
+      0,
+      28.1
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      8
+    ],
+    "space": "guardian_hall",
+    "variant": "",
+    "mesh_objects": 5
+  },
+  {
+    "id": "north_library-bookshelf-045",
+    "kind": "bookshelf",
+    "position": [
+      42,
+      0,
+      34.45
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "north_library",
+    "variant": "",
+    "mesh_objects": 90
+  },
+  {
+    "id": "north_library-bookshelf-046",
+    "kind": "bookshelf",
+    "position": [
+      48,
+      0,
+      34.45
+    ],
+    "turn": 0,
+    "reference": [
+      5
+    ],
+    "space": "north_library",
+    "variant": "",
+    "mesh_objects": 90
+  },
+  {
+    "id": "corridor-sconce-047",
+    "kind": "sconce",
+    "position": [
+      27,
+      2.7,
+      -3.72
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      1
+    ],
+    "space": "corridor",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "corridor-sconce-048",
+    "kind": "sconce",
+    "position": [
+      33,
+      2.7,
+      -3.72
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      1
+    ],
+    "space": "corridor",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "corridor-sconce-049",
+    "kind": "sconce",
+    "position": [
+      39,
+      2.7,
+      -3.72
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      1
+    ],
+    "space": "corridor",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "corridor-sconce-050",
+    "kind": "sconce",
+    "position": [
+      45,
+      2.7,
+      -3.72
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      1
+    ],
+    "space": "corridor",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "corridor-sconce-051",
+    "kind": "sconce",
+    "position": [
+      51,
+      2.7,
+      -3.72
+    ],
+    "turn": 3.141592653589793,
+    "reference": [
+      1
+    ],
+    "space": "corridor",
+    "variant": "",
+    "mesh_objects": 4
+  },
+  {
+    "id": "throne-throne-052",
+    "kind": "throne",
+    "position": [
+      52.6,
+      1.2,
+      15
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      9
+    ],
+    "space": "throne",
+    "variant": "",
+    "mesh_objects": 35
+  },
+  {
+    "id": "throne-royal_side_table-053",
+    "kind": "royal_side_table",
+    "position": [
+      52.5,
+      1.2,
+      16.5
+    ],
+    "turn": 0,
+    "reference": [
+      9
+    ],
+    "space": "throne",
+    "variant": "",
+    "mesh_objects": 11
+  },
+  {
+    "id": "throne-guardian-054",
+    "kind": "guardian",
+    "position": [
+      52.9,
+      0,
+      10.5
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      8,
+      9
+    ],
+    "space": "throne",
+    "variant": "",
+    "mesh_objects": 27
+  },
+  {
+    "id": "throne-guardian-055",
+    "kind": "guardian",
+    "position": [
+      52.9,
+      0,
+      19.5
+    ],
+    "turn": 1.5707963267948966,
+    "reference": [
+      8,
+      9
+    ],
+    "space": "throne",
+    "variant": "",
+    "mesh_objects": 27
+  }
+]

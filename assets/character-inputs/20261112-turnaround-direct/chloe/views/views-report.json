@@ -1,0 +1,58 @@
+{
+  "stage": "views_prepared_from_turnaround",
+  "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\chloe.png",
+  "source_sha256": "a2d9a6adda8c55607d4183dee04017e67b3c10039eab3551fff84e4378a63374",
+  "crop_regions": {
+    "front": {
+      "source_pixel_box": [
+        284,
+        67,
+        754,
+        742
+      ],
+      "foreground_box": [
+        0,
+        10,
+        469,
+        675
+      ]
+    },
+    "left": {
+      "source_pixel_box": [
+        807,
+        67,
+        1181,
+        742
+      ],
+      "foreground_box": [
+        15,
+        12,
+        374,
+        675
+      ]
+    },
+    "back": {
+      "source_pixel_box": [
+        1238,
+        67,
+        1696,
+        742
+      ],
+      "foreground_box": [
+        1,
+        14,
+        447,
+        675
+      ]
+    }
+  },
+  "right_view": "mirrored authored left view; approximation",
+  "scale": 1.0225563909774436,
+  "status": "prepared_pending_visual_review",
+  "output_sha256": {
+    "front": "4696df0b1472b576c5bf3175e6ca0ac8c6faa4bb5abe450a4a29f1fa04d2391b",
+    "left": "b0355970220981865dde38378a28331900f0c204cb86c42e726f809381062103",
+    "back": "e02d2bed56f66c2f5048f000252a0b2fd7d2f5ab5a3ccb9e5e4127524565cbc4",
+    "right": "a4a9505b7614da4a642e1c1b80282fa369767bc809a33a6a8ba17dbdc6e664ab"
+  }
+}

@@ -1,0 +1,4411 @@
+[
+  {
+    "id": 0,
+    "slug": "vivi",
+    "blend": "assets/characters/vivi.blend",
+    "model": "assets/characters/vivi.fbx",
+    "vertices": 46016,
+    "triangles": 88507,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Attack2": [
+        531,
+        555
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/vivi.png",
+    "sha256": {
+      "blend": "580e33ba6f1fdf8278c393fc894735e4a858e4722bafcae73247fc0519661dab",
+      "model": "d260994f22f2c0b27a7d4569b7047edb3c3aed006b0c7b5cb2fb88965e864966",
+      "guide": "40d6b4734fe65445a2b6d217da6cd83c153aedeba810e6fa5ca6bb5d56eb39cf",
+      "portrait": "fcb698c50f12b781ae4c0eb512e73cb30c327e35ca879df5e06cdc9b8d399981",
+      "hands": "1b9d5d3a052bb507e17cb1f9adb9c790cd2023a91135bdc0cde07467c197492b",
+      "refined_arms_texture": "4a1e9edfefcc5dceddf70e968e83868de289bc31ba12198d12bb237d7aee19ed",
+      "cheeks": "f1a9f45f751b461dfe2b96fc8013e76aeb40972f5fb806623d068294b0e03066",
+      "closed_eyes": "b1e0ba0de7bd2413e8c23e579415d3ba9de16b874fa197d79463e95f322956a3",
+      "half_closed_eyes": "0f9a1073c1178f6ba97e1a06b35d1203fa03f750c7d6a1ccd27dc1156567e1e1"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/vivi-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/vivi-weapon.fbx",
+    "morph_data": "assets/characters/vivi.morphs.json",
+    "hands": "assets/characters/vivi-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 7975,
+        "hand_faces": 10434,
+        "cuff_radius": 0.04088,
+        "cuff_clearance": 0.02912
+      },
+      {
+        "side": "R",
+        "hand_vertices": 7998,
+        "hand_faces": 10394,
+        "cuff_radius": 0.03657041610096073,
+        "cuff_clearance": 0.026050159414382983
+      }
+    ],
+    "refined_arms_texture": "assets/characters/vivi-refined-arms.png",
+    "cheeks": "assets/characters/vivi-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2445958,
+          -0.1506446,
+          1.2525847
+        ],
+        [
+          0.2445418,
+          -0.1497624,
+          1.2526885
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 16567,
+      "reconstructed_vertices": 1339,
+      "revision": "separate-arm-domains-v1",
+      "slug": "vivi",
+      "source_sha256": {
+        ".blend": "6e21c09fb0d3803de7af403b6f900b8abedd87f749f30f247673f602b6c23564",
+        ".fbx": "2e8a9f389b785a9671d98cfb1bcb767b876632fa1ad44b600b4fd8734dc84e60",
+        "-rig.json": "1e93ab7a019f9f6cc5999e8b80377cf783cec57ed0406bf68f072faed565b282",
+        ".morphs.json": "40dc42ab3d106ac310f0568f94d38df2b43448088da2d0f779bf74286295e54f"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vivi/vivi/skeleton.skel",
+      "sha256": "f1cb79ce5a9cc5771f442017e08fac2f1f4a6c591496b1256beb676ad4c86bf3"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vivi/vivi/skeleton.skel",
+      "sha256": "f1cb79ce5a9cc5771f442017e08fac2f1f4a6c591496b1256beb676ad4c86bf3"
+    }
+  },
+  {
+    "id": 1,
+    "slug": "naia",
+    "blend": "assets/characters/naia.blend",
+    "model": "assets/characters/naia.fbx",
+    "vertices": 36715,
+    "triangles": 69864,
+    "bones": 58,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/naia.png",
+    "sha256": {
+      "blend": "781cb44721160c7e845e76d3d2c7c5ad994aa4f3ffcffd3d6fed14a636f41792",
+      "model": "1f5bced727182869190d7e419af0e932377a55431d02f8e2cf0757085b9e8c12",
+      "guide": "2663d1eb65cea54b66edb9a743fe5477ad68511530dc24e4ee32d16b4848a07e",
+      "portrait": "9cc4f6a65e04fb88b24929adbe4b5b709afe24aab498198174e2e4de2c0b4557",
+      "weapon_model": "8bbe6c22de790a32b70e508c91bd406f91821b542fba9bbbd3739aab40362242",
+      "hands": "5f6baabad54140f451ed69ceaf75d65b5376a436aea49cdcef2972cae09fa88a",
+      "refined_arms_texture": "02e2a0e03fef8ce6ff681ef7b1c95b420988d32bf42b076886a887854644d708",
+      "cheeks": "0952c860d14a08f55d4052e98cf549266fa65b0b01994b25f95f2d473193614e",
+      "closed_eyes": "a74551565d6e5126981a88e298c0cf47d240350259ea4239728b9e3b211cf395",
+      "half_closed_eyes": "f47cef2f648360134891b2bf92dc2ba4b17afbf4e462619edc4b4ab205c2b1fe"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/naia-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "source_manifest": "assets/character-sources/tripo/naia/source-files.json",
+    "textures": [
+      "assets/characters/naia-rigged-basecolor.jpg",
+      "assets/characters/naia-clothes-basecolor.jpg",
+      "assets/characters/naia-bracelet-basecolor.jpg",
+      "assets/characters/naia-sandals-basecolor.jpg",
+      "assets/characters/naia-weapon-basecolor.jpg",
+      "assets/characters/naia-weapon-hat-basecolor.jpg",
+      "assets/characters/naia-head-hat-basecolor.jpg"
+    ],
+    "weapon_model": "assets/characters/naia-weapon.fbx",
+    "texture_sha256": {
+      "assets/characters/naia-rigged-basecolor.jpg": "f2b56d69646ff8a1c94c72c13bd135f113d2f91458cd8c277397f6013b921dcc",
+      "assets/characters/naia-clothes-basecolor.jpg": "5164085093758cbd4e88559f48581bf71a76c3cfc72626c4b814392e0158e47e",
+      "assets/characters/naia-bracelet-basecolor.jpg": "ac4c6199e3b9eb41b21d671ba77f24ce1c06026cadca73d53c0f040122c2c4c6",
+      "assets/characters/naia-sandals-basecolor.jpg": "b1730fd68c2548555fb56eef3aa8790be42116d3b3acc168d3d70008e7c4f599",
+      "assets/characters/naia-weapon-basecolor.jpg": "16c785a9cf36ae0dad9a80747ec587a27a6fc30bdc905ef8b156c76a90a8f5a4",
+      "assets/characters/naia-weapon-hat-basecolor.jpg": "1bcf29a270cbb090b413c38987e4d8b4ca3211356fe33bb436444415229c9b26",
+      "assets/characters/naia-head-hat-basecolor.jpg": "1ef677f5c796217a2b0f874798d520ea70fd32722da90fbb8971c075ac18c071"
+    },
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/naia-weapon.fbx",
+    "morph_data": "assets/characters/naia.morphs.json",
+    "hands": "assets/characters/naia-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8141,
+        "hand_faces": 10853,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8154,
+        "hand_faces": 10858,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      }
+    ],
+    "refined_arms_texture": "assets/characters/naia-refined-arms.png",
+    "braid_chains": {
+      "L": [
+        "Braid.L.01",
+        "Braid.L.02",
+        "Braid.L.03"
+      ],
+      "R": [
+        "Braid.R.01",
+        "Braid.R.02",
+        "Braid.R.03"
+      ]
+    },
+    "cheeks": "assets/characters/naia-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.216077,
+          -0.1394823,
+          1.1959944
+        ],
+        [
+          0.2108623,
+          -0.1341369,
+          1.1918688
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 5918,
+      "reconstructed_vertices": 1441,
+      "revision": "separate-arm-domains-v1",
+      "slug": "naia",
+      "source_sha256": {
+        ".blend": "08f3bdc34039a8ff12a1b18bc46ece8cb42589b627321584f8f2f0d34d1981d3",
+        ".fbx": "45d164e0afbcfe9bf3cc938db9f63ec096214db9b727dfe2cbc06e50048faef8",
+        "-rig.json": "e3f376fe69d4f5224bd2f50cd6e577c21bae24ab2d30cc982d881e5c6c081ef7",
+        ".morphs.json": "f34802bf9d9478b2c3f1d7e987dedaf0c5e8f758b944ecf300b5d66e143f097c"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/naia/naia/skeleton.skel",
+      "sha256": "525b42c56315ca53600b13c284e2ba7aa827b8dbb7494025036f9d20d21cf153"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/naia/naia/skeleton.skel",
+      "sha256": "525b42c56315ca53600b13c284e2ba7aa827b8dbb7494025036f9d20d21cf153"
+    }
+  },
+  {
+    "id": 2,
+    "slug": "erpin",
+    "blend": "assets/characters/erpin.blend",
+    "model": "assets/characters/erpin.fbx",
+    "vertices": 40773,
+    "triangles": 76872,
+    "bones": 56,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ],
+      "Attack2_1": [
+        531,
+        581
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/erpin.png",
+    "sha256": {
+      "blend": "b2335837690d8f8e03bf93115922e45f1f75375f426a825e203a999a614cef4b",
+      "model": "c70af90f1724ec27a80a85ded0cc0b13c1e60b21502fb35759c1efc2bd8d0d67",
+      "guide": "53f77968de6c38a1776195be417d4ba9cc0d8b23b98e832a88cb922c5d380943",
+      "portrait": "0622045f5dd7534ced65844047414db9ac8196d42e1ce1c7df2b5fd8ef2b4051",
+      "weapon_model": "91d444d94cfc2d246ee815148942ce5015ce2cc255b4900832df74ec32617398",
+      "hands": "0c19248cb8534e90a7391a66dc5c3e3d0db416da28b3fc38d3473fdf6be87731",
+      "refined_arms_texture": "58c160828991c32a4c88c136637451709fb872502eab52f07d09418c5e8c7fd6",
+      "cheeks": "db0afd769ad1b124d82c38439c7be55b8c73949e8e980531e80ba15c862263ca",
+      "closed_eyes": "65d97aa2239d3aa6ca08ea92cecaeb0df277b035d8e10d355bb44e807ec2c162",
+      "half_closed_eyes": "dc45c06189d91a6e2d80a8d6c333579685499d64bc1a76e9d35730ba89db3598"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/erpin-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "source_manifest": "assets/character-sources/tripo/erpin/source-files.json",
+    "textures": [
+      "assets/characters/erpin-rigged-basecolor.jpg",
+      "assets/characters/erpin-hair-basecolor.jpg",
+      "assets/characters/erpin-clothes-basecolor.jpg",
+      "assets/characters/erpin-cape-basecolor.jpg",
+      "assets/characters/erpin-wings-basecolor.jpg",
+      "assets/characters/erpin-accessories-basecolor.jpg",
+      "assets/characters/erpin-weapon-basecolor.jpg"
+    ],
+    "weapon_model": "assets/characters/erpin-weapon.fbx",
+    "texture_sha256": {
+      "assets/characters/erpin-rigged-basecolor.jpg": "766d5d31cc87094fb933284cd46cd6f15b323313975b908712b0a1fbf3cea886",
+      "assets/characters/erpin-hair-basecolor.jpg": "291fc5878fc628fea9d2107fceace52cd951232f4dceba6c95d4f2e4b98edb94",
+      "assets/characters/erpin-clothes-basecolor.jpg": "be8f307b974152c6817556a2eff223c2063b837aae3f27787cc812e90b66436a",
+      "assets/characters/erpin-cape-basecolor.jpg": "e8bbec3dcff5775d76adaa3bf191cb0475221014905b56e5707fd3d30aa0c311",
+      "assets/characters/erpin-wings-basecolor.jpg": "f2c1c626a95ae80d6500914e167d6da690c76459176e890c458f4306c7b5d8da",
+      "assets/characters/erpin-accessories-basecolor.jpg": "dc253e9b4a1c25049fe6089fe537eff6e92b8a7a9565d3c3bea09dc2c76b5775",
+      "assets/characters/erpin-weapon-basecolor.jpg": "f137b637851de77c55f831ddb41e9bb5c6b178f0e55cbfec4519fccd0083e6af"
+    },
+    "crown_correction": {
+      "scale_xyz": [
+        0.62,
+        0.62,
+        0.52
+      ],
+      "rise_m": 0.0555,
+      "reference": "assets/character-inputs/inputs-masked/erpin.png"
+    },
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/erpin-weapon.fbx",
+    "morph_data": "assets/characters/erpin.morphs.json",
+    "hands": "assets/characters/erpin-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8148,
+        "hand_faces": 10782,
+        "cuff_radius": 0.04088,
+        "cuff_clearance": 0.02912
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8152,
+        "hand_faces": 10787,
+        "cuff_radius": 0.04088,
+        "cuff_clearance": 0.02912
+      }
+    ],
+    "refined_arms_texture": "assets/characters/erpin-refined-arms.png",
+    "cheeks": "assets/characters/erpin-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2271897,
+          -0.2108267,
+          1.1803071
+        ],
+        [
+          0.2169332,
+          -0.2104446,
+          1.1835164
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 16411,
+      "reconstructed_vertices": 1860,
+      "revision": "separate-arm-domains-v1",
+      "slug": "erpin",
+      "source_sha256": {
+        ".blend": "2c05c301efac4ac627257a99052ec8989c8bf1b87695d88227ae23bfe1aa4e29",
+        ".fbx": "c3aa1b57bffcac7e83d7a158b54270feeaae6d29768f45964f576517001e45d4",
+        "-rig.json": "60238b01718692e8341ed55104046b2ed018441be5af63111fd621f8e1e21161",
+        ".morphs.json": "ac08c9832c34fdf155edc56825fffdbc8a963f1b8da6cc07b788d399bfad002d"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/erpin/erpin/skeleton.skel",
+      "sha256": "defbc371b9f3193c904f23097cce266b9f1c2c2705c1cb38ca364d3e07bac894"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 1.4666666666666666,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/erpin/erpin/skeleton.skel",
+      "sha256": "defbc371b9f3193c904f23097cce266b9f1c2c2705c1cb38ca364d3e07bac894"
+    },
+    "erpin_cake": {
+      "source_clip": "Attack2_1",
+      "duration": 1.6666666666666667,
+      "bite_frames": [
+        11,
+        17,
+        23,
+        29
+      ],
+      "left_hand": "Hand.R"
+    },
+    "independent_wings": {
+      "bones": [
+        "Wing.L",
+        "WingTip.L",
+        "Wing.R",
+        "WingTip.R"
+      ],
+      "attachment": "Head",
+      "weighted_vertices": 744,
+      "baked_inertia_all_clips": true,
+      "runtime_inertia": true
+    }
+  },
+  {
+    "id": 3,
+    "slug": "id",
+    "blend": "assets/characters/id.blend",
+    "model": "assets/characters/id.fbx",
+    "vertices": 47605,
+    "triangles": 92240,
+    "bones": 54,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/id.png",
+    "sha256": {
+      "blend": "5fe3ec62159c07d0c08bfd88362b895e7ae23ef622fbc251772d6b39b51763bc",
+      "model": "5363e4c9ed8cf14acb64878df55f16b9ad519bac1d14cd729cec26b66dba9252",
+      "guide": "976a16bf2b97d897f7e54ba638b144bcbf3f1f3f9a8a653acedb379ced4673f1",
+      "portrait": "8ea68a069516ce3273415da45439e8d94785d7f4e25fcde8c5a0bb4b54967be7",
+      "hands": "a4e27b66ad8cb7d2523d03297b869ffa2e808e384a3506c82a8e87ad71e69a84",
+      "refined_arms_texture": "31c7d6960772612b17be4d7ecdf3cfe8226ed0f2460324fdeb74346148456375",
+      "cheeks": "eda2842eb9afd9334ac9143667f0d01c5315ed6a1d3200a5da04583b534796e9",
+      "closed_eyes": "ca585494ea57e821dbfb26cb8d53d2f27f58f36186ebb49a39e80b8e624d5be4",
+      "half_closed_eyes": "f5bffde0ba05e4f819c6c409e431a2eb4373157790f7ebe3699f86cd6c20822c"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/id-portrait.png",
+    "correction": "Fitted sleeveless white/black one-piece bodysuit, crossed neck straps, bare arms, white wrist bands, charcoal thigh-high stockings with white side piping and white low shoes. Based on user-provided costume references; crescent pod and seated rig preserved.",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [
+      "Crescent",
+      "Nata"
+    ],
+    "morph_data": "assets/characters/id.morphs.json",
+    "hands": "assets/characters/id-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8074,
+        "hand_faces": 10775,
+        "cuff_radius": 0.03652804544230897,
+        "cuff_clearance": 0.026019977575343373
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8072,
+        "hand_faces": 10666,
+        "cuff_radius": 0.0349980673264871,
+        "cuff_clearance": 0.024930130150374374
+      }
+    ],
+    "refined_arms_texture": "assets/characters/id-refined-arms.png",
+    "mount_resize": {
+      "scale": 1.7,
+      "old_dimensions_m": [
+        0.9273120164871216,
+        1.1439605057239532,
+        1.2199999801814556
+      ],
+      "new_dimensions_m": [
+        1.5764304399490356,
+        1.9447328448295593,
+        2.0740001015365124
+      ],
+      "base_m": [
+        0.0,
+        0.44999998807907104,
+        0.019999999552965164
+      ],
+      "front_height_scale": 1.1,
+      "robot_offset_m": [
+        0.3199999928474426,
+        0.0,
+        0.1599999964237213
+      ],
+      "unchanged_rider_meshes": [
+        "id_SkinnedMesh",
+        "id_RefinedHand.L",
+        "id_RefinedSleeve.L",
+        "id_RefinedViewSleeve.L",
+        "id_RefinedHand.R",
+        "id_RefinedSleeve.R",
+        "id_RefinedViewSleeve.R"
+      ],
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      },
+      "candidate_sha256": {
+        "id.blend": "92740db5c65f7bdfd70391d65d43213a394a333bb64a170c44ec10fd9f80c626",
+        "id.fbx": "4622fc50b67addd01a0268705af00dbcf43396a6997c39baee31692da73da016"
+      }
+    },
+    "seated_pose": {
+      "source": "assets\\characters\\id-blink-L.png",
+      "source_sha256": "12321ea8c0e7c8e1246e82d7fb2c5c726e53d6d0f021cb7703e89e1dc53ebdc3",
+      "hip_offset_m": [
+        0.0,
+        0.41999998688697815,
+        -0.13500000536441803
+      ],
+      "leg_angles_rad": {
+        "Thigh": -2.17,
+        "Shin": 0.95,
+        "Foot": 1.1
+      },
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      },
+      "rest_arm_clips": [
+        "Idle",
+        "Jump",
+        "Run",
+        "Walk"
+      ],
+      "idle_joints": {
+        "Hips": [
+          0.003613540204241872,
+          0.4055458605289459,
+          0.5851884484291077
+        ],
+        "Thigh.L": [
+          -0.09395233541727066,
+          0.4055458903312683,
+          0.5551884770393372
+        ],
+        "Shin.L": [
+          -0.10117948055267334,
+          0.16245678067207336,
+          0.6862034201622009
+        ],
+        "Foot.L": [
+          -0.10117954015731812,
+          -0.1719243973493576,
+          0.5484513640403748
+        ],
+        "Hand.L": [
+          -0.11999998986721039,
+          0.16999998688697815,
+          0.7900000810623169
+        ],
+        "Hand.R": [
+          0.11999993771314621,
+          0.16999998688697815,
+          0.7899999618530273
+        ]
+      },
+      "candidate_sha256": {
+        "id.blend": "9ae209015496ac6c7918a050f409a9d60418e38ea07cb6abbcee4c192fe897ed",
+        "id.fbx": "528ff72d0dfc9ce0e71f21ef2f775d7a4845752b132287ac170c680019943cd8"
+      }
+    },
+    "cheeks": "assets/characters/id-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2119923,
+          -0.1621068,
+          1.2080683
+        ],
+        [
+          0.2036691,
+          -0.1719704,
+          1.2052466
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 22388,
+      "reconstructed_vertices": 1916,
+      "revision": "separate-arm-domains-v1",
+      "slug": "id",
+      "source_sha256": {
+        ".blend": "03afe4647b372679d6c6d4e1e3be910c945ea0c8bd0229f4c35b39bc41df6b3f",
+        ".fbx": "25a02e1453cf5d475ad001d45e04244071f6e36d814f110907aba27078ad7f1d",
+        "-rig.json": "68a85dcb96f99979287f6aa12d7dd54548736b1144246471ba1e5de7f93f9565",
+        ".morphs.json": "1397995ec5aa1729c7199e11dec6fda95d5f727393046f8270afe3ec43bfa5df"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ed/ed/skeleton.skel",
+      "sha256": "49369c5751c574a7d8fc17a50bbb9bee388643c81814b8565e884ba222a691e0"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 2.6666666666666665,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ed/ed/skeleton.skel",
+      "sha256": "49369c5751c574a7d8fc17a50bbb9bee388643c81814b8565e884ba222a691e0"
+    }
+  },
+  {
+    "id": 4,
+    "slug": "aya",
+    "blend": "assets/characters/aya.blend",
+    "model": "assets/characters/aya.fbx",
+    "vertices": 42485,
+    "triangles": 80986,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Attack2": [
+        531,
+        555
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/aya.png",
+    "sha256": {
+      "blend": "e770d6dc7f5cec7e4b938d4a43fd4594b48797fecd2b3a719fc87449c55545ef",
+      "model": "c675a3a70b22db3829d272914da79637ccf15c8798685718a880a4636e4e39ee",
+      "guide": "5eb22ec104035f91fd0f525ce0d8884a73f4c2f87722b0bfdb3ae5fee085ca87",
+      "portrait": "fae202bef58207a03a093de48b0d746367f4e0420e5c438e4f942652bf65ddd5",
+      "hands": "9ec01000beeac6144dd40c0af9491e1e529443415a020d350103908a88f82ccb",
+      "refined_arms_texture": "b51abb6410aad7755af3ed2323ea48a61b79ffb3cd5acfdd891df7a38452a4af",
+      "cheeks": "7d6d8f744a5cfcb12278bc3e0e4310978553f66a405ed8d224a5bdd0d600010a",
+      "closed_eyes": "fb78642ee3142a98a4781db5c5a94bc6b235675e1f35e2a0fd143dd305729e40",
+      "half_closed_eyes": "8b2bcc8d56a7789fe7cbf798f7907c2fd4e3ddb6b83af94c4fc0f0e5a1171b00"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/aya-portrait.png",
+    "parasol_in_model": true,
+    "correction": "Held flower parasol; two ankle-length low white twin tails; 2026-11-12",
+    "sleeve_correction": "White kimono sleeves; brown hands preserved; 2026-11-13",
+    "dance": {
+      "status": "verified-standing-retarget",
+      "clip": "Dance_1",
+      "seconds": 1.6,
+      "source": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-aya-aya",
+      "source_sha256": "cba39900e962f190ae1fdf598ea2c9bde4d900a226e3683794b639935e1e1402"
+    },
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/aya-weapon.fbx",
+    "morph_data": "assets/characters/aya.morphs.json",
+    "hands": "assets/characters/aya-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 7862,
+        "hand_faces": 10362,
+        "cuff_radius": 0.03722424473504964,
+        "cuff_clearance": 0.026515900359213446
+      },
+      {
+        "side": "R",
+        "hand_vertices": 7862,
+        "hand_faces": 10232,
+        "cuff_radius": 0.03520031107038689,
+        "cuff_clearance": 0.025074194187124907
+      }
+    ],
+    "refined_arms_texture": "assets/characters/aya-refined-arms.png",
+    "cheeks": "assets/characters/aya-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2070774,
+          -0.1574939,
+          1.3365332
+        ],
+        [
+          0.1982734,
+          -0.1914605,
+          1.343967
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 5943,
+      "reconstructed_vertices": 1319,
+      "revision": "separate-arm-domains-v1",
+      "slug": "aya",
+      "source_sha256": {
+        ".blend": "124b4f755bb22e008e18e0eaa3465482c371dc536372a3c7876a558ba56853de",
+        ".fbx": "cc4fb6136c5460ad769a48cba756010a67b7fd1687c39bc21d9ad0500e653f1c",
+        "-rig.json": "f27f30ed677ca3861615b89d685f274bc15840558ccb5577090299c1ffa95504",
+        ".morphs.json": "cfddec65bd68d6a152d5170f286e1e8129434acfe6e0fe01b3a36afbd0039348"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.8333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/aya/aya/skeleton.skel",
+      "sha256": "bf83a8dbbc4c8e65d2273afac4ce48afd702fdb0dcf6a31d08a3513d8ed32109"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/aya/aya/skeleton.skel",
+      "sha256": "bf83a8dbbc4c8e65d2273afac4ce48afd702fdb0dcf6a31d08a3513d8ed32109"
+    }
+  },
+  {
+    "id": 5,
+    "slug": "picora",
+    "blend": "assets/characters/picora.blend",
+    "model": "assets/characters/picora.fbx",
+    "vertices": 39264,
+    "triangles": 75169,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/picora.png",
+    "sha256": {
+      "blend": "76318017eae473297e4fd7a9c0da75063b7e92b504119915094f39698c76c613",
+      "model": "c08a903c2ddc63cc55c2efb2bd577b31b42c2812fcb34bc23121882602affe26",
+      "guide": "389a11bd167cf09c0a139331765d1a85f601b2032940c40399d90dfc5be8c0e2",
+      "portrait": "45ca956ce6d3935b92f6f13dea61e3e0e7b9482e07fff9a33f1787dc860c94ff",
+      "hands": "eca2e809976dde33bb3bf661c009c0b49977b9fea8194a160c41e749dca3e35a",
+      "refined_arms_texture": "a688e7721ba8e6d7b596a03f9d1f1b3e0e70e7f1d711bff23d1f0415755e106a",
+      "cheeks": "a424e27b71930c1a2c01899b8889115baa3872d4230b0ac0781b7eb44c18bced",
+      "closed_eyes": "5b0b89cb1b072e8a3696dcfcb5814f899dade77c1177314a7fff8d010abafdd1",
+      "half_closed_eyes": "4ca6ffcbfd4cde8aef715e8caeec4557de7e4bc7d2441d2b706371583dff705f"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/picora-portrait.png",
+    "guide_update": {
+      "date": "2026-11-12",
+      "record": "artifacts/tripo-picora-shoulder-bag/generation.json",
+      "scope": "Shoulder-bag reference updated; runtime model remains unchanged"
+    },
+    "dance": {
+      "status": "verified-standing-retarget",
+      "clip": "Dance_1",
+      "seconds": 1.066667,
+      "source": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-picora-picora",
+      "source_sha256": "ae150c1b5ea116a0fbff93cea6f84e1fcc9bbd7976133ed17078473fd0ed5f7e"
+    },
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/picora-weapon.fbx",
+    "morph_data": "assets/characters/picora.morphs.json",
+    "hands": "assets/characters/picora-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8154,
+        "hand_faces": 10792,
+        "cuff_radius": 0.03274914908544928,
+        "cuff_clearance": 0.02332816099237483
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8126,
+        "hand_faces": 10765,
+        "cuff_radius": 0.03270570135196971,
+        "cuff_clearance": 0.023297211921951024
+      }
+    ],
+    "refined_arms_texture": "assets/characters/picora-refined-arms.png",
+    "cheeks": "assets/characters/picora-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2705875,
+          -0.2212465,
+          1.1949412
+        ],
+        [
+          0.2667802,
+          -0.2285032,
+          1.1918752
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 11622,
+      "reconstructed_vertices": 1131,
+      "revision": "separate-arm-domains-v1",
+      "slug": "picora",
+      "source_sha256": {
+        ".blend": "f288702ee43939e5e4083e4f2fb2dbf58e14f20a84e7e65e700c2021dc78259f",
+        ".fbx": "0b1d0adafd971fbebaa910f18eca15c51458b5547e7ae876b5bcf672011d192f",
+        "-rig.json": "65b50cfa1e615e31123da894e471bc88677bbe87d24e2cb33a82fb55055d4de0",
+        ".morphs.json": "5b08e9ddbe2e73e62b77123ea25e50eb18a7e9b663fd457be45873f68cb8c232"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.5666666666666667,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.skel",
+      "sha256": "7a3e137f6f12d33ffa8eef65871001d1492c31f0876df230e6347c9d33e93c3c"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.9333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/picora/picora/skeleton.skel",
+      "sha256": "7a3e137f6f12d33ffa8eef65871001d1492c31f0876df230e6347c9d33e93c3c"
+    }
+  },
+  {
+    "id": 6,
+    "slug": "chloe",
+    "blend": "assets/characters/chloe.blend",
+    "model": "assets/characters/chloe.fbx",
+    "vertices": 42380,
+    "triangles": 79125,
+    "bones": 58,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/chloe.png",
+    "sha256": {
+      "blend": "45b8ba7968d68e58d89971a4afc6a340d60aa641eb303b1c5f147c0dd251222e",
+      "model": "ebfd307380eefe179e1682a6f5fe35fc16bd0e78935a16d3f70f809bf0a72da7",
+      "guide": "a2d9a6adda8c55607d4183dee04017e67b3c10039eab3551fff84e4378a63374",
+      "portrait": "47d8cb3e0c7ea34c820f761b295300adde0d854e5c18211caba54579152cc230",
+      "hands": "97dd719995284a86e65258d1c857a7d9579b3f9b33df13b96e192c04cd03f39d",
+      "refined_arms_texture": "7958d39e2b1ba7a55379ee3d339b92379d3c0833492bcdf22493ee73c41534a1",
+      "cheeks": "af914fd876b15b80485255bba4010262af71b15ae4664098ab1c1286c4897bae",
+      "closed_eyes": "b89efc950d13e20eee7483a01df4b3dfd3401e41c56fdccc327718363732c032",
+      "half_closed_eyes": "0f19a4662a3fea76323ca34b4e38ec0d25ea6623407a00510eced8d2cd358177"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/chloe-portrait.png",
+    "dance": {
+      "status": "verified-standing-retarget",
+      "clip": "Dance_1",
+      "seconds": 1.066667,
+      "source": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-chloe-chloe",
+      "source_sha256": "1715f7c693bdb58bbb55864565719e1b28e0f9aecad7a3c64b51d7949d10645d"
+    },
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [
+      "Sebastian"
+    ],
+    "morph_data": "assets/characters/chloe.morphs.json",
+    "hands": "assets/characters/chloe-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8134,
+        "hand_faces": 10766,
+        "cuff_radius": 0.03430357217686792,
+        "cuff_clearance": 0.02443542127667304
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8141,
+        "hand_faces": 10736,
+        "cuff_radius": 0.033669306811874015,
+        "cuff_clearance": 0.02398361581119793
+      }
+    ],
+    "refined_arms_texture": "assets/characters/chloe-refined-arms.png",
+    "cheeks": "assets/characters/chloe-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2415837,
+          -0.212346,
+          1.1048714
+        ],
+        [
+          0.2256894,
+          -0.2266128,
+          1.105321
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 9162,
+      "reconstructed_vertices": 3985,
+      "revision": "separate-arm-domains-v1",
+      "slug": "chloe",
+      "source_sha256": {
+        ".blend": "71bb28addce9acc43948a61478fab86de4d114e5f8006518ffb5479a446002e8",
+        ".fbx": "a8848e730feff4b95bfd22732cd2e6568cebac71eafd458d2b05aa75b8c202f7",
+        "-rig.json": "66963509ccc3aefa41f06881c4c9073d5a173ae9decb8f2b71c00039a98270d1",
+        ".morphs.json": "8986dff74cc7229e3f46e15634659a46b4a481f2854784b8c26cff761ff7a20b"
+      }
+    },
+    "companion_resize": {
+      "mesh": "Sebastian",
+      "scale": 2.4,
+      "old_base": [
+        0,
+        0.4,
+        0.67
+      ],
+      "new_base": [
+        0,
+        0.58,
+        0.03
+      ],
+      "rider_lift": 0.0,
+      "reference": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-basic.jpg",
+      "old_dimensions_m": [
+        0.9291602969169617,
+        0.48314328491687775,
+        1.2499999403953552
+      ],
+      "new_dimensions_m": [
+        2.229984760284424,
+        1.1595439314842224,
+        2.9999999720603228
+      ],
+      "source_sha256": {
+        "chloe.blend": "285fe7a6b015007aae9682b05498b312d87b58c41d32dbf59589d7e8750817b6",
+        "chloe.fbx": "cd35914c819c4a4f12e796dcb3f73f0834fe8cf064e1315f10beb49fc094ace1",
+        "chloe.morphs.json": "8986dff74cc7229e3f46e15634659a46b4a481f2854784b8c26cff761ff7a20b"
+      },
+      "replaces_sha256": {
+        "chloe.blend": "d679cfa426f38ba39ea0df4454d1a5c3fdb7aef3d00777ead02ccf7f392bdf8d",
+        "chloe.fbx": "bc77622413420f26bba7aa4199e4a7a9d7bd6800c785be17e4d4c0724e6685f9",
+        "chloe.morphs.json": "8986dff74cc7229e3f46e15634659a46b4a481f2854784b8c26cff761ff7a20b"
+      },
+      "grounding_lift_m": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.18297168481349946,
+        0.23322914409637452,
+        0.2117951946258545,
+        0.0650230782032013,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.24575452375411988,
+        0.2619683282375336,
+        0.2595554428100586,
+        0.26345507669448853,
+        0.26421333718299866,
+        0.2721882300376892,
+        0.2860996561050415,
+        0.2786480622291565,
+        0.2735799388885498,
+        0.24361114072799683,
+        0.08187371361255646,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.005886139899492264,
+        0.016003022521734238,
+        0.01560483741760254,
+        0.015195722311735153,
+        0.014776757538318634,
+        0.014390146911144257,
+        0.014019871681928635,
+        0.013645707249641419,
+        0.013083933472633362,
+        0.012103001207113266,
+        0.011136377781629563,
+        0.010216242253780365,
+        0.009333985477685929,
+        0.008468350946903229,
+        0.007593418091535568,
+        0.00626287105679512,
+        0.004960276737809181,
+        0.0036851508468389513,
+        0.002437007233500481,
+        0.0012075291872024538,
+        7.275547087192552e-05,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0007202612161636354,
+        0.0019087368547916414,
+        0.00304493921995163,
+        0.0041479492485523226,
+        0.0049769716262817384,
+        0.0056910054683685304,
+        0.0063929991722106935,
+        0.007093696475028992,
+        0.007794535338878632,
+        0.008716671347618103,
+        0.00952697041630745,
+        0.010313729375600815,
+        0.011114365041255951,
+        0.011949783742427826,
+        0.01282923910021782,
+        0.013721651017665863,
+        0.014201442331075669,
+        0.014485208868980408,
+        0.014763629615306854,
+        0.015057130336761475,
+        0.01538310068845749,
+        0.015698383182287216,
+        0.016003022521734238,
+        0.005886106371879578,
+        0.0,
+        0.0,
+        0.008230535864830017,
+        0.04227102416753769,
+        0.07011304664611817,
+        0.09056825059652329,
+        0.10301049667596818,
+        0.107335715174675,
+        0.10301049667596818,
+        0.09056825059652329,
+        0.07011304664611817,
+        0.04227102416753769,
+        0.008230535864830017,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.136428190946579,
+        0.22411520648002625,
+        0.17545400428771973,
+        0.08022908735275269,
+        0.061443048149347305,
+        0.133496506690979,
+        0.1711297916173935,
+        0.1712564663887024,
+        0.175498379945755,
+        0.19423518943786622,
+        0.19237445163726807,
+        0.17616163063049317,
+        0.19209284949302674,
+        0.19441819059848786,
+        0.17971600461006165,
+        0.18763407933712006,
+        0.19612862038612366,
+        0.18325075376033784,
+        0.182560546875,
+        0.19547133016586304,
+        0.1888542311191559,
+        0.17865691947937012,
+        0.19360846149921418,
+        0.19661830234527589,
+        0.13616546857357026,
+        0.03287666718661785,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      }
+    },
+    "carry_pose": {
+      "source_sha256": {
+        "chloe.blend": "e6868493717acb9d94542149ff7d5ca9958e44db3ef1c9fef5b0ecf5c150d85c",
+        "chloe.fbx": "6725da89920057136cd677e4bcf69372aff0174808fa53ec73efadeea10e04df",
+        "chloe.morphs.json": "8986dff74cc7229e3f46e15634659a46b4a481f2854784b8c26cff761ff7a20b",
+        "chloe-hands.json": "97dd719995284a86e65258d1c857a7d9579b3f9b33df13b96e192c04cd03f39d"
+      },
+      "head_forward_m": 0.4,
+      "upper_arm_length_m": 0.67,
+      "forearm_length_m": 0.53,
+      "cheek_anchors": {
+        "L": {
+          "vertices": [
+            1097,
+            1102,
+            1098
+          ],
+          "weights": [
+            0.39581304270971285,
+            0.12604485015949324,
+            0.47814210713079397
+          ],
+          "rest": [
+            -0.5400000214576721,
+            -0.1599999964237213,
+            1.7090973854064941
+          ]
+        },
+        "R": {
+          "vertices": [
+            2786,
+            2781,
+            2774
+          ],
+          "weights": [
+            0.11264524576618506,
+            0.5392924577076801,
+            0.3480622965261348
+          ],
+          "rest": [
+            0.5,
+            -0.10000000149011612,
+            1.7022271156311035
+          ]
+        }
+      },
+      "maximum_palm_contact_error_m": 6.309722471159735e-07,
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/chloe/chloe/skeleton.skel",
+      "sha256": "4dc5cb12549fde9bbd1432f8ca70acf66569ca33d7847e041295936693988090"
+    },
+    "straight_carry_pose": {
+      "source_sha256": {
+        "chloe.blend": "07763d61a72dc394c19c4dcde90fff4d76c9251e70c195cb0b93e230778af3f8",
+        "chloe.fbx": "2a6278a5a672ca307f512eb723f3a9085f200003cd11552ddb32a604db3a26e2",
+        "chloe.morphs.json": "8986dff74cc7229e3f46e15634659a46b4a481f2854784b8c26cff761ff7a20b",
+        "chloe-hands.json": "7b97a3968e30a65e0c2fa075505301e674deb7a1ac3407a046d7b5ecd05cb7bb"
+      },
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      },
+      "frame_range": [
+        0,
+        528
+      ],
+      "neutral_reach_m": 0.9150581592739211,
+      "lengths_m": {
+        "L": [
+          0.5109075338565909,
+          0.4041506254173302
+        ],
+        "R": [
+          0.510907526935056,
+          0.4041506323388649
+        ]
+      },
+      "arm_scale_range": [
+        0.9790727954139928,
+        1.2796492669638913
+      ],
+      "samples_per_frame": 4,
+      "cheek_anchors": {
+        "L": {
+          "vertices": [
+            1097,
+            1102,
+            1098
+          ],
+          "weights": [
+            0.39581304270971285,
+            0.12604485015949324,
+            0.47814210713079397
+          ],
+          "rest": [
+            -0.5400000214576721,
+            -0.1599999964237213,
+            1.7090973854064941
+          ]
+        },
+        "R": {
+          "vertices": [
+            2786,
+            2781,
+            2774
+          ],
+          "weights": [
+            0.11264524576618506,
+            0.5392924577076801,
+            0.3480622965261348
+          ],
+          "rest": [
+            0.5,
+            -0.10000000149011612,
+            1.7022271156311035
+          ]
+        }
+      },
+      "elbow_bend_degrees": 0.0
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/chloe/chloe/skeleton.skel",
+      "sha256": "4dc5cb12549fde9bbd1432f8ca70acf66569ca33d7847e041295936693988090"
+    }
+  },
+  {
+    "id": 7,
+    "slug": "renua",
+    "blend": "assets/characters/renua.blend",
+    "model": "assets/characters/renua.fbx",
+    "vertices": 41041,
+    "triangles": 68401,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/renua.png",
+    "sha256": {
+      "blend": "30e7138a2a44ba3c95e43d67cba5d2a9e9e98fff434ea074a73c796e75ec3ca4",
+      "model": "1e3ffe9c1b57db15da0ad3230311bc19b1d68cc373628d10b7380a56cdc708d7",
+      "guide": "c673b8653f83c725b3e7f897e1755fbd970fab2c76cd8536534d515503501c09",
+      "portrait": "3cef460cbedfe3838e404cd62aded7464fa857c5ba1135f876ac92972e462bda",
+      "weapon_model": "fe0ab195a343134393d1255d7169c599cca8b349bf0df346810e598ab3e6cf55",
+      "hands": "4885b099b05e5765526683078befe06b868b0cd09c881f04634d0aa9d1d5ecd2",
+      "refined_arms_texture": "f7b7ea98a321850c01c0eff5ed42ea0873220da49ace4202bfd721af4aa7152f",
+      "cheeks": "8f291e4c42ee72b40375fcd3b91b251210d73b9a017c8a69900fc9ba92f28996",
+      "closed_eyes": "2e42d02cb87f2668fcf2632b44ad2ea866774d65285c1ab3348ee9d1ef4568f5",
+      "half_closed_eyes": "5a39f1336f3dba6324dfecb0d20a2ea44ddb5915a4b356a68ff737c8f8cd404b"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/renua-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "source_manifest": "assets/character-sources/tripo/renua/source-files.json",
+    "textures": [
+      "assets/characters/renua-rigged-basecolor.jpg",
+      "assets/characters/renua-hair-basecolor.jpg",
+      "assets/characters/renua-clothes-basecolor.jpg",
+      "assets/characters/renua-accessories-basecolor.jpg",
+      "assets/characters/renua-weapon-basecolor.jpg"
+    ],
+    "weapon_model": "assets/characters/renua-weapon.fbx",
+    "texture_sha256": {
+      "assets/characters/renua-rigged-basecolor.jpg": "6d9b6c8b466ef683ef5aaa051d467e7cf685710483117d0b50105c488c42d919",
+      "assets/characters/renua-hair-basecolor.jpg": "d08d4a5f2fcdabc700e48b4dce37eba3a4114ba897b19bf21b86f2bdf6b98ba4",
+      "assets/characters/renua-clothes-basecolor.jpg": "764fc6e287016034d15de2cd08f88439acf93862064bd883f32ceb1610d5adb2",
+      "assets/characters/renua-accessories-basecolor.jpg": "7eb31cf5dd948ec0466196e94507f651b3878fb10c22d1a7dfc57b4cf310ffc4",
+      "assets/characters/renua-weapon-basecolor.jpg": "7896e2d9f5ac68634a3fbd5df5f76ed115dcc7733895ad639a0c46af122b7def"
+    },
+    "dance": {
+      "status": "verified-standing-retarget",
+      "clip": "Dance_1",
+      "seconds": 2.666667,
+      "source": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-renewaawaken-renewaawaken",
+      "source_sha256": "22a1677b8bc0091213246de29abb3f471346cde8662978bb2a2046214328d762"
+    },
+    "head_accessory_correction": {
+      "reference": "assets/character-inputs/inputs-masked/renua.png",
+      "halo_hair_depth_clearance_m": 0.06255656480789185,
+      "halo_above_forelock_m": 0.3768608570098877,
+      "region_vertices": {
+        "halo": 2610,
+        "earphones": 1977,
+        "fins": 1064
+      }
+    },
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/renua-weapon.fbx",
+    "morph_data": "assets/characters/renua.morphs.json",
+    "hands": "assets/characters/renua-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8147,
+        "hand_faces": 10702,
+        "cuff_radius": 0.02995211357171524,
+        "cuff_clearance": 0.021335752133276608
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8132,
+        "hand_faces": 10556,
+        "cuff_radius": 0.0312954699683613,
+        "cuff_clearance": 0.02229266353910668
+      }
+    ],
+    "refined_arms_texture": "assets/characters/renua-refined-arms.png",
+    "cheeks": "assets/characters/renua-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2072115,
+          -0.1490985,
+          1.2182091
+        ],
+        [
+          0.212674,
+          -0.1259472,
+          1.2252264
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "restored_coat": {
+      "restored_faces": 12728,
+      "restored_vertices": 6642,
+      "old_hand_vertices_excluded": 656,
+      "face_vertices": 41041,
+      "facial_controls": 23,
+      "new_hand_controls_preserved": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 15312,
+      "reconstructed_vertices": 7302,
+      "restored_coat": {
+        "vertices": 6642,
+        "sleeve_core_radius_m": 0.085,
+        "sleeve_outer_radius_m": 0.19
+      },
+      "revision": "separate-arm-domains-v1",
+      "slug": "renua",
+      "source_sha256": {
+        ".blend": "9047ec6b5cc6c0dc2ddc0526453649493de83ba24e2e425a2ac92d658a9fa86c",
+        ".fbx": "4b9b7338dc1b8e3318670a2a59b039149b80f71c72bfd5102b3118c990bcf360",
+        "-rig.json": "2f97efadb14d563dfcfbd12460ad335e42e346ecc23e22a3fc73423352d27a4a",
+        ".morphs.json": "2a0868160460ef90dc76b5ac9bdee5cd7e5150ee50b3b355ee86c2678502deee"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 2.6333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/renewaawaken/renewaawaken/skeleton.skel",
+      "sha256": "176184bd1f244c1fa414fd762df000be32c9d7f5facbea7f030e533760d2ae7d"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 1,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/renewaawaken/renewaawaken/skeleton.skel",
+      "sha256": "176184bd1f244c1fa414fd762df000be32c9d7f5facbea7f030e533760d2ae7d"
+    }
+  },
+  {
+    "id": 8,
+    "slug": "mayo",
+    "blend": "assets/characters/mayo.blend",
+    "model": "assets/characters/mayo.fbx",
+    "vertices": 40197,
+    "triangles": 74994,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/mayo.png",
+    "sha256": {
+      "blend": "f32e6b5cc676325e554daff21c2af8023b885fc31749ecfa3694020cf47507cb",
+      "model": "e1c4a014a706acd0ef73ffe5fee59d181fe268135360736a03abc3507157bf33",
+      "guide": "462b14c00caff916b7dbcf66b4e2d62ea812f4021be439fe9422422059c71b31",
+      "portrait": "729a15fcefe6c8d121f1f218d2a233f0dd5d9ad81957dcafd33f9dc71c833684",
+      "hands": "54905427818247cd9cd7ee31187ae9c731c7e5d18009afd25a7ca68e006ebcc6",
+      "refined_arms_texture": "8fe2cdeb545ffa32e571a451b183ba273fbacaaf493f0ee64cb6f8f755a7875a",
+      "cheeks": "76c2ea8b34fed7ef264baf10b319cdcd2a7329fbc86d2fc05811ce93707e3e0c",
+      "closed_eyes": "d0a0439437183866e12491b20db0c16dbd8b562aa73dc79ffe7453a7021241aa",
+      "half_closed_eyes": "ca10ae9e8218e59c7527015bc16f17ccd62eea025029333b5d2e4810bed5796f"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/mayo-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/mayo-weapon.fbx",
+    "morph_data": "assets/characters/mayo.morphs.json",
+    "hands": "assets/characters/mayo-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8132,
+        "hand_faces": 10781,
+        "cuff_radius": 0.03616789385924555,
+        "cuff_clearance": 0.02576343124220231
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8132,
+        "hand_faces": 10776,
+        "cuff_radius": 0.03556654808642509,
+        "cuff_clearance": 0.025335075349234314
+      }
+    ],
+    "refined_arms_texture": "assets/characters/mayo-refined-arms.png",
+    "cheeks": "assets/characters/mayo-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2180662,
+          -0.1382686,
+          1.1717448
+        ],
+        [
+          0.2142609,
+          -0.1353825,
+          1.1677287
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 12635,
+      "reconstructed_vertices": 2072,
+      "revision": "separate-arm-domains-v1",
+      "slug": "mayo",
+      "source_sha256": {
+        ".blend": "a64b5bc74be45a0a0891f16cca77aa225ec67f6dda46e9dcd547902faffd8343",
+        ".fbx": "d89a23cebf3ff88040335089a106de3474c55b9ed5f904fdfc06ab39cb701434",
+        "-rig.json": "614d7f48dec3928c88c2648161bb815c62c77ebc04eda129c1cc94c4ad01b921",
+        ".morphs.json": "8dd60699ed1d466fbdac1b89dd3c25647c36ef4feec505c5ed7b29f5d95d4dc9"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/mayo/mayo/skeleton.skel",
+      "sha256": "13b78c4272546c7ef0367c2d25fbcb5ab0777dda4150e7a2b0fb5379772d7386"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/mayo/mayo/skeleton.skel",
+      "sha256": "13b78c4272546c7ef0367c2d25fbcb5ab0777dda4150e7a2b0fb5379772d7386"
+    }
+  },
+  {
+    "id": 9,
+    "slug": "bella",
+    "blend": "assets/characters/bella.blend",
+    "model": "assets/characters/bella.fbx",
+    "vertices": 46140,
+    "triangles": 87482,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/bella.png",
+    "sha256": {
+      "blend": "46563ed6938f0f38bc7a35b9aa966ec600e5d47d56b63c12a44e44a27ee60cc9",
+      "model": "fe4f9277242139426d524b0fe58998babd258818aee848d80d8b74a5a12a3b80",
+      "guide": "604163038998758b12df7533515c5b54046c144189d6cd59f5b0dd72551680e3",
+      "portrait": "3f909f0d9e882ba55c26c9335f94f71fc6944aa17cf743e3a640dbcad48ea850",
+      "hands": "a3e3ccb4d46753bbc7f96eee2c8b2031df37f6986640ee6fc5352fe7786a8d18",
+      "refined_arms_texture": "b895ec92e8641282b287005835f1ab2a6d5d6a0f5cc057b42e820a994da54c07",
+      "cheeks": "d9b94a87649b18ee4bfd27189473ea95a653b877b90ba27ce4dd25730801ef18",
+      "closed_eyes": "5306c3d4c4887f9e0f268e75057aa3ea1628bc5d4f1050fce1abf74b87e438ba",
+      "half_closed_eyes": "bef640b54b294acef02a9f0f5ea6cbecd94b9e493c52ca81aaeab1c6314465c6"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/bella-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/bella-weapon.fbx",
+    "morph_data": "assets/characters/bella.morphs.json",
+    "hands": "assets/characters/bella-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8141,
+        "hand_faces": 10587,
+        "cuff_radius": 0.03508487277584645,
+        "cuff_clearance": 0.024991964169096104
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8136,
+        "hand_faces": 10519,
+        "cuff_radius": 0.03151294277269154,
+        "cuff_clearance": 0.02244757567369808
+      }
+    ],
+    "refined_arms_texture": "assets/characters/bella-refined-arms.png",
+    "cheeks": "assets/characters/bella-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2032407,
+          -0.0765368,
+          1.3755927
+        ],
+        [
+          0.19181,
+          -0.0712952,
+          1.3768353
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 17308,
+      "reconstructed_vertices": 2897,
+      "revision": "separate-arm-domains-v1",
+      "slug": "bella",
+      "source_sha256": {
+        ".blend": "3b853d9e186387bf9f43e6f2431fef1e00567ce38e2849cc5b8305e3e803af29",
+        ".fbx": "504cb4c4081d96b59c5663fa598c7ff3a19623b0b5b0fd97badbcb5b213593ca",
+        "-rig.json": "3dcd1c3a7acb1a74c48b71f8714ce2404174084a8c4a9ec236ee2d658e8b4dfd",
+        ".morphs.json": "0e4da8b59691fac4a0dbdccaefefed4d4cc45ba9b25a21f375a4c1c663610044"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.9333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vela/vela/skeleton.skel",
+      "sha256": "90cb010b025365571a31b807b327ea3c73a3c1210752c1438cb55ce61d3965e2"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 6.6,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/vela/vela/skeleton.skel",
+      "sha256": "90cb010b025365571a31b807b327ea3c73a3c1210752c1438cb55ce61d3965e2"
+    }
+  },
+  {
+    "id": 10,
+    "slug": "ui",
+    "blend": "assets/characters/ui.blend",
+    "model": "assets/characters/ui.fbx",
+    "vertices": 54472,
+    "triangles": 103797,
+    "bones": 58,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/ui.png",
+    "sha256": {
+      "blend": "5ac76f1163429a986ca64405b751caabf7907ad498696b5d6ef2e9fdac6e5539",
+      "model": "8168f6390e18bbcf63daa1429889a4a15d145b1e2d4c4a1641753a2816a55ca7",
+      "guide": "c208d1b3c77b56262caf7c90656513d9952a8bdf193e9cfe0efc836da9a50bfe",
+      "portrait": "6d5c998343bf539c04af5456a209046c972b8ee945a84e6a7fa1575cae3c4773",
+      "hands": "1df4ccce39825828d2a0b3edfac70d710ec675325e3662cc7a9608a11b69500b",
+      "refined_arms_texture": "34c81952f6aaf116508218c104dd21fcd40c9c13a98108afe877a8c53d649bba",
+      "cheeks": "9e1f04c8eb5a5e5cf06eefd2db80fba813c2d3d60c26e020b02edf1039d8d43b",
+      "closed_eyes": "922da70a35c29585f90da5f6b1df0fbc39880f68679a61c48a49db5be92ad878",
+      "half_closed_eyes": "afa6d675701d6fda043d968ed8271874805d554ea74af7942d396ebd6622dd76"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/ui-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [
+      "Frog"
+    ],
+    "weapon": "assets/characters/ui-weapon.fbx",
+    "morph_data": "assets/characters/ui.morphs.json",
+    "hands": "assets/characters/ui-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8020,
+        "hand_faces": 10624,
+        "cuff_radius": 0.03856557597904688,
+        "cuff_clearance": 0.027471369190553947
+      },
+      {
+        "side": "R",
+        "hand_vertices": 7668,
+        "hand_faces": 10306,
+        "cuff_radius": 0.04088,
+        "cuff_clearance": 0.02912
+      }
+    ],
+    "refined_arms_texture": "assets/characters/ui-refined-arms.png",
+    "cheeks": "assets/characters/ui-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2340735,
+          -0.1261586,
+          1.3277755
+        ],
+        [
+          0.2301055,
+          -0.1304221,
+          1.3266269
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 13263,
+      "reconstructed_vertices": 5168,
+      "revision": "separate-arm-domains-v1",
+      "slug": "ui",
+      "source_sha256": {
+        ".blend": "7da2e2d472ef9b289c9de5bfa54178fbb50adcb65214c55d622bf8176385b3c2",
+        ".fbx": "8ddc1024ebd310b58108660bcb95cb89912811fbfb5cf9acbfd641ea121051eb",
+        "-rig.json": "5572ce8ce8a0cc330be069f987dc200ed8d2061b561042cb0e213e1d2091c5e4",
+        ".morphs.json": "2437ed44a1ba55aad7b9ecc0f4167fc6f2c2250a21e5d978d39461da28d144aa"
+      }
+    },
+    "companion_resize": {
+      "mesh": "Frog",
+      "scale": 1.55,
+      "old_base": [
+        0,
+        -0.04,
+        0
+      ],
+      "new_base": [
+        0,
+        -0.04,
+        0.025
+      ],
+      "rider_lift": 0.3,
+      "reference": "assets/references/ui-fullbody.png",
+      "old_dimensions_m": [
+        0.98097825050354,
+        0.8602956533432007,
+        0.6600000262260437
+      ],
+      "new_dimensions_m": [
+        1.520516276359558,
+        1.3334581851959229,
+        1.0229999776929617
+      ],
+      "source_sha256": {
+        "ui.blend": "01cf7887f7a20572b489ac9fae8ddd840378b8dd596e2ead4ad1d4f462cacd96",
+        "ui.fbx": "753552bf983a44d0bf2b3f362d717ada0f45967fc84583de1fd0d10a1075b85d",
+        "ui.morphs.json": "2437ed44a1ba55aad7b9ecc0f4167fc6f2c2250a21e5d978d39461da28d144aa"
+      },
+      "replaces_sha256": {
+        "ui.blend": "8510334bfd60a1f44af7c8720af4dd9f0edeeb751b4ed1dbc6273415877f688c",
+        "ui.fbx": "739dfe168f921acd7add6d976eb371fb49aed9f5f8adecb65ee218adf2a40450",
+        "ui.morphs.json": "2437ed44a1ba55aad7b9ecc0f4167fc6f2c2250a21e5d978d39461da28d144aa"
+      },
+      "grounding_lift_m": [
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.013431095138192177,
+        0.014073055788874626,
+        0.014387004628777504,
+        0.014370721384882927,
+        0.01402429173886776,
+        0.013350219085812569,
+        0.012353510215878487,
+        0.011041664138436318,
+        0.0094247577637434,
+        0.0075156172662973406,
+        0.005329741716384888,
+        0.002885634630918503,
+        0.0006209561526775362,
+        0.003391907170414925,
+        0.005918140143156052,
+        0.008177580863237381,
+        0.010151062712073326,
+        0.011822531551122666,
+        0.013178691819310188,
+        0.014209099665284157,
+        0.014905971094965935,
+        0.01526412795484066,
+        0.015280955091118813,
+        0.01495638544857502,
+        0.014292706355452538,
+        0.013294924601912499,
+        0.011970442339777947,
+        0.011729430958628655,
+        0.013423873662948609,
+        0.014788793951272965,
+        0.015815398275852204,
+        0.01649740579724312,
+        0.0168307224214077,
+        0.016813463151454926,
+        0.016445609360933304,
+        0.015729392498731613,
+        0.014669122725725174,
+        0.013271321162581444,
+        0.011544915467500687,
+        0.009501455903053284,
+        0.0071553574800491335,
+        0.004524069458246231,
+        0.001628203868865967,
+        0.00416064690053463,
+        0.006834080994129181,
+        0.009217558979988098,
+        0.011293422982096672,
+        0.013047084763646126,
+        0.014466878578066826,
+        0.0155437743216753,
+        0.01627120803296566,
+        0.01664480622112751,
+        0.01666234116256237,
+        0.01632381285727024,
+        0.015631128653883934,
+        0.014588427349925041,
+        0.013202041938900948,
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.011480857238173485,
+        0.012465943202376366,
+        0.014073055788874626,
+        0.017013334289193154,
+        0.026059873953461647,
+        0.03317448179423809,
+        0.038075712129473686,
+        0.04057395327091217,
+        0.04057395327091217,
+        0.038075712129473686,
+        0.03317448179423809,
+        0.026059873953461647,
+        0.017013334289193154,
+        0.01495638544857502,
+        0.013294924601912499,
+        0.011729430958628655,
+        0.014788793951272965,
+        0.01649740579724312,
+        0.016813463151454926,
+        0.023008457005023956,
+        0.029581880748271942,
+        0.03410909566283226,
+        0.036416309505701065,
+        0.036416309505701065,
+        0.03410909566283226,
+        0.029581880748271942,
+        0.023008457005023956,
+        0.01664480622112751,
+        0.01632381285727024,
+        0.014588427349925041,
+        0.011480857238173485,
+        0.01649740579724312,
+        0.0168307224214077,
+        0.011480857238173485,
+        0.012988491535186768,
+        0.014387004628777504,
+        0.023966424718499184,
+        0.03317448179423809,
+        0.0389309009462595,
+        0.040888464629650116,
+        0.0389309009462595,
+        0.03317448179423809,
+        0.023966424718499184,
+        0.015280955091118813,
+        0.013835136398673058,
+        0.011729430958628655,
+        0.015344793528318405,
+        0.0168307224214077,
+        0.021073842972517014,
+        0.029581880748271942,
+        0.03489892426133156,
+        0.03670675548911095,
+        0.03489892426133156,
+        0.029581880748271942,
+        0.021073842972517014,
+        0.01666234116256237,
+        0.01515315155684948,
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.011480857238173485,
+        0.012465943202376366,
+        0.014073055788874626,
+        0.014370721384882927,
+        0.013350219085812569,
+        0.011041664138436318,
+        0.0075156172662973406,
+        0.002885634630918503,
+        0.003391907170414925,
+        0.008177580863237381,
+        0.011822531551122666,
+        0.014209099665284157,
+        0.01526412795484066,
+        0.01495638544857502,
+        0.013294924601912499,
+        0.011729430958628655,
+        0.014788793951272965,
+        0.01649740579724312,
+        0.016813463151454926,
+        0.015729392498731613,
+        0.013271321162581444,
+        0.009501455903053284,
+        0.004524069458246231,
+        0.00416064690053463,
+        0.009217558979988098,
+        0.013047084763646126,
+        0.0155437743216753,
+        0.01664480622112751,
+        0.01632381285727024,
+        0.014588427349925041,
+        0.011480857238173485,
+        0.01649740579724312,
+        0.0168307224214077,
+        0.011480857238173485,
+        0.010404864877462387,
+        0.0165191298276186,
+        0.02881715129315853,
+        0.04530149567127228,
+        0.06338364499807358,
+        0.08042780923843384,
+        0.09908608216047288,
+        0.10881680119037629,
+        0.11004479098320008,
+        0.11262363064289094,
+        0.11258005964756013,
+        0.11169998216629029,
+        0.11179409790039063,
+        0.11270731556415559,
+        0.11236931252479554,
+        0.1102971123456955,
+        0.10794764626026154,
+        0.09761021900177003,
+        0.08491621035337449,
+        0.06861666458845139,
+        0.05057921129465103,
+        0.03334257061779499,
+        0.01956945340335369,
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.011480857238173485,
+        0.012073543474078179,
+        0.013681304261088371,
+        0.014387004628777504,
+        0.014176358088850975,
+        0.013053507164120674,
+        0.011041664138436318,
+        0.008183558091521263,
+        0.004542740613222122,
+        0.0006209561526775362,
+        0.0051046801656484606,
+        0.008868022441864014,
+        0.011822531551122666,
+        0.013902348086237908,
+        0.015063185796141625,
+        0.015280955091118813,
+        0.014551383063197136,
+        0.012889266565442085,
+        0.011729430958628655,
+        0.014371065974235535,
+        0.01608127224445343,
+        0.0168307224214077,
+        0.016607052266597748,
+        0.015413934916257858,
+        0.013271321162581444,
+        0.010216961234807968,
+        0.006308934271335602,
+        0.001628203868865967,
+        0.005974125668406487,
+        0.009944426447153092,
+        0.013047084763646126,
+        0.015223377004265785,
+        0.016435172960162163,
+        0.01666234116256237,
+        0.01590117122232914,
+        0.01416413913667202,
+        0.011480857238173485,
+        0.013271321162581444,
+        0.011544915467500687,
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.013431095138192177,
+        0.014073055788874626,
+        0.014387004628777504,
+        0.014370721384882927,
+        0.01402429173886776,
+        0.013350219085812569,
+        0.012353510215878487,
+        0.011041664138436318,
+        0.0094247577637434,
+        0.0075156172662973406,
+        0.005329741716384888,
+        0.002885634630918503,
+        0.0006209561526775362,
+        0.003391907170414925,
+        0.005918140143156052,
+        0.008177580863237381,
+        0.010151062712073326,
+        0.011822531551122666,
+        0.013178691819310188,
+        0.014209099665284157,
+        0.014905971094965935,
+        0.01526412795484066,
+        0.015280955091118813,
+        0.01495638544857502,
+        0.014292706355452538,
+        0.013294924601912499,
+        0.011970442339777947,
+        0.011729430958628655,
+        0.013423873662948609,
+        0.014788793951272965,
+        0.015815398275852204,
+        0.01649740579724312,
+        0.0168307224214077,
+        0.016813463151454926,
+        0.016445609360933304,
+        0.015729392498731613,
+        0.014669122725725174,
+        0.013271321162581444,
+        0.011544915467500687,
+        0.009501455903053284,
+        0.0071553574800491335,
+        0.004524069458246231,
+        0.001628203868865967,
+        0.00416064690053463,
+        0.006834080994129181,
+        0.009217558979988098,
+        0.011293422982096672,
+        0.013047084763646126,
+        0.014466878578066826,
+        0.0155437743216753,
+        0.01627120803296566,
+        0.01664480622112751,
+        0.01666234116256237,
+        0.01632381285727024,
+        0.015631128653883934,
+        0.014588427349925041,
+        0.013202041938900948,
+        0.011480857238173485,
+        0.0071553574800491335,
+        0.004524069458246231,
+        0.011480857238173485,
+        0.01245772334933281,
+        0.013325863137841225,
+        0.014066439673304558,
+        0.014661342456936836,
+        0.0153322132229805,
+        0.015844693958759308,
+        0.016158504962921143,
+        0.01625953856110573,
+        0.017766096249222756,
+        0.021048363849520683,
+        0.0241458570510149,
+        0.027047660753130913,
+        0.02974415998160839,
+        0.032227043613791466,
+        0.03448911811411381,
+        0.03652454222738743,
+        0.03832865934073925,
+        0.039898148357868195,
+        0.04123075920343399,
+        0.04232558476924896,
+        0.0431829007267952,
+        0.04380433875322342,
+        0.044192573606967926,
+        0.044352112889289856,
+        0.044287955939769745,
+        0.04400693494081497,
+        0.04351671653985977,
+        0.04282676297426224,
+        0.0419469313621521,
+        0.040888464629650116,
+        0.0406802171766758,
+        0.04146576541662216,
+        0.04213364291191101,
+        0.042604378044605255,
+        0.042868746995925903,
+        0.04291934388875961,
+        0.042749552607536316,
+        0.0423545526266098,
+        0.041730022609233856,
+        0.04087343680858612,
+        0.03978327530622482,
+        0.0384593350738287,
+        0.036902580961585045,
+        0.035115317061543465,
+        0.0331008216291666,
+        0.03086372520029545,
+        0.028409783348441124,
+        0.0257460964769125,
+        0.022880819246172905,
+        0.01982340644299984,
+        0.016584560826420784,
+        0.016249381557106972,
+        0.0161315990537405,
+        0.015799746468663216,
+        0.015287263870239258,
+        0.014861012428998947,
+        0.01427533346414566,
+        0.013546187981963158,
+        0.01269137541949749,
+        0.011729430958628655,
+        0.011094548359513283,
+        0.011758907318115235,
+        0.012306616261601448,
+        0.012739932715892792,
+        0.014483076140284538,
+        0.016011704310774803,
+        0.017301254525780678,
+        0.018329773649573326,
+        0.01917103546857834,
+        0.01974961030483246,
+        0.02014035414159298,
+        0.020860847637057305,
+        0.02316263745725155,
+        0.025278706654906273,
+        0.02720303888618946,
+        0.028930716767907143,
+        0.030457821294665337,
+        0.03178159575164318,
+        0.03290024082362652,
+        0.03381297419965267,
+        0.03452020566165447,
+        0.03502340669929981,
+        0.03532514776289463,
+        0.03558883498609066,
+        0.03594965170323849,
+        0.036140513226389885,
+        0.036163617476820946,
+        0.036186457231640816,
+        0.036448522090911865,
+        0.03670675548911095,
+        0.03681072089076042,
+        0.03675877171754837,
+        0.03655018526315689,
+        0.036420308604836464,
+        0.03624772708117962,
+        0.03590418080985546,
+        0.03553855660557747,
+        0.035217138558626175,
+        0.03469629827141762,
+        0.03397365900874138,
+        0.033047916918992996,
+        0.03191880378127098,
+        0.03058720248937607,
+        0.029054990589618683,
+        0.027324973225593567,
+        0.025401091754436493,
+        0.02328824493288994,
+        0.020992408126592636,
+        0.020467654421925545,
+        0.02007362674176693,
+        0.019350570246577263,
+        0.0183145819157362,
+        0.016984467014670372,
+        0.015394624873995781,
+        0.013942532792687416,
+        0.01227849218249321,
+        0.011636619076132775,
+        0.01106561216711998,
+        0.010414599061012268,
+        0.011480857238173485,
+        0.00416064690053463,
+        0.006834080994129181,
+        0.011480857238173485,
+        0.014387004628777504,
+        0.011041664138436318,
+        0.0006209561526775362,
+        0.011822531551122666,
+        0.015280955091118813,
+        0.011729430958628655,
+        0.0168307224214077,
+        0.013271321162581444,
+        0.001628203868865967,
+        0.013047084763646126,
+        0.01666234116256237,
+        0.011480857238173485,
+        0.011184743225574494,
+        0.012465943202376366,
+        0.011480857238173485,
+        0.012465943202376366,
+        0.014073055788874626,
+        0.014370721384882927,
+        0.013350219085812569,
+        0.011041664138436318,
+        0.0075156172662973406,
+        0.002885634630918503,
+        0.003391907170414925,
+        0.008177580863237381,
+        0.011822531551122666,
+        0.014209099665284157,
+        0.01526412795484066,
+        0.01495638544857502,
+        0.013294924601912499,
+        0.011729430958628655,
+        0.014788793951272965,
+        0.01649740579724312,
+        0.016813463151454926,
+        0.015729392498731613,
+        0.013271321162581444,
+        0.009501455903053284,
+        0.004524069458246231,
+        0.00416064690053463,
+        0.009217558979988098,
+        0.013047084763646126,
+        0.0155437743216753,
+        0.01664480622112751,
+        0.01632381285727024,
+        0.014588427349925041,
+        0.011480857238173485,
+        0.01649740579724312,
+        0.0168307224214077,
+        0.011480857238173485,
+        0.010941126003861427,
+        0.012073543474078179,
+        0.012988491535186768,
+        0.013681304261088371,
+        0.014148261949419975,
+        0.014387004628777504,
+        0.014396403536200524,
+        0.014176358088850975,
+        0.013727941170334816,
+        0.013053507164120674,
+        0.01215649637579918,
+        0.011041664138436318,
+        0.009714909449219704,
+        0.008183558091521263,
+        0.00645617450773716,
+        0.004542740613222122,
+        0.0024546408951282503,
+        0.0006209561526775362,
+        0.0029464462697505953,
+        0.0051046801656484606,
+        0.007082468450069428,
+        0.008868022441864014,
+        0.010451002597808838,
+        0.011822531551122666,
+        0.01297502088546753,
+        0.013902348086237908,
+        0.01459959577023983,
+        0.015063185796141625,
+        0.015290678098797798,
+        0.015280955091118813,
+        0.015034139707684517,
+        0.014551383063197136,
+        0.013835136398673058,
+        0.012889266565442085,
+        0.011718601539731026,
+        0.011729430958628655,
+        0.01316408123075962,
+        0.014371065974235535,
+        0.015344793528318405,
+        0.01608127224445343,
+        0.01657723131775856,
+        0.0168307224214077,
+        0.016840639144182205,
+        0.016607052266597748,
+        0.016130811154842377,
+        0.015413934916257858,
+        0.014459362804889679,
+        0.013271321162581444,
+        0.011854991868138313,
+        0.010216961234807968,
+        0.00836519207060337,
+        0.006308934271335602,
+        0.004059175580739975,
+        0.001628203868865967,
+        0.0036882800906896593,
+        0.005974125668406487,
+        0.0080632144510746,
+        0.009944426447153092,
+        0.011608401864767075,
+        0.013047084763646126,
+        0.01425382550060749,
+        0.015223377004265785,
+        0.015951484993100166,
+        0.016435172960162163,
+        0.016672410622239113,
+        0.01666234116256237,
+        0.016404890075325966,
+        0.01590117122232914,
+        0.01515315155684948,
+        0.01416413913667202,
+        0.0129381572753191,
+        0.011480857238173485
+      ],
+      "clips": {
+        "Idle": [
+          0,
+          60
+        ],
+        "Walk": [
+          63,
+          93
+        ],
+        "Run": [
+          96,
+          120
+        ],
+        "Jump": [
+          123,
+          153
+        ],
+        "Attack": [
+          156,
+          180
+        ],
+        "Skill": [
+          183,
+          219
+        ],
+        "Ultimate": [
+          222,
+          282
+        ],
+        "Dance": [
+          285,
+          405
+        ],
+        "Hurt": [
+          408,
+          420
+        ],
+        "Death": [
+          423,
+          453
+        ],
+        "Select": [
+          456,
+          528
+        ]
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ui/ui/skeleton.skel",
+      "sha256": "dcab0f515b80d9982f0399a5408227b03dbbbd06f05f60e3c3ae38ed2a9979a6"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/ui/ui/skeleton.skel",
+      "sha256": "dcab0f515b80d9982f0399a5408227b03dbbbd06f05f60e3c3ae38ed2a9979a6"
+    }
+  },
+  {
+    "id": 11,
+    "slug": "butter",
+    "blend": "assets/characters/butter.blend",
+    "model": "assets/characters/butter.fbx",
+    "vertices": 38836,
+    "triangles": 73748,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/butter.png",
+    "sha256": {
+      "blend": "60426f9674a1e44fdd238a07101fdc51c6bc20ccefdf69963f8b0f532ae17d47",
+      "model": "d5da2a10cd4c8a98fc78db6643896ad967bca44b5474f2b0ad0611a54f6cfda9",
+      "guide": "49aef99ccc60b637d3f3ef172fd1d66d0eaa3772a2d4b6156e60df7f19be43fa",
+      "portrait": "d9066574689b325198cde246f6d894b852b7e9d3e5e7bd75449fd1e89c77d9f3",
+      "hands": "90cf2d6b6039ef7d48f39d027e37475629e2984b1aa9ace73dd5e82eb9e197fc",
+      "refined_arms_texture": "e5c2d14b030dcb332d1939bff472391a1439ed082d168e436c5254ba86bb3992",
+      "cheeks": "8ed318943ad0cd236f1e9b6615616d3035669684d693f1f5069f69dbb97652d2",
+      "closed_eyes": "204254152c6516d3e4bac962fae6860dc0869926aa88398f8037619ede5a967a",
+      "half_closed_eyes": "c64648316199eb5c10a5187c6b07cdc55ceba82d9d43b1cfa0bd03d881ca31a5"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/butter-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "source_manifest": "assets/character-sources/tripo/butter/source-files.json",
+    "textures": [
+      "assets/characters/butter-rigged-basecolor.jpg",
+      "assets/characters/butter-clothes-basecolor.jpg",
+      "assets/characters/butter-accessories-basecolor.jpg"
+    ],
+    "texture_sha256": {
+      "assets/characters/butter-rigged-basecolor.jpg": "9974f7a71187a5f231d102c0810e3c89e7165472f208d4b113114ece64f875d7",
+      "assets/characters/butter-clothes-basecolor.jpg": "9c6347c4431a0edfeaa8a5589535bc466e88cc4eab6307332a9afd244df7f310",
+      "assets/characters/butter-accessories-basecolor.jpg": "6f450ecd180984b241315422a05bd50e6a8d601123879b91cf25f32b3d793411"
+    },
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/butter-weapon.fbx",
+    "morph_data": "assets/characters/butter.morphs.json",
+    "hands": "assets/characters/butter-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 7766,
+        "hand_faces": 10417,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      },
+      {
+        "side": "R",
+        "hand_vertices": 7726,
+        "hand_faces": 10308,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      }
+    ],
+    "refined_arms_texture": "assets/characters/butter-refined-arms.png",
+    "cheeks": "assets/characters/butter-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2213014,
+          -0.2099172,
+          1.2707124
+        ],
+        [
+          0.2090945,
+          -0.2145073,
+          1.2547607
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 11083,
+      "reconstructed_vertices": 1558,
+      "revision": "separate-arm-domains-v1",
+      "slug": "butter",
+      "source_sha256": {
+        ".blend": "cc974a9e2c7eb496297575d1d0d417164859df7b15a2713fa44473f191bfb44a",
+        ".fbx": "cfd36a6ff443f06ea0a2972f99ce6f4d0e8915b68417db7a92da8d39d8f236a5",
+        "-rig.json": "4d2a7e7ef00b24ca0b6f9e4c5402de1292f9dbaf99f9974864efc399b97a5741",
+        ".morphs.json": "349715e167d9fb04fe9221e5cc7630794e0beb40bdef16f9d22ab927b89a169f"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/butter/butter/skeleton.skel",
+      "sha256": "8cf3bf30337b85b72eaecb64ebe93fe92bae4f2bf7b8fa96a3fca02247903134"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/butter/butter/skeleton.skel",
+      "sha256": "8cf3bf30337b85b72eaecb64ebe93fe92bae4f2bf7b8fa96a3fca02247903134"
+    }
+  },
+  {
+    "id": 12,
+    "slug": "komi",
+    "blend": "assets/characters/komi.blend",
+    "model": "assets/characters/komi.fbx",
+    "vertices": 37732,
+    "triangles": 70612,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/komi.png",
+    "sha256": {
+      "blend": "fb3a44055512635eac6fc4581ed4e580453bc407f1288891f4a7e5afcf3db2e0",
+      "model": "28be089f6bae9c97666714876cee97a851aee7a69c633f9e5102ca7fc0213b14",
+      "guide": "b6fd6b06653cb933905fbe1539e4f06db6042826398f3ee66de522e38ec6aaa1",
+      "portrait": "618d3fc5580967632960b63b3c896aa2902c39c077eceb5572a2e55718c38a11",
+      "hands": "b45cb1b450c9b3d27025f3b421ac38d1960219bf2a3a72dcbc99192e13605da1",
+      "refined_arms_texture": "29957427dee67f68c0b7817c22310a4206c710470597c2b5d50abf17815f0362",
+      "cheeks": "9d566913828fa10614b283d72ea53ca16270988983385bbb64f9c912c0313be4",
+      "closed_eyes": "decec314729eedd9a3888b17cf4ed88e82f5e1e874a8bb48b721ac277161f646",
+      "half_closed_eyes": "1dc13c65894260dee4444d686d8ab447bc4d59219996603d5b19d63564c3a282"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/komi-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/komi-weapon.fbx",
+    "morph_data": "assets/characters/komi.morphs.json",
+    "hands": "assets/characters/komi-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8137,
+        "hand_faces": 10808,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8132,
+        "hand_faces": 10719,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      }
+    ],
+    "refined_arms_texture": "assets/characters/komi-refined-arms.png",
+    "cheeks": "assets/characters/komi-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2845859,
+          -0.1881182,
+          1.2640805
+        ],
+        [
+          0.219334,
+          -0.2231141,
+          1.2585574
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 5566,
+      "reconstructed_vertices": 1837,
+      "revision": "separate-arm-domains-v1",
+      "slug": "komi",
+      "source_sha256": {
+        ".blend": "ca516d23ba3befb121a0bb47f2bee0dc305c92897766c5a663c17326f2b14086",
+        ".fbx": "a0493080745be977aabdc8c9d42a394a7732df420c14b807401e5abc8528a846",
+        "-rig.json": "f1bab3215ee30e5f50f36fa66b8ac1c115dceb68e08bb3decdd26214fcfdfcc7",
+        ".morphs.json": "4e526f478eb4dcde4e526b440c3109cb4f16072a375295b5eb5207c9e4fb6022"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/kommy/kommy/skeleton.skel",
+      "sha256": "bf9343adaa92a8cd2b9e8278ddf914b6b2f18dc77553c43124a17d1ed92a806e"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.9333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/kommy/kommy/skeleton.skel",
+      "sha256": "bf9343adaa92a8cd2b9e8278ddf914b6b2f18dc77553c43124a17d1ed92a806e"
+    }
+  },
+  {
+    "id": 13,
+    "slug": "hilde",
+    "blend": "assets/characters/hilde.blend",
+    "model": "assets/characters/hilde.fbx",
+    "vertices": 43700,
+    "triangles": 82048,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/hilde.png",
+    "sha256": {
+      "blend": "3f417a6370960e9cd59a168a96a15466e122bc805852d8da426c8495b4f06da1",
+      "model": "b48e1404c0b4a37b9599ca2d287e0d3ae0eb395f7ef7d1ba91c995636de2c874",
+      "guide": "47c77764574a7be10efa87bef7be4de7a04da935c3fbd243cd2c54bdf9c1262b",
+      "portrait": "903a2180de8232a5c13a2c1e14152e01a594db9f4cb41fad576e868c47ef79eb",
+      "hands": "7970de2c40706451a207d30091cc4a4b8d5cf02fc3cb4a4773bfcdd10317692f",
+      "refined_arms_texture": "b2bf73904ac242546203f78990a5ce01646cb8997ed008b61807a1ac02f4155d",
+      "cheeks": "6194b5b7b4d94ccae838e369500b2db1eb711ec077da132f921dbf0edf1ce2e1",
+      "closed_eyes": "b3c49280e9022c80bbd1edc291f20d6fdedc381be4b07d68012246946d21feeb",
+      "half_closed_eyes": "deda401967c16e73114236dd99f3cb01af3439f13d9c3a4e55c02647816da76e"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/hilde-portrait.png",
+    "dance": {
+      "status": "verified-standing-retarget",
+      "clip": "Dance_1",
+      "seconds": 1.6,
+      "source": "https://wiki.cheeky.tsuncloud.com/korea/spines/spines-spine-standing-hilde-hilde",
+      "source_sha256": "140553861ac0045bc37e7021e278111bcbdddf7c1487a4d3847a8e3c7d4f7af8"
+    },
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/hilde-weapon.fbx",
+    "morph_data": "assets/characters/hilde.morphs.json",
+    "hands": "assets/characters/hilde-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8055,
+        "hand_faces": 10746,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8112,
+        "hand_faces": 10685,
+        "cuff_radius": 0.0292,
+        "cuff_clearance": 0.0208
+      }
+    ],
+    "refined_arms_texture": "assets/characters/hilde-refined-arms.png",
+    "cheeks": "assets/characters/hilde-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2254472,
+          -0.1840055,
+          1.1210318
+        ],
+        [
+          0.1950083,
+          -0.2024098,
+          1.127352
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 7924,
+      "reconstructed_vertices": 2126,
+      "revision": "separate-arm-domains-v1",
+      "slug": "hilde",
+      "source_sha256": {
+        ".blend": "d9fd6d09e34b554d7a7aed7ffa841eea31171048510e400a91bd016b86888c18",
+        ".fbx": "c57b36685101c7f298ff79aa41a2d886a0fbdb87c72528256cfc0c5f65cfb6fb",
+        "-rig.json": "3cb2997a644a01c2799226ddeba9c8ca6a7cbd5477767188d990756273b72f40",
+        ".morphs.json": "e1c0e03812af9b4b985f2b5c0a46b5da7420cfab680334c7daa34041ed0b37d7"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.3333333333333333,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/hilde/hilde/skeleton.skel",
+      "sha256": "61e62c7b10285080a10f47d5ab8dfd5361ca7b4fae72e919c97a5a83ff1f40a1"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/hilde/hilde/skeleton.skel",
+      "sha256": "61e62c7b10285080a10f47d5ab8dfd5361ca7b4fae72e919c97a5a83ff1f40a1"
+    }
+  },
+  {
+    "id": 14,
+    "slug": "shion",
+    "blend": "assets/characters/shion.blend",
+    "model": "assets/characters/shion.fbx",
+    "vertices": 41396,
+    "triangles": 74856,
+    "bones": 52,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Spawn": [
+        456,
+        528
+      ]
+    },
+    "fps": 30,
+    "guide": "assets/turnarounds/shion.png",
+    "sha256": {
+      "blend": "c589650c3507c7fcc7b2aed37db3f3035166bc8cc1d113043b4270451199c774",
+      "model": "4554df3f00dee1eaa3ee9d3cd6e30eab560adfa6f18254dd28976d0bebae016f",
+      "guide": "297b7a95b9f73b4fe737f24d7ac631d7d761f21622c031baca44420752301eeb",
+      "portrait": "c63fab5391368070bce4a240809a5112733c7500d37e2c9d23920c2ec18b3197",
+      "hands": "a9a2cc00d4eda2c4c0c85d8c6831d8fbe6ec9594c8f210dbca15ce5ee06b38cf",
+      "refined_arms_texture": "bd8b6caadfdb4d3b11e910501297d88c469f70bb29f99f1b3bacf7b4f773d14c",
+      "cheeks": "2a5750878c16d95324191623d7dd0db55b1ed69fab5d4b4c3a734b0080cd5385",
+      "closed_eyes": "4da1adf40d247feab11b8abdcdfa37f5095d544aa47950798d4189f4377c4ea6",
+      "half_closed_eyes": "6050b8eddf1e7419dc27f6ec9068194131e7cd104b40f3cc16716051e42bef4a"
+    },
+    "selection_gesture": "Original battle Spawn",
+    "portrait": "assets/characters/shion-portrait.png",
+    "source": "Meshy generated files supplied by user, 2026-11-15",
+    "morphs": [
+      "eyeBlink_L",
+      "eyeSquint_L",
+      "eyeWide_L",
+      "browUp_L",
+      "browDown_L",
+      "mouthSmile_L",
+      "mouthFrown_L",
+      "cheekPuff_L",
+      "cheekStretch_L",
+      "cheekSquash_L",
+      "eyeBlink_R",
+      "eyeSquint_R",
+      "eyeWide_R",
+      "browUp_R",
+      "browDown_R",
+      "mouthSmile_R",
+      "mouthFrown_R",
+      "cheekPuff_R",
+      "cheekStretch_R",
+      "cheekSquash_R",
+      "jawOpen",
+      "mouthPucker",
+      "mouthWide"
+    ],
+    "companions": [],
+    "weapon": "assets/characters/shion-weapon.fbx",
+    "morph_data": "assets/characters/shion.morphs.json",
+    "hands": "assets/characters/shion-hands.json",
+    "refined_hands": [
+      {
+        "side": "L",
+        "hand_vertices": 8117,
+        "hand_faces": 10739,
+        "cuff_radius": 0.039796595272546226,
+        "cuff_clearance": 0.02834825964619731
+      },
+      {
+        "side": "R",
+        "hand_vertices": 8143,
+        "hand_faces": 10740,
+        "cuff_radius": 0.04088,
+        "cuff_clearance": 0.02912
+      }
+    ],
+    "refined_arms_texture": "assets/characters/shion-refined-arms.png",
+    "cheeks": "assets/characters/shion-cheeks.json",
+    "cheek_refinement": {
+      "isolated_skin": true,
+      "protected_features": [
+        "eyes",
+        "mouth",
+        "hair",
+        "accessories"
+      ],
+      "hit_radius_m": 0.14,
+      "centers": [
+        [
+          -0.2549961,
+          -0.2429727,
+          1.1243376
+        ],
+        [
+          0.2432801,
+          -0.2408295,
+          1.1276225
+        ]
+      ]
+    },
+    "natural_blink": {
+      "stages": [
+        "open",
+        "half",
+        "closed"
+      ],
+      "brow_weight": 0.75,
+      "sampled_upper_lashes": true
+    },
+    "arm_weight_isolation": {
+      "changed_vertices": 26160,
+      "reconstructed_vertices": 3121,
+      "revision": "separate-arm-domains-v1",
+      "slug": "shion",
+      "source_sha256": {
+        ".blend": "cbb88400f0712f9e2e3b445d9733eb5760aa1309f997112dc858f2480a3419d5",
+        ".fbx": "d3c77ec154a7d64b6b0519b8bfd1ea137fbab53f086aa1eabf294d8edf294ab1",
+        "-rig.json": "e9dce91f69096b3f840c67e76d8f39734c4c7836f2e458eeae75e79ca11dbabb",
+        ".morphs.json": "e824e28b3ed4f7796464ad6e4f9d8f1b98f471b704f62554aaac1823b5d9b9c3"
+      }
+    },
+    "spawn": {
+      "clip": "Spawn",
+      "duration": 1.8,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/xxionx/xxionx/skeleton.skel",
+      "sha256": "58c7f26af044a036080251b6d95357780f267a36e1b95d91ed87e9e5350a9c57"
+    },
+    "move": {
+      "clip": "Move",
+      "duration": 0.6666666666666666,
+      "source": "https://cheeky.tsuncloud.com/deploy/com.epidgames.trickcalrevive/spines/spine/ingame/hero/xxionx/xxionx/skeleton.skel",
+      "sha256": "58c7f26af044a036080251b6d95357780f267a36e1b95d91ed87e9e5350a9c57"
+    }
+  }
+]

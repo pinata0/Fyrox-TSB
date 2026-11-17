@@ -1,0 +1,481 @@
+{
+  "body_edits": [
+    {
+      "slug": "butter",
+      "source": "C:/Users/user/projects/Fyrox-TSB/assets/character-inputs/tripo-individual/버터-butter.png",
+      "prompt": "Use case: identity-preserve. Edit this exact existing Butter chibi reference for a new 3D animation base. Preserve the exact character identity, proportions, white shirt, yellow apron dress, large yellow bow and smaller ear bows, bell collar, diagonal strap, puppy-face hip pouch, sandy blonde long hair, soft floppy puppy ears, cream-tipped fluffy tail, striped knee socks, and shoes. Change only the expression to a relaxed small CLOSED mouth with no teeth showing at rest; keep both aqua-blue eyes OPEN and clearly readable. Use a neutral frontal A-pose with empty hands, arms slightly separated from torso, fingers readable, feet slightly apart. Keep dog ears clearly separate from the hair; keep tail separated from the leg and the long hair. Preserve original colors and cute round soft cheeks; normal chibi anatomy without emphasis. Full body and all extremities within margins. Clean crisp cel-shaded reference illustration, no text, no slingshot or other props, no additional views, true transparent background.",
+      "source_snapshot": "artifacts/tripo-animation-inputs/before/tripo-individual/버터-butter.png",
+      "generated_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-e441951c-4b40-4fbe-8789-c08d027865f6.png",
+      "output": "artifacts/tripo-animation-inputs/images/butter-body.png"
+    },
+    {
+      "slug": "id",
+      "source": "C:/Users/user/projects/Fyrox-TSB/artifacts/id-bodysuit-correction/images/front.png",
+      "prompt": "Use case: identity-preserve. Edit this exact front A-pose Id/Ed reference ONLY to make the face ready as an animation base. Preserve the exact chibi proportions, very long fluffy white hair, curled ahoge, pointed elf ears, fitted sleeveless white-center black-side one-piece bodysuit, white neck band and crossed black neck straps, bare arms, white wrist bands, dark thigh-high stockings with white side piping, white low shoes and empty-hand A-pose. Open BOTH EYES naturally with GOLDEN YELLOW irises, keeping her relaxed sleepy half-lidded character; eyelids still visibly open, not closed lash lines. Keep a small neutral CLOSED mouth. Keep the exact white/black fitted costume and neutral compact chibi body without anatomical emphasis. Entire hair and shoes within margins. Same crisp linework and pastel cel shading. One character, no chair, robot, weapon, text, alternate heads or additional views. True transparent background.",
+      "source_snapshot": "C:/Users/user/projects/Fyrox-TSB/artifacts/id-bodysuit-correction/images/front.png",
+      "generated_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-68418435-9551-4605-a0fc-4dc875c4d538.png",
+      "output": "artifacts/tripo-animation-inputs/images/id-body.png"
+    },
+    {
+      "slug": "aya",
+      "source": "C:/Users/user/projects/Fyrox-TSB/assets/character-inputs/tripo-roster/aya/front.png",
+      "prompt": "Use case: identity-preserve. This is Aya's existing approved appearance. Make a BODY-ONLY neutral A-pose input for separately rigging and attaching her parasol later. REMOVE ONLY the complete parasol canopy, shaft and grip from this image. Her hand must be empty and open, no shaft fragments. Put both arms gently out in a neutral relaxed symmetrical A-pose, with a small visible gap from the kimono. Preserve every other character feature: warm brown skin, visible gold eye, swept bangs covering the other eye with black forehead patch, blue gem earring, white kimono with gray waves and gold trim, dark obi and flower clasp, sandals. CRITICAL: the WHITE LOW TWIN TAILS begin at the TWO pale blue butterfly ties below the ears and extend ALL THE WAY TO THE ANKLES; retain BOTH distinct thick flowing long tails and curled tips. Never shorten her hair or replace the two tails by one curtain. Preserve cute chibi proportions and relaxed small closed-mouth expression. Full body, ankle-length twin tails and feet visible with margins. No props, umbrella, weapon, scenery, pedestal, words or additional views. True transparent background, same line art and soft cel shading.",
+      "source_snapshot": "artifacts/tripo-animation-inputs/before/tripo-roster/aya/front.png",
+      "generated_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-1d18babc-dbe4-4cca-a73f-5cf921929146.png",
+      "output": "artifacts/tripo-animation-inputs/images/aya-body.png"
+    },
+    {
+      "key": "body",
+      "prompt": "Use case: precise-object-edit / identity-preserve. Asset type: Picora BODY-ONLY Tripo input. Image 1 is the existing front A-pose body to edit. Image 2 is the original character design and shoulder-bag reference. Preserve the existing image's identity, head size, hair silhouette, candy twin buns, pastel turquoise/pink hair and curled locks, wing-heart clips, hairpins, eye colors, cheeks and heart mark, white blouse, pink vest and bow, mismatched legwear and shoes, chibi proportions, clean outlines and empty-hand front A-pose. Make ONLY the following focused corrections: remove the pair of pink cherries at the image-right hip because they belong to the SHOULDER BAG strap (which is generated separately), not to the skirt; keep the other yellow and pastel waist decorations. Keep the body completely free of the bag, its white strap, its pink bow and its cherry charm. Make the mouth a small relaxed CLOSED neutral smile, eyes open. Restore the subtle white grid/plaid lines on the teal pleated skirt visible in Image 2. Restore the small white wing and teal bow ornament on the striped-side lower leg/shoe from Image 2. Both own arms/hands intact and empty, feet slightly apart, full body including hair tips and soles inside frame. Do not add a staff or bag or backpack or extra appendages. True transparent background, no writing, no drop shadow or scenery. Keep existing illustration style, pose and colors.",
+      "source": "C:/Users/user/.codex/generated_images/01a1cff6-400a-7701-a00a-2fcdc7373c5d/exec-6e7d044a-de3a-4a2a-8361-79935d76e86b.png",
+      "output": "artifacts/tripo-picora-shoulder-bag/images/picora-body.png",
+      "role": "body_only",
+      "refs": [
+        "artifacts/tripo-picora-shoulder-bag/before/assets/character-inputs/tripo-roster/picora/front.png",
+        "artifacts/tripo-picora-shoulder-bag/references/user-picora-shoulder-bag.png"
+      ],
+      "sha256": "a0c9d0aebfe73ab2e0328e4e36b311985aef1639fcde0a3d6f1fc3e65a11a810",
+      "slug": "picora",
+      "operation": "Built-in image_gen; remove bag-strap cherries from body; neutral closed mouth; restore plaid and boot ornament"
+    },
+    {
+      "slug": "chloe",
+      "key": "chloe-body",
+      "source": "C:/Users/user/projects/Fyrox-TSB/artifacts/tripo-chloe-sebastian-correction/references/chloe-without-sebastian-user.png",
+      "prompt": "Use case: identity-preserve. Recreate ONLY the small blonde girl CHLOE in the supplied character reference as a clean high-resolution Tripo input illustration. The provided picture is the authoritative design WITHOUT her separate bear companion Sebastian. Faithfully preserve her compact chibi proportions, very short body and limbs, large head, pale blonde HIGH TWIN PONYTAILS tied with small burgundy bows, long flowing ponytails with the small round bead-like accents shown, split swept bangs, pointed elf ears, red/gold eyes, small cheek marking and small relaxed closed mouth. Preserve her yellow puff-sleeve winter outfit with white fluffy cuffs and double white ruffled hem, large burgundy neck bow with cream stripe and oval pink gem in a gold setting, white opaque legwear and small yellow/brown shoes. Show a neutral frontal A-pose: BOTH of her own small arms and EMPTY hands visible slightly away from her torso, feet slightly separated. This pose change reveals her hands while retaining the short rounded proportions. Her natural scalp and high ponytail ties are fully exposed. Absolutely NO bear, no plush head, no hood, no hat, no bear ears, no pink antenna/heart tuft, no long toy arms, no tail, no purple cape and no purple ribbon anywhere on this girl; those belong to the separate Sebastian doll, not Chloe's clothes. Clean crisp game-anime cel shading like the reference, full hair and shoes visible with margin. One character, one front view, no labels, no frame, no background, true transparent alpha. Do not lengthen her legs or redesign the dress.",
+      "generated_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-c4644edf-abd8-4e3a-92f6-e10bfe7ee556.png",
+      "output": "artifacts/tripo-chloe-sebastian-correction/images/chloe-body.png",
+      "authority": "User-supplied separate Chloe and Sebastian references; default relationship cross-checked against original character reference and character documentation.",
+      "source_snapshot": "C:/Users/user/projects/Fyrox-TSB/artifacts/tripo-chloe-sebastian-correction/references/chloe-without-sebastian-user.png",
+      "operation": "Rebuilt from user-supplied Chloe without Sebastian; supersedes the erroneous hood/cape body"
+    }
+  ],
+  "props": [
+    {
+      "slug": "vivi",
+      "key": "weapon",
+      "label": "수은 칼날",
+      "kind": "projectile",
+      "description": "One floating mercury blade shard used by Vivi. A long tapered silver angular lance-like blade with a dark gray underside, a raised faceted central ridge, a sharply pointed long tip and short jagged flared rear. It is a summoned metal shard, no human sword handle, no crossguard. One blade only; later duplicate it for the multi-blade attack. Use the angular silver-gray blade styling in the reference, not her dark dragon wings.",
+      "reference": "assets/references/vivi-fullbody.png",
+      "note": "공격 모션 Attack1_1 23/57에서 수은 칼날 확인. 단일 날의 뒤쪽·두께는 제작용 해석.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. One floating mercury blade shard used by Vivi. A long tapered silver angular lance-like blade with a dark gray underside, a raised faceted central ridge, a sharply pointed long tip and short jagged flared rear. It is a summoned metal shard, no human sword handle, no crossguard. One blade only; later duplicate it for the multi-blade attack. Use the angular silver-gray blade styling in the reference, not her dark dragon wings.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-c623cb1c-b53d-42af-a874-2539cc601795.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-c623cb1c-b53d-42af-a874-2539cc601795.png"
+    },
+    {
+      "slug": "erpin",
+      "key": "weapon",
+      "label": "왕실 지팡이",
+      "kind": "prop",
+      "description": "Erpin's tall royal staff visible to the left of the character: slim white shaft with gold fittings and a diamond-shaped bottom finial; large circular gold-rimmed dark open ring head topped by a small angular crown-like outline; the ring contains a floating elongated blue-pink diamond crystal and two small crystal fragments. Keep the ring hole visibly empty around the central crystal, with long white/gold hanging side prongs. No character's crown, wings or hands.",
+      "reference": "assets/references/erpin-fullbody.png",
+      "note": "원작 전신 캡처의 지팡이 확인. 링 안 보석과 장식은 별도 부품.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. Erpin's tall royal staff visible to the left of the character: slim white shaft with gold fittings and a diamond-shaped bottom finial; large circular gold-rimmed dark open ring head topped by a small angular crown-like outline; the ring contains a floating elongated blue-pink diamond crystal and two small crystal fragments. Keep the ring hole visibly empty around the central crystal, with long white/gold hanging side prongs. No character's crown, wings or hands.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-f2d5528d-cff0-4e39-81aa-77909ea59efc.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-3f9e34fc-1c98-454f-bc9f-68c920a84113.png",
+      "cleanup": {
+        "slug": "erpin",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-3f9e34fc-1c98-454f-bc9f-68c920a84113.png"
+      }
+    },
+    {
+      "slug": "id",
+      "key": "weapon",
+      "label": "초승달 부유 장치",
+      "kind": "mount",
+      "description": "Ed/Id's EMPTY dark gray crescent moon mechanical pod from the reference. Remove the girl AND the small round companion robot. Preserve the thick C-shaped crescent outer shell, pale padded inner seat, circular white outer panels/lights, trim seams, upward curling tips, visible shell thickness and open interior. Three-quarter front view. No extra gun, no human, no hair, no pillow shaped like a person.",
+      "reference": "assets/references/id-fullbody.png",
+      "note": "원작 초승달 장치. 별도 손총을 추가하지 않음.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. Ed/Id's EMPTY dark gray crescent moon mechanical pod from the reference. Remove the girl AND the small round companion robot. Preserve the thick C-shaped crescent outer shell, pale padded inner seat, circular white outer panels/lights, trim seams, upward curling tips, visible shell thickness and open interior. Three-quarter front view. No extra gun, no human, no hair, no pillow shaped like a person.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-73422c95-0ccf-43ec-973e-fa485f3e61d0.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-73422c95-0ccf-43ec-973e-fa485f3e61d0.png"
+    },
+    {
+      "slug": "id",
+      "key": "prop-robot",
+      "label": "동반 로봇",
+      "kind": "companion",
+      "description": "ONLY Ed/Id's small hovering round robot from the top left of the reference. A pale round disc body surrounding a dark face with two small white vertical oval eyes, slim side fin/ring structures, small curved antenna, and short delicate hanging celestial ornaments ending in diamond and crescent shapes. Preserve the original simple sleepy-friendly robot face. No girl, crescent seat, gun, hands or background.",
+      "reference": "assets/references/id-fullbody.png",
+      "note": "원작 전신의 동반 로봇. 장치와 분리 입력.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Ed/Id's small hovering round robot from the top left of the reference. A pale round disc body surrounding a dark face with two small white vertical oval eyes, slim side fin/ring structures, small curved antenna, and short delicate hanging celestial ornaments ending in diamond and crescent shapes. Preserve the original simple sleepy-friendly robot face. No girl, crescent seat, gun, hands or background.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-d8dfe602-62f3-4c53-b2bb-52c0d56e6907.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-5641f5a0-2cc6-4235-8bcb-5e27b2d692ec.png",
+      "cleanup": {
+        "slug": "id",
+        "key": "prop-robot",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-5641f5a0-2cc6-4235-8bcb-5e27b2d692ec.png"
+      }
+    },
+    {
+      "slug": "aya",
+      "key": "weapon",
+      "label": "꽃잎 양산",
+      "kind": "prop",
+      "description": "ONLY Aya's open WHITE FLOWER-PETAL PARASOL from the reference: overlapping large white curled flower petals forming the canopy, pale blue-gray underside, clearly visible pale ribs and center hub, long straight white shaft ending in simple grip. Keep the full shaft and grip. Three-quarter side view reveals open underside and canopy silhouette, not a top-down flower. No character, hair, butterfly hair ties, kimono, sword, or hands.",
+      "reference": "assets/character-inputs/inputs-masked/aya.png",
+      "note": "사용자 정정한 꽃잎 양산 기준. 본체와 별도 생성해 손에 연결.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Aya's open WHITE FLOWER-PETAL PARASOL from the reference: overlapping large white curled flower petals forming the canopy, pale blue-gray underside, clearly visible pale ribs and center hub, long straight white shaft ending in simple grip. Keep the full shaft and grip. Three-quarter side view reveals open underside and canopy silhouette, not a top-down flower. No character, hair, butterfly hair ties, kimono, sword, or hands.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-64a6bc3b-2650-4cb1-abf6-665eb9613a9e.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-64a6bc3b-2650-4cb1-abf6-665eb9613a9e.png"
+    },
+    {
+      "slug": "picora",
+      "key": "weapon",
+      "label": "장식 지팡이",
+      "kind": "prop",
+      "description": "ONLY Picora's ornate dark brown curled hook staff from the reference: large candy-cane-like curled C-shaped head with pastel mint, pink, yellow and white stickers/patches; long slim brown shaft with pink wrap near the grip; hanging keychain ornaments near the neck including a pink rectangular star tag, beads, turquoise bow and white wing-shaped charm. Preserve visible exact staff construction; no sticker book, no character, no hands.",
+      "reference": "assets/references/picora-fullbody.png",
+      "note": "원작 캡처의 갈고리형 지팡이·스티커·키링 확인.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Picora's ornate dark brown curled hook staff from the reference: large candy-cane-like curled C-shaped head with pastel mint, pink, yellow and white stickers/patches; long slim brown shaft with pink wrap near the grip; hanging keychain ornaments near the neck including a pink rectangular star tag, beads, turquoise bow and white wing-shaped charm. Preserve visible exact staff construction; no sticker book, no character, no hands. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-8dd7a117-690a-4f4b-9651-1b278393edca.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-8dd7a117-690a-4f4b-9651-1b278393edca.png"
+    },
+    {
+      "slug": "renua",
+      "key": "weapon",
+      "label": "시계 모양 마법진",
+      "kind": "effect",
+      "description": "One floating GOLDEN CLOCK-LIKE MAGIC CIRCLE used by awakened Renua. Front three-quarter view of concentric thin gold rings, inner eccentric orbital circles, small clock-like radial ticks and angular diamond arrow ornaments at top and bottom; empty open spaces, NO filled plate, NO gun barrel or pistol grip. A clean solid-ribbon volume study for her original summoned magic circle effect. Match fine gold geometry of her halo in the reference but make the attack circle a separate object. No character, no actual halo duplicated around a head.",
+      "reference": "assets/references/renua-fullbody.png",
+      "note": "각성 리뉴아 Attack1_1 23/81의 금색 시계형 공격 마법진 확인. 3D 실물 장비가 아닌 효과용 해석.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. One floating GOLDEN CLOCK-LIKE MAGIC CIRCLE used by awakened Renua. Front three-quarter view of concentric thin gold rings, inner eccentric orbital circles, small clock-like radial ticks and angular diamond arrow ornaments at top and bottom; empty open spaces, NO filled plate, NO gun barrel or pistol grip. A clean solid-ribbon volume study for her original summoned magic circle effect. Match fine gold geometry of her halo in the reference but make the attack circle a separate object. No character, no actual halo duplicated around a head. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-659d0628-9787-4d52-a004-97ae895a5e62.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-13771bb4-9b6b-40bf-8bfe-1943cfff958e.png",
+      "cleanup": {
+        "slug": "renua",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-13771bb4-9b6b-40bf-8bfe-1943cfff958e.png"
+      }
+    },
+    {
+      "slug": "mayo",
+      "key": "weapon",
+      "label": "침 발사관",
+      "kind": "prop",
+      "description": "One short straight hollow blowpipe used by Mayo, held to her lips in the original attack. Narrow cylindrical blue-gray tube with brown rims at the open ends, a small white outlined diamond motif around its middle, simple dark mouth opening. Slight three-quarter side view clearly shows the hollow end. It is a mouth-blown dart tube, NOT a firearm: no pistol handle, tank, trigger, stock, magazine or syringe. White and muted blue palette matches her uniform. No darts or hands or character.",
+      "reference": "assets/references/mayo-fullbody.png",
+      "note": "원작 Attack1_1 20/44에서 입으로 부는 파랑·갈색 짧은 관 확인.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. One short straight hollow blowpipe used by Mayo, held to her lips in the original attack. Narrow cylindrical blue-gray tube with brown rims at the open ends, a small white outlined diamond motif around its middle, simple dark mouth opening. Slight three-quarter side view clearly shows the hollow end. It is a mouth-blown dart tube, NOT a firearm: no pistol handle, tank, trigger, stock, magazine or syringe. White and muted blue palette matches her uniform. No darts or hands or character. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-0c1eaee1-4ea1-4347-b0b0-dd01d4b600e2.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-72659c41-dbc4-4ea7-947f-ff2f65856af0.png",
+      "cleanup": {
+        "slug": "mayo",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-72659c41-dbc4-4ea7-947f-ff2f65856af0.png"
+      }
+    },
+    {
+      "slug": "bella",
+      "key": "weapon",
+      "label": "도깨비불",
+      "kind": "effect",
+      "description": "ONLY ONE of Bella's floating ghost flames shown in the reference. Compact curling blue/cyan flame with a pale near-white inner core and violet purple curled outer tip, a single continuous wispy teardrop form. Clean solid-looking volume suitable for a proxy mesh; soft internal color gradients but no outer glow cloud. No face unless actually in the reference, no lantern, handle, cage, skull, base, or character.",
+      "reference": "assets/references/bella-fullbody.png",
+      "note": "원작 도깨비불. 랜턴을 추가하지 않음. 최종 발광·투명·파티클은 엔진에서 설정.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY ONE of Bella's floating ghost flames shown in the reference. Compact curling blue/cyan flame with a pale near-white inner core and violet purple curled outer tip, a single continuous wispy teardrop form. Clean solid-looking volume suitable for a proxy mesh; soft internal color gradients but no outer glow cloud. No face unless actually in the reference, no lantern, handle, cage, skull, base, or character. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-877c2a56-8d83-4f73-bc86-f1697e4d5410.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-e5bb29f6-9404-4bba-8074-b0b96490b7f6.png",
+      "cleanup": {
+        "slug": "bella",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-e5bb29f6-9404-4bba-8074-b0b96490b7f6.png"
+      }
+    },
+    {
+      "slug": "ui",
+      "key": "weapon",
+      "label": "네잎클로버 지팡이",
+      "kind": "prop",
+      "description": "ONLY Ui's green four-leaf clover wand from the reference: long slim slightly curved green stem, four broad heart-shaped green leaflets joined at the top, simple lighter vein pattern, small yellow ribbon with white dots tied below the clover head. Preserve all FOUR leaves. No girl, hat, frog, hands or scenery.",
+      "reference": "assets/references/ui-fullbody.png",
+      "note": "원작 손에 든 네잎클로버 소품.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Ui's green four-leaf clover wand from the reference: long slim slightly curved green stem, four broad heart-shaped green leaflets joined at the top, simple lighter vein pattern, small yellow ribbon with white dots tied below the clover head. Preserve all FOUR leaves. No girl, hat, frog, hands or scenery. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-80464f0a-396b-447e-bea9-c30db7c48d43.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-58a0008c-5de8-4b9c-bcea-0112e4f50f8d.png",
+      "cleanup": {
+        "slug": "ui",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-58a0008c-5de8-4b9c-bcea-0112e4f50f8d.png"
+      }
+    },
+    {
+      "slug": "ui",
+      "key": "prop-frog",
+      "label": "개구리 탑승물",
+      "kind": "mount",
+      "description": "ONLY Ui's large friendly green frog mount from the reference, EMPTY without the girl. Rounded plump light-green body, protruding little eyes, wide curved smile, round pink cheeks, yellow cloth sash with pink flower clasp, webbed feet, small zipper pull on the side as shown. Preserve squat proportions and seated shape. No tiny frog sitting on top, no hat, hair, clover wand, girl or humanoid legs.",
+      "reference": "assets/references/ui-fullbody.png",
+      "note": "원작 개구리 탑승물 분리 입력.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Ui's large friendly green frog mount from the reference, EMPTY without the girl. Rounded plump light-green body, protruding little eyes, wide curved smile, round pink cheeks, yellow cloth sash with pink flower clasp, webbed feet, small zipper pull on the side as shown. Preserve squat proportions and seated shape. No tiny frog sitting on top, no hat, hair, clover wand, girl or humanoid legs. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-c8c1ad29-d6ea-4108-b82c-05ca4a576e80.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-c8c1ad29-d6ea-4108-b82c-05ca4a576e80.png"
+    },
+    {
+      "slug": "butter",
+      "key": "weapon",
+      "label": "새총",
+      "kind": "prop",
+      "description": "ONLY Butter's distinctive slingshot held in the reference. Rounded golden-yellow Y-shaped fork, short dark brown handle, small yellow bow tied at the neck of the handle, two reddish-brown elastic bands fixed at the tips, small central pouch. Preserve the clear empty U opening and simple chibi scale. One complete slingshot, three-quarter front view, natural relaxed bands. No stone, human hand, character, dog-face purse or extra bow beside the object.",
+      "reference": "assets/references/butter-fullbody.png",
+      "note": "원작 전신 캡처의 노란 Y자 새총·목의 리본·갈색 손잡이 확인.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Butter's distinctive slingshot held in the reference. Rounded golden-yellow Y-shaped fork, short dark brown handle, small yellow bow tied at the neck of the handle, two reddish-brown elastic bands fixed at the tips, small central pouch. Preserve the clear empty U opening and simple chibi scale. One complete slingshot, three-quarter front view, natural relaxed bands. No stone, human hand, character, dog-face purse or extra bow beside the object. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-4f6a33c4-780d-4215-86ad-f82b8a5c20bc.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-4f6a33c4-780d-4215-86ad-f82b8a5c20bc.png"
+    },
+    {
+      "slug": "komi",
+      "key": "weapon",
+      "label": "분홍 물방울 베개",
+      "kind": "deformable_prop",
+      "description": "ONLY Komi's pink pillow from the reference. A soft plump rectangular pillow with white polka dots, pale pink/white ruffled borders on the two short ends and simple seam around the perimeter. Slight three-quarter view showing thickness and rounded corners. No cat, character, hands, bed, extra pillow or decorative face.",
+      "reference": "assets/references/komi-fullbody.png",
+      "note": "원작 전신 캡처의 분홍 물방울·프릴 베개.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Komi's pink pillow from the reference. A soft plump rectangular pillow with white polka dots, pale pink/white ruffled borders on the two short ends and simple seam around the perimeter. Slight three-quarter view showing thickness and rounded corners. No cat, character, hands, bed, extra pillow or decorative face. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-aeb1c18c-6201-4c8b-935d-bb17b5690911.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-aeb1c18c-6201-4c8b-935d-bb17b5690911.png"
+    },
+    {
+      "slug": "hilde",
+      "key": "weapon",
+      "label": "의료 주사기총",
+      "kind": "prop",
+      "description": "ONLY Hilde's medical injector gun held in the reference. Short chunky dark charcoal rectangular cylindrical upper barrel with a large pale yellow-green medicine window, a small lime medical plus symbol near its front, pale silver frame and short pale pistol grip, small dark round muzzle. Copy the stylized clinical shape; do not turn it into a giant exposed needle syringe or a realistic firearm. No medical case, hand, character, numbers or labels.",
+      "reference": "assets/references/hilde-fullbody.png",
+      "note": "원작 전신 캡처의 의료 총 형상·약액 창·십자 표식.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Hilde's medical injector gun held in the reference. Short chunky dark charcoal rectangular cylindrical upper barrel with a large pale yellow-green medicine window, a small lime medical plus symbol near its front, pale silver frame and short pale pistol grip, small dark round muzzle. Copy the stylized clinical shape; do not turn it into a giant exposed needle syringe or a realistic firearm. No medical case, hand, character, numbers or labels. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-f31ee882-690b-4696-8528-8d9df35df63f.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-a48fc0c8-9087-474f-b6a0-5d89072874de.png",
+      "cleanup": {
+        "slug": "hilde",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-a48fc0c8-9087-474f-b6a0-5d89072874de.png"
+      }
+    },
+    {
+      "slug": "shion",
+      "key": "weapon",
+      "label": "저격총",
+      "kind": "prop",
+      "description": "ONLY Shion's large dark gray/navy stylized rifle from the reference. Very long chunky rectangular front barrel shroud with small vertical vents, long straight receiver, compact scope on top, large angular box magazine below, skeletal angular rear stock with an open cutout, and small lower front support/bipod structure. Copy the silhouette, muted navy-gray panels and dark outlines. Entire stock and muzzle visible. No character, hands, bullets, muzzle flash or real-world logos.",
+      "reference": "assets/references/shion-fullbody.png",
+      "note": "원작 전신 캡처의 큰 직선형 총열·조준경·탄창·개머리판 확인.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. ONLY Shion's large dark gray/navy stylized rifle from the reference. Very long chunky rectangular front barrel shroud with small vertical vents, long straight receiver, compact scope on top, large angular box magazine below, skeletal angular rear stock with an open cutout, and small lower front support/bipod structure. Copy the silhouette, muted navy-gray panels and dark outlines. Entire stock and muzzle visible. No character, hands, bullets, muzzle flash or real-world logos. IMPORTANT: absolutely NO GLOW, halo, haze, shadow, fog or colored aura outside the object's silhouette. Treat this as a crisp opaque sticker cutout, with 100% transparent empty pixels immediately outside the contour and in all holes. Do not draw a surrounding light bloom.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-1b10212a-5067-429c-92bd-b0862ab96428.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-1b10212a-5067-429c-92bd-b0862ab96428.png"
+    },
+    {
+      "slug": "naia",
+      "key": "effect-water",
+      "label": "물줄기 효과 · 선택",
+      "kind": "effect",
+      "description": "One separate aqua-blue water projectile emitted from the snout nozzle of Naia's dolphin water gun. Rounded teardrop volume, short tapering flowing tail and soft white-blue highlights. This is an optional proxy for later water VFX, separate from the dolphin water-gun prop. No toy body, handle, hands or character in this effect mesh.",
+      "reference": "assets/references/naia-fullbody.png",
+      "note": "돌고래 물총의 주둥이 노즐에서 나오는 물줄기용 형태입니다. 물총 본체와 별도이며 최종 입자·투명도·흐름은 엔진에서 제작합니다.",
+      "prompt": "Create a clean isolated GAME ASSET input illustration for Tripo. The supplied screenshot is visual evidence, not the output layout. Draw ONLY the named prop, removing the character, hands, clothing, web page UI and background. One object or the explicitly described connected assembly, one three-quarter view with minimal perspective; full silhouette centered, ample margin, crisp clean cel-shaded shapes, enough visible thickness for 3D reconstruction. Preserve the original prop's silhouette and colors. No words, labels, other views, display stand, ground shadow, motion trails, or extra decoration. TRUE transparent background with clean antialiased edges. One simple aqua-blue magical water projectile for Naia's hand-cast water attack: a rounded teardrop-shaped water volume with a short tapering flowing tail and soft white-blue highlight shapes. This is an optional solid volume study for a later water VFX, NOT a physical water pistol. No gun, handle, reservoir, bracelet, hands or body.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-4d7398dc-bb47-41c5-befc-1047e358ea18.png",
+      "original_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-295948ef-d280-4ee1-bade-c3ef31b15186.png",
+      "cleanup": {
+        "slug": "naia",
+        "key": "weapon",
+        "prompt": "Edit this image ONLY to remove the soft outer glow, aura, haze, fog and cast shadows surrounding the solid object. Preserve the object design, colors, internal shading, proportions and all solid parts. Output a precise clean cutout of the solid object with transparent background. All space immediately outside its contour and inside its open holes must be fully transparent, no feathered haze or residual halo. Keep just a narrow antialiased edge. Do not add any objects or change the design. The object interior should remain opaque.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-295948ef-d280-4ee1-bade-c3ef31b15186.png"
+      },
+      "reassignment": "Originally mislabeled as the only weapon; retained as optional water VFX after dolphin water-gun correction."
+    },
+    {
+      "slug": "naia",
+      "key": "weapon",
+      "label": "돌고래 물총",
+      "kind": "prop",
+      "prompt": "Use case: stylized-concept. Create a clean isolated Tripo 3D input illustration of NAIA'S DOLPHIN WATER GUN, faithfully based on the LEFTMOST purple card icon in the supplied official announcement screenshot, captioned 나이아의 돌고래 물총. The screenshot is a design reference only. Draw ONLY that complete dolphin-shaped toy, one object, no card frame or UI. Preserve the curved compact slate/indigo BLUE DOLPHIN body, long rounded snout pointing left, a small dark friendly eye, broad WHITE belly patch following the inner curve, little dorsal fin, and tapered lower body ending in two blue tail flukes. Preserve the SMALL TAN STRAW HAT with YELLOW FLOWER and green leaves on its head from that icon. The toy is itself shaped like a dolphin, with a small discreet water outlet at the snout. Do not add a pistol grip, trigger guard, barrel, scope, reservoir, hose, or other invented gun hardware. Render a single nearly side-on three-quarter view with just enough visible thickness for 3D reconstruction. Full snout, hat, fin and tail in frame with generous margins. Crisp cel-shaded chibi game-art style, clean dark outlines, smooth opaque toy surfaces. True transparent background. No water stream or splash, no hand, no girl, no extra dolphins, no words, no ground, no shadows or glow. This is a hand-held dolphin-shaped water toy, not a living animal or a water projectile. Keep the tiny hat visibly a separate accessory resting on the dolphin, not fused into its body.",
+      "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-e92b6d64-35df-4f75-8513-1de37ac7ccfc.png",
+      "reference_url": "https://game.naver.com/lounge/Trickcal/board/detail/8404614",
+      "reference_viewer": "https://gagether.wiki/ko/games/trickcal/items/quick-trickcal-kr-8404614",
+      "visual_evidence": "Official 1200x675 card pickup image, leftmost Naia dolphin-water-gun icon; normal costume Attack2_1 frame 12/60 also shows the blue dolphin toy.",
+      "note": "공식 카드의 작은 꽃 밀짚모자를 포함한 외형 기준. 작은 모자는 분리 액세서리로 요청. 등쪽 두께·노즐 구멍은 3D 제작용 해석.",
+      "description": "One hand-held DOLPHIN-SHAPED WATER GUN used by Naia. Match the blue curved dolphin toy in the reference: slate/indigo-blue body, long rounded snout with a small water outlet, a dark eye, broad white inner belly stripe, small dorsal fin and two tail flukes. Keep the miniature tan straw hat with a yellow flower and green leaves shown in the official artifact-card illustration as a separate removable accessory. The dolphin body itself is the toy; do not add a pistol grip, trigger guard, rifle barrel, hose, or external tank. Preserve its solid toy-like curved silhouette and smooth stylized surface. No water stream, character or hand in this mesh.",
+      "reference": "https://game.naver.com/lounge/Trickcal/board/detail/8404614"
+    },
+    {
+      "key": "prop-bag",
+      "label": "숄더백 · 끈·체리 장식 포함",
+      "kind": "deformable_prop",
+      "description": "ONLY Picora's complete SHOULDER BAG, including its narrow long white shoulder strap, double pink cherry charm with mint stems and white outline at the lower front strap attachment, and pink bow at the upper outer/back edge. Small rounded cream/pale-yellow oval pouch with dusty-pink side gusset/piping, curved pink swirl/U-like front graphic and white wing-like/scalloped upper trim. Preserve the open loop of the single strap; both strap ends attach to the top sides of the bag. It hangs from ONE shoulder beside the SAME hip, not diagonally across the chest. The supplied front assembly reference places it on image-right (character L). Make the pouch, strap, bow and cherry charm distinct mesh parts for assembly and secondary motion; do not fuse the loop shut. Do not add a short carry handle, backpack straps, face, zipper, unrelated staff charms, hands or character. Hidden back/underside and thickness are a restrained modeling interpretation, not a verified official reverse view.",
+      "note": "사용자 첨부와 원작 아틀라스 Bag/Bag_Ribbon/Bag_Stciker/Bag_Strip/Bag_Strip_B 파츠를 대조. 체리는 끈 장식이며 치마에 중복하지 않습니다. 후면·두께·보조 본은 제작용 해석입니다.",
+      "reference": "artifacts/tripo-picora-shoulder-bag/references/user-picora-shoulder-bag.png",
+      "source": "artifacts/tripo-picora-shoulder-bag/images/picora-bag.png",
+      "slug": "picora",
+      "prompt": "Use case: stylized-concept. Asset type: isolated Tripo 3D reconstruction input. Image 1 is Picora's original character wearing her SHOULDER BAG; Image 2 is the original game sprite atlas, with its Bag, Bag_Ribbon, Bag_Stciker, Bag_Strip and Bag_Strip_B pieces on the far right. Use both only as design references. Generate ONE complete isolated shoulder-bag assembly, no character: a small rounded cream/pale buttery-yellow oval pouch, flattened front-to-back, dusty-rose side gusset/piping, a bold curved pink swirl/U-like graphic on the front face, the white wing-like/scalloped folded trim across the upper front, and the pink bow at the upper outer/back edge. Include its ONE long narrow WHITE shoulder strap forming an open tall loop, pale pink/dark rose fine edging, both ends connected to the top sides of the pouch. Include the small double CHERRY charm at the lower front strap attachment: two pink cherries, mint/aqua stems, white outline. The bag is suspended from one shoulder, not a backpack or handbag, and the strap is not a short carry handle. Render a near-front three-quarter view, a little visible thickness, complete strap loop above the bag, ample margins. Faithful clean chibi game cel shading, dark muted brown outlines, pastel colors. The pink motif is a simple original curved graphic, not text or a face. Only ONE bag, ONE continuous loop strap, ONE cherry charm, ONE bow; do not copy unrelated staff charms or outfit decorations from the atlas. No person, hands, clothing, staff, multi-view sheet, labels, ground shadow or scenery. True transparent background.",
+      "cleanup_prompt": "Use case: background-extraction. Edit only the background/alpha of this single shoulder-bag asset. Remove ALL of the blurred brown/pink halo, haze, glow and shadow surrounding the bag and strap. The entire exterior around the crisp dark contour AND the entire large empty hole inside the strap loop must be fully TRANSPARENT with alpha=0. Preserve the bag itself pixel-faithfully: all colors, shape, strap, white trim, pink bow, cherries, linework, composition and resolution. Solid object surfaces stay opaque; retain only a narrow antialiased edge at the actual contour. No soft fade, outer glow, drop shadow, vignette, gray fill, checkerboard pattern or background paint. A clean production PNG cutout with no semitransparent cloud beyond its contour.",
+      "generated_source": "C:/Users/user/.codex/generated_images/01a1cff6-400a-7701-a00a-2fcdc7373c5d/exec-4ee5e851-3f04-476c-8e56-a860ca899cf9.png",
+      "output": "artifacts/tripo-picora-shoulder-bag/images/picora-bag.png",
+      "record": "artifacts/tripo-picora-shoulder-bag/generation.json"
+    },
+    {
+      "slug": "chloe",
+      "key": "prop-sebastian",
+      "label": "세바스티안 · 곰 인형 전신",
+      "kind": "companion",
+      "description": "One COMPLETE independent stuffed bear companion, SEBASTIAN, based on the original normal/base design. Preserve the clean WHITE head and compact white torso, thin dark-brown DASHED forehead stitches, small glossy dark-brown button eyes, shallow white muzzle and rounded triangular brown nose. Each round salmon-pink cheek has ONE CORAL OUTLINE HEART marking, two hearts total. The prominent crown tuft is a LAVENDER/LILAC HEART-SHAPED LOOP with an open center, never a yellow/olive rod or straight tab. Keep the pale mint/aqua ear and very long padded arm on image-left, and soft pink ear and very long arm on image-right with thin curved diamond quilting lines and small pale cream-yellow stitch dots. Preserve pale piping on the mint arm, the PLUM/LAVENDER-purple neck bow with drooping loops and two long notched tails, and the small side ornament beside the image-right ear: colored band, mint rectangular loop, white cap and pink tassel. Match the original game sprite's short simple white legs and rounded flat feet; do not add separate teddy shoes, paw pads or exposed metal zipper hardware. Both long arms attach to the BEAR TORSO at the shoulders. Keep arm/torso and foot gaps for rigging. Translate the clean 2D reference into smooth stylized matte 3D forms with flat pastel colors and restrained cel shading. Keep the cheek hearts and quilting as clear surface markings that follow deformation; no realistic woven fabric, fur, felt grain, thick upholstery, photorealistic shading or metallic rivets. Preserve the open hole in the heart tuft. The bear is separate from Chloe, not a hood, hat or pair of loose arms; no girl or human hands. Unseen back surfaces, depth and final assembly scale remain modeling interpretations.",
+      "note": "공식 소개 일러스트와 원작 Idle_SebastianForm 전신 대조. 양 볼 하트 선무늬·라벤더 하트형 바보털·민트/분홍 팔·보라 리본·옆 고리/술 장식을 반영하고 실사 봉제 질감과 노란 막대, 노출 금속 지퍼를 제거했습니다. 팬 제작 첨부는 구조 설명용 이력이며 외형·재질 기준이 아닙니다.",
+      "reference": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-basic.jpg",
+      "references": [
+        {
+          "path": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-basic.jpg",
+          "url": "https://x.com/trickcal_jp/status/1971582899796484364",
+          "image_url": "https://pbs.twimg.com/media/G1xtOIHWwAAPI2h.jpg",
+          "role": "Official published base illustration: colors, markings, outlines, ornament.",
+          "sha256": "d410865edb1cfb7577efe88ef6a27444ad695399808a23c82f8d783e6226f933"
+        },
+        {
+          "path": "artifacts/tripo-sebastian-original-style/references/chloe-official-jp-profile.jpg",
+          "url": "https://x.com/trickcal_jp/status/2058729771199316128",
+          "image_url": "https://pbs.twimg.com/media/HI6Cyh_acAAOiwl.jpg",
+          "role": "Official published character profile: corroborates normal/base appearance.",
+          "sha256": "0bf1d4706cb5f84c5613eca2b3027b4682a829bcde5c139b2d0cfd17a51a2219"
+        }
+      ],
+      "motion_reference": {
+        "url": "https://wiki.cheeky.tsuncloud.com/korea/spines/chloe",
+        "host_role": "Community viewer displaying original game sprite; not an official website.",
+        "skin": "Normal",
+        "animation": "Idle_SebastianForm",
+        "frame": "8 / 40",
+        "observation": "Complete white bear torso and short simple legs, long asymmetric arms, plum ribbon; battle-state cheek stars are not the default heart marks."
+      },
+      "authority": "Official published illustrations for normal appearance; original game sprite for body structure. Prior user attachment is fan-made and is not a color/material authority.",
+      "prompt": "Use case: identity-preserve / style-transfer. Rebuild the corrected standalone SEBASTIAN Tripo input illustration using the FOUR recent reference images. The first two images are official Trickcal Chloe promotional illustrations: they are the PRIMARY authority for normal/base appearance, facial details and drawing style. The next two are screenshots of the original game animation in a community viewer; the final screenshot clearly reveals Sebastian's full torso and limbs and is the PRIMARY authority for full-body proportions. Ignore all UI, all lettering and the girl. This is a replacement of an inaccurate previously generated photorealistic plush bear, NOT a request to imitate that old toy render or the user's fan-made model.\n\nDraw ONLY Sebastian, the independent complete bear doll, upright FRONT VIEW, with his own head, torso, two very long asymmetrical arms and two very short simple white legs, full silhouette with 8% margins. Neutral relaxed pose, arms a little away from the torso and feet apart. Match the full-body game sprite's compact white torso, large head, long teardrop-shaped mitten-free padded arms and short simple blocky rounded legs. No human hands, no girl, no hat or wearable costume.\n\nCritical normal/base identity, all mandatory:\n- Very clean WHITE head and torso, no gray dirt shading. Dark brown thin dashed stitched lines on forehead as shown in official art, not thick realistic seams.\n- Two large flat-round salmon-pink cheeks. ONE clearly visible thin CORAL/PINK OUTLINE HEART centered on EACH cheek, exactly two hearts total. These are line markings on the pink cheek surfaces, not floating icons, not solid heart-shaped cheeks and NOT the battle-state stars seen in the sprite screenshot.\n- Top tuft is a prominent thick curved LAVENDER/LILAC-PINK HEART-SHAPED AHOGE LOOP, matching the official art: asymmetrical two rounded heart lobes and open center, emerging from the crown. The top curl is purple-lavender, NEVER yellow, olive, a straight rod or a vertical fabric tag.\n- Small glossy dark-brown/near-black round eyes with tiny white highlights; short dark-brown rounded triangular nose on a shallow white muzzle.\n- Viewer-left ear and entire long arm are pale MINT/AQUA. Viewer-right ear and long arm are soft PINK with the original thin curved diamond quilting lines and SMALL pale cream-yellow stitch dots. Keep these as clean graphic markings, not deeply inflated upholstery cells or metallic rivets. Preserve pale edge piping on the mint arm.\n- PLUM/LAVENDER-purple neck bow with the drooping rounded loops and two long notched tails seen on the game sprite. No saturated cobalt-blue bow.\n- Preserve the small hanging ornament visible next to the viewer-right ear in the official illustration: a short golden/pink band with mint rectangular loop, small white bell-shaped cap and short pink tassel below it. This hangs from the bear, it is not Chloe jewelry. Keep it clear and simplified at the correct small scale.\n- Plain short white bear legs and flat rounded simple feet like the original game sprite, no paw pads, no separate oversized teddy shoes. White body with a restrained simple center seam, no exposed realistic metal zipper.\n\nArt direction: faithful clean 2D Trickcal game illustration, warm dark-brown hand-drawn outer contour, clean smooth pastel color blocks, subtle one-step cel shadows and a few small graphic highlights. Use the two OFFICIAL illustrations for stylistic fidelity, not a photographic plush render. The quilting is drawn linework. NO visible fabric weave, fibers, fleece, fuzzy surface, pores, felt grain, deep ambient occlusion or studio 3D lighting. This must look like a finished original-style game asset reference, not a toy product photograph.\nOne isolated full-body bear only. True transparent background with crisp clean alpha edges, opaque flat white body, no gray backdrop, shadows on ground, captions, labels, sparkles, poster, frame, symbols outside the body, UI or extra views. Keep all limbs, heart tuft and side tassel fully in frame.\n",
+      "input_method": "Built-in image_gen, num_last_images_to_include=4: two official illustrations and two viewer screenshots, the last showing the full body.",
+      "generated_source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-b860f830-6256-4d58-943f-7cdf5aeb7afd.png",
+      "output": "artifacts/tripo-sebastian-original-style/images/sebastian.png",
+      "sha256": "8e8ea17b4065a2f0086e5fedc6d8cfd67cc84b918a04ec68ab31705d58947293",
+      "supersedes": "artifacts/tripo-chloe-sebastian-correction/images/sebastian.png"
+    }
+  ],
+  "prior_image_generation": {
+    "mode": "built-in image_gen",
+    "created_date": "2026-11-12",
+    "entries": [
+      {
+        "slug": "ui",
+        "input": "assets/character-inputs/inputs-masked/ui.png",
+        "output": "ui/front.png",
+        "transparent_background": true,
+        "prompt": "Use case: identity-preserve. Asset type: single front reference PNG for Tripo 3D game character generation. Edit the provided UI character reference: isolate ONLY the same mint-green-haired nature spirit girl, redraw her standing in a relaxed neutral A-pose, empty hands slightly away from body and feet slightly apart. Remove the large frog mount and clover wand completely, but KEEP the tiny frog ornament resting on her straw hat, pink flower, white hat bow, two pink hair clips, leaf-green eyes, rosy round cheeks, small happy mouth, long thick mint-green braid tied with the yellow bow, golden-yellow raincoat with pink flower buttons and small blue frog badge, and white cuff frills. Preserve the exact recognizable head and hat design. Her feet were hidden by the mount: infer short plain cream leggings and small yellow rain boots, and show these as a simple consistent fully clothed game-rig preparation interpretation. Keep cute chibi proportions about 2.4 heads tall, short limbs, oversized head. Clean crisp dark brown illustration lines and soft pastel shading matching the input. Single front orthographic full body, hands empty and visible, no held props, centered with generous empty margins, 1024x1024 square composition. Transparent background. No large frog, clover wand, pedestal, scenery, text, labels, extra views or duplicate characters.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-f767b5d9-d6a6-4291-9777-dc553459221c.png"
+      },
+      {
+        "slug": "aya",
+        "input": "assets/references/aya-parasol-reference.webp",
+        "output": "aya/front.png",
+        "transparent_background": true,
+        "prompt": "Use case: identity-preserve. Asset: corrected transparent full-body FRONT Tripo character reference for Aya from Trickcal. Image 1 is the EDIT TARGET (previous fan-art front image). Image 2 is the original-design reference; image 3 is an original Spine reference screenshot. Correct the HAIRSTYLE: Aya has very long WHITE TWIN TAILS tied LOW on BOTH sides beneath the ears with pale blue butterfly ties, descending all the way to her ANKLES. The two white masses outside the patterned kimono in the original are HAIR, not fabric panels. Replace the incorrect bob ending below the jaw with clearly connected low twin tails: keep the original large swept bangs covering one eye and black forehead patch; flow from the crown past each ear into a butterfly tie and then a thick flowing white tail reaching ankle height, gently flared curled tips. Show visible strand grooves and subtle cool gray hair shading, with a clear boundary and small gap from the kimono sleeves and skirt. Keep exactly two long ponytail masses, not a single long hair curtain, not braids. Preserve the target's warm brown skin, gold eye, expression, chibi proportions, dark obi with flower clasp, patterned white kimono with gold trim, sandals, blue gem earring and holding pose. Preserve the large separate OPEN FLOWER-PETAL PARASOL, blue-gray underside, visible ribs, shaft and hand grip over the shoulder. Make the two tails prominent and continuous down to the ankles, visible outside both sides of the body. The parasol petals above the head are not hair. One whole character, straight-on front view, centered, entire parasol and both feet inside frame with margins. Clean polished 2D cel-shaded line art matching target. No text, no labels, no scene, no pedestal. True transparent background.",
+        "source": "C:\\Users\\user\\.codex\\generated_images\\01a1cf58-6367-7cc1-83d2-879d0a605a13\\exec-2f6be4aa-5347-45f9-be61-7e4eeabf204b.png"
+      },
+      {
+        "slug": "id",
+        "input": [
+          "artifacts/id-bodysuit-correction/references/user-costume-side.png",
+          "artifacts/id-bodysuit-correction/references/user-costume-front.png"
+        ],
+        "output": "id/front.png",
+        "transparent_background": true,
+        "prompt": "Use case: identity-preserve. Edit Image 1, the existing chibi Ed/Id (이드) FRONT Tripo reference. Correct ONLY HER CLOTHING using user-supplied images 2 and 3 as garment-construction references. Her outfit is a fitted SLEEVELESS ONE-PIECE WHITE AND BLACK BODYSUIT / leotard, with a WHITE CENTRAL TORSO PANEL and BLACK SIDE PANELS continuing to the hips. It has a small white neck band and thin BLACK CROSSED HALTER STRAPS on the upper chest, bare shoulders and bare arms with simple white wrist bands. Replace long trousers with DARK CHARCOAL THIGH-HIGH STOCKINGS, narrow white side piping, and a small natural gap of visible upper thigh below the bodysuit leg openings. White low ankle shoes matching the references; no high heels. Opaque smooth matte fabric throughout. Remove the entire zip-up tracksuit jacket, its zipper, cuffs, waist hem, sleeves and baggy pants. No cape, robe, skirt, gold trim, chest clasp or sports jacket. Keep the original character identity, very long fluffy WHITE HAIR, curled ahoge, long pointed elf ears, pale skin, sleepy CLOSED EYES, facial expression and exactly the same compact chibi proportions. Use a neutral production-reference A-pose, small straight torso, no anatomical emphasis, not the posed camera angles of images 2/3. Single full-body character, front orthographic view, empty hands, arms slightly apart, feet separated, entire hair and shoes visible with margin. Preserve crisp dark line art and gentle pastel cel shading. TRUE transparent background. No pod, companion robot, text, logos, backdrop, pedestal or additional characters. The user-provided images supersede the previous tracksuit interpretation. Use images 2/3 for the outfit only.",
+        "source": "C:/Users/user/.codex/generated_images/01a1cf58-6367-7cc1-83d2-879d0a605a13/exec-0ff61b3d-ad80-4b44-b8ed-bc1d392530ac.png"
+      },
+      {
+        "slug": "id",
+        "input": [
+          "artifacts/id-bodysuit-correction/references/user-costume-side.png",
+          "artifacts/id-bodysuit-correction/references/user-costume-front.png"
+        ],
+        "output": "id/mounted-reference.png",
+        "transparent_background": true,
+        "prompt": "Precise costume edit. Image 1 is the EDIT TARGET; image 2 is the APPROVED CORRECTED COSTUME. In image 1 replace Ed's tracksuit with the EXACT outfit in image 2: fitted sleeveless one-piece white/black bodysuit with white central torso and black sides, small white neck band and thin crossed black halter straps, bare arms and simple white wrist bands, dark charcoal thigh-high stockings with narrow white side piping, a small natural gap above stocking tops, and white low ankle shoes. Remove jacket, zipper, baggy sleeves, cuffs, elastic waist and loose trousers completely. Maintain the target's small chibi body proportions and neutral sleepy seated pose without anatomical emphasis. Preserve EVERYTHING ELSE: long white hair, closed eyes when visible, elf ears, pose, camera direction, complete crescent pod, floating robot, illustration style, colors and layout. DO NOT add another character or another view. Do not change view direction, pod geometry or robot direction. No text. Keep exactly ONE complete FRONT assembly, centered and fully uncropped on a TRUE transparent background.",
+        "source": "C:/Users/user/.codex/generated_images/01a1cf58-6367-7cc1-83d2-879d0a605a13/exec-ba314bd7-98b2-4519-8045-944ae1696d3d.png"
+      }
+    ]
+  },
+  "reference_edits": [
+    {
+      "date": "2026-11-15",
+      "tool": "built-in image_gen",
+      "authority": "User-requested correction. Eyebrows AND eyelashes must be white. User-supplied Nata reference supersedes the earlier generic spherical robot and the rejected split upper/lower crescent attempt.",
+      "scope": "Meshy input PNGs and prompts only; not a new 3D model or rig.",
+      "findings": {
+        "body": "Original Ed illustration shows white filled eyebrows and eyelashes with fine dark contours, white hair and pale skin. Preserve the user-approved bodysuit and open golden eyes; no nose.",
+        "nata": "User reference has one broad continuous C-shaped white crescent body connected along its left side and open to the right, round display within the opening, horizontal rail, long orbital arc and celestial hanging ornaments. It is not a full white sphere or two detached jaws.",
+        "evidence_limit": "Unseen rear geometry is not verified by this front-view reference; text search did not provide a specific eyelash-color specification. The color correction is grounded in the inspected original illustration and explicit user instruction."
+      },
+      "source_urls": [
+        "https://wikiwiki.jp/thetrickal/%E3%82%A4%E3%83%BC%E3%83%89",
+        "https://wiki.cheeky.tsuncloud.com/korea/apostles/ed",
+        "https://www.gacha.gg/trickcal/story/ed-s-story",
+        "https://x.com/trickcal_en/status/2035899334676353025"
+      ],
+      "research_note": "Searched for Ed/Id official art, white eyebrows/eyelashes and Nata. Inspected assets/references/id.png, id-official-profile.jpg, id-fullbody.png, and the user's Nata image. The official X post URL is from existing provenance and returned 403 in this research pass; not claimed as freshly fetched.",
+      "entries": [
+        {
+          "asset": "body",
+          "selected": true,
+          "source": "C:/Users/user/.codex/generated_images/01a1dae2-6143-76c2-9aaa-672f3b450cea/exec-a4b14225-8c66-421c-9c18-43b924b75f56.png",
+          "output": "artifacts/id-meshy-palette-crescents/images/id-body.png",
+          "prompt": "Use case: identity-preserve. Precise facial color correction for the character Ed/Id (이드) from Trickcal.\nImage 1 is the edit target: the already lightened full-body standing reference. Image 2 is the original game character illustration, the authority for WHITE EYEBROWS AND WHITE EYELASHES. Study the white filled eyelashes surrounded by only a fine outline in image 2.\nCRITICAL EDIT: Change BOTH EYEBROWS and ALL EYELASHES to clean soft WHITE matching her white hair. This includes the entire currently thick dark upper lash bands above BOTH golden eyes and their outward-pointing lash spikes. Those shapes must have WHITE interiors, NOT black, charcoal, brown, gray or pink. White lashes may have a very thin muted gray-brown contour like the original to make the white shape readable, but there must be no solid dark eyeliner band and no black mascara. Keep the same half-lidded OPEN sleepy eyes, gold irises, pupils and highlights. Do not confuse the upper white eyelashes with eyebrows; BOTH are white.\nPreserve every other aspect of image 1: very pale porcelain pink-white skin on face, ears, arms, hands and legs; subtle pale blush only; fluffy long white hair, curled ahoge and pointed ears; exact chibi proportions, frontal neutral A-pose, existing tiny closed downturned mouth, and smooth NO-NOSE face with no bridge, bump, dot, line, nostrils or nose shadow. Do not return warm tan skin or dark facial shading.\nPreserve the approved sleeveless fitted white-center/black-side one-piece bodysuit, white neckband, crossed thin black halter straps, white wrist bands, charcoal thigh-high stockings with thin white piping and white low shoes exactly. No costume or proportion change. Hair roots and body joints stay connected. Empty hands, full silhouette within canvas.\nSingle full-body character, no mount or robot, no new objects or lettering. Keep the transparent background and crisp pastel cel shading. True clean transparency outside the character.",
+          "transparent_background": true,
+          "reference_images": [
+            "C:/Users/user/.codex/generated_images/01a1dae2-6143-76c2-9aaa-672f3b450cea/exec-bdf35b70-7140-449b-abff-faeede18063c.png",
+            "assets/references/id.png"
+          ],
+          "prior_palette_prompt": "Use case: identity-preserve. Edit image 1, the existing Ed/Id (이드) full-body standing Meshy character reference. Image 2 is her official profile art, provided ONLY to ground the very pale skin and white hair palette; do not copy its seated pose, closed eyes, lettering, costume interpretation, moon pod or robot.\nMake this narrowly targeted correction: ALL exposed skin on the face, ears, neck, shoulders, arms, hands and small upper-thigh gaps must be a consistent VERY PALE porcelain pink-white, approximately #FFF0EE as a base, with only faint cool pink shading and extremely subtle cheek blush. Remove the current warm peach/tan cast, broad pink blush, brown shadows and strong warm ambient shading. Keep the skin bright even under the hair. Do not wash out the dark clothing. Hair should read clean soft WHITE, with delicate light neutral-lilac shadow accents rather than gray/beige heavy shading.\nPreserve the exact existing character design, compact chibi proportions, neutral full-body front A-pose, half-lidded OPEN golden eyes, pointed elf ears, fluffy very long hair, curled ahoge, dark outlines and original small closed-mouth shape. Keep a smooth NO-NOSE face: no nose bump, nostrils, nose bridge, nose dot, nose line or nose shadow. The tiny downturned mouth is a mouth and must stay.\nPreserve the approved fitted sleeveless white/black one-piece bodysuit with white central torso panel, black side panels, small white neck band, thin crossed black halter straps, bare arms, white wrist bands, opaque charcoal thigh-high stockings with narrow white side piping and white low ankle shoes. No garment changes, sleeves, skirt, robe, pants or gold trim. Preserve hair connected to scalp and natural body joints, with no exploded or detached parts.\nSingle character only, empty hands, all hair tips and shoes fully inside the canvas with a little margin. Crisp restrained pastel cel-shaded illustration, even neutral illumination, no warm lighting. TRUE transparent background with clean alpha outside the character, no checkerboard, glow, shadow backdrop, ground plane or text. No robot, mount or duplicate views.",
+          "sha256": "5e0b2a6432996badee65a5e47a0e644a5635b855cbd16ad80687ef30a28c79c0"
+        },
+        {
+          "asset": "prop-robot",
+          "selected": true,
+          "source": "C:/Users/user/.codex/generated_images/01a1dae2-6143-76c2-9aaa-672f3b450cea/exec-addc3939-d6f5-44a6-9acd-fc909fc6e784.png",
+          "output": "artifacts/id-meshy-palette-crescents/images/id-prop-robot.png",
+          "prompt": "Use case: reference-grounded asset recreation. The attached user image is the EXACT authoritative design for NATA (나타), Ed/Id's small floating robot from Trickcal. Recreate this same robot as a clean high-resolution isolated Meshy Image-to-3D reference. This is fidelity work, not a redesign.\nKeep the exact visual construction:\n- One large continuous WHITE C-SHAPED CRESCENT housing, thick on the LEFT and opening to the RIGHT. Upper and lower tapered horns curve toward the right. The upper and lower parts are JOINED by the broad left crescent body. Preserve the circular recessed marks near its upper left edge and the small paired round details near top and bottom. Do NOT split this into two detached crescents, two jaws, a sphere, ball, helmet, donut, or a complete white circular shell.\n- The round dark face display nests within the opening of the large crescent, offset toward the right, in a thin pale circular bezel. Keep the white cheerful inverted-V eyes and small white cheek dots shown in the user reference; no mouth or nose. Its subtle fine display dot pattern should remain a surface texture.\n- Preserve the single slim horizontal elliptical Saturn-like equatorial rail with dark trim, extending both sides at the same level and attached to the crescent body, exactly as pictured.\n- Preserve the separate slender white orbital arc sweeping from above-left, passing in front of the lower-left region and curling below-right, plus the tiny white ring detail at upper-right. This is an orbital arc in the illustration, NOT a short upside-down U antenna attached to the top of a ball. Keep its visible path as in the reference, crisp and slender, with no large surrounding glow.\n- Preserve the dangling ornaments and their visible arrangement from the reference: left small diamond, small ring, and low crescent; right diamond, ring, low ringed-planet symbol, and outer crescent, hanging from thin straight lines. Do not substitute generic jewelry chains, heavy beads or a new symmetric arrangement.\nMatch the same nearly frontal view, proportions, silhouette and pale white/cool-gray/charcoal colors. Show subtle restrained cel shading and just enough edge thickness to make the solid crescent housing and thin rail readable as a physical game prop. Preserve the original simple black outline style. No photorealistic glossy metal, bronze trim, added mechanical arms or invented panels.\nOne complete standalone robot only, all arcs and ornaments fully inside the frame with margin, larger clear resolution. TRUE transparent background: remove the user's flat gray background, all ambient haze and diffuse glow; keep transparent negative spaces through the rings and crescent opening. Keep the actual white orbital line and ornaments. No character, moon-seat mount, text, pedestal, floor shadow, background, duplicate views or checkerboard.",
+          "transparent_background": true,
+          "reference_images": [
+            "artifacts/id-meshy-palette-crescents/references/nata-user-reference.png"
+          ],
+          "sha256": "815a373d83be7e88aeaba8b5b741faf69b0c907a375aef8cee7b98df3faf6dd4"
+        }
+      ],
+      "rejected_attempts": [
+        "exec-da1b1a08-3b85-4375-b377-bb9a36a857c5.png",
+        "exec-6c204bb8-a226-4604-a9d5-529e97f614e0.png"
+      ]
+    },
+    {
+      "date": "2026-11-15",
+      "method": "promote_existing_worn_bag_reference",
+      "image_generation_performed": false,
+      "selected_image": "artifacts/tripo-picora-shoulder-bag/images/picora-assembly.png",
+      "sha256": "d7f362934fdbc85e7063a1fc1d8495eebf0403f12e34a5cbc9fe340c7cda7862",
+      "request": "Use the existing bag-wearing Picora reference as the sole default body input; keep staff separate; retire separate bag input and duplicate assembly/turnaround references from the active pack.",
+      "previous_generation_record": "artifacts/tripo-picora-shoulder-bag/generation.json"
+    },
+    {
+      "tool": "image_gen.imagegen",
+      "mode": "built-in edit",
+      "date": "2026-11-15",
+      "input": "artifacts/meshy-input-refresh/before/assets/character-inputs/tripo-roster/renua/front.png",
+      "output": "artifacts/meshy-input-refresh/images/renua-no-halo.png",
+      "prompt": "Use case: precise-object-edit. Edit target: the provided full-body chibi Renua character PNG. Asset type: clean character reference for Meshy image-to-3D. Remove ONLY the entire large halo behind the head: remove its big circular gray inner disk, all concentric gold circular rings, the small floating circular ornament near the upper left, and every gold diamond/star point projecting from that halo. Make the removed halo area genuinely transparent, revealing no replacement object. Reconstruct the top/back hair outline only where necessary. Preserve the exact same character identity, 2D anime game-sprite style, front view, A-pose, expression, head-to-body proportions and entire outfit. Keep the silver-white bob, dark gray forelock, white curled ahoge, pale gold open eyes, pointed ears, both dark temple fins attached to the sides of the head, gold-and-turquoise ear discs and their dangling gold tags. These side-of-head accessories are NOT the halo and must remain. Keep the white high-neck sleeveless top, navy shorts, navy thigh-high boots with gold detailing, oversized navy-and-cream coat, gold trim, dangling coat fittings and white tassels unchanged. Character face must have NO NOSE: no nose geometry, nose tip, nasal bridge, nostrils, nose dot, nose line, or nose shadow. Keep the small existing mouth and cheek blush. Hair roots remain naturally connected to the head; head/neck/arms/legs form one visually assembled character. Full body centered with a small clear margin, no cropping, no weapons, no halo, no disk or ring behind the head, no new accessories, no text, no watermark, no scenery, no cast shadow. Preserve a real transparent RGBA background. Produce a sharp higher-resolution version suitable for 3D reference while closely preserving the input's original drawing and colors.",
+      "transparent_background": true,
+      "sha256": "0038f2240b670900683265211984ca04d06feb69e3443d9678515e8be21b9ba7",
+      "review": "Halo, gray disk and floating halo ornaments removed; side-of-head ornaments and outfit retained. Source character is a stylized fan-game reference, not a verified 3D model."
+    }
+  ]
+}

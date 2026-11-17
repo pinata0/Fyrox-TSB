@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+One short straight hollow blowpipe used by Mayo, held to her lips in the original attack. Narrow cylindrical blue-gray tube with brown rims at the open ends, a small white outlined diamond motif around its middle, simple dark mouth opening. Slight three-quarter side view clearly shows the hollow end. It is a mouth-blown dart tube, NOT a firearm: no pistol handle, tank, trigger, stock, magazine or syringe. White and muted blue palette matches her uniform. No darts or hands or character.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

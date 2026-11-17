@@ -1,0 +1,212 @@
+Browser tab: 1, Title: "erpin · Trickcal Wiki", URL: "https://wiki.cheeky.tsuncloud.com/korea/spines/erpin".
+1 AXWebArea erpin · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/erpin
+	2 container
+		3 link Description: Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		4 link Description: Planner, Value: planner.cheeky.tsuncloud.com/korea
+		5 link Description: Story, Value: story.cheeky.tsuncloud.com/korea
+		6 link Description: Schedule, Value: schedule.cheeky.tsuncloud.com/korea
+		7 link Description: Trickcal Wiki, Value: wiki.cheeky.tsuncloud.com/korea
+		8 link Description: Apostles, Value: wiki.cheeky.tsuncloud.com/korea/apostles
+		9 link Description: Monsters, Value: wiki.cheeky.tsuncloud.com/korea/monsters
+		10 link Description: Cards, Value: wiki.cheeky.tsuncloud.com/korea/cards
+		11 link Description: Stages, Value: wiki.cheeky.tsuncloud.com/korea/stages
+		12 link Description: MyHome, Value: wiki.cheeky.tsuncloud.com/korea/myhome
+		13 link Description: Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		14 link Description: Events, Value: wiki.cheeky.tsuncloud.com/korea/event
+		15 link Description: History, Value: wiki.cheeky.tsuncloud.com/korea/history
+		16 switch Spoilers, Help: Show unreleased / spoiler content, Value: 0
+		17 link Description: Global, Value: wiki.cheeky.tsuncloud.com/global/spines/erpin
+		18 link Description: Korea, Value: wiki.cheeky.tsuncloud.com/korea/spines/erpin
+	19 container
+		20 link Description: ← Spines, Value: wiki.cheeky.tsuncloud.com/korea/spines
+		21 heading erpin, Value: 1
+			22 text erpin
+		23 text hero · Apostles
+		24 button Open in lightbox
+		26 button Attack, Help: Play a Attack animation
+		27 button Experience, Help: Play a Experience animation
+		28 button OW, Help: Play a OW animation
+		29 button Ultimate, Help: Play a Ultimate animation
+		30 text Skin
+		31 pop up button (collapsed, settable) Value: Normal, Secondary Actions: Expand
+			32 menu
+				33 default
+				34 (selected) Normal
+		35 text Animation
+		36 pop up button (collapsed, settable) Value: Idle, Secondary Actions: Expand
+			37 menu
+				38 Die
+				39 Groggy
+				40 (selected) Idle
+				41 Move
+				42 Skill1_1
+				43 Spawn
+				44 Victory
+		45 text ANIMATION INSPECTOR frames @  30  fps
+		46 button ⏸ Pause
+		47 button ◀ −1f, Help: Step back one frame
+		48 button +1f ▶, Help: Step forward one frame
+		49 text frame  18 / 150 name Idle time 0.601 / 5.000 s loop true timelines 108 timeScale 1.00× Speed
+		50 button 0.25×
+			51 text 0.25
+			52 text ×
+		53 button 0.5×
+			54 text 0.5
+			55 text ×
+		56 button 1×
+			57 text 1
+			58 text ×
+		59 button 1.5×
+			60 text 1.5
+			61 text ×
+		62 button 2×
+			63 text 2
+			64 text ×
+		65 stepper (settable, integer) 1
+		66 text | fps
+		67 button 30
+		68 button 60
+		69 text Animations (fastest → slowest)
+		70 button Ultimate1_2_Loop 16f · 0.53s
+			71 text Ultimate1_2_Loop
+			72 text 16
+			73 text f
+			74 text  · 
+			75 text 0.53
+			76 text s
+		77 button Groggy 32f · 1.07s
+			78 text Groggy
+			79 text 32
+			80 text f
+			81 text  · 
+			82 text 1.07
+			83 text s
+		84 button Ultimate1_1 35f · 1.17s
+			85 text Ultimate1_1
+			86 text 35
+			87 text f
+			88 text  · 
+			89 text 1.17
+			90 text s
+		91 button Spawn 40f · 1.33s
+			92 text Spawn
+			93 text 40
+			94 text f
+			95 text  · 
+			96 text 1.33
+			97 text s
+		98 button Attack1_1 44f · 1.47s
+			99 text Attack1_1
+			100 text 44
+			101 text f
+			102 text  · 
+			103 text 1.47
+			104 text s
+		105 button Move 44f · 1.47s
+			106 text Move
+			107 text 44
+			108 text f
+			109 text  · 
+			110 text 1.47
+			111 text s
+		112 button Attack2_1 50f · 1.67s
+			113 text Attack2_1
+			114 text 50
+			115 text f
+			116 text  · 
+			117 text 1.67
+			118 text s
+		119 button Attack2_2 50f · 1.67s
+			120 text Attack2_2
+			121 text 50
+			122 text f
+			123 text  · 
+			124 text 1.67
+			125 text s
+		126 button Attack2_3 50f · 1.67s
+			127 text Attack2_3
+			128 text 50
+			129 text f
+			130 text  · 
+			131 text 1.67
+			132 text s
+		133 button Attack2_4 50f · 1.67s
+			134 text Attack2_4
+			135 text 50
+			136 text f
+			137 text  · 
+			138 text 1.67
+			139 text s
+		140 button Attack2_5 50f · 1.67s
+			141 text Attack2_5
+			142 text 50
+			143 text f
+			144 text  · 
+			145 text 1.67
+			146 text s
+		147 button Die 55f · 1.83s
+			148 text Die
+			149 text 55
+			150 text f
+			151 text  · 
+			152 text 1.83
+			153 text s
+		154 button Victory 55f · 1.83s
+			155 text Victory
+			156 text 55
+			157 text f
+			158 text  · 
+			159 text 1.83
+			160 text s
+		161 button Experience_1 85f · 2.83s
+			162 text Experience_1
+			163 text 85
+			164 text f
+			165 text  · 
+			166 text 2.83
+			167 text s
+		168 button OW1_Skill1_1 85f · 2.83s
+			169 text OW1_Skill1_1
+			170 text 85
+			171 text f
+			172 text  · 
+			173 text 2.83
+			174 text s
+		175 button Skill1_1 85f · 2.83s
+			176 text Skill1_1
+			177 text 85
+			178 text f
+			179 text  · 
+			180 text 2.83
+			181 text s
+		182 button Ultimate1_3 90f · 3.00s
+			183 text Ultimate1_3
+			184 text 90
+			185 text f
+			186 text  · 
+			187 text 3.00
+			188 text s
+		189 button OW1_Skill1_2 96f · 3.20s
+			190 text OW1_Skill1_2
+			191 text 96
+			192 text f
+			193 text  · 
+			194 text 3.20
+			195 text s
+		196 button Idle 150f · 5.00s
+			197 text Idle
+			198 text 150
+			199 text f
+			200 text  · 
+			201 text 5.00
+			202 text s
+		203 button Experience_2 173f · 5.77s
+			204 text Experience_2
+			205 text 173
+			206 text f
+			207 text  · 
+			208 text 5.77
+			209 text s
+	25 text Fan-made; not affiliated with the game publishers.
+
+The focused UI element is 1 AXWebArea erpin · Trickcal Wiki, URL: wiki.cheeky.tsuncloud.com/korea/spines/erpin

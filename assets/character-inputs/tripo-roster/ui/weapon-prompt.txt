@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+ONLY Ui's green four-leaf clover wand from the reference: long slim slightly curved green stem, four broad heart-shaped green leaflets joined at the top, simple lighter vein pattern, small yellow ribbon with white dots tied below the clover head. Preserve all FOUR leaves. No girl, hat, frog, hands or scenery.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.

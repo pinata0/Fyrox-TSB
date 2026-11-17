@@ -1,0 +1,8 @@
+Generated with the built-in image_gen tool (not the CLI), 2026-11-15.
+Reference image: naia-healing-stream-concept.png
+Editable model: naia-healing-stream.blend
+Portable model: naia-healing-stream.glb
+Runtime mesh: naia-water-mesh.json
+
+Prompt:
+Use case: stylized-concept. Create a polished 3D game VFX modeling reference of a continuous healing WATER STREAM for a fantasy character ability. A single long directed jet of liquid water travels horizontally from left to right, with a narrow rounded emission point, a gently undulating translucent aqua and cyan body, overlapping twisting water ribbons on its surface, bright white irregular foam streaks, scattered clear droplets and a soft splash at the far right. The continuous thick liquid silhouette should read unmistakably as flowing water, not a laser, electric beam, smoke, rope or solid crystal. Water remains mostly blue-cyan, with only subtle pale mint glints to suggest rapid healing. Isolate the whole stream on a dark desaturated slate background with enough margin, no character, no weapon, no scenery, no labels, no text or watermark. Three-quarter side perspective suitable for reproducing as a lightweight animated game mesh. Wide landscape composition, high quality readable stylized real-time 3D effect.

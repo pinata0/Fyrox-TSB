@@ -1,0 +1,29 @@
+{
+  "backup": "artifacts/tripo-backups/20261112-192408",
+  "files": [
+    {
+      "kind": "rigged",
+      "original_fbx": "tripo_convert_ff763c4f-a3c8-4d88-a3aa-0d670844657b.fbx",
+      "fbx": "assets/character-sources/tripo/butter/rigged/butter-rigged.fbx",
+      "texture": "assets/character-sources/tripo/butter/rigged/butter-rigged.fbm/butter-rigged-basecolor.jpg",
+      "texture_links_updated": 4,
+      "sha256": "7be9e25b5d1eab961e4c8b3d012b8c11b762debc9626f411dbfd0141a01cd633"
+    },
+    {
+      "kind": "clothes",
+      "original_fbx": "One_full-body_cute_chibi_dog-girl_chara…_#13.fbx",
+      "fbx": "assets/character-sources/tripo/butter/clothes/butter-clothes.fbx",
+      "texture": "assets/character-sources/tripo/butter/clothes/butter-clothes.fbm/butter-clothes-basecolor.jpg",
+      "texture_links_updated": 4,
+      "sha256": "047a5bdfb6efc20b6739b41bc8b3110b6eaad7f42b322cba194fdc12f7dd0acc"
+    },
+    {
+      "kind": "accessories",
+      "original_fbx": "One_full-body_cute_chibi_dog-girl_chara…_#14.fbx",
+      "fbx": "assets/character-sources/tripo/butter/accessories/butter-accessories.fbx",
+      "texture": "assets/character-sources/tripo/butter/accessories/butter-accessories.fbm/butter-accessories-basecolor.jpg",
+      "texture_links_updated": 4,
+      "sha256": "ccd2653b75ed3aad506f14dea041571001384ab48a9b07b537e3915ac049a43b"
+    }
+  ]
+}

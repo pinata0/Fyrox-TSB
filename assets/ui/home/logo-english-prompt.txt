@@ -1,0 +1,9 @@
+Use case: text-localization / precise-object-edit.
+Edit target: the attached ORIGINAL Trickcal logo.
+User request: Keep the big Korean "트릭컬" logo, but replace its small brown "RE:VIVE" subtitle with a similarly SMALL BROWN ENGLISH subtitle reading exactly:
+"SHOOTING BALDDAGU"
+This is a game title logo on a truly transparent background.
+Preserve the original main Korean title "트릭컬" as closely as possible: same shapes, proportions, pink/orange/sky-blue colors, simple highlights, dotted patterns, little gold stars, cream sticker border and thin chocolate outline. Do not make the main title more glossy or 3D.
+Change ONLY the subtitle region: remove "RE:VIVE" and write "SHOOTING BALDDAGU" in simple dark warm-brown uppercase lettering similar to the original brown handwritten rounded sans serif subtitle. The entire subtitle is single-color brown, no colored fill, no separate thick stroke or colored bubble-letter effect. It must be modest and small, about the original RE:VIVE lettering's visual weight or slightly smaller, clearly subordinate to the big Korean title. A single line below the Korean lettering in the cream lower portion of the logo, compact and clearly readable. Allow the cream lower edge to extend subtly as needed so the full English subtitle fits. Main Korean title occupies at least 80% of the mark's visual area.
+Exact text only: main "트릭컬", subtitle "SHOOTING BALDDAGU". No Korean subtitle, no RE:VIVE, no additional text.
+Keep the overall logo compact, approximately 1.8:1 landscape shape, narrow transparent padding, smooth crisp outlines, all edges inside the canvas. Actual alpha transparency outside the logo, no backdrop, no painted checkerboard, no drop-shadow rectangle, no scene, no watermark.

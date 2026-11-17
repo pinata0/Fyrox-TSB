@@ -1,0 +1,58 @@
+{
+  "stage": "views_prepared_from_turnaround",
+  "source": "C:\\Users\\user\\projects\\Fyrox-TSB\\assets\\turnarounds\\naia.png",
+  "source_sha256": "2663d1eb65cea54b66edb9a743fe5477ad68511530dc24e4ee32d16b4848a07e",
+  "crop_regions": {
+    "front": {
+      "source_pixel_box": [
+        31,
+        72,
+        538,
+        865
+      ],
+      "foreground_box": [
+        31,
+        23,
+        507,
+        772
+      ]
+    },
+    "left": {
+      "source_pixel_box": [
+        548,
+        108,
+        986,
+        853
+      ],
+      "foreground_box": [
+        8,
+        8,
+        438,
+        737
+      ]
+    },
+    "back": {
+      "source_pixel_box": [
+        995,
+        102,
+        1482,
+        853
+      ],
+      "foreground_box": [
+        5,
+        6,
+        472,
+        740
+      ]
+    }
+  },
+  "right_view": "mirrored authored left view; approximation",
+  "scale": 0.9078771695594126,
+  "status": "prepared_pending_visual_review",
+  "output_sha256": {
+    "front": "60ce4dfee7e7940ca932fe51c48089ecc0a8107988507edd5b6dc59e74e261e3",
+    "left": "8f105780c20c6a0b9194925d0ddac418587db05d80a76546255afafbe956bb07",
+    "back": "0f80eea8883d0520dcbf1745bdb9eb6568466cc2cea29578de0be4f9961f6d82",
+    "right": "28ed283235638baf6843649f6e7924cb4e9db3f645d4934be63084eee4d2d63e"
+  }
+}

@@ -1,0 +1,5 @@
+Create ONE separate stylized 3D game asset from the attached reference.
+
+One floating mercury blade shard used by Vivi. A long tapered silver angular lance-like blade with a dark gray underside, a raised faceted central ridge, a sharply pointed long tip and short jagged flared rear. It is a summoned metal shard, no human sword handle, no crossguard. One blade only; later duplicate it for the multi-blade attack. Use the angular silver-gray blade styling in the reference, not her dark dragon wings.
+
+Keep this asset separate from the character. Preserve silhouette, colors, visible thickness, holes and attachment surfaces. Use clean stylized geometry, no hands, person, pedestal, scenery or text. Ignore any surrounding glow in the image; reconstruct only the solid core shape.
