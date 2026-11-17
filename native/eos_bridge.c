@@ -2,6 +2,10 @@
 #define _CRT_RAND_S
 #include <stdlib.h>
 #include <string.h>
+#if defined(__linux__)
+#include <errno.h>
+#include <sys/random.h>
+#endif
 #include "eos_sdk.h"
 #include "eos_p2p.h"
 #include "eos_version.h"
@@ -131,7 +135,11 @@ void tsb_eos_login(TsbEos* ctx) {
     if (ctx->login_started || ctx->closing) return;
     ctx->login_started = 1;
     options.ApiVersion = EOS_CONNECT_CREATEDEVICEID_API_LATEST;
+#if defined(__linux__)
+    options.DeviceModel = "Linux PC";
+#else
     options.DeviceModel = "Windows PC";
+#endif
     EOS_Connect_CreateDeviceId(ctx->connect, &options, ctx, created_device);
 }
 static void EOS_CALL auth_expiring(const EOS_Connect_AuthExpirationCallbackInfo* info) {
@@ -272,7 +280,18 @@ int32_t tsb_eos_random(char* output) {
     unsigned int value;
     int i, j;
     for (i = 0; i < 4; ++i) {
+#if defined(__linux__)
+        size_t received = 0;
+        while (received < sizeof(value)) {
+            ssize_t count = getrandom((unsigned char*)&value + received,
+                sizeof(value) - received, 0);
+            if (count < 0 && errno == EINTR) continue;
+            if (count <= 0) return -1;
+            received += (size_t)count;
+        }
+#else
         if (rand_s(&value) != 0) return -1;
+#endif
         for (j = 0; j < 8; ++j) output[i * 8 + j] = hex[(value >> (j * 4)) & 15];
     }
     output[32] = 0;

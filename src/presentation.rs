@@ -934,7 +934,6 @@ fn make_scene(rt: &mut Runtime) -> Scene {
         );
         g[rt.pulses[i]].set_visibility(false);
     }
-    // Offscreen observers precede the main observer: portals display this frame.
     rt.portals = portals::Portals::new(g);
     rt.camera = CameraBuilder::new(BaseBuilder::new().with_name("FPS camera"))
         .with_fov(zoom::NORMAL_FOV.to_radians())
@@ -3039,8 +3038,6 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     rt.portals.update(
         g,
         &poses,
-        rt.camera,
-        context.user_interfaces.first().screen_size(),
         !show_selection && !rt.home_open && !rt.lobby.open,
         w.tick as f32 * DT,
     );

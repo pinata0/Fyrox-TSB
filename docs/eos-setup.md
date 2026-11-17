@@ -1,6 +1,6 @@
 # EOS SDK 연결과 설정 점검
 
-현재 Windows x64/MSVC용 EOS C SDK를 `eos` Cargo 기능으로 연결합니다. SDK 원본은 프로젝트 밖에 보관하며, 필요한 DLL만 Cargo 출력 폴더에 복사합니다. 기본 빌드는 EOS를 포함합니다. SDK 없이 UDP만 빌드하려면 `cargo build --no-default-features --features desktop --bin tsb`를 사용합니다.
+Windows x64/MSVC와 Linux x64/GNU용 EOS C SDK를 `eos` Cargo 기능으로 연결합니다. SDK 원본은 프로젝트 밖에 보관하며, 대상 운영체제의 런타임만 Cargo 출력 폴더에 복사합니다. Windows는 `EOSSDK-Win64-Shipping.dll`, Linux는 `libEOSSDK-Linux-Shipping.so`를 사용합니다. 기본 빌드는 EOS를 포함합니다. SDK 없이 UDP만 빌드하려면 `cargo build --no-default-features --features desktop --bin tsb`를 사용합니다. 아래 명령은 Windows 기준이며 Linux 빌드·패키징은 [Linux 안내](LINUX_BUILD.md)를 참고하세요.
 
 ## SDK 위치
 

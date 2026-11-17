@@ -110,6 +110,21 @@ def digest(path: Path) -> str:
         return hashlib.file_digest(stream, 'sha256').hexdigest()
 
 
+def runtime_assets() -> set[Path]:
+    """The same models, maps, textures and UI assets on every desktop platform."""
+    selected: set[Path] = set()
+    for folder in ('assets/characters', 'assets/maps'):
+        selected.update(p for p in (ROOT / folder).rglob('*') if p.is_file() and p.suffix.lower() in {'.fbx','.png','.jpg','.jpeg','.dds','.tga','.json'})
+    for slug in SLUGS:
+        selected.add(ROOT / f'assets/character-inputs/inputs-masked/{slug}.png')
+    selected.update((ROOT / 'assets/fonts').glob('*.ttf'))
+    selected.update((ROOT / 'assets/ui/markers').glob('*.png'))
+    selected.update((ROOT / 'assets/ui/round-results').glob('*.png'))
+    selected.update((ROOT / 'assets/ui/startup').glob('*.png'))
+    selected.update(ROOT / p for p in ('assets/ui/home/elias-picnic-soft.png', 'assets/ui/home/trickcal-shooting-balddagu-logo.png'))
+    return selected
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--include-eos-config', action='store_true', required=True,
@@ -161,16 +176,7 @@ def main() -> None:
 
         # Runtime assets only: model/weapon meshes, their textures, portraits,
         # both maps, menu art, icons and the bundled Korean font.
-        selected: set[Path] = set()
-        for folder in ('assets/characters', 'assets/maps'):
-            selected.update(p for p in (ROOT / folder).rglob('*') if p.is_file() and p.suffix.lower() in {'.fbx','.png','.jpg','.jpeg','.dds','.tga','.json'})
-        for slug in SLUGS:
-            selected.add(ROOT / f'assets/character-inputs/inputs-masked/{slug}.png')
-        selected.update((ROOT / 'assets/fonts').glob('*.ttf'))
-        selected.update((ROOT / 'assets/ui/markers').glob('*.png'))
-        selected.update((ROOT / 'assets/ui/round-results').glob('*.png'))
-        selected.update((ROOT / 'assets/ui/startup').glob('*.png'))
-        selected.update(ROOT / p for p in ('assets/ui/home/elias-picnic-soft.png', 'assets/ui/home/trickcal-shooting-balddagu-logo.png'))
+        selected = runtime_assets()
         registry_text = (ROOT / 'data/resources.registry').read_text(encoding='utf-8-sig')
         registry = json.loads(re.sub(r',\s*([}\]])', r'\1', registry_text))
         # Retain UUID lookups only for resources included in this package.

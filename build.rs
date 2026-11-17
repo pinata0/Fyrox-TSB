@@ -8,11 +8,16 @@ fn main() {
 #[cfg(feature = "eos")]
 fn configure_eos() {
     use std::{env, fs, path::PathBuf};
-    assert_eq!(
-        env::var("TARGET").unwrap(),
-        "x86_64-pc-windows-msvc",
-        "The EOS bridge currently supports Windows x64/MSVC only"
-    );
+    let target = env::var("TARGET").unwrap();
+    let (library, runtime_name, library_directory) = match target.as_str() {
+        "x86_64-pc-windows-msvc" => ("EOSSDK-Win64-Shipping", "EOSSDK-Win64-Shipping.dll", "Lib"),
+        "x86_64-unknown-linux-gnu" => (
+            "EOSSDK-Linux-Shipping",
+            "libEOSSDK-Linux-Shipping.so",
+            "Bin",
+        ),
+        _ => panic!("The EOS bridge supports Windows x64/MSVC and Linux x64/GNU; got {target}"),
+    };
     let root = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").unwrap());
     let sdk = if let Some(path) = env::var_os("EOS_SDK_DIR") {
         let path = PathBuf::from(path);
@@ -44,16 +49,27 @@ fn configure_eos() {
         PathBuf::from(sdk_text.strip_prefix(r"\\?\").unwrap_or(sdk_text))
     };
     for relative in [
-        "Include/eos_sdk.h",
-        "Lib/EOSSDK-Win64-Shipping.lib",
-        "Bin/EOSSDK-Win64-Shipping.dll",
+        "Include/eos_sdk.h".to_owned(),
+        format!("Bin/{runtime_name}"),
     ] {
-        assert!(sdk.join(relative).is_file(), "Missing EOS file: {relative}");
+        assert!(
+            sdk.join(&relative).is_file(),
+            "Missing EOS file: {relative}"
+        );
+    }
+    if target == "x86_64-pc-windows-msvc" {
+        assert!(
+            sdk.join("Lib/EOSSDK-Win64-Shipping.lib").is_file(),
+            "Missing EOS Windows import library"
+        );
     }
     println!("cargo:rerun-if-changed=native/eos_bridge.c");
     println!("cargo:rerun-if-changed={}", sdk.join("Include").display());
-    println!("cargo:rerun-if-changed={}", sdk.join("Lib").display());
-    let runtime = sdk.join("Bin/EOSSDK-Win64-Shipping.dll");
+    println!(
+        "cargo:rerun-if-changed={}",
+        sdk.join(library_directory).display()
+    );
+    let runtime = sdk.join("Bin").join(runtime_name);
     println!("cargo:rerun-if-changed={}", runtime.display());
     cc::Build::new()
         .file("native/eos_bridge.c")
@@ -62,20 +78,25 @@ fn configure_eos() {
         .compile("tsb_eos_bridge");
     println!(
         "cargo:rustc-link-search=native={}",
-        sdk.join("Lib").display()
+        sdk.join(library_directory).display()
     );
-    println!("cargo:rustc-link-lib=dylib=EOSSDK-Win64-Shipping");
+    println!("cargo:rustc-link-lib=dylib={library}");
+    if target == "x86_64-unknown-linux-gnu" {
+        // Resolve the bundled SDK next to the binary, including Cargo test binaries.
+        println!("cargo:rustc-link-arg=-Wl,-rpath,$ORIGIN");
+    }
 
     // Cargo's OUT_DIR ends in <profile>/build/<package>/out, including custom targets.
-    // Both executable and test processes need the SDK DLL alongside their .exe.
+    // Executables and test processes both need the SDK runtime beside them.
     let out = PathBuf::from(env::var_os("OUT_DIR").unwrap());
     let profile = out.ancestors().nth(3).unwrap();
     for directory in [profile.to_path_buf(), profile.join("deps")] {
         fs::create_dir_all(&directory).expect("Cannot create Cargo output directory");
-        let destination = directory.join("EOSSDK-Win64-Shipping.dll");
-        if fs::read(&destination).ok() != Some(fs::read(&runtime).expect("Cannot read EOS DLL")) {
+        let destination = directory.join(runtime_name);
+        if fs::read(&destination).ok() != Some(fs::read(&runtime).expect("Cannot read EOS runtime"))
+        {
             fs::copy(&runtime, destination)
-                .expect("Cannot copy EOS DLL; close running EOS programs");
+                .expect("Cannot copy EOS runtime; close running EOS programs");
         }
     }
 }

@@ -1,10 +1,10 @@
-//! Deterministic GPU review of both colors, parallax and the split cooldown tile.
+//! Deterministic GPU review of opaque portal markers and the split cooldown tile.
 use super::*;
 use trickcal_shooting_balddagu::portal::Portal;
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     if rt.review_capture >= 6 {
-        println!("PORTAL_REVIEW_OK: yellow/blue live views, parallax, foreground occlusion, unpaired entrance, authored castle wall, split cooldowns");
+        println!("PORTAL_REVIEW_OK: yellow/blue opaque markers, angled view, foreground occlusion, unpaired entrance, authored castle wall, split cooldowns");
         context.loop_controller.exit();
         return Ok(());
     }

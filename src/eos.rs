@@ -645,6 +645,19 @@ fn p2p_worker(rx: Receiver<Command>, path: PathBuf, force: bool) {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn room_sockets_use_fresh_128_bit_hex_tokens() {
+        let mut seen = std::collections::HashSet::new();
+        for _ in 0..256 {
+            let socket = random_socket().unwrap();
+            assert_eq!(socket.len(), 32);
+            assert!(socket
+                .bytes()
+                .all(|c| c.is_ascii_digit() || (b'a'..=b'f').contains(&c)));
+            assert!(seen.insert(socket));
+        }
+    }
+
     fn config() -> EosConfig {
         EosConfig {
             product_id: "a".repeat(32),
