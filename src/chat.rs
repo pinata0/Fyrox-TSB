@@ -63,6 +63,8 @@ pub struct ChatMessage {
     pub character: u8,
     pub channel: ChatChannel,
     pub text: String,
+    /// Set only by the authority for an accepted character-voice wheel action.
+    pub voice_line: bool,
 }
 
 #[derive(Debug, Default)]
@@ -227,6 +229,7 @@ mod tests {
             character: 0,
             channel: ChatChannel::Team,
             text: "hello".into(),
+            voice_line: false,
         };
         let mut history = ChatHistory::default();
         history.insert(message(2));
@@ -251,6 +254,7 @@ mod tests {
             character: 0,
             channel: ChatChannel::Match,
             text: text.into(),
+            voice_line: false,
         };
         let mut transcript = ChatTranscript::default();
         let mut room = ChatHistory::default();

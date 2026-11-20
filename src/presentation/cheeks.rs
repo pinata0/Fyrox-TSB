@@ -1,4 +1,5 @@
 //! Preview-private soft cheek meshes and retargeted standing reactions.
+use crate::presentation::SceneState;
 use super::*;
 use fyrox::scene::{
     camera::Camera,
@@ -8,6 +9,7 @@ use fyrox::scene::{
     },
 };
 use trickcal_shooting_balddagu::cheeks::{Interaction, Phase};
+mod deformation;
 
 #[derive(Debug)]
 struct Vertex {
@@ -21,6 +23,7 @@ struct FaceSurface {
     resource: SurfaceResource,
     vertices: Vec<Vertex>,
     to_vertex: Matrix4<f32>,
+    skin: deformation::Skin,
 }
 #[derive(Debug)]
 pub(super) struct Cheeks {
@@ -40,12 +43,11 @@ pub(super) struct Cheeks {
     hands: [Handle<Node>; 2],
     arm_sides: [f32; 2],
     tears: [Handle<Node>; 2],
+    eyes: super::cheek_eyes::Eyes,
 }
 #[derive(Debug, Clone, Copy)]
 struct FaceLayout {
     cheek: Vector3<f32>,
-    eye_y: f32,
-    eye_x: f32,
 }
 impl FaceLayout {
     fn for_id(id: u8) -> Self {
@@ -53,11 +55,9 @@ impl FaceLayout {
             serde_json::from_str(include_str!("../../assets/characters/meshy-faces.json"))
                 .expect("validated Meshy face landmarks")
         });
-        let [x, y, z, eye_y, eye_x, _] = LAYOUTS[id as usize];
+        let [x, y, z, _, _, _] = LAYOUTS[id as usize];
         Self {
             cheek: Vector3::new(x, y, z),
-            eye_y,
-            eye_x,
         }
     }
 }
@@ -140,7 +140,31 @@ impl Cheeks {
                         .with_bones(surface.bones().to_vec())
                         .build(),
                 ));
+                let mut skin =
+                    deformation::Skin::new(&vertices, data.geometry_buffer.iter().map(|t| t.0));
+                if std::env::args().any(|a| a == "--cheek-review") {
+                    for side in 0..2 {
+                        for x in [-0.12_f32, 0.0, 0.12] {
+                            for y in [-0.07_f32, 0.0, 0.07] {
+                                skin.update(
+                                    side,
+                                    to_vertex.transform_vector(&Vector3::new(
+                                        x,
+                                        y,
+                                        x.hypot(y) * 0.55,
+                                    )),
+                                );
+                                skin.review();
+                            }
+                        }
+                    }
+                    println!(
+                        "CHEEK_TOPOLOGY_OK: {} 18 drag directions, no folded triangles",
+                        characters::SLUGS[visual.id as usize]
+                    );
+                }
                 surfaces.push(FaceSurface {
+                    skin,
                     resource,
                     vertices,
                     to_vertex,
@@ -157,33 +181,25 @@ impl Cheeks {
         let shapes = Shapes::new();
         let head_scale = to_model.transform_vector(&Vector3::x()).norm();
         let tears = std::array::from_fn(|i| {
-            let p = to_model
-                .try_inverse()
-                .unwrap()
-                .transform_point(
-                    &Vector3::new(
-                        if i == 0 { -face.eye_x } else { face.eye_x },
-                        face.eye_y - 0.07,
-                        face.cheek.z + 0.085,
-                    )
-                    .into(),
-                )
+            let p = inv_bind
+                .transform_point(&mask.tear_anchors[i].into())
                 .coords;
             let tear = shapes.solid(
                 g,
                 "Cheek reaction tear",
                 V3::new(p.x, p.y, p.z),
-                V3::new(0.018 / head_scale, 0.028 / head_scale, 0.01 / head_scale),
+                V3::new(0.012 / head_scale, 0.018 / head_scale, 0.006 / head_scale),
                 [202, 241, 255],
                 1,
             );
             g.link_nodes(tear, head);
-            g[tear].set_visibility(false);
+            g[tear].set_visible(false);
             g[tear].set_cast_shadows(false);
             tear
         });
         Self {
             interaction: Interaction::default(),
+            eyes: super::cheek_eyes::Eyes::new(g, visual.root, visual.id),
             id: visual.id,
             bones,
             head_to_model: to_model.try_inverse().unwrap(),
@@ -292,9 +308,10 @@ impl Cheeks {
         debug_assert!((g[self.bones[0]].global_transform() - head_before).norm() < 1.0e-5);
         debug_assert!((g[self.bones[1]].global_transform() - torso_before).norm() < 1.0e-5);
         let face = state.face(self.id);
+        self.eyes.apply(g, state.eyes(self.id));
         for (i, tear) in self.tears.iter().enumerate() {
             let source = if state.side > 0.0 { i } else { 1 - i };
-            g[*tear].set_visibility(blend > 0.05 && (face[3] as u8 & (1 << source)) != 0);
+            g[*tear].set_visible(blend > 0.05 && (face[3] as u8 & (1 << source)) != 0);
         }
         // Lift the pinched skin slightly off the face so its rounded pad stays
         // in front of adjacent hair instead of shearing sideways through it.
@@ -305,15 +322,18 @@ impl Cheeks {
         );
         if blend > 0.0 || self.dirty {
             self.changed_vertices = 0;
-            for surface in &self.surfaces {
+            for surface in &mut self.surfaces {
+                let side = usize::from(state.side > 0.0);
+                let disp = surface.to_vertex.transform_vector(&stretch);
+                surface.skin.update(side, disp);
                 let mut data = surface.resource.data_ref();
                 let mut buffer = data.vertex_buffer.modify();
                 for v in &surface.vertices {
                     if v.control.weights == [0.0, 0.0] {
                         continue;
                     }
-                    let side = usize::from(state.side > 0.0);
-                    let weight = v.control.weights[side];
+                    let group = surface.skin.groups[v.index];
+                    let weight = surface.skin.weights[group];
                     let delta = stretch * weight;
                     let p = v.original + surface.to_vertex.transform_vector(&delta);
                     if delta.norm() > 0.001 {
@@ -321,12 +341,10 @@ impl Cheeks {
                     }
                     let mut vertex = buffer.get_mut(v.index).unwrap();
                     vertex.write_3_f32(Usage::Position, p).unwrap();
-                    // The baked gradient follows the actual skin surface and all feature pins.
-                    let grad_vertex = v.control.gradients[side];
-                    let disp = surface.to_vertex.transform_vector(&stretch);
-                    let denom = 1.0 + grad_vertex.dot(&disp);
-                    let n = if weight > 0.0 && denom.abs() > 0.15 {
-                        (v.normal - grad_vertex * (disp.dot(&v.normal) / denom)).normalize()
+                    // Rebuild the smooth gradient from the relaxed triangles, including UV seams.
+                    let grad_vertex = surface.skin.gradients[group];
+                    let n = if weight > 0.0 {
+                        deformed_normal(v.normal, grad_vertex, disp)
                     } else {
                         v.normal
                     };
@@ -359,6 +377,7 @@ impl Cheeks {
     pub fn review_protected(&self) {
         let mut count = 0;
         for surface in &self.surfaces {
+            surface.skin.review();
             let data = surface.resource.data_ref();
             for v in surface
                 .vertices
@@ -377,6 +396,23 @@ impl Cheeks {
             self.id
         );
     }
+
+    pub fn review_eyes(&self, g: &Graph) {
+        self.eyes.review(g);
+    }
+}
+
+/// Transport oriented surface area, without dividing by the deformation's
+/// determinant. A pinched surface can turn past 90 degrees; inverse-transpose
+/// alone flips its normal when that determinant becomes negative.
+fn deformed_normal(
+    normal: Vector3<f32>,
+    gradient: Vector3<f32>,
+    disp: Vector3<f32>,
+) -> Vector3<f32> {
+    (normal * (1.0 + gradient.dot(&disp)) - gradient * disp.dot(&normal))
+        .try_normalize(1.0e-8)
+        .unwrap_or(normal)
 }
 
 /// Two-bone IK preserves sleeve lengths while fitting the original 2D hand target.
@@ -411,4 +447,48 @@ fn pose_arm(
         hand,
         start + direction * distance - g[elbow].global_position(),
     );
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn cheek_normals_follow_the_triangle_through_a_tight_pinch() {
+        let a = Vector3::<f32>::zeros();
+        let b = Vector3::x();
+        let c = Vector3::y();
+        // A declining skin weight beside a fixed feature. Lifting the skin
+        // keeps the triangle non-degenerate even as its XY projection folds.
+        let weights = [1.0, 0.0, 1.0];
+        let gradient = -Vector3::x();
+        for x in [0.0, 0.8, 0.9, 0.99, 1.0, 1.01, 1.1, 1.2, 2.0] {
+            let disp = Vector3::new(x, 0.0, 0.55 * x);
+            let [pa, pb, pc] = [a, b, c].map(|p| p + disp * (1.0 - p.x));
+            let expected = (pb - pa).cross(&(pc - pa)).normalize();
+            let actual = deformed_normal(Vector3::z(), gradient, disp);
+            assert!(actual.dot(&expected) > 0.99999, "pull {x}: {actual:?}");
+            assert_eq!(pa, a + disp * weights[0]);
+            assert_eq!(pb, b + disp * weights[1]);
+        }
+    }
+
+    #[test]
+    fn cheek_normals_remain_continuous_at_the_old_fallback_thresholds() {
+        for x in [0.85, 1.0, 1.15] {
+            let before = deformed_normal(
+                Vector3::z(),
+                -Vector3::x(),
+                Vector3::new(x - 0.0001, 0.0, 0.55 * x),
+            );
+            let after = deformed_normal(
+                Vector3::z(),
+                -Vector3::x(),
+                Vector3::new(x + 0.0001, 0.0, 0.55 * x),
+            );
+            assert!(before.dot(&after) > 0.99999);
+        }
+        let normal = Vector3::new(0.3, 0.4, 0.5).normalize();
+        assert!((deformed_normal(normal, Vector3::y(), Vector3::zeros()) - normal).norm() < 1e-6);
+    }
 }

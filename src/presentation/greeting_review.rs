@@ -5,7 +5,9 @@ const TICKS: [u8; 6] = [0, 100, 80, 69, 8, 0];
 const WORLD_HEROES: [u8; 4] = [1, 2, 7, 11];
 
 fn review_step(capture: u8) -> usize {
-    if std::env::args().any(|arg| arg == "--erpin-only") {
+    if std::env::args().any(|arg| arg == "--first-person-framing-only") {
+        capture as usize / 3 * 6 + [0, 2, 5][capture as usize % 3]
+    } else if std::env::args().any(|arg| arg == "--erpin-only") {
         12 + capture as usize
     } else {
         capture as usize
@@ -13,6 +15,11 @@ fn review_step(capture: u8) -> usize {
 }
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
+    if std::env::args().any(|arg| arg == "--first-person-framing-only") && rt.review_capture >= 45 {
+        println!("GREETING_FRAMING_REVIEW_OK: 15 heroes, 45 captures, 109 ticks per hero, visible fingers/palm and smooth grip return");
+        context.loop_controller.exit();
+        return Ok(());
+    }
     if std::env::args().any(|arg| arg == "--erpin-only") && rt.review_capture >= 6 {
         println!(
             "ERPIN_GREETING_REVIEW_OK: anatomical right arm, grip/raise/left/right/lower/return"
@@ -105,9 +112,14 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
         assert!((g[rt.camera].global_position() - vec(rt.view_pos)).norm() < 0.001);
         let arm = rt.first_person_arm.as_ref().unwrap();
         assert_eq!(arm.character, id);
-        arm.verify_anatomical_hand(g, rt.camera, held);
-        if held {
+        let free = matches!(id, 3 | 7 | 9);
+        arm.verify_anatomical_hand(g, rt.camera, held && !free);
+        if held && !free {
             assert!(arm.grip_error(g, rt.wave_hand, rt.weapons[id as usize]) < 0.001);
+        }
+        if wave_pose(TICKS[step % 6]).0 == 1.0 {
+            arm.verify_greeting_in_view(g, rt.camera);
+            arm.verify_sleeve_corner(g, rt.camera);
         }
     }
     let tag = format!(

@@ -20,6 +20,7 @@ struct Sample {
 pub struct ClientMotion {
     pending: VecDeque<(u64, Input)>,
     predicted: Option<Actor>,
+    portal_reopen: [f32; PLAYERS],
     correction: V3,
     key: Option<(MapId, u16, Phase, usize)>,
     samples: VecDeque<Sample>,
@@ -36,19 +37,37 @@ fn discontinuity(a: &Actor, b: &Actor) -> bool {
         || (a.pos - b.pos).length() > TELEPORT_DISTANCE
 }
 
-fn predict_step(world: &World, slot: usize, a: &mut Actor, input: Input) {
+fn predict_step(
+    world: &World,
+    slot: usize,
+    a: &mut Actor,
+    input: Input,
+    portal_reopen: &mut [f32; PLAYERS],
+) {
     if world.phase != Phase::Playing || !a.alive() {
         return;
     }
     // Skill movement (dash/knockback) is supplied by authority. Do not invent
     // damage or rerun ability activation while replaying movement inputs.
-    let mut pairs = world.actors.each_ref().map(|actor| actor.portals.ends);
+    for remaining in portal_reopen.iter_mut() {
+        crate::portal::advance_reopen(remaining);
+    }
+    a.portals.reopen = portal_reopen[slot];
+    let mut pairs = world.actors.each_ref().map(|actor| {
+        if actor.alive() { actor.portals.ends } else { [None; 2] }
+    });
     // Replace the local owner's pair when replaying unacknowledged placement.
     pairs[slot] = a.portals.ends;
     crate::portal::advance(&world.map, a, input, &pairs);
     pairs[slot] = a.portals.ends;
+    for (pair, remaining) in pairs.iter_mut().zip(portal_reopen.iter()) {
+        if *remaining > 0.0 {
+            *pair = [None; 2];
+        }
+    }
     if a.combat.dash > 0.0 {
         crate::phase_skill::advance(&world.map, a, input.phase_shift);
+        crate::race_skill::advance(&world.map, a, input);
         return;
     }
     for timer in [
@@ -56,6 +75,8 @@ fn predict_step(world: &World, slot: usize, a: &mut Actor, input: Input) {
         &mut a.combat.speed_up,
         &mut a.combat.stun,
         &mut a.combat.sleep,
+        &mut a.combat.frozen,
+        &mut a.combat.polymorph,
     ] {
         *timer = (*timer - DT).max(0.0);
     }
@@ -70,14 +91,43 @@ fn predict_step(world: &World, slot: usize, a: &mut Actor, input: Input) {
     {
         a.dancing = false;
     }
-    if a.combat.disabled() {
+    crate::renua_skill::temporal_step(&world.map, &world.projectiles, a);
+    let factor = crate::renua_skill::time_factor(a);
+    if a.combat.action_interrupted() || a.burrowed() {
         a.combat.naia = Default::default();
     } else {
-        a.combat.naia.advance(input);
+        a.combat.naia.advance_scaled(input, factor);
+    }
+    a.combat.renua.advance(factor);
+    crate::hilde_skill::advance_actor(a, input);
+    crate::komi_skill::advance_actor(a, input);
+    crate::shion_skill::advance(a, input);
+    if a.combat.stun > 0.0 || a.combat.sleep > 0.0 || a.combat.frozen > 0.0 || a.burrowed() {
+        a.combat.renua.start(crate::renua_skill::Phase::Off);
+    }
+    crate::aya_skill::advance_actor(a);
+    crate::ui_skill::advance_actor(a);
+    crate::chloe_skill::advance_actor(a);
+    crate::picora_skill::advance_actor(a);
+    crate::picora_skill::advance_buffs(a);
+    crate::mayo_skill::advance_actor(a);
+    crate::bella_skill::advance_actor(a);
+    crate::ui_skill::predict_rain(&world.map, &world.projectiles, slot, a);
+    a.combat.id.tick_timers();
+    a.combat.id.advance_action_scaled(factor);
+    if a.combat.action_interrupted() || a.burrowed() {
+        a.combat.id.start(crate::id_skill::Phase::Off);
     }
     crate::erpin::advance(a, input, movement::grounded(&world.map, a.pos));
+    crate::erpin_skill::advance_actor(&world.map, &world.actors, slot, a);
     crate::phase_skill::advance(&world.map, a, input.phase_shift);
-    movement::step_actor_with_portals(&world.map, a, input, &pairs);
+    crate::race_skill::advance(&world.map, a, input);
+    if let Some(owner) = movement::step_actor_with_portals(&world.map, a, input, &pairs) {
+        portal_reopen[owner] = crate::portal::REOPEN_DELAY;
+        a.portals.reopen = portal_reopen[slot];
+    }
+    crate::butter_skill::advance_actor(a, input);
+    crate::vivi_skill::advance_actor(a);
 }
 
 impl ClientMotion {
@@ -99,17 +149,19 @@ impl ClientMotion {
         self.age = 0.0;
         self.pending.retain(|(seq, _)| *seq > acknowledged);
         let mut predicted = world.actors[slot].clone();
+        self.portal_reopen = world.actors.each_ref().map(|a| a.portals.reopen);
         for &(_, input) in &self.pending {
-            predict_step(world, slot, &mut predicted, input);
+            predict_step(world, slot, &mut predicted, input, &mut self.portal_reopen);
         }
         let error = old_position.map_or(V3::default(), |p| p - predicted.pos);
         // Hide small reconciliation errors over several frames. A teleport,
         // respawn or large correction must take effect immediately.
-        self.correction = if !reset && error.length() <= 0.75 {
-            error
-        } else {
-            V3::default()
-        };
+        self.correction =
+            if !reset && !world.actors[slot].combat.disabled() && error.length() <= 0.75 {
+                error
+            } else {
+                V3::default()
+            };
         self.predicted = Some(predicted);
         if self.samples.back().is_none_or(|s| s.tick < world.tick) {
             self.samples.push_back(Sample {
@@ -145,13 +197,16 @@ impl ClientMotion {
             if world.phase == Phase::Playing && a.alive() {
                 let input = input.sanitized();
                 self.pending.push_back((sequence, input));
-                predict_step(world, self.key.unwrap().3, a, input);
+                predict_step(world, self.key.unwrap().3, a, input, &mut self.portal_reopen);
             }
         }
     }
 
     pub fn actor(&self, world: &World, slot: usize, local_slot: usize) -> Actor {
         let mut actor = world.actors[slot].clone();
+        if world.phase == Phase::Playing && self.predicted.as_ref().is_some_and(Actor::alive) {
+            actor.portals.reopen = self.portal_reopen[slot];
+        }
         if slot == local_slot {
             if let Some(predicted) = &self.predicted {
                 let target = predicted.pos + self.correction;
@@ -170,11 +225,31 @@ impl ClientMotion {
                 };
                 actor.yaw = predicted.yaw;
                 actor.pitch = predicted.pitch;
+                actor.view_aspect = predicted.view_aspect;
                 actor.vy = predicted.vy;
                 actor.crouching = predicted.crouching;
                 actor.combat.naia = predicted.combat.naia;
+                actor.combat.renua = predicted.combat.renua;
+                actor.combat.shion = predicted.combat.shion;
+                if actor.character == 14 { actor.combat.magic_ammo = predicted.combat.magic_ammo; }
+                actor.combat.temporal = predicted.combat.temporal;
+                actor.combat.frozen = predicted.combat.frozen;
+                actor.combat.aya = predicted.combat.aya;
+                actor.combat.id = predicted.combat.id;
+                actor.combat.hilde = predicted.combat.hilde;
+                actor.combat.ui = predicted.combat.ui;
+                actor.combat.chloe = predicted.combat.chloe;
+                actor.combat.vivi = predicted.combat.vivi;
+                actor.combat.bella = predicted.combat.bella;
+                actor.combat.mayo = predicted.combat.mayo;
+                actor.combat.polymorph = predicted.combat.polymorph;
+                actor.combat.rain_slow = predicted.combat.rain_slow;
+                actor.combat.komi = predicted.combat.komi;
+                actor.combat.butter = predicted.combat.butter;
                 actor.combat.erpin = predicted.combat.erpin;
+                actor.combat.erpin_skill = predicted.combat.erpin_skill;
                 actor.phase_skill = predicted.phase_skill;
+                actor.race_skill = predicted.race_skill;
                 actor.portals = predicted.portals;
             }
             return actor;
@@ -209,5 +284,8 @@ impl ClientMotion {
     }
 }
 
+#[cfg(test)]
+#[path = "prediction/dragon_charge_tests.rs"]
+mod dragon_charge_tests;
 #[cfg(test)]
 mod tests;

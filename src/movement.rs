@@ -7,32 +7,64 @@ pub fn step_actor(map: &[Block], a: &mut Actor, input: Input) {
     step_actor_with_portals(map, a, input, &[]);
 }
 
+/// Returns the owner of a traversed pair, if any.
 pub fn step_actor_with_portals(
     map: &[Block],
     a: &mut Actor,
     input: Input,
     pairs: &[crate::portal::Pair],
-) {
+) -> Option<usize> {
+    step_actor_traced(map, a, input, pairs, &mut |_, _| {})
+}
+
+/// Reports only the route actually walked, including collision slides and steps.
+/// Portal exits are isolated contacts, never a swept segment across the map.
+pub(crate) fn step_actor_traced(
+    map: &[Block],
+    a: &mut Actor,
+    input: Input,
+    pairs: &[crate::portal::Pair],
+    contact: &mut dyn FnMut(V3, V3),
+) -> Option<usize> {
+    if a.combat.erpin_skill.owns_movement() { return None; }
+    if a.combat.view_locked() { return None; }
+    a.view_aspect = input.sanitized().view_aspect;
+    contact(a.pos, a.pos);
     let input = crate::portal::aimed_input(a, input);
     // Releasing Ctrl only stands up when the full body has headroom.
-    a.crouching = input.crouch || (a.crouching && !can_stand(map, a));
+    if a.combat.polymorph > 0.0 {
+        a.crouching = a.crouching && !can_stand(map, a);
+    } else if !a.combat.shion.active() && !a.combat.komi.locked() {
+        a.crouching = input.crouch || (a.crouching && !can_stand(map, a));
+    }
     if a.crouching {
         a.dancing = false;
     }
     let height = a.collision_height();
+    // Time stop also arrests jumps, portal momentum and race movement.
     if !a.dancing {
         a.yaw = input.yaw;
         a.pitch = input.pitch;
     }
     let f = direction(a.yaw, 0.0);
     let right = V3::new(-f.z, 0.0, f.x);
-    let mut movement = f * input.forward + right * input.strafe;
+    let charging = crate::race_skill::charging(a) && !a.combat.disabled() && !a.combat.channeling();
+    let forward = if charging { 1.0 } else { input.forward };
+    let mut movement = f * forward + right * input.strafe;
     if movement.length() > 1.0 {
         movement = movement.normalized();
     }
-    let mut speed = if a.crouching { CROUCH_SPEED } else { 5.8 };
+    let mut speed = if charging {
+        crate::race_skill::CHARGE_SPEED
+    } else if a.crouching {
+        CROUCH_SPEED
+    } else {
+        WALK_SPEED
+    };
     if a.combat.slow > 0.0 {
         speed *= 0.65;
+    } else if a.combat.rain_slow > 0.0 {
+        speed *= crate::ui_skill::RAIN_SPEED;
     }
     if a.combat.speed_up > 0.0 {
         speed *= 1.2;
@@ -40,46 +72,93 @@ pub fn step_actor_with_portals(
     if a.combat.naia.phase == crate::naia_skill::Phase::Move {
         speed *= crate::naia_skill::SPEED_MULTIPLIER;
     }
-    let water_lock = a.combat.naia.phase == crate::naia_skill::Phase::Fire || a.combat.erpin.eating;
+    let water_lock = matches!(
+        a.combat.naia.phase,
+        crate::naia_skill::Phase::Fire | crate::naia_skill::Phase::Ultimate
+    ) || a.combat.erpin.eating || a.combat.aya.active() || a.combat.shion.active() || a.combat.komi.locked() || matches!(a.combat.butter.phase, crate::butter_skill::Phase::Skill | crate::butter_skill::Phase::Ultimate);
+    let water_lock = water_lock || a.combat.vivi.casting() || a.combat.chloe.locked();
     if water_lock {
         speed = 0.0;
     }
-    if a.combat.disabled() || a.combat.dash > 0.0 {
+    if a.combat.movement_disabled() || a.combat.dash > 0.0 {
         speed = 0.0;
     }
     let on_ground = grounded(map, a.pos) && a.vy <= 0.0;
     a.portals.momentum = a.portals.momentum * if on_ground { 0.72 } else { 0.99 };
     let mut velocity = movement * speed;
+    let surging = a.race_skill.active()
+        && crate::race_skill::has_surge(crate::roster::character(a.character).race);
+    if a.race_skill.active()
+        && !crate::race_skill::charging(a)
+        && !a.burrowed()
+        && !a.combat.disabled()
+        && !water_lock
+    {
+        velocity = a.race_skill.velocity + velocity * if surging { 0.0 } else { 0.15 };
+    }
     if !a.combat.disabled()
+        && !surging
+        && !charging
         && a.combat.dash <= 0.0
         && !water_lock
         && a.portals.momentum.length() > speed
     {
         velocity = a.portals.momentum + velocity * 0.15;
     }
-    if input.jump && on_ground && !a.combat.disabled() && !water_lock {
+    if input.jump && on_ground && !a.combat.disabled() && !water_lock && !a.burrowed() {
         a.vy = 6.0;
     }
-    a.vy -= 18.0 * DT;
-    if crate::portal::traverse(map, pairs, a, velocity + V3::new(0.0, a.vy, 0.0)) {
-        return;
+    if a.combat.vivi.phase == crate::vivi_skill::Phase::Ultimate && !a.combat.action_interrupted() {
+        let t=a.combat.vivi.elapsed;
+        let action_dt=DT*crate::renua_skill::time_factor(a);
+        a.vy=(crate::vivi_skill::ultimate_lift(t+action_dt)-crate::vivi_skill::ultimate_lift(t))/action_dt.max(0.00001);
+    } else if a.combat.butter.hovering() && !a.combat.action_interrupted() {
+        let t = a.combat.butter.elapsed;
+        let action_dt = DT * crate::renua_skill::time_factor(a);
+        a.vy = (crate::butter_skill::lift(t + action_dt) - crate::butter_skill::lift(t)) / action_dt.max(0.00001);
+    } else {
+        a.vy -= 18.0 * DT * crate::renua_skill::time_factor(a);
     }
-    let delta = velocity * DT;
+    let transit = if a.burrowed() {
+        None
+    } else {
+        crate::portal::traverse(map, pairs, a, velocity + V3::new(0.0, a.vy, 0.0))
+    };
+    if let Some(owner) = transit {
+        // The portal now owns the rotated momentum; do not reapply the old launch direction.
+        crate::race_skill::finish_charge(a);
+        a.race_skill.remaining = 0.0;
+        a.race_skill.velocity = V3::default();
+        contact(a.pos, a.pos);
+        return Some(owner);
+    }
+    let time_factor = crate::renua_skill::time_factor(a);
+    let delta = velocity * (DT * time_factor);
+    let before = a.pos;
     if a.phase_skill.active() {
-        let (position, contact) = walk_with_height(map, a.pos, delta, on_ground, true, height);
+        let (position, touched_wall) =
+            walk_traced(map, a.pos, delta, on_ground, true, height, contact);
         a.pos = position;
-        if contact {
+        if touched_wall {
             a.ghost_phase = PHASE_LINGER;
         }
     } else {
-        a.pos = walk_with_height(map, a.pos, delta, on_ground, false, height).0;
+        a.pos = walk_traced(map, a.pos, delta, on_ground, false, height, contact).0;
     }
-    vertical_with_height(map, &mut a.pos, &mut a.vy, DT, height);
+    if surging && (a.pos - before).flat().dot(delta.normalized()) + 0.001 < delta.length() {
+        a.race_skill.cancel();
+    }
+    let before = a.pos;
+    vertical_with_height(map, &mut a.pos, &mut a.vy, DT * time_factor, height);
+    contact(before, a.pos);
+    crate::race_skill::after_movement(map, a);
     crate::phase_skill::remember_clear_position(map, a);
+    None
 }
 
 pub const BODY_HEIGHT: f32 = 1.8;
-pub const CROUCH_SPEED: f32 = 2.9;
+pub const WALK_SPEED: f32 = 3.48;
+pub const CROUCH_SPEED: f32 = WALK_SPEED * 0.5;
 pub const BODY_RADIUS: f32 = 0.4;
 pub const STEP_HEIGHT: f32 = 0.32;
 /// Long enough for a 20 Hz snapshot to carry a brief wall contact.
@@ -139,11 +218,23 @@ pub fn phase_walk(map: &[Block], p: V3, delta: V3, stepping: bool) -> (V3, bool)
 
 pub fn walk_with_height(
     map: &[Block],
+    p: V3,
+    delta: V3,
+    stepping: bool,
+    phase: bool,
+    height: f32,
+) -> (V3, bool) {
+    walk_traced(map, p, delta, stepping, phase, height, &mut |_, _| {})
+}
+
+fn walk_traced(
+    map: &[Block],
     mut p: V3,
     delta: V3,
     stepping: bool,
     phase: bool,
     height: f32,
+    trace: &mut dyn FnMut(V3, V3),
 ) -> (V3, bool) {
     let mut contact = false;
     // Swept subdivision also protects callers such as dash/knockback from thin walls.
@@ -156,6 +247,7 @@ pub fn walk_with_height(
             }
             let candidate = p + axis;
             if !blocked_with_height(map, candidate, height) {
+                trace(p, candidate);
                 p = candidate;
             } else if stepping && grounded(map, p) {
                 let top = support(map, candidate, p.y + STEP_HEIGHT);
@@ -165,6 +257,8 @@ pub fn walk_with_height(
                     if !blocked_with_height(map, lifted, height)
                         && !blocked_with_height(map, overhead, height)
                     {
+                        trace(p, overhead);
+                        trace(overhead, lifted);
                         p = lifted;
                     }
                     // A walkable rise is floor geometry. If there is no headroom,
@@ -178,6 +272,7 @@ pub fn walk_with_height(
                     .iter()
                     .any(|b| !b.phaseable && overlaps_body(b, candidate, height))
             {
+                trace(p, candidate);
                 p = candidate;
                 contact = true;
             }

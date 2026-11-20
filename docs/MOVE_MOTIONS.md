@@ -48,6 +48,26 @@ cargo run --bin tsb -- --solo --attack-review --move-review
 
 변경 전 코드·모델은 `artifacts/move-motions/before/`에 보존한다. 런타임은 FBX를 사용하며 Spine 원본·분석 런타임은 사용하지 않는다.
 
+## 우이 개구리 도약 수정 / 2026-11-20
+
+기존 변환은 우이의 인체 관절만 추출해 별도 계층인 개구리가 이동 중 고정되어 있었다. 이제 원작 `Move`의 `Eru_Body`, 머리, 앞다리, 뒷다리도 독립적으로 추출한다. `scripts/ui_move.py`가 원작의 준비·도약·착지 타이밍과 눌림/늘어남을 Walk와 Run에 적용한다. 개구리 발을 바닥에 맞춘 뒤 모델 좌표 기준 최대 0.42m의 도약을 더하며, 우이는 앉은 다리 자세를 유지하고 개구리의 높이·착지 탄성을 따라간다. 걷기 0.8초, 달리기 0.64초 주기는 그대로다.
+
+도약은 월드 모델의 본에만 적용한다. 이동 판정과 `Actor::eye()`는 기존 게임 좌표를 사용하므로 1인칭 카메라가 도약을 따라 들썩이지 않는다. 기존 손·무기 보행 흔들림(`sin(tick * 0.18) * 0.012`)은 우이에게도 유지한다. 실제 점프·앉기·잠복의 시점 변화는 기존 로직을 따른다.
+
+우이만 재생성·검증하려면:
+
+```powershell
+node scripts/extract_move_motions.cjs ui
+& 'C:\Program Files\Blender Foundation\Blender 5.3\blender.exe' --background --python-exit-code 1 --python scripts/bake_move_motions.py -- ui
+& 'C:\Program Files\Blender Foundation\Blender 5.3\blender.exe' --background --python-exit-code 1 --python scripts/verify_ui_move.py
+cargo test --offline --no-default-features --lib motion::
+cargo run --offline --bin tsb-review -- --solo --attack-review --move-review --ui-only
+```
+
+`verify_ui_move.py`는 Blend와 재수입한 FBX의 실제 정점·본을 1/4프레임 간격으로 검사한다. 도약 높이, 착지 시 바닥 관통, 개구리 다리 움직임, 우이의 동반 상승, 루프 연결, 고정된 게임 루트를 확인한다. 변경 전 백업과 비교해 다른 모션 키·메시·가중치·UV·표정 모프 보존도 검사한다. 결과는 `artifacts/move-motions/ui-verification.json`에 기록한다. GPU 검사는 걷기·달리기·이동 공격 각각의 월드/1인칭 총 32시점에서 개구리 본 유지, 카메라 높이, 손·무기 흔들림과 파지를 검증한다.
+
+위 모델 검사, 모션 테스트 14개, GPU 32시점 검사를 통과했다. 1인칭 16시점의 카메라 위치와 게임 눈높이 오차는 모두 0이었고 손·무기의 보행 흔들림은 유지됐다. GPU 기록은 `artifacts/move-motions/ui-gpu.log`이며, 일반 실행 파일 `target/debug/tsb.exe`도 다시 빌드했다.
+
 ## 실행 파일
 
-작업 폴더의 `Play-MoveMotions.cmd`는 올바른 에셋 경로에서 빌드된 `target/debug/tsb.exe`를 실행한다. 단일 EXE 포장은 C: 드라이브 공간 부족으로 완료하지 않았다. 이전 `release/` 배포본에는 이 변경이 포함되어 있지 않다. 처음 실행한 릴리스 링크 실패는 `release-build.log`에 기록했다. 임시 테스트 캐시를 정리하고 캡처를 JPEG로 전환했으며, 이후 릴리스 재빌드는 남은 디스크 공간을 보호하기 위해 중단했다.
+작업 폴더의 `Play.cmd`는 올바른 에셋 경로에서 빌드된 `target/debug/tsb.exe`를 실행한다. 단일 EXE 포장은 C: 드라이브 공간 부족으로 완료하지 않았다. 이전 `release/` 배포본에는 이 변경이 포함되어 있지 않다. 처음 실행한 릴리스 링크 실패는 `release-build.log`에 기록했다. 임시 테스트 캐시를 정리하고 캡처를 JPEG로 전환했으며, 이후 릴리스 재빌드는 남은 디스크 공간을 보호하기 위해 중단했다.

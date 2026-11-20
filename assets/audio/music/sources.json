@@ -1,0 +1,50 @@
+{
+  "album": "Trickcal Revive Soundtrack Collection (2024)",
+  "composer": "Warak",
+  "publisher": "EPID Games",
+  "album_url": "https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024",
+  "rights": "Original game soundtrack; not CC0. No redistribution license is granted by this manifest.",
+  "conversion": "Source FLAC -> stereo Vorbis quality 5, 44100 Hz; loudnorm -18 LUFS, -1.5 dBTP, LRA 11. Full tracks, no trimming.",
+  "tracks": [
+    {
+      "title": "Trickal Main Title",
+      "screen": "Main menu",
+      "file": "main_title.ogg",
+      "page": "https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024/01.%2520Trickal%2520Main%2520Title.mp3",
+      "source_url": "https://nu.vgmtreasurechest.com/soundtracks/trickcal-revive-soundtrack-collection-2024/oycvjtjsmu/01.%20Trickal%20Main%20Title.flac",
+      "source_sha256": "594ea331ac4ea5f5d70cb677737ecf57a7e1f99ce853d63fab38ebcdd461a096",
+      "sha256": "6d8b20a034c5332f08b108d05a769161c33b37c207d87b38bf00bbf8c87ee37f",
+      "bytes": 2569158
+    },
+    {
+      "title": "Day Life",
+      "screen": "Battle lobby",
+      "file": "day_life.ogg",
+      "page": "https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024/02.%2520Day%2520Life.mp3",
+      "source_url": "https://nu.vgmtreasurechest.com/soundtracks/trickcal-revive-soundtrack-collection-2024/kokesiwrzb/02.%20Day%20Life.flac",
+      "source_sha256": "628378ee720a9c361ad5e79ef868dac040143292e1ffa435cf2f91c87fac2770",
+      "sha256": "a98fb8ee32c2a26ca26852579371ce5834f8f423df934e35c33deffc8cd4c479",
+      "bytes": 1582895
+    },
+    {
+      "title": "Lounge",
+      "screen": "Hero selection",
+      "file": "lounge.ogg",
+      "page": "https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024/03.%2520Lounge.mp3",
+      "source_url": "https://nu.vgmtreasurechest.com/soundtracks/trickcal-revive-soundtrack-collection-2024/sldepsfosw/03.%20Lounge.flac",
+      "source_sha256": "3aba444516d4071b976136cd5cfca5d755c4e55fc597062533fc0f11f11e0d01",
+      "sha256": "b6062e760715a11c10ee2b1093d729eb7d4149424f024deb4f58d9461179ddc5",
+      "bytes": 2987274
+    },
+    {
+      "title": "Adventure Begins",
+      "screen": "In game",
+      "file": "adventure_begins.ogg",
+      "page": "https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024/13.%2520Adventure%2520Begins.mp3",
+      "source_url": "https://nu.vgmtreasurechest.com/soundtracks/trickcal-revive-soundtrack-collection-2024/ftyawsqojr/13.%20Adventure%20Begins.flac",
+      "source_sha256": "0fa3e32c822832565ae02951ca96c0fdfa7033508a6622c99d73fe4b557bef60",
+      "sha256": "551743d0f23dc455354722a3576117c0e09588a9c2c3232a00a75858b5ef76e8",
+      "bytes": 2275636
+    }
+  ]
+}

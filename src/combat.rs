@@ -8,6 +8,7 @@ use crate::{
 pub const MAX_PROJECTILES: usize = 96;
 pub const ULT_PER_SECOND: f32 = 1.25;
 pub const ULT_PER_DAMAGE: f32 = 0.12;
+pub const HILDE_SYRINGE_HEAL: f32 = 8.0;
 
 #[cfg(test)]
 mod tests;
@@ -20,13 +21,8 @@ pub enum AttackClass {
 }
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum CastKind {
-    Echo,
     Needles,
-    Marksman,
-    Universe,
-    Rain,
     Drain,
-    TimeBreak,
 }
 #[derive(Debug, Clone, Copy)]
 pub struct Cast {
@@ -46,7 +42,7 @@ impl Cast {
     pub fn blocking(self) -> bool {
         matches!(
             self.kind,
-            CastKind::Echo | CastKind::Needles | CastKind::Marksman
+            CastKind::Needles
         )
     }
 }
@@ -61,8 +57,31 @@ pub struct DamageOverTime {
 
 #[derive(Debug, Clone, Default)]
 pub struct CombatState {
+    pub chloe: crate::chloe_skill::State,
+    pub vivi: crate::vivi_skill::State,
     pub erpin: crate::erpin::State,
+    pub erpin_skill: crate::erpin_skill::State,
     pub naia: crate::naia_skill::State,
+    pub id: crate::id_skill::State,
+    pub renua: crate::renua_skill::State,
+    pub hilde: crate::hilde_skill::State,
+    pub shion: crate::shion_skill::State,
+    pub aya: crate::aya_skill::State,
+    pub ui: crate::ui_skill::State,
+    pub picora: crate::picora_skill::State,
+    pub sticker: f32,
+    pub mayo: crate::mayo_skill::State,
+    pub bella: crate::bella_skill::State,
+    pub komi: crate::komi_skill::State,
+    pub butter: crate::butter_skill::State,
+    /// Frog form blocks actions but leaves walking and looking available.
+    pub polymorph: f32,
+    /// Independent 15% rain slow; other slows retain their own strength.
+    pub rain_slow: f32,
+    /// Ice prison: arrests motion, view and every gameplay input.
+    pub frozen: f32,
+    /// Continuous exposure to a temporal field: zero is free, one is frozen.
+    pub temporal: f32,
     pub ultimate: f32,
     pub q_down: bool,
     pub ultimate_flash: f32,
@@ -91,10 +110,10 @@ pub struct CombatState {
     pub extended: bool,
     pub regen: f32,
     pub regen_rate: f32,
+    pub regen_source: Option<usize>,
     pub regen_tick: f32,
     pub healing_up: f32,
     pub ward: f32,
-    pub ward_saves: u8,
     pub taunt: f32,
     pub taunt_source: usize,
     pub blind: f32,
@@ -103,7 +122,7 @@ pub struct CombatState {
     pub revive_armed: bool,
     pub revive_used: bool,
     pub attacks: u32,
-    /// Last Vivi basic attack in the repeating 1, 2, 3 sequence; zero after spawning.
+    /// Last Vivi slash direction: 1 left-to-right, 2 right-to-left.
     pub vivi_combo: u8,
     /// Last Aya basic attack stage, retained for observers and replay.
     pub aya_combo: u8,
@@ -116,12 +135,40 @@ pub struct CombatState {
     pub dash_mask: u16,
 }
 impl CombatState {
-    pub fn disabled(&self) -> bool {
-        self.stun > 0.0 || self.sleep > 0.0
+    /// Time fields pause a gesture; hard crowd control cancels it.
+    pub fn action_interrupted(&self) -> bool {
+        self.stun > 0.0 || self.sleep > 0.0 || self.frozen > 0.0 || self.polymorph > 0.0
     }
+    /// Taunt locks skills without disabling walking, aiming, reload or basic attacks.
+    pub fn skills_locked(&self) -> bool { self.disabled() || self.taunt > 0.0 }
+    pub fn disabled(&self) -> bool {
+        self.movement_disabled() || self.polymorph > 0.0
+    }
+    pub fn movement_disabled(&self) -> bool {
+        self.stun > 0.0 || self.sleep > 0.0 || self.view_locked()
+    }
+    pub fn view_locked(&self) -> bool { self.frozen > 0.0 || self.temporal >= 1.0 }
     pub fn channeling(&self) -> bool {
-        self.erpin.eating
+        self.chloe.phase.basic() || self.channeling_blocks_surge()
+    }
+    /// Fairy/witch movement can overlap Chloe's normal and mounted swings.
+    /// Every other action keeps its usual channeling restriction.
+    pub fn channeling_blocks_surge(&self) -> bool {
+        self.chloe.locked() || self.vivi.active()
+            || self.erpin.eating
+            || self.erpin_skill.active()
             || self.naia.active()
+            || self.id.active()
+            || self.renua.active()
+            || self.hilde.active()
+            || self.shion.active()
+            || self.aya.active()
+            || self.ui.active()
+            || self.picora.active()
+            || self.mayo.active()
+            || self.bella.active()
+            || self.komi.locked()
+            || self.butter.active()
             || self.cast.is_some_and(Cast::blocking)
             || self.dash > 0.0
     }
@@ -138,7 +185,7 @@ impl CombatState {
             self.weaken.max(self.skill_weaken).max(self.physical_weaken),
             self.taunt,
             self.ward,
-            self.resist.max(self.physical_resist),
+            self.resist.max(self.physical_resist).max(self.sticker),
             self.damage_up.max(self.skill_up),
             self.blind,
             self.ultimate_flash,
@@ -173,8 +220,18 @@ impl CombatState {
         }
     }
     pub fn status_text(&self) -> &'static str {
-        if self.stun > 0.0 {
-            "STUN / MORPH"
+        if self.temporal >= 1.0 {
+            "TIME STOP"
+        } else if self.temporal > 0.0 {
+            "TIME SLOW"
+        } else if self.frozen > 0.0 {
+            "FROSTBITE / FROZEN"
+        } else if self.weaken > 0.0 {
+            "WEAKENED / DAMAGE -20%"
+        } else if self.polymorph > 0.0 {
+            "FROG / MOVEMENT ONLY"
+        } else if self.stun > 0.0 {
+            "STUN"
         } else if self.sleep > 0.0 {
             "SLEEPING / DEBUFF IMMUNE"
         } else if self.giant > 0.0 {
@@ -185,12 +242,14 @@ impl CombatState {
             "POISONED"
         } else if self.frost > 0.0 {
             "FROSTBITE"
+        } else if self.rain_slow > 0.0 {
+            "RAIN / SPEED -15%"
         } else if self.slow > 0.0 {
             "SLOWED"
         } else if self.taunt > 0.0 {
-            "TAUNTED: OTHER TARGETS -25%"
+            "TAUNTED / SKILLS LOCKED"
         } else if self.ward > 0.0 {
-            "LETHAL-HIT WARD"
+            "HP FLOOR 10%"
         } else if self.haste > 0.0 {
             "ATTACK HASTE"
         } else if self.blind > 0.0 {
@@ -225,6 +284,18 @@ pub enum ProjectileKind {
     Cake3,
     Cake2,
     Cake1,
+    RenuaOrb,
+    TimeField,
+    SnowGarden,
+    MedicalGrenade,
+    RainField,
+    BoulderBlast,
+    BellaFire,
+    BellaHeal,
+    ErpinBlast,
+    ErpinCrash,
+    MercuryField,
+    Confetti,
 }
 impl ProjectileKind {
     pub fn cake(remaining: u8) -> Self {
@@ -266,12 +337,24 @@ impl ProjectileKind {
             17 => Self::Cake3,
             18 => Self::Cake2,
             19 => Self::Cake1,
+            20 => Self::RenuaOrb,
+            21 => Self::TimeField,
+            22 => Self::SnowGarden,
+            23 => Self::MedicalGrenade,
+            24 => Self::RainField,
+            25 => Self::BoulderBlast,
+            26 => Self::BellaFire,
+            27 => Self::BellaHeal,
+            28 => Self::ErpinBlast,
+            29 => Self::ErpinCrash,
+            30 => Self::MercuryField,
+            31 => Self::Confetti,
             _ => return None,
         })
     }
     pub fn radius(self) -> f32 {
         match self {
-            Self::Boulder => 0.65,
+            Self::Boulder => crate::butter_skill::BOULDER_RADIUS,
             Self::Wave => 1.7,
             Self::Flame => 0.6,
             Self::Doll => 0.3,
@@ -341,12 +424,19 @@ impl World {
                 ray_box(from, d.normalized(), b.min(), b.max()).is_some_and(|t| t < len - 0.02)
             })
     }
-    fn targets(&self, source: usize, origin: V3, radius: f32, allies: bool) -> Vec<usize> {
+    pub(crate) fn targets(
+        &self,
+        source: usize,
+        origin: V3,
+        radius: f32,
+        allies: bool,
+    ) -> Vec<usize> {
         self.actors
             .iter()
             .enumerate()
             .filter(|(i, a)| {
                 a.alive()
+                    && !a.burrowed()
                     && (team(*i) == team(source)) == allies
                     && (allies || !self.in_spawn(*i))
                     && (a.eye() - origin).length() <= radius
@@ -355,50 +445,25 @@ impl World {
             .map(|(i, _)| i)
             .collect()
     }
-    fn aimed_target(&self, source: usize, allies: bool, range: f32) -> Option<usize> {
-        let a = &self.actors[source];
-        let dir = direction(a.yaw, a.pitch);
-        self.targets(source, a.eye(), range, allies)
-            .into_iter()
-            .filter(|&i| i != source)
-            .filter_map(|i| {
-                let d = self.actors[i].eye() - a.eye();
-                let dot = dir.dot(d.normalized());
-                (dot > 0.87).then_some((i, dot, d.length()))
-            })
-            .max_by(|a, b| a.1.total_cmp(&b.1).then_with(|| b.2.total_cmp(&a.2)))
-            .map(|v| v.0)
-    }
     fn wounded(&self, source: usize, range: f32) -> Vec<usize> {
         let mut targets = self.targets(source, self.actors[source].eye(), range, true);
         targets.sort_by_key(|&i| (self.actors[i].hp, i));
         targets
     }
-    fn point_aimed(&self, source: usize, range: f32) -> V3 {
-        let a = &self.actors[source];
-        let dir = direction(a.yaw, a.pitch);
-        let mut distance = range;
-        for b in &self.map {
-            if let Some(t) = ray_box(a.eye(), dir, b.min(), b.max()) {
-                distance = distance.min((t - 0.05).max(0.0));
-            }
-        }
-        if let Some(i) = self.aimed_target(source, false, range) {
-            self.actors[i].eye()
-        } else {
-            a.eye() + dir * distance
-        }
-    }
-    fn add_guard(&mut self, i: usize, amount: f32, time: f32) {
+    pub(crate) fn add_guard(&mut self, i: usize, amount: f32, time: f32) {
         let c = &mut self.actors[i].combat;
         c.guard = c.guard.max(amount).min(120.0);
         c.guard_time = c.guard_time.max(time);
     }
-    fn cleanse(&mut self, i: usize, stun: bool) {
+    pub(crate) fn cleanse(&mut self, i: usize, stun: bool) {
         let c = &mut self.actors[i].combat;
         c.poison = 0.0;
         c.frost = 0.0;
+        c.frozen = 0.0;
         c.slow = 0.0;
+        c.rain_slow = 0.0;
+        c.taunt = 0.0;
+        c.polymorph = 0.0;
         c.weaken = 0.0;
         c.skill_weaken = 0.0;
         c.physical_weaken = 0.0;
@@ -420,10 +485,17 @@ impl World {
         } * if a.combat.healing_up > 0.0 { 1.2 } else { 1.0 };
         a.hp =
             a.hp.saturating_add((amount * factor).round() as u16)
-                .min(MAX_HP);
+                .min(a.max_hp());
     }
-    fn push(&mut self, target: usize, dir: V3, distance: f32) {
-        if self.actors[target].shield > 0.0 || !self.actors[target].alive() || self.in_spawn(target)
+    pub(crate) fn push(&mut self, target: usize, dir: V3, distance: f32) {
+        if crate::erpin_skill::unstoppable(&self.actors[target]) { return; }
+        if self.actors[target].shield > 0.0
+            || !self.actors[target].alive()
+            || self.actors[target].burrowed()
+            || self.actors[target].combat.komi.resting()
+            || self.actors[target].combat.butter.hovering()
+            || self.actors[target].combat.frozen > 0.0
+            || self.in_spawn(target)
         {
             return;
         }
@@ -446,21 +518,27 @@ impl World {
         }
     }
     fn taunt(&mut self, source: usize, target: usize, seconds: f32) {
-        if self.actors[target].shield <= 0.0
-            && self.actors[target].combat.sleep <= 0.0
+        self.apply_taunt(source, target, seconds);
+    }
+    pub(crate) fn apply_taunt(&mut self, source: usize, target: usize, seconds: f32) -> bool {
+        if self.actors[target].alive() && self.actors[target].shield <= 0.0
+            && !self.actors[target].burrowed()
+            && self.actors[target].combat.sleep <= 0.0 && !self.actors[target].combat.komi.resting()
             && !self.in_spawn(target)
         {
-            self.actors[target].combat.taunt = seconds;
+            self.actors[target].combat.taunt = self.actors[target].combat.taunt.max(seconds);
             self.actors[target].combat.taunt_source = source;
+            return true;
         }
+        false
     }
     fn dot(&mut self, source: usize, target: usize, frost: bool, seconds: f32, class: AttackClass) {
-        if self.in_spawn(target) {
+        if self.in_spawn(target) || self.actors[target].burrowed() {
             return;
         }
         let id = self.actors[source].character;
         let c = &mut self.actors[target].combat;
-        if c.sleep > 0.0 {
+        if c.sleep > 0.0 || c.komi.resting() {
             return;
         }
         let active = if frost { c.frost > 0.0 } else { c.poison > 0.0 };
@@ -490,6 +568,9 @@ impl World {
             || team(source) == team(target)
             || !self.actors[target].alive()
             || self.actors[target].shield > 0.0
+            || self.actors[target].combat.id.invulnerable > 0.0
+            || self.actors[target].combat.komi.resting()
+            || self.actors[target].burrowed()
             || self.in_spawn(target)
         {
             return false;
@@ -504,14 +585,14 @@ impl World {
         if s.giant > 0.0 {
             factor *= 1.15;
         }
-        if source_character == 14 {
+        if source_character == 14 && class == AttackClass::Basic {
             factor *= 1.0 + s.magic_ammo as f32 * 0.05;
         }
         if class == AttackClass::Basic && s.empowered > 0.0 {
             factor *= 1.0 + s.empower_stacks as f32 * 0.02;
         }
         if s.weaken > 0.0 || s.poison > 0.0 {
-            factor *= 0.8;
+            factor *= crate::mayo_skill::POISON_DAMAGE_FACTOR;
         }
         if physical && s.physical_weaken > 0.0 {
             factor *= 0.8;
@@ -524,11 +605,15 @@ impl World {
                 factor *= 1.25;
             }
         }
-        if s.taunt > 0.0 && s.taunt_source != target {
-            factor *= 0.75;
+        if source_character == 3 && class == AttackClass::Ultimate {
+            // Fixed-health damage ignores attack buffs; poison and general weaken still apply.
+            factor = if s.weaken > 0.0 || s.poison > 0.0 { crate::mayo_skill::POISON_DAMAGE_FACTOR } else { 1.0 };
         }
-        if t.resist > 0.0 {
-            factor *= 0.75;
+        if t.id.phase == crate::id_skill::Phase::Ultimate {
+            factor *= 0.7;
+        }
+        if t.resist > 0.0 || t.sticker > 0.0 {
+            factor *= crate::picora_skill::DAMAGE_FACTOR;
         }
         if physical && t.physical_resist > 0.0 {
             factor *= 0.8;
@@ -539,13 +624,19 @@ impl World {
         if t.frost > 0.0 && character(source_character).personality == Personality::Cool {
             factor *= 1.15;
         }
-        let mut damage = (base * factor).round().max(0.0);
+        let execution = source_character == 14 && class == AttackClass::Ultimate;
+        let mut damage = if execution {
+            self.actors[target].hp as f32 + self.actors[target].shield_health()
+        } else {
+            (base * factor).round().max(0.0)
+        };
         let a = &mut self.actors[target];
         let before_hp = a.hp;
         let before_barrier = a.shield_health();
+        let incoming = damage;
         // Apply once per hit after damage modifiers, before either shield absorbs it.
         // A shield present at impact also halves that hit's overflow into HP.
-        if before_barrier > 0.0 && damage > 10.0 {
+        if !execution && before_barrier > 0.0 && damage > 10.0 {
             damage *= 0.5;
         }
         let absorbed = a.combat.guard.min(damage);
@@ -558,28 +649,26 @@ impl World {
         if mercury_break {
             a.combat.mercury = false;
         }
-        if damage >= a.hp as f32 && a.combat.ward > 0.0 && a.combat.ward_saves > 0 {
-            a.combat.ward_saves -= 1;
-            a.combat.guard = 24.0;
-            a.combat.guard_time = 3.0;
-            damage = 0.0;
+        if !execution && a.combat.ward > 0.0 {
+            damage = damage.min(a.hp.saturating_sub(a.max_hp().div_ceil(10)) as f32);
         }
+        // Shield absorption, shield reduction and a ward save protect this actor.
+        a.stats.mitigated += (incoming - damage).max(0.0);
         a.hp = a.hp.saturating_sub(damage.ceil() as u16);
         let actual = (before_hp - a.hp) as f32 + (before_barrier - a.shield_health()).max(0.0);
-        a.safe_time = 0.0;
         a.hurt = 0.35;
         a.dancing = false;
         a.wave_ticks = 0;
-        if matches!(a.character, 3 | 9) && actual > 0.0 {
+        if a.character == 9 && actual > 0.0 {
             a.combat.incoming = a.combat.incoming.saturating_add(1);
-            let threshold = if a.character == 3 { 5 } else { 4 };
+            let threshold = 4;
             if a.combat.incoming >= threshold {
                 a.combat.incoming = 0;
                 a.combat.retaliate = true;
             }
         }
         let revive =
-            !a.alive() && a.character == 9 && a.combat.revive_armed && !a.combat.revive_used;
+            !execution && !a.alive() && a.character == 9 && a.combat.revive_armed && !a.combat.revive_used;
         if revive {
             a.hp = 60;
             a.combat.revive_used = true;
@@ -588,19 +677,28 @@ impl World {
         }
         let killed = !a.alive();
         if killed {
-            a.deaths += 1;
+            a.deaths = a.deaths.saturating_add(1);
             a.respawn = 7.0;
             a.killed_by = Some(source);
             a.ghost_phase = 0.0;
             a.phase_skill = Default::default();
+            a.race_skill = Default::default();
             a.combat.cast = None;
+            a.combat.id = Default::default();
+            a.combat.shion = Default::default();
+            a.combat.aya = Default::default();
+            a.combat.frozen = 0.0;
+            a.combat.picora = Default::default();
+            a.combat.sticker = 0.0;
+            a.combat.fashion = 0.0;
             a.combat.dash = 0.0;
         }
+        self.record_damage(source, target, actual, killed);
         if revive && self.actors[source].combat.sleep <= 0.0 {
             self.actors[source].combat.stun = 0.6;
         }
         if killed {
-            self.actors[source].kills += 1;
+            self.actors[source].kills = self.actors[source].kills.saturating_add(1);
             self.event = format!(
                 "{} > {}",
                 character(source_character).name,
@@ -620,7 +718,7 @@ impl World {
         }
         true
     }
-    fn burst(
+    pub(crate) fn burst(
         &mut self,
         source: usize,
         origin: V3,
@@ -650,12 +748,12 @@ impl World {
             AttackClass::Skill,
             0.0,
         ) {
-            if self.actors[i].combat.sleep <= 0.0 {
+            if self.actors[i].combat.sleep <= 0.0 && !self.actors[i].combat.komi.resting() {
                 self.actors[i].combat.vulnerable = 4.0;
             }
         }
     }
-    fn melee(&mut self, source: usize, range: f32, damage: f32, hits: u8, enhanced: bool) {
+    pub(crate) fn melee(&mut self, source: usize, range: f32, damage: f32, hits: u8, enhanced: bool) {
         let a = &self.actors[source];
         let origin = a.eye();
         let dir = direction(a.yaw, a.pitch);
@@ -676,7 +774,7 @@ impl World {
             if hit_target
                 && enhanced
                 && self.actors[i].alive()
-                && self.actors[i].combat.sleep <= 0.0
+                && self.actors[i].combat.sleep <= 0.0 && !self.actors[i].combat.komi.resting()
             {
                 match id {
                     4 => self.actors[i].combat.slow = 2.0,
@@ -690,23 +788,22 @@ impl World {
             }
         }
         if id == 0 && connected {
-            self.heal(source, 5.0);
+            self.heal_from(source, source, 5.0);
         }
         self.actors[source].shot_end = origin + dir * range;
         let a = &self.actors[source];
         if let Some(hit) = crate::impact::melee_contact(&self.map, origin, a.yaw, a.pitch, range) {
-            let finisher = id == 0 && a.combat.vivi_combo == 3;
-            let tilt = if finisher || a.combat.attacks.is_multiple_of(2) {
+            let tilt = if (id == 0 && a.combat.vivi_combo == 2) || (id != 0 && a.combat.attacks.is_multiple_of(2)) {
                 -0.55
             } else {
                 0.55
             };
             let rotation = crate::impact::slash_rotation(hit.face, a.yaw, a.pitch, tilt);
-            let half_length = (if finisher { 0.64 } else { 0.48 }) * a.body_scale();
+            let half_length = 0.48 * a.body_scale();
             self.record_slash(hit, half_length, rotation);
         }
     }
-    fn ray(
+    pub(crate) fn ray(
         &mut self,
         source: usize,
         range: f32,
@@ -737,15 +834,9 @@ impl World {
             .actors
             .iter()
             .enumerate()
-            .filter(|(i, a)| *i != source && a.alive())
+            .filter(|(i, a)| *i != source && a.alive() && !a.burrowed())
             .filter_map(|(i, a)| {
-                let size = a.body_scale();
-                ray_box(
-                    origin,
-                    dir,
-                    a.pos + V3::new(-0.48 * size, 0.0, -0.48 * size),
-                    a.pos + V3::new(0.48 * size, a.hit_height(), 0.48 * size),
-                )
+                crate::chloe_skill::ray_hit(a, origin, dir, 0.0)
                 .filter(|t| *t < distance)
                 .map(|t| (i, t))
             })
@@ -758,7 +849,8 @@ impl World {
                 distance = t;
             }
             for _ in 0..hits {
-                self.damage_hit(source, i, damage / hits as f32, class, id);
+                let multiplier=if class==AttackClass::Basic && crate::chloe_skill::headshot(&self.actors[i],origin,dir,t,0.0){1.5}else{1.0};
+                self.damage_hit(source, i, damage * multiplier / hits as f32, class, id);
             }
             if !pierce {
                 break;
@@ -818,11 +910,27 @@ impl World {
     pub(crate) fn primary_attack(&mut self, source: usize) {
         let a = &self.actors[source];
         let k = kit(a.character);
-        if a.cooldown > 0.0 || a.reload > 0.0 || a.combat.disabled() || a.combat.channeling() {
+        if a.cooldown > 0.0
+            || a.reload > 0.0
+            || a.combat.disabled()
+            || a.combat.channeling()
+            || a.burrowed()
+            || a.combat.komi.active()
+            || a.race_skill.fire_latched
+        {
             return;
         }
         if k.magazine > 0 && a.ammo == 0 {
             self.reload(source);
+            return;
+        }
+        if a.character == 6 { self.start_chloe(source, false); return; }
+        if a.character == 7 {
+            self.start_renua(source, crate::renua_skill::Phase::Basic);
+            return;
+        }
+        if a.character == 0 {
+            self.start_vivi(source, crate::vivi_skill::Phase::Left);
             return;
         }
         let id = a.character;
@@ -848,18 +956,7 @@ impl World {
             }
         }
         match id {
-            0 => {
-                let stage = self.actors[source].combat.vivi_combo % 3 + 1;
-                self.actors[source].combat.vivi_combo = stage;
-                let finisher = stage == 3;
-                self.melee(
-                    source,
-                    k.range,
-                    k.damage * if finisher { 1.5 } else { 1.0 },
-                    if finisher { 5 } else { 2 },
-                    finisher,
-                );
-            }
+            0 => unreachable!("Vivi attacks use the source action clock"),
             1 => {
                 let count = if n.is_multiple_of(4) { 3 } else { 1 };
                 for _ in 0..count {
@@ -878,7 +975,7 @@ impl World {
                     crate::erpin::shot_delay() / crate::attack::rate(&self.actors[source]);
             }
             3 => {
-                self.ray(source, k.range, k.damage, 4, AttackClass::Basic, false);
+                self.ray(source, k.range, k.damage, 1, AttackClass::Basic, false);
             }
             4 => {
                 self.actors[source].combat.aya_combo = if n.is_multiple_of(3) {
@@ -895,46 +992,9 @@ impl World {
                 );
             }
             5 => {
-                let index = self.projectile(
-                    source,
-                    if n.is_multiple_of(4) {
-                        ProjectileKind::Ricochet
-                    } else {
-                        ProjectileKind::Bolt
-                    },
-                    dir,
-                    24.0,
-                    k.damage,
-                    AttackClass::Basic,
-                );
-                if let Some(index) = index {
-                    if n.is_multiple_of(4) {
-                        self.projectiles[index].bounces = 1;
-                    }
-                }
+                self.actors[source].combat.picora.shot_delay = crate::picora_skill::shot_delay(&self.actors[source]);
             }
-            6 => self.melee(
-                source,
-                if boosted { 4.4 } else { k.range },
-                if boosted { 40.0 } else { k.damage },
-                if boosted { 3 } else { 1 },
-                !boosted && n.is_multiple_of(3),
-            ),
-            7 => {
-                if n.is_multiple_of(4) {
-                    self.ray(source, k.range, 26.0, 1, AttackClass::Basic, true);
-                    self.actors[source].combat.damage_up = 3.0;
-                } else {
-                    self.projectile(
-                        source,
-                        ProjectileKind::Bolt,
-                        dir,
-                        40.0,
-                        k.damage,
-                        AttackClass::Basic,
-                    );
-                }
-            }
+            6 => unreachable!("Chloe uses delayed source action"),
             8 => {
                 self.projectile(
                     source,
@@ -990,12 +1050,12 @@ impl World {
                 let target = if n.is_multiple_of(3) {
                     self.wounded(source, 14.0)
                         .into_iter()
-                        .find(|&i| self.actors[i].hp < MAX_HP)
+                        .find(|&i| self.actors[i].hp < self.actors[i].max_hp())
                 } else {
                     None
                 };
                 if let Some(i) = target {
-                    self.heal(i, 24.0);
+                    self.heal_from(source, i, 24.0);
                     self.actors[source].shot_end = self.actors[i].eye();
                     self.actors[source].ability_flash = 0.4;
                 } else {
@@ -1023,7 +1083,7 @@ impl World {
                             AttackClass::Basic,
                             0.0,
                         ) {
-                            if self.actors[j].combat.sleep <= 0.0 {
+                            if self.actors[j].combat.sleep <= 0.0 && !self.actors[j].combat.komi.resting() {
                                 self.actors[j].combat.blind = 1.0;
                             }
                         }
@@ -1033,37 +1093,16 @@ impl World {
             _ => unreachable!(),
         }
     }
-    fn start_cast(
-        &mut self,
-        i: usize,
-        kind: CastKind,
-        count: u8,
-        interval: f32,
-        class: AttackClass,
-    ) {
-        let a = &mut self.actors[i];
-        a.combat.cast = Some(Cast {
-            kind,
-            left: count,
-            step: 0,
-            timer: 0.0,
-            interval,
-            dir: direction(a.yaw, a.pitch),
-            origin: a.eye(),
-            mask: 0,
-            target: None,
-            switched: false,
-            class,
-        });
-    }
     pub(crate) fn use_skill(&mut self, source: usize) {
         let a = &self.actors[source];
-        if a.ability_cooldown > 0.0 || a.combat.disabled() || a.combat.channeling() {
+        if a.ability_cooldown > 0.0 || a.combat.skills_locked() || a.combat.channeling() || a.combat.komi.active() || a.burrowed()
+            || a.character == 12 && !crate::movement::grounded(&self.map, a.pos)
+            || a.character == 6 && a.combat.chloe.active()
+            || a.character == 5 && (a.combat.picora.shot_delay > 0.0 || self.picora_target(source).is_none())
+        {
             return;
         }
         let id = a.character;
-        let origin = a.eye();
-        let dir = direction(a.yaw, a.pitch);
         self.actors[source].ability_cooldown = kit(id).cooldown
             * if character(id).race == Race::Witch {
                 0.95
@@ -1073,137 +1112,54 @@ impl World {
         self.actors[source].ability_flash = 0.4;
         self.actors[source].shield = 0.0;
         match id {
-            0 => {
-                self.add_guard(source, 45.0, 6.0);
-                self.actors[source].combat.mercury = true;
-            }
+            0 => self.start_vivi(source, crate::vivi_skill::Phase::Skill),
             1 => {
                 self.actors[source].combat.naia.start();
                 self.actors[source].reload = 0.0;
             }
-            2 => {
-                for n in 0..4 {
-                    let d = direction(
-                        self.actors[source].yaw + (n as f32 - 1.5) * 0.065,
-                        self.actors[source].pitch,
-                    );
-                    self.projectile(
-                        source,
-                        ProjectileKind::MagicBomb,
-                        d,
-                        20.0,
-                        14.0,
-                        AttackClass::Skill,
-                    );
-                }
-            }
-            3 => {
-                self.add_guard(source, 50.0, 8.0);
-                for i in self.targets(source, origin, 10.0, true) {
-                    if i != source {
-                        let c = &mut self.actors[i].combat;
-                        c.ward = 6.0;
-                        c.ward_saves = 2;
-                    }
-                }
-            }
-            4 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Butterfly,
-                    dir,
-                    14.0,
-                    15.0,
-                    AttackClass::Skill,
-                );
-            }
-            5 => {
-                for i in self.wounded(source, 14.0).into_iter().take(3) {
-                    self.heal(i, 12.0);
-                    let c = &mut self.actors[i].combat;
-                    c.regen = 4.0;
-                    c.regen_rate = 8.0;
-                    c.physical_resist = 4.0;
-                    c.healing_up = 4.0;
-                }
-            }
-            6 => {
-                self.add_guard(source, 50.0, 8.0);
-                let c = &mut self.actors[source].combat;
-                c.empowered = 8.0;
-                c.empower_stacks = 0;
-                c.extended = false;
-            }
-            7 => self.start_cast(source, CastKind::Echo, 5, 0.16, AttackClass::Skill),
-            8 => self.start_cast(source, CastKind::Needles, 3, 0.12, AttackClass::Skill),
-            9 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Flame,
-                    dir,
-                    15.0,
-                    24.0,
-                    AttackClass::Skill,
-                );
-                for i in self.targets(source, origin, 8.0, true) {
-                    self.add_guard(i, 24.0, 5.0);
-                    self.actors[i].combat.damage_up = 5.0;
-                }
-                if !self.actors[source].combat.revive_used {
-                    self.actors[source].combat.revive_armed = true;
-                }
-            }
-            10 => self.start_cast(source, CastKind::Rain, 8, 0.5, AttackClass::Skill),
-            11 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Ricochet,
-                    dir,
-                    30.0,
-                    14.0,
-                    AttackClass::Skill,
-                );
-            }
-            12 => {
-                self.cleanse(source, true);
-                let c = &mut self.actors[source].combat;
-                c.sleep = 4.0;
-                c.regen = 4.0;
-                c.regen_rate = 18.0;
-            }
+            2 => self.start_erpin_skill(source, crate::erpin_skill::Phase::Skill),
+            3 => self.protect_id_team(source),
+            4 => self.start_aya(source, crate::aya_skill::Phase::Skill),
+            5 => self.start_picora(source, crate::picora_skill::Phase::Skill),
+            6 => self.start_chloe(source, true),
+            7 => self.start_renua(source, crate::renua_skill::Phase::Skill),
+            8 => self.start_mayo(source, crate::mayo_skill::Phase::Skill),
+            9 => self.start_bella(source, crate::bella_skill::Phase::Skill),
+            10 => self.start_ui(source, crate::ui_skill::Phase::Skill),
+            11 => self.start_butter(source, crate::butter_skill::Phase::Skill),
+            12 => self.start_komi(source, crate::komi_skill::Phase::Rest),
             13 => {
-                for i in self.targets(source, origin, 9.0, true) {
-                    self.heal(i, 20.0);
-                }
-                for i in self
-                    .wounded(source, 9.0)
-                    .into_iter()
-                    .filter(|&i| self.actors[i].hp < 96)
-                    .take(2)
-                    .collect::<Vec<_>>()
-                {
-                    self.actors[i].combat.regen = 4.0;
-                    self.actors[i].combat.regen_rate = 8.0;
-                }
+                self.start_hilde(source, crate::hilde_skill::Phase::Skill);
             }
             14 => {
-                if self.actors[source].combat.magic_ammo == 5 {
-                    self.actors[source].combat.damage_up = 6.0;
-                }
-                self.actors[source].combat.magic_ammo = 5;
-                self.start_cast(source, CastKind::Marksman, 5, 0.13, AttackClass::Skill);
+                self.start_shion(source, crate::shion_skill::Phase::Load);
             }
             _ => unreachable!(),
         }
     }
     pub(crate) fn use_ultimate(&mut self, source: usize) -> bool {
         let a = &self.actors[source];
-        if !a.alive() || a.combat.ultimate < 100.0 || a.combat.disabled() {
+        if !a.alive()
+            || a.combat.ultimate < 100.0
+            || a.combat.skills_locked()
+            || a.burrowed()
+            || a.combat.chloe.busy()
+            || a.combat.id.phase == crate::id_skill::Phase::Ultimate
+            || a.combat.renua.phase == crate::renua_skill::Phase::Ultimate
+            || a.combat.hilde.active()
+            || a.combat.komi.active()
+            || a.combat.ui.active()
+            || a.combat.vivi.active()
+            || a.combat.picora.active()
+            || a.character == 5 && (a.combat.picora.shot_delay > 0.0 || self.picora_target(source).is_none())
+            || a.combat.mayo.active()
+            || a.combat.bella.active()
+            || a.combat.shion.active()
+            || a.combat.aya.phase == crate::aya_skill::Phase::Ultimate
+        {
             return false;
         }
         let id = a.character;
-        let origin = a.eye();
-        let dir = direction(a.yaw, a.pitch);
         self.actors[source].combat.ultimate = 0.0;
         self.actors[source].combat.ultimate_flash = 1.2;
         self.actors[source].combat.cast = None;
@@ -1212,204 +1168,73 @@ impl World {
         self.actors[source].shield = 0.0;
         self.event = format!("{}: {}", character(id).name, kit(id).ultimate);
         match id {
-            0 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Spear,
-                    dir,
-                    30.0,
-                    55.0,
-                    AttackClass::Ultimate,
-                );
-            }
+            0 => self.start_vivi(source, crate::vivi_skill::Phase::Ultimate),
             1 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Wave,
-                    dir.flat().normalized(),
-                    12.0,
-                    35.0,
-                    AttackClass::Ultimate,
-                );
+                self.actors[source].combat.naia.phase = crate::naia_skill::Phase::Ultimate;
+                self.actors[source].combat.ultimate_flash = crate::naia_skill::ULTIMATE_SECONDS;
+                self.actors[source].reload = 0.0;
             }
-            2 => {
-                let c = &mut self.actors[source].combat;
-                c.dash = 0.55;
-                c.dash_dir = dir.flat().normalized();
-                c.dash_mask = 0;
-            }
+            2 => self.start_erpin_skill(source, crate::erpin_skill::Phase::Start),
             3 => {
-                for i in self.targets(source, origin, 9.0, true) {
-                    self.actors[i].combat.skill_up = 6.0;
-                }
-                self.start_cast(source, CastKind::Universe, 4, 0.45, AttackClass::Ultimate);
+                self.actors[source]
+                    .combat
+                    .id
+                    .start(crate::id_skill::Phase::Ultimate);
+                self.actors[source].combat.ultimate_flash = crate::id_skill::ULTIMATE_SECONDS;
+                self.actors[source].reload = 0.0;
             }
-            4 => {
-                let mut center = self.point_aimed(source, 24.0);
-                let mut seen = 0u16;
-                for step in 0..5 {
-                    let hits = self.targets(source, center, 2.8, false);
-                    let damage = if step == 0 && hits.len() == 1 {
-                        55.0
-                    } else {
-                        35.0
-                    };
-                    for i in hits {
-                        if seen & (1 << i) == 0 {
-                            seen |= 1 << i;
-                            if self.damage_hit(source, i, damage, AttackClass::Ultimate, id) {
-                                self.dot(source, i, true, 5.0, AttackClass::Ultimate);
-                            }
-                        }
-                    }
-                    let next = self
-                        .targets(source, center, 8.0, false)
-                        .into_iter()
-                        .filter(|i| seen & (1 << i) == 0)
-                        .min_by(|&a, &b| {
-                            (self.actors[a].eye() - center)
-                                .length()
-                                .total_cmp(&(self.actors[b].eye() - center).length())
-                        });
-                    if let Some(i) = next {
-                        center = self.actors[i].eye();
-                    } else {
-                        break;
-                    }
-                }
-            }
-            5 => {
-                let target = self
-                    .aimed_target(source, true, 18.0)
-                    .or_else(|| {
-                        self.wounded(source, 12.0)
-                            .into_iter()
-                            .find(|&i| i != source)
-                    })
-                    .unwrap_or(source);
-                self.add_guard(target, 70.0, 8.0);
-                self.actors[target].combat.fashion = 8.0;
-            }
-            6 => {
-                for n in 0..7 {
-                    let d = direction(
-                        self.actors[source].yaw + (n as f32 - 3.0) * 0.13,
-                        self.actors[source].pitch,
-                    );
-                    self.projectile(
-                        source,
-                        ProjectileKind::Doll,
-                        d,
-                        10.0,
-                        14.0,
-                        AttackClass::Ultimate,
-                    );
-                }
-            }
+            4 => self.start_aya(source, crate::aya_skill::Phase::Ultimate),
+            5 => self.start_picora(source, crate::picora_skill::Phase::Ultimate),
+            6 => self.summon_sebastians(source),
             7 => {
-                for i in self.targets(source, origin, 12.0, true) {
-                    let c = &mut self.actors[i].combat;
-                    c.haste = 6.0;
-                    c.speed_up = 6.0;
-                    c.resist = 6.0;
-                }
-                let targets = self.targets(source, origin, 12.0, false);
-                let mut mask = 0;
-                for i in targets {
-                    if self.actors[i].shield <= 0.0 && self.actors[i].combat.sleep <= 0.0 {
-                        self.actors[i].combat.slow = 3.0;
-                        mask |= 1 << i;
-                    }
-                }
-                self.start_cast(source, CastKind::TimeBreak, 6, 0.12, AttackClass::Ultimate);
-                let cast = self.actors[source].combat.cast.as_mut().unwrap();
-                cast.timer = 2.0;
-                cast.mask = mask;
+                self.start_renua(source, crate::renua_skill::Phase::Ultimate);
+                self.actors[source].combat.ultimate_flash = crate::renua_skill::ULTIMATE_SECONDS;
             }
-            8 => self.start_cast(source, CastKind::Needles, 8, 0.1, AttackClass::Ultimate),
-            9 => self.start_cast(source, CastKind::Drain, 4, 0.75, AttackClass::Ultimate),
-            10 => {
-                let allies = self.wounded(source, 12.0);
-                let healed = allies.first().copied();
-                if let Some(i) = healed {
-                    self.heal(i, MAX_HP as f32);
-                    self.add_guard(i, 25.0, 6.0);
-                }
-                if let Some(i) =
-                    allies
-                        .into_iter()
-                        .filter(|&i| Some(i) != healed)
-                        .max_by(|&a, &b| {
-                            self.actors[a]
-                                .ability_cooldown
-                                .total_cmp(&self.actors[b].ability_cooldown)
-                        })
-                {
-                    self.actors[i].ability_cooldown = 0.0;
-                }
-                if let Some(i) = self.aimed_target(source, false, 18.0) {
-                    if self.actors[i].shield <= 0.0 && self.actors[i].combat.sleep <= 0.0 {
-                        self.actors[i].combat.stun = 1.25;
-                    }
-                }
-            }
-            11 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::Boulder,
-                    dir,
-                    18.0,
-                    65.0,
-                    AttackClass::Ultimate,
-                );
-            }
-            12 => {
-                self.heal(source, 45.0);
-                self.actors[source].combat.giant = 8.0;
-                self.burst(source, origin, 5.5, 40.0, AttackClass::Ultimate, 2.0);
-            }
+            8 => self.start_mayo(source, crate::mayo_skill::Phase::Ultimate),
+            9 => self.start_bella(source, crate::bella_skill::Phase::Ultimate),
+            10 => self.start_ui(source, crate::ui_skill::Phase::Ultimate),
+            11 => self.start_butter(source, crate::butter_skill::Phase::Ultimate),
+            12 => self.start_komi(source, crate::komi_skill::Phase::Feast),
             13 => {
-                for i in self.burst(source, origin, 10.0, 30.0, AttackClass::Ultimate, 0.0) {
-                    if self.actors[i].combat.sleep <= 0.0 {
-                        self.actors[i].combat.physical_weaken = 5.0;
-                    }
-                }
-                for i in self.targets(source, origin, 10.0, true) {
-                    self.actors[i].combat.haste = 5.0;
-                }
+                self.start_hilde(source, crate::hilde_skill::Phase::Equip);
+                self.actors[source].combat.ultimate_flash = crate::hilde_skill::EQUIP_SECONDS + crate::hilde_skill::LAUNCHER_SECONDS;
             }
             14 => {
-                self.projectile(
-                    source,
-                    ProjectileKind::DarkOrb,
-                    dir,
-                    26.0,
-                    60.0,
-                    AttackClass::Ultimate,
-                );
-                self.actors[source].combat.magic_ammo =
-                    (self.actors[source].combat.magic_ammo + 3).min(5);
+                self.start_shion(source, crate::shion_skill::Phase::Ultimate);
+                self.actors[source].combat.ultimate_flash = crate::shion_skill::ULTIMATE_SECONDS;
             }
             _ => unreachable!(),
         }
         true
     }
     pub(crate) fn advance_combat(&mut self) {
+        // Protection expires before any actor's damage/DoT is processed this tick.
+        for a in &mut self.actors {
+            a.combat.rain_slow = 0.0;
+            a.combat.id.tick_timers();
+            a.combat.ward = (a.combat.ward - DT).max(0.0);
+            if a.combat.ward < DT * 0.01 {
+                a.combat.ward = 0.0;
+            }
+        }
         for i in 0..PLAYERS {
             if !self.actors[i].alive() {
                 continue;
             }
+            crate::picora_skill::advance_buffs(&mut self.actors[i]);
             let c = &mut self.actors[i].combat;
             c.ultimate = (c.ultimate + ULT_PER_SECOND * DT).min(100.0);
             let guard_expired = c.guard_time > 0.0 && c.guard_time <= DT;
-            let fashion_expired = c.fashion > 0.0 && c.fashion <= DT;
+
             for t in [
                 &mut c.ultimate_flash,
                 &mut c.guard_time,
                 &mut c.stun,
+                &mut c.polymorph,
                 &mut c.slow,
                 &mut c.poison,
                 &mut c.frost,
+                &mut c.frozen,
                 &mut c.weaken,
                 &mut c.skill_weaken,
                 &mut c.physical_weaken,
@@ -1425,10 +1250,8 @@ impl World {
                 &mut c.empowered,
                 &mut c.regen,
                 &mut c.healing_up,
-                &mut c.ward,
                 &mut c.taunt,
                 &mut c.blind,
-                &mut c.fashion,
             ] {
                 *t = (*t - DT).max(0.0);
             }
@@ -1451,24 +1274,22 @@ impl World {
                 let active = if d == 0 { c.poison } else { c.frost };
                 let dot = &mut c.dots[d];
                 dot.tick -= DT;
-                if active > 0.0 && dot.tick <= 0.0 {
+                if d == 1 && active > 0.0 && dot.tick <= 0.0 {
                     dot.tick = 1.0;
                     dot.class.map(|class| (dot.owner, dot.character, class))
                 } else {
                     None
                 }
             });
-            let fashion = c.fashion > 0.0 && c.aura_tick <= 0.0;
-            if fashion {
-                c.aura_tick = 1.0;
-            }
+            let regen_source = c.regen_source;
             let retaliate = c.retaliate;
             c.retaliate = false;
             if heal > 0.0 {
-                self.heal(i, heal);
-            }
-            if fashion_expired {
-                self.heal(i, 35.0);
+                if let Some(source) = regen_source {
+                    self.heal_from(source, i, heal);
+                } else {
+                    self.heal(i, heal);
+                }
             }
             for (source, id, class) in dots.into_iter().flatten() {
                 self.damage_hit(source, i, 3.0, class, id);
@@ -1479,18 +1300,13 @@ impl World {
             if mercury {
                 self.mercury_burst(i);
             }
-            if fashion {
-                for target in self.targets(i, self.actors[i].eye(), 6.0, false) {
-                    self.taunt(i, target, 1.2);
-                }
-            }
             if retaliate {
                 let id = self.actors[i].character;
-                self.heal(i, if id == 3 { 22.0 } else { 18.0 });
+                self.heal_from(i, i, if id == 3 { 22.0 } else { 18.0 });
                 for target in
                     self.burst(i, self.actors[i].eye(), 4.5, 20.0, AttackClass::Skill, 0.0)
                 {
-                    if self.actors[target].combat.sleep <= 0.0 {
+                    if self.actors[target].combat.sleep <= 0.0 && !self.actors[target].combat.komi.resting() {
                         self.actors[target].combat.weaken = 3.0;
                     }
                 }
@@ -1498,12 +1314,16 @@ impl World {
                     self.add_guard(i, 25.0, 5.0);
                 }
             }
+            let time_factor = crate::renua_skill::time_factor(&self.actors[i]);
+            if time_factor == 0.0 && !self.actors[i].combat.action_interrupted() {
+                continue;
+            }
             self.advance_dash(i);
             if let Some(mut cast) = self.actors[i].combat.cast.take() {
-                if self.actors[i].combat.stun > 0.0 {
+                if self.actors[i].combat.disabled() {
                     continue;
                 }
-                cast.timer -= DT;
+                cast.timer -= DT * time_factor;
                 if cast.timer <= 0.0 {
                     self.cast_pulse(i, &mut cast);
                     cast.left = cast.left.saturating_sub(1);
@@ -1521,11 +1341,12 @@ impl World {
         if self.actors[i].combat.dash <= 0.0 {
             return;
         }
-        if self.actors[i].combat.stun > 0.0 {
+        if self.actors[i].combat.disabled() {
             self.actors[i].combat.dash = 0.0;
             return;
         }
-        let step = self.actors[i].combat.dash_dir * (20.0 * DT / 5.0);
+        let action_dt = DT * crate::renua_skill::time_factor(&self.actors[i]);
+        let step = self.actors[i].combat.dash_dir * (20.0 * action_dt / 5.0);
         for _ in 0..5 {
             let next = self.actors[i].pos + step;
             if crate::movement::blocked_with_height(
@@ -1548,19 +1369,11 @@ impl World {
                 }
             }
         }
-        self.actors[i].combat.dash = (self.actors[i].combat.dash - DT).max(0.0);
+        self.actors[i].combat.dash = (self.actors[i].combat.dash - action_dt).max(0.0);
     }
     fn cast_pulse(&mut self, i: usize, cast: &mut Cast) {
         let origin = self.actors[i].eye();
-        let id = self.actors[i].character;
         match cast.kind {
-            CastKind::Echo => {
-                if let Some(p) =
-                    self.projectile(i, ProjectileKind::Echo, cast.dir, 38.0, 12.0, cast.class)
-                {
-                    self.projectiles[p].step = cast.step;
-                }
-            }
             CastKind::Needles => {
                 let offset = if cast.class == AttackClass::Ultimate {
                     (cast.step as f32 - 3.5) * 0.035
@@ -1578,78 +1391,56 @@ impl World {
                     cast.class,
                 );
             }
-            CastKind::Marksman => {
-                self.ray(i, 60.0, 12.0, 1, cast.class, false);
-                self.actors[i].combat.magic_ammo =
-                    self.actors[i].combat.magic_ammo.saturating_sub(1);
-                self.actors[i].shot = self.actors[i].shot.wrapping_add(1);
-            }
-            CastKind::Universe => {
-                for t in self.burst(i, origin, 9.0, 12.0, cast.class, 0.0) {
-                    self.actors[t].ability_cooldown =
-                        (self.actors[t].ability_cooldown + 0.7).min(20.0);
-                }
-            }
-            CastKind::Rain => {
-                for t in self.targets(i, origin, 7.0, true) {
-                    self.heal(t, 8.0);
-                    self.actors[t].ability_cooldown =
-                        (self.actors[t].ability_cooldown - 0.2).max(0.0);
-                }
-                self.burst(i, origin, 7.0, 4.0, cast.class, 0.0);
-            }
             CastKind::Drain => {
                 for t in self.burst(i, origin, 10.0, 12.0, cast.class, 0.0) {
                     self.taunt(i, t, 3.0);
                 }
                 for t in self.targets(i, origin, 10.0, true) {
                     if t != i {
-                        self.heal(t, 10.0);
+                        self.heal_from(i, t, 10.0);
                     }
                 }
                 if cast.left == 1 {
-                    self.heal(i, (MAX_HP - self.actors[i].hp) as f32 * 0.4);
+                    self.heal_from(i, i, (self.actors[i].max_hp().saturating_sub(self.actors[i].hp)) as f32 * 0.4);
                 }
             }
-            CastKind::TimeBreak => {
-                for t in 0..PLAYERS {
-                    if cast.mask & (1 << t) != 0
-                        && self.actors[t].alive()
-                        && self.visible_between(cast.origin, self.actors[t].eye())
-                        && self.damage_hit(i, t, 8.0, cast.class, id)
-                        && self.actors[t].combat.sleep <= 0.0
-                    {
-                        self.actors[t].combat.stun = 0.75;
-                    }
-                }
-            }
+
         }
         self.actors[i].ability_flash = 0.4;
     }
-    fn projectile_hit(&mut self, p: &mut Projectile, target: usize) {
+    pub(crate) fn projectile_hit(&mut self, p: &mut Projectile, target: usize) {
         let source = p.owner;
         let id = p.character;
+        if p.kind == ProjectileKind::Syringe && team(source) == team(target) {
+            self.heal_from(source, target, HILDE_SYRINGE_HEAL);
+            return;
+        }
         if p.kind == ProjectileKind::Wave && team(source) == team(target) {
-            self.heal(target, 60.0);
+            self.add_guard(
+                target,
+                crate::naia_skill::WAVE_GUARD,
+                crate::naia_skill::WAVE_GUARD_SECONDS,
+            );
             return;
         }
-        if !self.damage_hit(source, target, p.damage, p.class, id) {
+        let critical=p.class==AttackClass::Basic && crate::chloe_skill::headshot(&self.actors[target],p.pos,p.velocity.normalized(),p.velocity.length()*DT,p.kind.radius());
+        if !self.damage_hit(source, target, p.damage*if critical{1.5}else{1.0}, p.class, id) {
             return;
         }
-        let immune = self.actors[target].combat.sleep > 0.0;
+        let immune = self.actors[target].combat.sleep > 0.0 || self.actors[target].combat.komi.resting();
         match p.kind {
-            ProjectileKind::Poison => self.dot(source, target, false, 4.0, p.class),
+            ProjectileKind::Poison => self.dot(source, target, false, crate::mayo_skill::POISON_SECONDS, p.class),
             ProjectileKind::Butterfly => {
                 if !immune {
-                    self.actors[target].combat.skill_weaken = 4.0;
+                    self.actors[target].combat.weaken = crate::aya_skill::WEAKEN_SECONDS;
                 }
-                if p.special_mask & (1 << target) == 0 {
+                // hit_mask deduplicates each flight leg. Return hits are real hits too.
+                if self.actors[source].alive() && self.actors[source].character == 4 {
                     self.actors[source].ability_cooldown =
-                        (self.actors[source].ability_cooldown - 1.0).max(0.0);
-                    p.special_mask |= 1 << target;
+                        (self.actors[source].ability_cooldown - crate::aya_skill::REFUND_SECONDS).max(0.0);
                 }
             }
-            ProjectileKind::Wave => self.push(target, p.velocity, 1.4),
+            ProjectileKind::Wave => self.push(target, p.velocity, crate::naia_skill::WAVE_PUSH),
             ProjectileKind::Flame => self.taunt(source, target, 3.0),
             ProjectileKind::Echo => {
                 let c = &mut self.actors[target].combat;
@@ -1666,17 +1457,22 @@ impl World {
                 if matches!(p.step, 1 | 3 | 4) && guard {
                     self.actors[target].combat.guard = 0.0;
                     self.actors[target].barrier = 0.0;
-                    self.heal(source, 12.0);
+                    self.heal_from(source, source, 12.0);
                 }
             }
             _ => {}
         }
     }
-    fn explode_projectile(&mut self, p: &Projectile) {
+    pub(crate) fn explode_projectile(&mut self, p: &Projectile) {
+        if p.kind == ProjectileKind::MagicBomb { self.erpin_blast(p.owner, p.pos, false); }
+        if p.kind == ProjectileKind::MedicalGrenade {
+            self.explode_hilde_grenade(p);
+            return;
+        }
         let (radius, push) = match p.kind {
             ProjectileKind::Spear => (4.0, 0.0),
             ProjectileKind::Doll => (2.0, 1.2),
-            ProjectileKind::Boulder => (4.5, 3.0),
+            ProjectileKind::Boulder => (crate::butter_skill::BLAST_RADIUS, 3.0),
             ProjectileKind::DarkOrb => (4.0, 0.0),
             ProjectileKind::MagicBomb => (2.0, 0.0),
             _ => (0.0, 0.0),
@@ -1688,24 +1484,98 @@ impl World {
         for target in self.targets(p.owner, p.pos, radius, false) {
             if self.damage_hit(p.owner, target, p.damage, p.class, p.character) {
                 self.push(target, self.actors[target].eye() - p.pos, push);
+                if p.kind == ProjectileKind::Boulder && self.actors[target].alive()
+                    && self.actors[target].combat.sleep <= 0.0 && !self.actors[target].combat.komi.resting() {
+                    self.actors[target].combat.stun = self.actors[target].combat.stun.max(crate::butter_skill::STUN_SECONDS);
+                }
                 if p.kind == ProjectileKind::Spear {
                     self.taunt(p.owner, target, 4.0);
-                    if self.actors[target].combat.sleep <= 0.0 {
+                    if self.actors[target].combat.sleep <= 0.0 && !self.actors[target].combat.komi.resting() {
                         self.actors[target].combat.weaken = 4.0;
                     }
                 }
             }
         }
-        self.actors[p.owner].ability_flash = 0.4;
+        if p.kind == ProjectileKind::Doll { self.chloe_confetti(p); return; }
+        if p.kind == ProjectileKind::Boulder {
+            let mut effect = p.clone();
+            effect.kind = ProjectileKind::BoulderBlast;
+            effect.age = 0.0;
+            effect.life = crate::butter_skill::BLAST_SECONDS;
+            effect.velocity = V3::default();
+            effect.damage = 0.0;
+            self.projectiles.push(effect);
+        } else if p.kind != ProjectileKind::MagicBomb { self.actors[p.owner].ability_flash = 0.4; }
     }
     fn advance_projectiles(&mut self) {
         let active = std::mem::take(&mut self.projectiles);
         for mut p in active {
             p.age += DT;
             p.life -= DT;
+            if p.kind == ProjectileKind::Confetti {
+                if p.life > 0.0 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::Doll && p.life <= 0.0 { continue; }
+            if p.kind == ProjectileKind::MercuryField {
+                self.advance_mercury(&mut p);
+                if p.life > 0.00001 { self.projectiles.push(p); }
+                continue;
+            }
+            if matches!(p.kind, ProjectileKind::ErpinBlast | ProjectileKind::ErpinCrash) {
+                if p.life > 0.0 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::BellaFire {
+                self.advance_bella_fire(&mut p);
+                if p.life > 0.00001 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::BellaHeal {
+                if p.life > 0.00001 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::BoulderBlast {
+                if p.life > 0.0 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::Ricochet && p.character == 11 {
+                self.advance_butter_ball(&mut p);
+                if p.life > 0.0 && p.pos.length() <= 180.0 { self.projectiles.push(p); }
+                continue;
+            }
+            if p.kind == ProjectileKind::RainField {
+                self.advance_ui_rain(&mut p);
+                if p.life > 0.00001 { self.projectiles.push(p); }
+                continue;
+            }
             if p.kind.cake_remaining().is_some() {
                 crate::erpin::step_cake(&mut p, &self.map);
                 if p.life > 0.0 {
+                    self.projectiles.push(p);
+                }
+                continue;
+            }
+            if p.kind == ProjectileKind::Wave {
+                self.advance_naia_wave(&mut p);
+                if p.life > 0.0 {
+                    self.projectiles.push(p);
+                }
+                continue;
+            }
+            if p.kind == ProjectileKind::SnowGarden {
+                if p.life > 0.0 && (p.step != 0 ||
+                    (self.actors[p.owner].alive() && !self.actors[p.owner].combat.action_interrupted()
+                        && self.actors[p.owner].combat.aya.phase == crate::aya_skill::Phase::Ultimate)) {
+                    self.projectiles.push(p);
+                }
+                continue;
+            }
+            if p.kind == ProjectileKind::TimeField {
+                if p.life > 0.0
+                    && self.actors[p.owner].alive()
+                    && self.actors[p.owner].character == 7
+                {
                     self.projectiles.push(p);
                 }
                 continue;
@@ -1726,13 +1596,18 @@ impl World {
                     })
                 {
                     p.velocity = (p.velocity * 0.85
-                        + (self.actors[t].eye() - p.pos).normalized() * 1.5)
+                        + (self.actors[t].pos + V3::new(0.0, 0.45, 0.0) - p.pos).normalized() * 1.5)
                         .normalized()
                         * 10.0;
                 }
             }
-            if matches!(p.kind, ProjectileKind::Stone | ProjectileKind::Boulder) {
+            if p.kind == ProjectileKind::Boulder {
+                p.velocity.y -= crate::butter_skill::BOULDER_GRAVITY * DT;
+            } else if p.kind == ProjectileKind::Stone {
                 p.velocity.y -= 5.0 * DT;
+            }
+            if p.kind == ProjectileKind::MedicalGrenade {
+                p.velocity.y -= crate::hilde_skill::GRENADE_GRAVITY * DT;
             }
             let delta = p.velocity * DT;
             let distance = delta.length();
@@ -1757,18 +1632,13 @@ impl World {
                 .filter(|(i, a)| {
                     *i != p.owner
                         && a.alive()
+                        && !a.burrowed()
                         && p.hit_mask & (1 << i) == 0
-                        && (team(*i) != team(p.owner) || p.kind == ProjectileKind::Wave)
+                        && (team(*i) != team(p.owner)
+                            || matches!(p.kind, ProjectileKind::Wave | ProjectileKind::Syringe | ProjectileKind::MedicalGrenade))
                 })
                 .filter_map(|(i, a)| {
-                    let scale = a.body_scale();
-                    let pad = V3::new(radius, radius, radius);
-                    ray_box(
-                        p.pos,
-                        dir,
-                        a.pos + V3::new(-0.48 * scale, 0.0, -0.48 * scale) - pad,
-                        a.pos + V3::new(0.48 * scale, a.hit_height(), 0.48 * scale) + pad,
-                    )
+                    crate::chloe_skill::ray_hit(a, p.pos, dir, radius)
                     .filter(|t| *t <= distance && *t < wall)
                     .map(|t| (i, t))
                 })
@@ -1785,6 +1655,7 @@ impl World {
                     | ProjectileKind::Boulder
                     | ProjectileKind::DarkOrb
                     | ProjectileKind::MagicBomb
+                    | ProjectileKind::MedicalGrenade
             );
             let mut ended = false;
             let mut ricochet = false;
@@ -1830,11 +1701,11 @@ impl World {
                     if let Some(hit) =
                         crate::impact::trace(&self.map, p.pos, dir, wall + 0.002, radius)
                     {
-                        self.record_impact(hit, (radius * 0.65).max(0.11));
+                        self.record_projectile_impact(hit, (radius * 0.65).max(0.11), p.kind, dir);
                     }
                     p.pos = p.pos + dir * (wall - 0.03).max(0.0);
                     if explosive {
-                        self.explode_projectile(&p);
+                        if p.kind != ProjectileKind::Doll { self.explode_projectile(&p); }
                     }
                     continue;
                 }
@@ -1844,7 +1715,7 @@ impl World {
                 || p.pos.length() > 180.0
                 || (p.returning && (p.pos - p.origin).length() < 0.5)
             {
-                if explosive {
+                if explosive && p.kind != ProjectileKind::Doll {
                     self.explode_projectile(&p);
                 }
                 continue;

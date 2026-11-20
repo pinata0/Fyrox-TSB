@@ -250,20 +250,21 @@ impl PlayerInfoUi {
                 (false, false) => "AUTO HEAL OFF",
             },
         );
-        let hp = actor.hp.min(MAX_HP);
+        let maximum = actor.max_hp();
+        let hp = actor.hp.min(maximum);
         let shield = if actor.alive() {
             actor.shield_health()
         } else {
             0.0
         };
         // Reserve capacity for the shield so full HP never hides the yellow segment.
-        let capacity = MAX_HP as f32 + shield;
+        let capacity = maximum as f32 + shield;
         let hp_width = BAR_WIDTH * hp as f32 / capacity;
         text(ui, self.shield_health, format!("+{}", shield.ceil() as u16));
         visible(ui, self.shield_health, shield > 0.0);
         text(ui, self.health, hp.to_string());
-        text(ui, self.maximum, format!("/ {MAX_HP}"));
-        let color = if hp <= MAX_HP / 4 {
+        text(ui, self.maximum, format!("/ {maximum}"));
+        let color = if hp <= maximum / 4 {
             [255, 113, 120]
         } else {
             WHITE

@@ -136,7 +136,7 @@ impl PortalHud {
             },
         );
         text(ui, self.shift, "SHIFT +");
-        let blocked = !actor.alive() || actor.combat.disabled() || actor.combat.channeling();
+        let blocked = !actor.alive() || actor.combat.skills_locked() || actor.combat.channeling() || actor.combat.komi.active();
         for i in 0..2 {
             let cd = actor.portals.cooldown[i];
             text_size(
@@ -185,6 +185,7 @@ impl PortalHud {
 
 #[derive(Debug, Default)]
 pub(super) struct CombatHud {
+    chloe: super::chloe_hud::Hud,
     portals: PortalHud,
     phase: super::phase_hud::PhaseHud,
     root: Handle<UiNode>,
@@ -319,6 +320,7 @@ impl CombatHud {
             place(ctx.inner(), node, 106.0, 43.0, 112.0, 64.0);
         }
         Self {
+            chloe: super::chloe_hud::Hud::new(ctx),
             portals: PortalHud::new(ctx),
             phase: super::phase_hud::PhaseHud::new(ctx),
             root,
@@ -350,11 +352,13 @@ impl CombatHud {
             self.magic,
         ]
         .into_iter()
+        .chain(self.chloe.labels())
         .chain(self.phase.labels())
         .chain(self.portals.labels())
     }
 
     pub fn render(&self, rt: &Runtime, ui: &mut UserInterface, show: bool) {
+        self.chloe.render(rt,ui,show);
         self.portals.render(rt, ui, show);
         self.phase.render(rt, ui, show);
         visible(ui, self.root, show);
@@ -379,7 +383,7 @@ impl CombatHud {
         let id = actor.character as usize;
         let kit = kit(actor.character);
         let cooling = actor.ability_cooldown > 0.0;
-        let blocked = !actor.alive() || actor.combat.disabled() || actor.combat.channeling();
+        let blocked = !actor.alive() || actor.combat.skills_locked() || actor.combat.channeling() || actor.combat.komi.active();
         let ready = !cooling && !blocked;
         for i in 0..self.skill_icons.len() {
             visible(ui, self.skill_icons[i], i == id);
@@ -453,25 +457,31 @@ impl CombatHud {
         );
         text(ui, self.key, "E");
         foreground(ui, self.key, if ready { WHITE } else { MUTED });
-        text(ui, self.weapon_name, kit.weapon);
+        let medical = id == 13 && actor.combat.hilde.active();
+        let launcher = medical && actor.combat.hilde.phase != trickcal_shooting_balddagu::hilde_skill::Phase::Skill;
+        text(ui, self.weapon_name, if actor.combat.komi.active() {if rt.korean_font {"맨손"}else{"EMPTY HANDS"}} else if launcher { if rt.korean_font {"의료용 유탄발사기"}else{"MEDICAL LAUNCHER"} }else{kit.weapon});
         let melee = kit.mode == AttackMode::Melee;
-        let low = !melee && actor.ammo <= kit.magazine / 4;
+        let unlimited = kit.magazine == 0 || launcher;
+        let marksman = id == 14 && actor.combat.shion.active();
+        let rounds = if marksman { actor.combat.magic_ammo } else { actor.ammo };
+        let capacity = if marksman { trickcal_shooting_balddagu::shion_skill::ROUNDS } else { kit.magazine };
+        let low = !unlimited && rounds <= capacity / 4;
         text(
             ui,
             self.ammo,
-            if melee {
+            if unlimited {
                 "∞".into()
             } else {
-                actor.ammo.to_string()
+                rounds.to_string()
             },
         );
         text(
             ui,
             self.capacity,
-            if melee {
+            if unlimited {
                 String::new()
             } else {
-                format!("/ {}", kit.magazine)
+                format!("/ {}", capacity)
             },
         );
         foreground(ui, self.ammo, if low { GOLD } else { WHITE });
@@ -481,11 +491,52 @@ impl CombatHud {
             } else {
                 "RESPAWNING".into()
             }
+        } else if actor.combat.komi.active() {
+            use trickcal_shooting_balddagu::komi_skill::Phase as Action;
+            let s=actor.combat.komi;let left=(s.phase.duration()-s.elapsed).max(0.0);
+            match (s.phase,rt.korean_font) {
+                (Action::Rest,true)=>format!("무적 · 자가 회복 {:.1}초 · 채팅 외 키로 기상",left),
+                (Action::Rest,false)=>format!("INVULNERABLE · HEAL {:.1}s · ANY NON-CHAT KEY TO WAKE",left),
+                (Action::Feast,true)=>"사료 먹는 중 · 거대화 준비".into(),
+                (Action::Feast,false)=>"EATING · PREPARING GIANT FORM".into(),
+                (_,true)=>format!("거대화 {:.1}초 · SHIFT 착지 공격 · 기본공격 불가",left),
+                (_,false)=>format!("GIANT {:.1}s · SHIFT SLAM · BASIC ATTACK LOCKED",left),
+            }
+        } else if medical {
+            use trickcal_shooting_balddagu::hilde_skill::{self as h, Phase as Action};
+            match (actor.combat.hilde.phase,rt.korean_font) {
+                (Action::Skill,true)=>"구급상자 · 주변 아군 회복".into(),
+                (Action::Skill,false)=>"MEDICAL CASE · AREA HEAL".into(),
+                (Action::Equip,true)=>"유탄발사기 준비 중".into(),
+                (Action::Equip,false)=>"EQUIPPING LAUNCHER".into(),
+                (Action::Launcher,true)=>format!("좌클릭 연사 · {:.1}초",(h::EQUIP_SECONDS+h::LAUNCHER_SECONDS-actor.combat.hilde.elapsed).max(0.0)),
+                (Action::Launcher,false)=>format!("HOLD LMB · {:.1}s",(h::EQUIP_SECONDS+h::LAUNCHER_SECONDS-actor.combat.hilde.elapsed).max(0.0)),
+                (_,true)=>"주사기총으로 전환 중".into(),
+                (_,false)=>"RESTORING SYRINGE GUN".into(),
+            }
+        } else if marksman {
+            use trickcal_shooting_balddagu::shion_skill::Phase as Action;
+            match (actor.combat.shion.phase, rt.korean_font) {
+                (Action::Load, true) => "마탄 충전 중".into(),
+                (Action::Load, false) => "CHARGING MAGIC ROUNDS".into(),
+                (Action::Ready | Action::Fire, true) => "고정 사격 · 좌클릭 발사".into(),
+                (Action::Ready | Action::Fire, false) => "ANCHORED · LMB FIRE".into(),
+                (Action::End, true) => "사격 자세 해제 중".into(),
+                (Action::End, false) => "LEAVING MARKSMAN STANCE".into(),
+                (_, true) => "종말의 폭발".into(),
+                (_, false) => "DOOMSDAY EXPLOSION".into(),
+            }
         } else if melee {
             if rt.korean_font {
                 "근접 무기 · 탄약 없음".into()
             } else {
                 "MELEE · NO AMMO".into()
+            }
+        } else if unlimited {
+            if rt.korean_font {
+                "무한 탄약".into()
+            } else {
+                "UNLIMITED AMMO".into()
             }
         } else if actor.reload > 0.0 {
             if rt.korean_font {

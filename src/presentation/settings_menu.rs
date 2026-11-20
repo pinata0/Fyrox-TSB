@@ -2,7 +2,9 @@
 use super::*;
 use fyrox::gui::image::{ImageBuilder, ImageMessage};
 use trickcal_shooting_balddagu::settings::{
-    settings_path, Settings, DEFAULT_SENSITIVITY, MAX_SENSITIVITY, MIN_SENSITIVITY,
+    settings_path, Settings, DEFAULT_CHARACTER_VOICE_VOLUME, DEFAULT_MUSIC_VOLUME, DEFAULT_SENSITIVITY, DEFAULT_SFX_VOLUME,
+    MAX_SENSITIVITY, MIN_SENSITIVITY,
+    DEFAULT_FRAME_LIMIT, FRAME_LIMITS,
 };
 
 type Rect = (f32, f32, f32, f32);
@@ -14,11 +16,12 @@ const MENU_BUTTONS: [Rect; 4] = [
     (420.0, 452.0, 440.0, 54.0),
     (420.0, 522.0, 440.0, 54.0),
 ];
-const SETTINGS_BUTTONS: [Rect; 4] = [
+const SETTINGS_BUTTONS: [Rect; 5] = [
     (420.0, 430.0, 80.0, 48.0),
     (510.0, 430.0, 80.0, 48.0),
     (610.0, 430.0, 250.0, 48.0),
     (420.0, 535.0, 440.0, 48.0),
+    (650.0, 260.0, 210.0, 40.0),
 ];
 
 #[derive(Debug)]
@@ -26,12 +29,41 @@ pub(super) struct Menu {
     pub open: bool,
     pub settings: Settings,
     editing: bool,
+    page: Page,
     dragging: bool,
     dirty: bool,
     focus: usize,
     path: Option<std::path::PathBuf>,
     status: Option<String>,
     background: Option<TextureResource>,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum Page {
+    Mouse,
+    Effects,
+    Music,
+    CharacterVoice,
+    FrameLimit,
+    Vsync,
+}
+impl Page {
+    fn audio(self) -> bool {
+        matches!(self, Self::Effects | Self::Music | Self::CharacterVoice)
+    }
+    fn video(self) -> bool {
+        matches!(self, Self::FrameLimit | Self::Vsync)
+    }
+    fn next(self) -> Self {
+        match self {
+            Self::Mouse => Self::Effects,
+            Self::Effects => Self::Music,
+            Self::Music => Self::CharacterVoice,
+            Self::CharacterVoice => Self::FrameLimit,
+            Self::FrameLimit => Self::Vsync,
+            Self::Vsync => Self::Mouse,
+        }
+    }
 }
 
 impl Default for Menu {
@@ -56,6 +88,7 @@ impl Default for Menu {
             open: false,
             settings: loaded.unwrap_or_default(),
             editing: false,
+            page: Page::Mouse,
             dragging: false,
             dirty: false,
             focus: 0,
@@ -67,6 +100,58 @@ impl Default for Menu {
 }
 
 impl Menu {
+    fn video_fraction(&self) -> f32 {
+        if self.page == Page::Vsync { f32::from(self.settings.vsync) } else {
+            FRAME_LIMITS.iter().position(|&n| n == self.settings.frame_limit).unwrap_or(2) as f32 / 6.0
+        }
+    }
+
+    fn change_video(&mut self, fraction: f32) {
+        let previous = self.settings;
+        if self.page == Page::Vsync {
+            self.settings.vsync = fraction >= 0.5;
+        } else {
+            self.settings.set_frame_limit(FRAME_LIMITS[(fraction.clamp(0.0, 1.0) * 6.0).round() as usize]);
+        }
+        self.dirty |= self.settings != previous || self.status.is_some();
+    }
+
+    fn step_video(&mut self, direction: f32) {
+        self.change_video(self.video_fraction() + direction * if self.page == Page::Vsync { 1.0 } else { 1.0 / 6.0 });
+    }
+
+    fn volume(&self) -> f32 {
+        if self.page == Page::CharacterVoice {
+            self.settings.character_voice_volume
+        } else if self.page == Page::Music {
+            self.settings.music_volume
+        } else {
+            self.settings.sfx_volume
+        }
+    }
+
+    fn default_volume(&self) -> f32 {
+        if self.page == Page::CharacterVoice {
+            DEFAULT_CHARACTER_VOICE_VOLUME
+        } else if self.page == Page::Music {
+            DEFAULT_MUSIC_VOLUME
+        } else {
+            DEFAULT_SFX_VOLUME
+        }
+    }
+
+    fn change_volume(&mut self, value: f32) {
+        let previous = self.settings;
+        if self.page == Page::CharacterVoice {
+            self.settings.set_character_voice_volume(value);
+        } else if self.page == Page::Music {
+            self.settings.set_music_volume(value);
+        } else {
+            self.settings.set_sfx_volume(value);
+        }
+        self.dirty |= self.settings != previous || self.status.is_some();
+    }
+
     fn change(&mut self, value: f32) {
         let previous = self.settings;
         self.settings.set_sensitivity(value);
@@ -97,7 +182,13 @@ impl Menu {
     fn drag(&mut self, size: Vector2<f32>, cursor: Vector2<f32>) {
         let (x, _, width, _) = selection::rect(size.x, size.y, SLIDER);
         let fraction = ((cursor.x - x) / width).clamp(0.0, 1.0);
-        self.change(MIN_SENSITIVITY + fraction * (MAX_SENSITIVITY - MIN_SENSITIVITY));
+        if self.page.video() {
+            self.change_video(fraction);
+        } else if self.page.audio() {
+            self.change_volume(fraction);
+        } else {
+            self.change(MIN_SENSITIVITY + fraction * (MAX_SENSITIVITY - MIN_SENSITIVITY));
+        }
     }
 }
 
@@ -146,6 +237,7 @@ pub(super) fn open(rt: &mut Runtime, context: &mut PluginContext) {
     );
     rt.settings_menu.open = true;
     rt.settings_menu.editing = false;
+    rt.settings_menu.page = Page::Mouse;
     rt.settings_menu.focus = 0;
     rt.settings_menu.dragging = false;
     rt.grabbed = false;
@@ -177,9 +269,22 @@ fn activate(rt: &mut Runtime, action: usize, context: &PluginContext) {
     let menu = &mut rt.settings_menu;
     if menu.editing {
         match action {
+            0 if menu.page.video() => menu.step_video(-1.0),
+            1 if menu.page.video() => menu.step_video(1.0),
+            2 if menu.page.video() => {
+                if menu.page == Page::Vsync { menu.change_video(0.0); }
+                else { menu.change_video(FRAME_LIMITS.iter().position(|&n| n == DEFAULT_FRAME_LIMIT).unwrap() as f32 / 6.0); }
+            }
+            0 if menu.page.audio() => menu.change_volume(menu.volume() - 0.05),
+            1 if menu.page.audio() => menu.change_volume(menu.volume() + 0.05),
+            2 if menu.page.audio() => menu.change_volume(menu.default_volume()),
             0 => menu.change(menu.settings.mouse_sensitivity - 0.05),
             1 => menu.change(menu.settings.mouse_sensitivity + 0.05),
             2 => menu.change(DEFAULT_SENSITIVITY),
+            4 => {
+                menu.page = menu.page.next();
+                menu.dragging = false;
+            }
             _ => {
                 menu.editing = false;
                 menu.focus = 0;
@@ -276,13 +381,20 @@ pub(super) fn on_event(rt: &mut Runtime, event: &Event<()>, context: &mut Plugin
                     PhysicalKey::Code(KeyCode::ArrowLeft | KeyCode::ArrowRight)
                         if rt.settings_menu.editing =>
                     {
-                        let step = if event.physical_key == PhysicalKey::Code(KeyCode::ArrowLeft) {
+                        let step: f32 = if event.physical_key == PhysicalKey::Code(KeyCode::ArrowLeft) {
                             -0.05
                         } else {
                             0.05
                         };
-                        rt.settings_menu
-                            .change(rt.settings_menu.settings.mouse_sensitivity + step);
+                        if rt.settings_menu.page.video() {
+                            rt.settings_menu.step_video(step.signum());
+                        } else if rt.settings_menu.page.audio() {
+                            rt.settings_menu
+                                .change_volume(rt.settings_menu.volume() + step);
+                        } else {
+                            rt.settings_menu
+                                .change(rt.settings_menu.settings.mouse_sensitivity + step);
+                        }
                         rt.settings_menu.save();
                     }
                     PhysicalKey::Code(KeyCode::Enter | KeyCode::NumpadEnter) if !event.repeat => {
@@ -309,8 +421,8 @@ pub(super) struct SettingsUi {
     track: Handle<UiNode>,
     fill: Handle<UiNode>,
     thumb: Handle<UiNode>,
-    buttons: [Handle<UiNode>; 4],
-    button_labels: [Handle<UiNode>; 4],
+    buttons: [Handle<UiNode>; 5],
+    button_labels: [Handle<UiNode>; 5],
     status: Handle<UiNode>,
     hint: Handle<UiNode>,
 }
@@ -416,7 +528,23 @@ impl SettingsUi {
             (420.0, 265.0, 440.0, 30.0),
             17.0,
             if menu.editing {
-                if kr {
+                if menu.page == Page::Vsync {
+                    if kr { "수직 동기화" } else { "VSYNC" }
+                } else if menu.page == Page::FrameLimit {
+                    if kr { "프레임 제한" } else { "FRAME RATE LIMIT" }
+                } else if menu.page == Page::CharacterVoice && kr {
+                    "캐릭터 음성 음량"
+                } else if menu.page == Page::CharacterVoice {
+                    "CHARACTER VOICE"
+                } else if menu.page == Page::Music && kr {
+                    "배경음악 음량"
+                } else if menu.page == Page::Music {
+                    "MUSIC VOLUME"
+                } else if menu.page.audio() && kr {
+                    "효과음 음량"
+                } else if menu.page.audio() {
+                    "SOUND EFFECTS"
+                } else if kr {
                     "마우스 감도"
                 } else {
                     "MOUSE SENSITIVITY"
@@ -435,10 +563,37 @@ impl SettingsUi {
                 self.value,
                 (420.0, 310.0, 440.0, 45.0),
                 27.0,
-                &format!("{:.2}x", menu.settings.mouse_sensitivity),
+                &if menu.page == Page::Vsync {
+                    if menu.settings.vsync { "ON".into() } else { "OFF".into() }
+                } else if menu.page == Page::FrameLimit {
+                    if menu.settings.frame_limit == 0 { if kr { "제한 없음".into() } else { "UNLIMITED".into() } }
+                    else { format!("{} FPS", menu.settings.frame_limit) }
+                } else if menu.page.audio() {
+                    format!(
+                        "{:.0}%{}",
+                        menu.volume() * 100.0,
+                        if menu.volume() == 0.0 {
+                            if kr {
+                                " · 음소거"
+                            } else {
+                                " · MUTED"
+                            }
+                        } else {
+                            ""
+                        }
+                    )
+                } else {
+                    format!("{:.2}x", menu.settings.mouse_sensitivity)
+                },
             );
-            let fraction = (menu.settings.mouse_sensitivity - MIN_SENSITIVITY)
-                / (MAX_SENSITIVITY - MIN_SENSITIVITY);
+            let fraction = if menu.page.video() {
+                menu.video_fraction()
+            } else if menu.page.audio() {
+                menu.volume()
+            } else {
+                (menu.settings.mouse_sensitivity - MIN_SENSITIVITY)
+                    / (MAX_SENSITIVITY - MIN_SENSITIVITY)
+            };
             put(self.track, (SLIDER.0, 381.0, SLIDER.2, 8.0));
             put(
                 self.fill,
@@ -454,7 +609,7 @@ impl SettingsUi {
                 15.0,
                 if menu.status.is_some() {
                     if kr {
-                        "저장 실패 · 감도를 다시 조절하면 재시도합니다"
+                        "저장 실패 · 값을 다시 조절하면 재시도합니다"
                     } else {
                         "Save failed. Adjust again to retry."
                     }
@@ -464,6 +619,9 @@ impl SettingsUi {
                     } else {
                         "Release to save"
                     }
+                } else if menu.page == Page::Vsync {
+                    if kr { "자동 저장 · 게임을 다시 시작하면 적용됩니다" }
+                    else { "Saved · restart the game to apply" }
                 } else if kr {
                     "자동 저장 · 다음 실행에도 유지됩니다"
                 } else {
@@ -479,9 +637,35 @@ impl SettingsUi {
         }
         let labels = if menu.editing {
             if kr {
-                ["-", "+", "기본값으로", "뒤로"]
+                [
+                    "-",
+                    "+",
+                    "기본값으로",
+                    "뒤로",
+                    match menu.page {
+                        Page::Mouse => "효과음 설정 →",
+                        Page::Effects => "배경음악 설정 →",
+                        Page::Music => "캐릭터 음성 설정 →",
+                        Page::CharacterVoice => "프레임 제한 →",
+                        Page::FrameLimit => "수직 동기화 →",
+                        Page::Vsync => "마우스 설정 →",
+                    },
+                ]
             } else {
-                ["-", "+", "RESET TO DEFAULT", "BACK"]
+                [
+                    "-",
+                    "+",
+                    "RESET TO DEFAULT",
+                    "BACK",
+                    match menu.page {
+                        Page::Mouse => "SOUND EFFECTS →",
+                        Page::Effects => "MUSIC SETTINGS →",
+                        Page::Music => "CHARACTER VOICE →",
+                        Page::CharacterVoice => "FRAME RATE →",
+                        Page::FrameLimit => "VSYNC →",
+                        Page::Vsync => "MOUSE SETTINGS →",
+                    },
+                ]
             }
         } else if kr {
             [
@@ -489,6 +673,7 @@ impl SettingsUi {
                 "게임으로 돌아가기",
                 "게임 로비로 돌아가기",
                 "방 나가기",
+                "",
             ]
         } else {
             [
@@ -496,6 +681,7 @@ impl SettingsUi {
                 "RESUME GAME",
                 "RETURN TO GAME LOBBY",
                 "LEAVE ROOM",
+                "",
             ]
         };
         for (i, label) in labels.iter().enumerate() {
@@ -535,9 +721,21 @@ impl SettingsUi {
                 (400.0, 646.0, 540.0, 55.0),
                 14.0,
                 if kr {
-                    "드래그 / ← → 감도 조절 · Esc 뒤로"
+                    if menu.page.video() {
+                        "드래그 / ← → 변경 · Esc 뒤로"
+                    } else if menu.page.audio() {
+                        "드래그 / ← → 음량 조절 · 0% 음소거 · Esc 뒤로"
+                    } else {
+                        "드래그 / ← → 감도 조절 · Esc 뒤로"
+                    }
                 } else {
-                    "Drag / Left-Right: sensitivity · Esc: back"
+                    if menu.page.video() {
+                        "Drag / Left-Right: change · Esc: back"
+                    } else if menu.page.audio() {
+                        "Drag / Left-Right: volume · 0%: mute · Esc: back"
+                    } else {
+                        "Drag / Left-Right: sensitivity · Esc: back"
+                    }
                 },
             );
         }
@@ -631,8 +829,102 @@ pub(super) fn review_update(rt: &mut Runtime, context: &mut PluginContext) {
             activate(rt, 3, context);
             assert!(rt.home_open && !rt.lobby.room_active && rt.settings_menu.open);
         }
+        12 => activate(rt, 0, context),
+        13 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::Effects);
+            rt.settings_menu.change_volume(0.35);
+            rt.settings_menu.save();
+            assert_eq!(
+                Settings::load(rt.settings_menu.path.as_ref().unwrap())
+                    .unwrap()
+                    .sfx_volume,
+                0.35
+            );
+        }
+        14 => {
+            rt.settings_menu.change_volume(0.0);
+            rt.settings_menu.save();
+            assert_eq!(
+                Settings::load(rt.settings_menu.path.as_ref().unwrap())
+                    .unwrap()
+                    .sfx_volume,
+                0.0
+            );
+        }
+        15 => {
+            activate(rt, 2, context);
+            assert_eq!(rt.settings_menu.settings.sfx_volume, DEFAULT_SFX_VOLUME);
+            assert_eq!(rt.settings_menu.settings.mouse_sensitivity, 2.35);
+        }
+        16 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::Music);
+            rt.settings_menu.change_volume(0.2);
+            rt.settings_menu.save();
+            let saved = Settings::load(rt.settings_menu.path.as_ref().unwrap()).unwrap();
+            assert_eq!(saved.music_volume, 0.2);
+            assert_eq!(saved.sfx_volume, DEFAULT_SFX_VOLUME);
+        }
+        17 => {
+            rt.settings_menu.change_volume(0.0);
+            rt.settings_menu.save();
+            assert_eq!(
+                Settings::load(rt.settings_menu.path.as_ref().unwrap())
+                    .unwrap()
+                    .music_volume,
+                0.0
+            );
+        }
+        18 => {
+            activate(rt, 2, context);
+            assert_eq!(rt.settings_menu.settings.music_volume, DEFAULT_MUSIC_VOLUME);
+            assert_eq!(rt.settings_menu.settings.sfx_volume, DEFAULT_SFX_VOLUME);
+            assert_eq!(rt.settings_menu.settings.mouse_sensitivity, 2.35);
+        }
+        19 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::CharacterVoice);
+            rt.settings_menu.change_volume(0.0);
+            rt.settings_menu.save();
+            assert_eq!(Settings::load(rt.settings_menu.path.as_ref().unwrap()).unwrap().character_voice_volume, 0.0);
+        }
+        20 => {
+            activate(rt, 2, context);
+            assert_eq!(rt.settings_menu.settings.character_voice_volume, DEFAULT_CHARACTER_VOICE_VOLUME);
+            assert_eq!(rt.settings_menu.settings.music_volume, DEFAULT_MUSIC_VOLUME);
+            assert_eq!(rt.settings_menu.settings.sfx_volume, DEFAULT_SFX_VOLUME);
+        }
+        21 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::FrameLimit);
+            activate(rt, 0, context);
+            assert_eq!(rt.settings_menu.settings.frame_limit, 90);
+            rt.settings_menu.change_video(1.0);
+            rt.settings_menu.save();
+            assert_eq!(Settings::load(rt.settings_menu.path.as_ref().unwrap()).unwrap().frame_limit, 0);
+        }
+        22 => {
+            activate(rt, 2, context);
+            assert_eq!(rt.settings_menu.settings.frame_limit, DEFAULT_FRAME_LIMIT);
+        }
+        23 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::Vsync);
+            activate(rt, 1, context);
+            rt.settings_menu.save();
+            assert!(Settings::load(rt.settings_menu.path.as_ref().unwrap()).unwrap().vsync);
+        }
+        24 => {
+            activate(rt, 2, context);
+            assert!(!rt.settings_menu.settings.vsync);
+        }
+        25 => {
+            activate(rt, 4, context);
+            assert_eq!(rt.settings_menu.page, Page::Mouse);
+        }
         _ => {
-            println!("SETTINGS_REVIEW_OK: blur, menu, slider, save, reset, back, resume, return to lobby, leave room, home actions; sensitivity=2.35");
+            println!("SETTINGS_REVIEW_OK: blur, menu, slider, save, reset, back, resume, return to lobby, leave room, home actions, independent audio volume, frame cap and VSync persistence; sensitivity=2.35");
             context.loop_controller.exit();
         }
     }

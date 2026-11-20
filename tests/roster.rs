@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::{game::*, roster::*};
 
 fn arena_test() -> World {
@@ -173,7 +174,8 @@ fn fairy_receives_extra_healing_and_heal_obeys_team_death_cover_and_cap() {
     w.actors[6].hp = 50;
     w.actors[6].pos = V3::new(-1.0, 0.0, 3.0);
     ability(&mut w, 0);
-    assert_eq!(w.actors[1].hp, 72);
+    for _ in 0..203 { w.tick([Input::default(); PLAYERS]); }
+    assert_eq!(w.actors[1].hp, 94);
     assert_eq!(w.actors[2].hp, 0);
     assert_eq!(w.actors[6].hp, 50);
     w.actors[0].ability_cooldown = 0.0;
@@ -185,15 +187,17 @@ fn fairy_receives_extra_healing_and_heal_obeys_team_death_cover_and_cap() {
         phaseable: true,
     });
     ability(&mut w, 0);
-    assert_eq!(w.actors[1].hp, 72);
+    for _ in 0..203 { w.tick([Input::default(); PLAYERS]); }
+    assert_eq!(w.actors[1].hp, 94);
     w.map.clear();
     w.actors[0].ability_cooldown = 0.0;
     w.actors[1].hp = 110;
     ability(&mut w, 0);
+    for _ in 0..203 { w.tick([Input::default(); PLAYERS]); }
     assert_eq!(w.actors[1].hp, MAX_HP);
 }
 #[test]
-fn shift_has_no_beast_speed_bonus_and_elf_reload_is_faster() {
+fn beast_shift_leaps_and_elf_reload_is_faster() {
     let mut w = arena_test();
     w.actors[0].character = 11;
     tick(
@@ -205,9 +209,11 @@ fn shift_has_no_beast_speed_bonus_and_elf_reload_is_faster() {
             ..Default::default()
         },
     );
-    assert!((w.actors[0].pos.z - 5.8 * DT).abs() < 0.0001);
+    assert!(w.actors[0].pos.z > WALK_SPEED * DT && w.actors[0].pos.y > 0.0);
     assert!(!w.actors[0].phase_skill.active());
     w.actors[0].pos = V3::default();
+    w.actors[0].race_skill = Default::default();
+    w.actors[0].vy = 0.0;
     tick(
         &mut w,
         0,
@@ -216,7 +222,7 @@ fn shift_has_no_beast_speed_bonus_and_elf_reload_is_faster() {
             ..Default::default()
         },
     );
-    assert!((w.actors[0].pos.z - 5.8 * DT).abs() < 0.0001);
+    assert!((w.actors[0].pos.z - WALK_SPEED * DT).abs() < 0.0001);
     w.actors[0].character = 3;
     w.actors[0].ammo = 1;
     tick(
@@ -234,27 +240,26 @@ fn shift_has_no_beast_speed_bonus_and_elf_reload_is_faster() {
     assert_eq!(w.actors[0].ammo, 40);
 }
 #[test]
-fn spirit_barrier_waits_four_seconds_absorbs_damage_and_never_stacks() {
-    let mut w = arena_test();
-    w.actors[6].character = 1;
-    w.actors[6].pos = V3::new(0.0, 0.0, 3.0);
-    for _ in 0..239 {
+fn spirits_do_not_gain_passive_shields_while_safe_or_after_skill_shields_expire() {
+    for id in [1, 10] {
+        let mut w = arena_test();
+        w.actors[6].character = id;
+        for _ in 0..600 {
+            tick(&mut w, 0, Input::default());
+            assert_eq!(w.actors[6].shield_health(), 0.0);
+        }
+
+        // Shields granted by skills still work and expire normally.
+        w.actors[6].combat.guard = 20.0;
+        w.actors[6].combat.guard_time = 1.0;
         tick(&mut w, 0, Input::default());
+        assert_eq!(w.actors[6].shield_health(), 20.0);
+        for _ in 0..600 {
+            tick(&mut w, 0, Input::default());
+            assert_eq!(w.actors[6].barrier, 0.0);
+        }
+        assert_eq!(w.actors[6].shield_health(), 0.0);
     }
-    assert_eq!(w.actors[6].barrier, 0.0);
-    for _ in 0..5 {
-        tick(&mut w, 0, Input::default());
-    }
-    assert!((w.actors[6].barrier - 9.6).abs() < 0.001);
-    shoot(&mut w, 0);
-    // First blade: 21 / 2 - 9.6 barrier = 0.9 -> 1 HP.
-    // Second blade: the barrier is gone, so all 21 damage reaches HP.
-    assert_eq!(w.actors[6].hp, 98);
-    assert_eq!(w.actors[6].barrier, 0.0);
-    for _ in 0..300 {
-        tick(&mut w, 0, Input::default());
-    }
-    assert!((w.actors[6].barrier - 9.6).abs() < 0.001);
 }
 #[test]
 fn ghost_damage_no_longer_grants_speed() {
@@ -272,7 +277,7 @@ fn ghost_damage_no_longer_grants_speed() {
             ..Default::default()
         },
     );
-    assert!(((w.actors[6].pos - before).length() - 5.8 * DT).abs() < 0.0001);
+    assert!(((w.actors[6].pos - before).length() - WALK_SPEED * DT).abs() < 0.0001);
 }
 fn ultimate(w: &mut World) {
     w.actors[0].combat.ultimate = 100.0;
@@ -300,9 +305,13 @@ fn dragon_resists_shockwave_and_witch_cooldown_applies_without_repeat_cast() {
     w.actors[0].character = 4;
     ability(&mut w, 0);
     assert!((w.actors[0].ability_cooldown - 8.55).abs() < 0.001);
-    assert_eq!(w.projectiles.len(), 1);
+    assert!(w.projectiles.is_empty());
     ability(&mut w, 0);
-    assert_eq!(w.projectiles.len(), 1);
+    assert!(w.projectiles.is_empty());
+    for _ in 0..77 {
+        tick(&mut w, 0, Input::default());
+    }
+    assert_eq!(w.projectiles.len(), 5);
 }
 #[test]
 fn shockwave_respects_spawn_protection_cover_and_swept_collision() {

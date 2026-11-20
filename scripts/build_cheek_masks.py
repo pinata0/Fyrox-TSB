@@ -54,6 +54,9 @@ def build(slug, render=False, publish=False):
     skin = (r>.55)&(r>=g*.98)&(r>=b*.98)&(g>r*.43)&(b>g*.90)
     eye = (((np.abs(x-cx)-ex)/(ex*.76))**2 + ((z-ez)/(eh*1.06))**2) < 1.0
     eye |= (np.abs(np.abs(x-cx)-ex)<.08)&(np.abs(z-ez)<eh*.85)
+    from face_regions import eye_triangles
+    mesh.calc_loop_triangles()
+    eye |= eye_triangles(p,np.array([t.vertices[:] for t in mesh.loop_triangles]),face)
     mouth = ((x-cx)/(.10 if slug=='ui' else .080))**2 + ((z-mz)/.036)**2 < 1
     roi = (np.abs(x-cx)<.40)&(z>mz-.14)&(z<ez+.05)&(y<-front+.22)
     # Fill small painted marks (Chloe's heart, cheek spirals); keep large hair regions out.

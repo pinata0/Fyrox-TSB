@@ -32,6 +32,7 @@ for ref,model in zip(refs,models):
 (ROOT/'assets/references/manifest.json').write_text(json.dumps(refs,ensure_ascii=False,indent=2),encoding='utf-8')
 (ROOT/'assets/characters/manifest.json').write_text(json.dumps(models,ensure_ascii=False,indent=2),encoding='utf-8')
 (ROOT/'assets/characters/index.html').write_text('''<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TSB 캐릭터 아트</title>
+<link rel="icon" href="../ui/icons/favicon.ico" sizes="16x16 32x32 48x48">
 <style>body{margin:0;padding:40px;background:#f1eee8;color:#243449;font:16px system-ui,sans-serif}h1{font-size:36px}main{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}article{background:white;border-radius:18px;padding:20px;box-shadow:0 4px 18px #263a4c10}h2{font-size:20px}img{max-width:100%}.model{width:100%;background:#edf0f4;border-radius:12px}nav{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}a{color:#25665d}p{line-height:1.6}summary{cursor:pointer}</style>
 <h1>Trickcal : Shooting Balddagu</h1><p>15명 캐릭터 아트 · 삼면도 / Blender / FBX / 원작 자료<br>G 춤 전환 · 마우스 360도 관찰 · 휠 줌 · 이동/공격 시 1인칭 복귀</p>
 <p>원작 캐릭터 디자인: EPID Games. 새로 제작한 팬게임용 MVP 3D 해석이며 측면·후면 일부와 춤 동작은 제작 과정에서 구성했습니다.</p><main>'''+''.join(cards)+'''</main><p>자료와 프롬프트: assets/references/manifest.json · assets/turnarounds/generation.json<br>제작·검증 기록: docs/CHARACTER_ART.md · docs/WORK_LOG.md</p></html>''',encoding='utf-8')

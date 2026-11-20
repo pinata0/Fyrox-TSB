@@ -3,6 +3,7 @@
     resources: [
         (name: "fyrox_instanceData", kind: PropertyGroup([]), binding: 0),
         (name: "fyrox_cameraData", kind: PropertyGroup([]), binding: 1),
+        (name: "properties", kind: PropertyGroup([(name:"mercury",kind:Float(value:0.0))]), binding: 2),
     ],
     disabled_passes: ["GBuffer", "DirectionalShadow", "PointShadow", "SpotShadow"],
     passes: [(
@@ -56,6 +57,13 @@
                 float visibility = cameraInside > 0.5 ? 0.08 : (gl_FrontFacing ? 1.0 : 0.35);
                 float alpha = (0.018 + 0.32 * grid + 0.22 * rim) * visibility;
                 vec3 tint = mix(vec3(0.20, 0.65, 0.86), vec3(0.62, 0.93, 1.0), max(grid, rim));
+                if(properties.mercury>0.5) {
+                    vec3 n=normalize(worldNormal);
+                    float silver=pow(max(0.0,dot(n,normalize(vec3(-0.5,0.8,-0.4)))),12.0);
+                    float ribbon=pow(0.5+0.5*sin(localPosition.y*8.0+localPosition.x*4.0),14.0);
+                    tint=mix(vec3(0.40,0.44,0.50),vec3(0.96,0.98,1.0),clamp(rim+silver+ribbon*0.35,0.0,1.0));
+                    alpha=(0.035+rim*0.58+silver*0.26+ribbon*0.065)*visibility;
+                }
                 FragColor = vec4(tint, alpha);
             }
         "#,

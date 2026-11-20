@@ -1,4 +1,5 @@
 //! Blender FBX meshes and baked skeletal motion clips. No reference art is loaded at runtime.
+use crate::presentation::SceneState;
 use super::{weapons, Shapes};
 use fyrox::{
     asset::manager::ResourceManager,
@@ -49,12 +50,46 @@ pub fn load(manager: &ResourceManager) -> Result<Vec<ModelResource>, String> {
         for node in data.get_scene().graph.linear_iter() {
             if let Some(player) = node.cast::<AnimationPlayer>() {
                 for a in player.animations().iter() {
-                    let expected = if matches!(*slug, "vivi" | "aya") {
-                        18.5
+                    let expected = if (std::env::args().any(|arg|arg=="--chloe-skill-review") && *slug!="chloe") || (std::env::args().any(|arg| arg == "--renua-skill-review") && *slug != "renua")
+                        || (std::env::args().any(|arg| arg == "--shion-skill-review") && *slug != "shion")
+                        || (std::env::args().any(|arg| arg == "--ui-skill-review") && *slug != "ui")
+                        || (std::env::args().any(|arg| arg == "--mayo-skill-review") && *slug != "mayo")
+                        || (std::env::args().any(|arg| arg == "--butter-skill-review") && *slug != "butter")
+                        || (std::env::args().any(|arg| arg == "--bella-skill-review") && *slug != "bella")
+                        || (std::env::args().any(|arg| arg == "--vivi-skill-review") && *slug != "vivi") {
+                        // Focused art review tolerates another hero's pending asset bake.
+                        // Normal launches still validate every delivered timeline.
+                        a.length()
+                    } else if *slug == "chloe" {
+                        Motion::ChloeDismount.frames().1 as f32/30.0
+                    } else if *slug == "picora" {
+                        Motion::PicoraUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "bella" {
+                        Motion::BellaUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "mayo" {
+                        Motion::MayoUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "ui" {
+                        Motion::UiUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "aya" {
+                        Motion::AyaUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "vivi" {
+                        Motion::ViviUltimate.frames().1 as f32 / 30.0
                     } else if *slug == "erpin" {
-                        Motion::ErpinEat.frames().1 as f32 / 30.0
+                        Motion::ErpinRecover.frames().1 as f32 / 30.0
+                    } else if *slug == "id" {
+                        Motion::IdUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "renua" {
+                        Motion::RenuaUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "shion" {
+                        Motion::ShionUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "butter" {
+                        Motion::ButterUltimate.frames().1 as f32 / 30.0
+                    } else if *slug == "komi" {
+                        Motion::KomiFeast.frames().1 as f32 / 30.0
+                    } else if *slug == "hilde" {
+                        Motion::HildeUltimate.frames().1 as f32 / 30.0
                     } else if *slug == "naia" {
-                        Motion::NaiaEnd.frames().1 as f32 / 30.0
+                        Motion::NaiaUltimate.frames().1 as f32 / 30.0
                     } else {
                         17.6
                     };
@@ -96,9 +131,17 @@ pub struct Visual {
     arm_animations: Vec<Animation>,
     wings: std::cell::RefCell<super::erpin_wings::Wings>,
     aim_pitch: f32,
+    orbit_age: f32,
     shadow_only: super::character_shadows::ShadowOnly,
+    shadow_casters: Option<Vec<Handle<Node>>>,
+    casting_shadows: bool,
+    weaken_outline: super::weaken_outline::Outline,
+    picora_outline: super::picora_outline::Outline,
     face: super::expressions::Face,
     grips: [super::hand_grip::Rig; 2],
+    whales: Option<super::naia_whales::School>,
+    pub pod: Option<super::id_fx::Pod>,
+    chloe_arms: Option<super::chloe_arms::Rig>,
 }
 impl Visual {
     pub fn spawn(
@@ -124,7 +167,7 @@ impl Visual {
             })
             .collect();
         for node in view_sleeves {
-            g[node].set_visibility(false);
+            g[node].set_visible(false);
             g[node].set_cast_shadows(false);
         }
         let player = g
@@ -136,7 +179,7 @@ impl Visual {
             .traverse_handle_iter(root)
             .find(|h| g[*h].name() == hand_name)
             .unwrap_or(root);
-        let weapon = weapons::build(g, shapes, id, weapon_resource);
+        let weapon = weapons::build(g, shapes, id, weapon_resource, false);
         let wave_arm = [upper_name, forearm_name].map(|name| {
             g.traverse_handle_iter(root)
                 .find(|h| g[*h].name() == name)
@@ -154,7 +197,8 @@ impl Visual {
             .map(|side| ["Thigh", "Shin", "Foot"].map(|bone| find(&format!("{bone}.{side}"))));
         // Mask by hierarchy so imported finger bones are included without letting
         // an attack overwrite the hips, torso, head, legs, hair or companions.
-        let arms: std::collections::HashSet<_> = ["UpperArm.L", "UpperArm.R"]
+        let arm_names=if id==6 {["Sebastian.Arm.L", "Sebastian.Arm.L"]}else{["UpperArm.L", "UpperArm.R"]};
+        let arms: std::collections::HashSet<_> = arm_names
             .into_iter()
             .map(find)
             .filter(|handle| handle.is_some())
@@ -191,14 +235,30 @@ impl Visual {
             arm_animations,
             wings: std::cell::RefCell::new(super::erpin_wings::Wings::new(g, root, id)),
             aim_pitch: 0.0,
+            orbit_age: 0.0,
             shadow_only: Default::default(),
+            shadow_casters: None,
+            casting_shadows: true,
+            weaken_outline: Default::default(),
+            picora_outline: Default::default(),
             face,
             grips,
+            pod: (id == 3).then(|| super::id_fx::Pod::new(g, root)),
+            chloe_arms: (id == 6).then(|| super::chloe_arms::Rig::new(g, root)),
+            whales: if id == 1 {
+                weapon_resource.map(|m| super::naia_whales::School::new(g, parent, m))
+            } else {
+                None
+            },
         };
         result.set_motion(g, Motion::Idle);
+        if id==6 {super::chloe_fx::face(g,root,Pose::default());}
         result
     }
     pub fn remove(self, g: &mut Graph) {
+        if let Some(school) = self.whales {
+            g.remove_node(school.root);
+        }
         g.remove_node(self.weapon);
         g.remove_node(self.root);
     }
@@ -216,6 +276,26 @@ impl Visual {
         self.shadow_only.enabled()
     }
 
+    pub fn set_shadow_casting(&mut self, g: &mut Graph, enabled: bool) {
+        if self.casting_shadows == enabled { return; }
+        let nodes = self.shadow_casters.get_or_insert_with(|| {
+            [self.root, self.weapon].into_iter()
+                .flat_map(|root| g.traverse_handle_iter(root))
+                .filter(|&h| g[h].cast::<fyrox::scene::mesh::Mesh>().is_some() && g[h].cast_shadows())
+                .collect()
+        });
+        for &h in nodes.iter() { g[h].set_cast_shadows(enabled); }
+        self.casting_shadows = enabled;
+    }
+
+    pub fn held_weapon(&self) -> Handle<Node> { self.weapon }
+    pub fn sleeve_binding(&self)->(Handle<Node>,Handle<Node>){(self.root,self.wave_arm[1])}
+    pub fn sleeve_points(&self,g:&Graph)->(Vector3<f32>,Vector3<f32>){
+        (g[self.wave_arm[1]].global_position(),g[self.hand].global_position())
+    }
+    pub fn picora_outline(&mut self,g:&mut Graph,active:bool,time:f32){
+        self.picora_outline.update(g,self.root,active,time);
+    }
     pub fn head_position(&self, g: &Graph) -> Vector3<f32> {
         if self.head.is_some() {
             g[self.head].global_position()
@@ -224,11 +304,36 @@ impl Visual {
         }
     }
 
+    /// Project a head after its root moved, without refreshing the entire rig.
+    pub fn current_head_position(&self, g: &Graph) -> Vector3<f32> {
+        let mut node = if self.head.is_some() { self.head } else { self.root };
+        let mut position = if self.head.is_some() { Vector3::zeros() } else { Vector3::y() * 1.22 };
+        while node.is_some() {
+            position = g[node].local_transform().matrix().transform_point(&position.into()).coords;
+            node = g[node].parent();
+        }
+        position
+    }
+
     /// Run after the FBX animation has updated both hand bones.
     pub fn attach_weapons(&self, g: &mut Graph) {
+        if self.id==6 {
+            g[self.weapon].set_visible(false);
+            for grip in &self.grips {grip.pose(g,0.0);}
+            if self.clock.pose.base().0==Motion::ChloeRideMove {self.grips[0].point(g,0.9);}
+            super::chloe_fx::face(g,self.root,self.clock.pose);
+            g.update_hierarchical_data_for_descendants(self.root);
+            return;
+        }
+        if self.id == 10 { super::ui_fx::weapon(g,self.weapon,self.clock.pose); }
+        if self.id == 13 && super::hilde_fx::active(self.clock.pose) {
+            g[self.weapon].set_visible(false);
+            g.update_hierarchical_data_for_descendants(g[self.root].parent());
+            return;
+        }
         // The editable Naia FBX also contains face keys. Apply the source clock
         // after skeletal evaluation so coarse FBX samples cannot override it.
-        if self.id == 1 && self.clock.pose.motion == Motion::Attack {
+        if self.id == 3 || self.id == 1 && self.clock.pose.motion == Motion::Attack {
             super::expressions::apply(
                 g,
                 self.root,
@@ -240,6 +345,57 @@ impl Visual {
         // Animation and actor transforms have changed since the last graph update.
         // IK must read positions from the same pose as global_rotation().
         g.update_hierarchical_data_for_descendants(g[self.root].parent());
+        if self.id == 4 && self.clock.pose.motion == Motion::AyaUltimate {
+            let age = self.clock.pose.age;
+            if (0.45..3.25).contains(&age) {
+                for grip in &self.grips { grip.pose(g, 0.0); }
+                let parent = g[self.weapon].parent();
+                let inverse = g[parent].global_transform().try_inverse().unwrap_or_default();
+                let pos = self.head_position(g) + Vector3::y() * (0.65 + 0.25 * (age * 2.0).sin());
+                g[self.weapon].local_transform_mut().set_position(inverse.transform_point(&pos.into()).coords)
+                    .set_rotation(UnitQuaternion::from_euler_angles(0.12, age * 2.8, 0.15));
+                weapons::update_aya(g, self.weapon, 0.0, false);
+                g.update_hierarchical_data_for_descendants(self.weapon);
+                return;
+            }
+        }
+        if self.id == 12 && !g[self.weapon].visibility() {
+            for grip in &self.grips { grip.pose(g,0.0); }
+            return;
+        }
+        if self.id == 9 {
+            g[self.weapon].set_visible(false);
+            self.grips[0].pose(g, if self.clock.pose.motion == Motion::BellaUltimate {0.8} else {0.0});
+            self.grips[1].pose(g,0.0);
+            return;
+        }
+        if self.id == 7 {
+            g[self.weapon].set_visible(false);
+            for grip in &self.grips { grip.pose(g, 0.0); }
+            return;
+        }
+        if let Some(pod) = &self.pod {
+            if !self.is_shadow_only() {
+                self.face
+                    .show_motion(g, self.clock.pose.motion, self.clock.pose.age, self.id);
+            }
+            pod.update(g, self.clock.pose, !self.is_shadow_only(), self.orbit_age);
+            for grip in &self.grips {
+                grip.pose(g, 0.0);
+            }
+            return;
+        }
+        if let Some(school) = &self.whales {
+            school.update(g, self.clock.pose, g[self.root].visibility());
+            super::naia_whales::update_weapon(g, self.weapon, self.clock.pose, false);
+            if self.clock.pose.motion == Motion::NaiaUltimate {
+                g[self.weapon].set_visible(false);
+                for grip in &self.grips {
+                    grip.pose(g, 0.0);
+                }
+                return;
+            }
+        }
         let phase = if self.clock.pose.motion.is_attack() {
             self.clock.pose.age / Motion::Attack.seconds(self.id)
         } else {
@@ -254,13 +410,7 @@ impl Visual {
                 .local_transform_mut()
                 .set_position(Vector3::new(0.0, -self.crouch_drop, 0.0))
                 .set_rotation(UnitQuaternion::from_euler_angles(-self.aim_pitch, 0.0, 0.0));
-            weapons::update_vivi_blades(
-                g,
-                self.weapon,
-                phase,
-                self.clock.pose.motion == Motion::Attack2,
-                false,
-            );
+            weapons::update_vivi_pose(g, self.weapon, self.clock.pose, self.orbit_age, false);
             g.update_hierarchical_data_for_descendants(self.weapon);
             return;
         }
@@ -269,6 +419,15 @@ impl Visual {
                 self.clock.pose.motion,
                 self.clock.pose.age,
             )
+        } else if self.id == 14 && matches!(self.clock.pose.motion, Motion::ShionLoad | Motion::ShionLoop | Motion::ShionEnd | Motion::ShionUltimate)
+        {
+            trickcal_shooting_balddagu::shion_skill::hand(self.clock.pose.motion, self.clock.pose.age)
+        } else if self.id == 5 && matches!(self.clock.pose.motion,Motion::PicoraSkill|Motion::PicoraUltimate) {
+            trickcal_shooting_balddagu::picora_skill::hand(self.clock.pose.motion,self.clock.pose.age,false)
+        } else if self.id == 10 && matches!(self.clock.pose.motion,Motion::UiSkill|Motion::UiUltimate) {
+            trickcal_shooting_balddagu::ui_skill::hand(self.clock.pose.motion,self.clock.pose.age)
+        } else if self.id == 2 && matches!(self.clock.pose.motion, Motion::ErpinSkill | Motion::ErpinStart | Motion::ErpinCharge | Motion::ErpinRecover) {
+            trickcal_shooting_balddagu::erpin_skill::hand_motion(self.clock.pose.motion, self.clock.pose.age)
         } else if self.id == 4 {
             trickcal_shooting_balddagu::aya_attack::hand(
                 false,
@@ -281,14 +440,17 @@ impl Visual {
         g[self.weapon]
             .local_transform_mut()
             .set_rotation(UnitQuaternion::from_euler_angles(
-                -self.aim_pitch + motion.angles[0],
+                weapons::world_pitch(self.id, -self.aim_pitch + motion.angles[0]),
                 motion.angles[1],
-                motion.angles[2],
+                if self.id == 10 && matches!(self.clock.pose.motion, Motion::UiSkill | Motion::UiUltimate) {
+                    // Hold the leaf beside the broad hat so its full source spin stays visible.
+                    0.75
+                } else { motion.angles[2] },
             ));
         g.update_hierarchical_data_for_descendants(self.weapon);
         if self.id == 11 {
-            weapons::update_slingshot(g, self.weapon, phase);
-            g.update_hierarchical_data_for_descendants(self.weapon);
+            self.butter_weapon(g);
+            return;
         }
         if self.id == 4 {
             weapons::update_aya(
@@ -321,11 +483,26 @@ impl Visual {
             self.grips[1].orient(g, facing * palm);
             self.grips[1].pose(g, 0.18);
         }
-        let desired = super::skeleton::world_rotation(g, self.weapon);
+        let weapon_rotation = super::skeleton::world_rotation(g, self.weapon);
+        let desired = if self.id == 1 {
+            let amount = trickcal_shooting_balddagu::naia_skill::whale_form(
+                self.clock.pose.motion,
+                self.clock.pose.age,
+            );
+            weapon_rotation.slerp(
+                &(weapon_rotation * super::naia_whales::cradle_rotation(false)),
+                amount,
+            )
+        } else {
+            super::hand_grip::facing(weapon_rotation, self.id, false)
+        };
         if held {
             self.grips[0].orient(g, desired);
         }
-        if held && weapons::grips(self.id)[1].is_some() {
+        if held
+            && weapons::grips(self.id)[1].is_some()
+            && (self.id != 1 || self.clock.pose.motion.is_naia_skill())
+        {
             self.align_supporting_hands(g, desired);
         }
         let parent = g[self.weapon].parent();
@@ -336,7 +513,13 @@ impl Visual {
         let hand_pos = inverse
             .transform_point(&self.grips[0].contact(g).into())
             .coords;
-        let grip = weapons::grips(self.id)[0].unwrap();
+        let grip = if self.id == 1 {
+            **g[weapons::grip_node(g, self.weapon, 1, false)]
+                .local_transform()
+                .position()
+        } else {
+            weapons::grips(self.id)[0].unwrap()
+        };
         let transform = g[self.weapon].local_transform();
         let offset = **transform.rotation() * grip.component_mul(transform.scale());
         g[self.weapon]
@@ -344,14 +527,151 @@ impl Visual {
             .set_position(hand_pos - offset);
         g.update_hierarchical_data_for_descendants(self.weapon);
     }
+    fn butter_weapon(&self, g: &mut Graph) {
+        use trickcal_shooting_balddagu::butter_skill as b;
+        let p=self.clock.pose;
+        let parent=g[self.root].parent();
+        let facing=super::skeleton::world_rotation(g,parent);
+        let rotation=facing*UnitQuaternion::from_euler_angles(-self.aim_pitch,0.0,0.0);
+        // The tail clock keeps advancing even while the source draw pose is held.
+        let tail=g.traverse_handle_iter(self.root).find(|&h|g[h].name()=="Tail");
+        if let Some(tail)=tail {
+            let amount=if p.motion==Motion::ButterAttack && p.age<0.67 {0.40}else{0.12};
+            let base=super::skeleton::world_rotation(g,tail);
+            super::skeleton::set_global_rotation(g,tail,
+                UnitQuaternion::from_axis_angle(&Vector3::y_axis(),(self.orbit_age*12.0).sin()*amount)*base);
+        }
+        let giant=super::butter_fx::is_giant(p);
+        let held=g[self.weapon].visibility() && b::weapon_visible(p.motion,p.age);
+        g[self.weapon].set_visible(held);
+        let scale=1.0+2.7*b::growth(p.motion,p.age);
+        g[self.weapon].local_transform_mut().set_scale(Vector3::repeat(scale));
+        super::butter_fx::weapon(g,self.weapon,p,false);
+        if giant {
+            // Grow the fork away from the reachable pouch, then draw it back.
+            let released=p.age>=b::ULTIMATE_RELEASE;
+            let pull=if released {1.0}else{b::pull(p.motion,p.age)};
+            let orientation=UnitQuaternion::from_euler_angles(-self.aim_pitch,0.0,0.0);
+            let pouch=Vector3::new(0.0,1.16,0.40-0.18*pull);
+            g[self.weapon].local_transform_mut().set_position(pouch-orientation*super::butter_fx::pouch(true,pull)*scale)
+                .set_rotation(UnitQuaternion::from_euler_angles(-self.aim_pitch,0.0,0.0));
+            g.update_hierarchical_data_for_descendants(self.weapon);
+            if released {
+                for grip in &self.grips {grip.pose(g,0.0);}
+                return;
+            }
+            let arms=[false,true].map(|left|super::skeleton::arm_bone_names(left).map(|name|g.traverse_handle_iter(self.root).find(|&h|g[h].name()==name).unwrap()));
+            for (i,left) in [false,true].into_iter().enumerate() {
+                self.grips[i].pose(g,if p.age<2.5 {0.85}else{0.0});
+                self.grips[i].orient(g,super::hand_grip::facing(rotation,11,left));
+            }
+            let origin=g[self.weapon].global_position();
+            let offsets=[0,1].map(|i|self.grips[i].contact(g)-g[arms[i][2]].global_position());
+            let centers=[0,1].map(|i|g[arms[i][0]].global_position()+offsets[i]-(g[super::butter_fx::draw_node(g,self.weapon,i==1)].global_position()-origin));
+            let radii=[0,1].map(|i|(g[arms[i][1]].global_position()-g[arms[i][0]].global_position()).norm()+(g[arms[i][2]].global_position()-g[arms[i][1]].global_position()).norm()-0.002);
+            let mut reachable=origin;
+            for _ in 0..24 {for i in 0..2 {let delta=reachable-centers[i];if delta.norm()>radii[i] {reachable=centers[i]+delta.normalize()*radii[i];}}}
+            let inverse=g[parent].global_transform().try_inverse().unwrap_or_default();
+            g[self.weapon].local_transform_mut().set_position(inverse.transform_point(&reachable.into()).coords);
+            g.update_hierarchical_data_for_descendants(self.weapon);
+            for (i,left) in [false,true].into_iter().enumerate() {
+                let arm=arms[i];
+                let palm=super::hand_grip::facing(rotation,11,left);
+                self.grips[i].orient(g,palm);
+                let n=super::butter_fx::draw_node(g,self.weapon,left);
+                let target=g[n].global_position()-(self.grips[i].contact(g)-g[arm[2]].global_position());
+                super::hand_grip::solve_arm(g,arm[0],arm[1],arm[2],target,facing*Vector3::new(if left{1.0}else{-1.0},-0.4,-0.3));
+                self.grips[i].orient(g,palm);
+            }
+        } else {
+            self.grips[0].pose(g,if held {super::hand_grip::amount(11)}else{0.0});
+            self.grips[1].pose(g,if held&&b::left_holding(p.motion,p.age) {0.85}else{0.0});
+            let desired=super::hand_grip::facing(rotation,11,false);
+            if held {self.grips[0].orient(g,desired);}
+            if held&&b::left_holding(p.motion,p.age) {self.align_supporting_hands(g,desired);}
+            let inverse=g[parent].global_transform().try_inverse().unwrap_or_default();
+            let pos=inverse.transform_point(&self.grips[0].contact(g).into()).coords;
+            g[self.weapon].local_transform_mut().set_position(pos);
+            g.update_hierarchical_data_for_descendants(self.weapon);
+        }
+    }
+    pub(super) fn butter_draw_errors(&self,g:&Graph)->[f32;2] {
+        [false,true].map(|left|(self.palm_contact(g,left)-g[super::butter_fx::draw_node(g,self.weapon,left)].global_position()).norm())
+    }
     pub(super) fn palm_contact(&self, g: &Graph, left: bool) -> Vector3<f32> {
         self.grips[usize::from(left)].contact(g)
+    }
+    pub(super) fn komi_grip(&self,g:&mut Graph,scale:f32,active:bool)->(Vector3<f32>,UnitQuaternion<f32>) {
+        let p=self.clock.pose;
+        let facing=super::skeleton::world_rotation(g,g[self.root].parent());
+        let rotation=facing*super::komi_fx::tin_rotation(p);
+        if self.id!=12 || !active {return (Vector3::zeros(),rotation);}
+        g[self.weapon].set_visible(false);
+        for grip in &self.grips {grip.pose(g,0.0);}
+        if p.motion!=Motion::KomiFeast {return (Vector3::zeros(),rotation);}
+        let arms=[false,true].map(|left|super::skeleton::arm_bone_names(left).map(|name|g.traverse_handle_iter(self.root).find(|h|g[*h].name()==name).unwrap()));
+        let center=(self.grips[0].contact(g)+self.grips[1].contact(g))*0.5-rotation*Vector3::new(0.0,0.20,0.0)*scale;
+        for i in 0..2 {
+            self.grips[i].orient(g,super::hand_grip::facing(rotation,12,i==1));
+            self.grips[i].pose(g,0.6);
+            let offset=self.grips[i].contact(g)-g[arms[i][2]].global_position();
+            let target=center+rotation*super::komi_fx::grip(i==1)*scale-offset;
+            super::hand_grip::solve_arm(g,arms[i][0],arms[i][1],arms[i][2],target,facing*Vector3::new(if i==0{-1.0}else{1.0},-0.5,-0.4));
+            self.grips[i].orient(g,super::hand_grip::facing(rotation,12,i==1));
+        }
+        (center,rotation)
+    }
+    pub(super) fn hilde_grip(&self,g:&mut Graph)->(Vector3<f32>,UnitQuaternion<f32>) {
+        let p=self.clock.pose;
+        let facing=super::skeleton::world_rotation(g,g[self.root].parent());
+        let rotation=facing*UnitQuaternion::from_euler_angles(-self.aim_pitch,0.0,0.0)*super::hilde_fx::rotation(p);
+        if self.id!=13 || !super::hilde_fx::active(p){return (self.palm_contact(g,false),rotation);}
+        g[self.weapon].set_visible(false);
+        let arms=[false,true].map(|left|super::skeleton::arm_bone_names(left).map(|name|g.traverse_handle_iter(self.root).find(|h|g[*h].name()==name).unwrap()));
+        for i in 0..2 {self.grips[i].orient(g,super::hand_grip::facing(rotation,13,i==1));self.grips[i].pose(g,if p.motion==Motion::HildeSkill && i==1 {0.25}else{1.0});}
+        let difference=rotation*super::hilde_fx::support(p)*super::hilde_fx::SCALE;
+        let offsets=[0,1].map(|i|self.grips[i].contact(g)-g[arms[i][2]].global_position());
+        let centers=[0,1].map(|i|g[arms[i][0]].global_position()+offsets[i]-if i==1{difference}else{Vector3::zeros()});
+        let radii=[0,1].map(|i|(g[arms[i][1]].global_position()-g[arms[i][0]].global_position()).norm()+(g[arms[i][2]].global_position()-g[arms[i][1]].global_position()).norm()-0.002);
+        let mut contact=self.grips[0].contact(g);
+        for _ in 0..24 {for i in 0..2 {let d=contact-centers[i];if d.norm()>radii[i]{contact=centers[i]+d.normalize()*radii[i];}}}
+        for i in 0..2 {let target=contact+if i==1 {difference}else{Vector3::zeros()}-offsets[i];super::hand_grip::solve_arm(g,arms[i][0],arms[i][1],arms[i][2],target,facing*Vector3::new(if i==0{-1.0}else{1.0},-0.5,-0.4));self.grips[i].orient(g,super::hand_grip::facing(rotation,13,i==1));}
+        (self.grips[0].contact(g),rotation)
+    }
+    pub(super) fn mayo_grip(&self,g:&mut Graph)->(Vector3<f32>,UnitQuaternion<f32>) {
+        let p=self.clock.pose;
+        let facing=super::skeleton::world_rotation(g,g[self.root].parent());
+        let rotation=facing*UnitQuaternion::from_euler_angles(-self.aim_pitch,0.0,0.0)*super::mayo_fx::rotation(p);
+        if self.id!=8 || !super::mayo_fx::active(p){return (self.palm_contact(g,false),rotation);}
+        g[self.weapon].set_visible(false);
+        let arms=[false,true].map(|left|super::skeleton::arm_bone_names(left).map(|name|g.traverse_handle_iter(self.root).find(|h|g[*h].name()==name).unwrap()));
+        for i in 0..2 {self.grips[i].orient(g,super::hand_grip::facing(rotation,13,i==1));self.grips[i].pose(g,1.0);}
+        let difference=rotation*super::mayo_fx::support(p)*super::mayo_fx::SCALE;
+        let offsets=[0,1].map(|i|self.grips[i].contact(g)-g[arms[i][2]].global_position());
+        let centers=[0,1].map(|i|g[arms[i][0]].global_position()+offsets[i]-if i==1{difference}else{Vector3::zeros()});
+        let radii=[0,1].map(|i|(g[arms[i][1]].global_position()-g[arms[i][0]].global_position()).norm()+(g[arms[i][2]].global_position()-g[arms[i][1]].global_position()).norm()-0.002);
+        let mut contact=self.grips[0].contact(g);
+        for _ in 0..24 {for i in 0..2 {let d=contact-centers[i];if d.norm()>radii[i]{contact=centers[i]+d.normalize()*radii[i];}}}
+        for i in 0..2 {let target=contact+if i==1 {difference}else{Vector3::zeros()}-offsets[i];super::hand_grip::solve_arm(g,arms[i][0],arms[i][1],arms[i][2],target,facing*Vector3::new(if i==0{-1.0}else{1.0},-0.5,-0.4));self.grips[i].orient(g,super::hand_grip::facing(rotation,13,i==1));}
+        (self.grips[0].contact(g),rotation)
     }
     pub(super) fn verify_hand_grip(&self, g: &Graph, left: bool) {
         self.grips[usize::from(left)].verify(g, true);
     }
     fn align_supporting_hands(&self, g: &mut Graph, desired: UnitQuaternion<f32>) {
-        let support_rotation = super::hand_grip::facing(desired, self.id, true);
+        let support_rotation = if self.id == 1 {
+            let rotation = super::skeleton::world_rotation(g, self.weapon);
+            let amount = trickcal_shooting_balddagu::naia_skill::whale_form(
+                self.clock.pose.motion,
+                self.clock.pose.age,
+            );
+            super::hand_grip::facing(rotation, self.id, true).slerp(
+                &(rotation * super::naia_whales::cradle_rotation(true)),
+                amount,
+            )
+        } else {
+            super::hand_grip::facing(desired, self.id, true)
+        };
         self.grips[1].orient(g, support_rotation);
         let arms = [false, true].map(|left| {
             super::skeleton::arm_bone_names(left).map(|name| {
@@ -367,7 +687,7 @@ impl Visual {
             .global_transform()
             .transform_point(&grip_values[1].unwrap().into())
             .coords
-            - g[self.weapon]
+            - g[weapons::grip_node(g, self.weapon, self.id, false)]
                 .global_transform()
                 .transform_point(&grip_values[0].unwrap().into())
                 .coords;
@@ -404,11 +724,12 @@ impl Visual {
         }
     }
     pub fn selection_pose(&mut self, g: &mut Graph, elapsed: f32) {
+        self.orbit_age = elapsed;
         self.seek(
             g,
             trickcal_shooting_balddagu::motion::selection_pose(self.id, elapsed),
         );
-        g[self.weapon].set_visibility(false);
+        g[self.weapon].set_visible(false);
     }
     fn set_motion(&mut self, g: &mut Graph, motion: Motion) {
         self.motion = motion;
@@ -471,9 +792,37 @@ impl Visual {
     pub fn pose(&self) -> Pose {
         self.clock.pose
     }
+    pub fn prepare_chloe_arms(&self, g: &mut Graph, gesture: [bool; 2]) {
+        if let Some(arms) = &self.chloe_arms {
+            let carry = super::chloe_arms::carrying(self.clock.pose);
+            arms.apply(g, gesture.map(|active| active || !carry));
+        }
+    }
+    pub fn review_chloe_arms(&self, g: &Graph) {
+        if let Some(arms) = &self.chloe_arms { arms.review(g); }
+    }
+    pub fn verify_aya_ultimate(&self, g: &Graph) {
+        assert!(g[self.weapon].global_position().y > self.head_position(g).y + 0.35,
+            "Aya parasol floats above her head");
+    }
+    pub fn verify_naia_ultimate(&self, g: &Graph) {
+        assert!(
+            !g[self.weapon].visibility(),
+            "world ultimate weapon must be hidden"
+        );
+        let school = self.whales.as_ref().expect("Naia school");
+        assert!(g[school.root].visibility());
+        assert_eq!(school.whales.len(), 6);
+        for whale in school.whales {
+            assert!(g[whale].local_transform().scale().x > 0.001);
+        }
+    }
     /// Apply after the engine evaluates Move, before crouch/weapon IK. Every
     /// non-arm bone remains exactly at its current locomotion sample.
     pub fn layer_attack_arms(&self, g: &mut Graph) {
+        if self.id == 3 {
+            return;
+        }
         let weight = self.clock.pose.arm_attack_weight(self.id);
         if weight <= 0.0 {
             return;
@@ -504,15 +853,18 @@ impl Visual {
         self.wings.borrow_mut().apply(g, dt);
     }
     pub fn staff_muzzle(&self, g: &Graph) -> Vector3<f32> {
-        g[self.weapon]
-            .global_transform()
-            .transform_point(&Vector3::new(0.0, 0.72, 0.0).into())
-            .coords
+        weapons::erpin_muzzle(g, self.weapon)
+    }
+    pub fn syringe_muzzle(&self, g: &Graph) -> Vector3<f32> {
+        weapons::hilde_muzzle(g, self.weapon)
+    }
+    pub fn clover_muzzle(&self, g: &Graph) -> Vector3<f32> {
+        super::ui_fx::muzzle(g, self.weapon)
     }
     pub fn water_muzzle(&self, g: &Graph) -> Vector3<f32> {
         g[self.weapon]
             .global_transform()
-            .transform_point(&Vector3::new(0.0, 0.10, 0.49).into())
+            .transform_point(&super::naia_whales::MUZZLE.into())
             .coords
     }
 
@@ -595,21 +947,27 @@ impl Visual {
         tick: u64,
         grounded: bool,
     ) {
+        self.weaken_outline.update(g, self.root, a.alive() && a.combat.weaken > 0.0 && !self.is_shadow_only());
         let pose = self.clock.observe(a, dt, tick, grounded);
         self.aim_pitch = a.pitch;
+        self.orbit_age = tick as f32 / 60.0;
         self.crouch_drop = if a.alive() {
             a.crouch_drop() * a.body_scale()
         } else {
             0.0
         };
         self.seek(g, pose);
+        g[self.root].set_visible(a.combat.polymorph<=0.0);
         // Meshy props are separate from the worn character mesh.
-        g[self.weapon].set_visibility(
+        g[self.weapon].set_visible(
             a.alive()
+                && a.combat.polymorph<=0.0
                 && pose.motion != Motion::Spawn
                 && !a.dancing
                 && a.wave_ticks == 0
-                && !matches!(self.id, 3 | 6),
+                && !matches!(self.id, 3 | 6 | 7)
+                && !(self.id == 13 && super::hilde_fx::active(pose))
+                && !(self.id == 12 && a.combat.komi.active()),
         );
         let inverse = g[parent]
             .global_transform()

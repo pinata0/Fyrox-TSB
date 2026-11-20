@@ -1,0 +1,20 @@
+Source: assets/ui/home/elias-picnic-soft.png
+Created: 2026-11-20, built-in image_gen, transparent background.
+Character design: EPID Games. Fan-game icon derived from the home illustration.
+
+Prompt:
+Use case: background-extraction. Asset type: Windows taskbar/process icon and
+browser favicon, square transparent PNG. Extract ONLY the head/face, short
+surrounding hair, and gold crown of Erpin, the blonde princess in the center-right
+with reddish pink starry eyes holding a cupcake. Preserve her original illustrated
+face, expression, eye shapes, mouth, line art, warm colors, head tilt and crown.
+Remove scenery, other characters, torso, hands, cupcake, braid lengths, wings and
+staff. Close the cutout just below her chin. Center the head with narrow padding,
+keeping the crown visible. No text, border, shadow, badge or new decorations.
+
+erpin-source.png: approved full-resolution cutout.
+erpin.png: embedded 256px window/taskbar icon.
+erpin.ico: Windows file/process icon, 16/24/32/48/64/128/256px.
+erpin.res: compiled Windows icon resource for the game and one-file launcher.
+favicon.ico: browser icon, 16/32/48px, with separate 16/32px PNG alternatives.
+Re-export with scripts/export_app_icons.py --rc <Windows SDK rc.exe>.

@@ -4,7 +4,7 @@ use fyrox::{
     dpi::{LogicalSize, PhysicalSize, Size},
     engine::{executor::Executor, GraphicsContextParams},
     event_loop::EventLoop,
-    window::WindowAttributes,
+    window::{Icon, WindowAttributes},
 };
 use presentation::{Game, Runtime, Session};
 use trickcal_shooting_balddagu::{
@@ -15,6 +15,9 @@ use trickcal_shooting_balddagu::{
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    // Engine info logs flush the file for every transient sound source.
+    // Keep warnings/errors; opt in to verbose resource/audio diagnostics.
+    Log::set_log_info(args.iter().any(|a| a == "--verbose-engine"));
     #[cfg(feature = "eos")]
     let _eos_shutdown = {
         use trickcal_shooting_balddagu::eos;
@@ -27,11 +30,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         eos::ShutdownGuard
     };
     if args.iter().any(|a| a == "--help" || a == "-h") {
-        println!("Trickcal : Shooting Balddagu\n\n  tsb                         Home / create or join a room\n  tsb --eos-host              Create a port-forwarding-free room\n  tsb --join eos:HOST:SOCKET   Join an EOS room\n  tsb --force-relay           Force EOS relay for testing\n  tsb --eos-config FILE       EOS game-client settings\n  tsb --lan                   Use UDP in the room creation UI\n  tsb --host 0.0.0.0:28080     Legacy direct UDP host\n  tsb --join 192.168.0.2:28080 Join host\n  tsb --online-session FILE   Open a DotG host/join session\n  tsb --solo                  Solo practice / optional bots\n  tsb --smoke-test            Render for 14 seconds and exit\n  tsb --art-review            Capture all 15 animated models and exit\n  tsb --communication-review Capture wheel and 15 hello gestures\n  tsb --ghost-review          Capture ghost wall phasing and ripples\n  tsb --lobby-review          Capture lobby flow and exit\n  tsb --auto-start            Start host/practice immediately\n\nH character select / arrows + F5 confirm / F5 start\nWASD move / mouse aim / LMB attack / hold RMB zoom (Shion) / R reload / E skill / Q ultimate\nG dance / mouse orbit + wheel zoom while dancing\nC hold + mouse drag + release: communication wheel / RMB cancel\nENTER chat (including hero/lobby/map) / ENTER send / TAB team-match / ESC cancel / PgUp-PgDn history\nM microphone mute/unmute (starts muted, team voice)\nSPACE jump / SHIFT ghost phase (3s / 12s cooldown) / ELF SHIFT+LMB yellow portal, SHIFT+RMB blue portal (5s each) / hold CTRL crouch / TAB scoreboard / ESC settings menu / F10 quit");
+        println!("Trickcal : Shooting Balddagu\n\n  tsb                         Home / create or join a room\n  tsb --eos-host              Create a port-forwarding-free room\n  tsb --join eos:HOST:SOCKET   Join an EOS room\n  tsb --force-relay           Force EOS relay for testing\n  tsb --eos-config FILE       EOS game-client settings\n  tsb --lan                   Use UDP in the room creation UI\n  tsb --host 0.0.0.0:28080     Legacy direct UDP host\n  tsb --join 192.168.0.2:28080 Join host\n  tsb --online-session FILE   Open a DotG host/join session\n  tsb --solo                  Solo practice / optional bots\n  tsb --smoke-test            Render for 14 seconds and exit\n  tsb --art-review            Capture all 15 animated models and exit\n  tsb --communication-review Capture wheel and 15 hello gestures\n  tsb --ghost-review          Capture ghost wall phasing and ripples\n  tsb --lobby-review          Capture lobby flow and exit\n  tsb --auto-start            Start host/practice immediately\n\nH character select / arrows + F5 confirm / F5 start\nWASD move / mouse aim / LMB attack / hold RMB zoom (Shion) / R reload / E skill / Q ultimate\nG dance / mouse orbit + wheel zoom while dancing\nC hold + mouse drag + release: communication wheel / RMB cancel\nENTER chat (including hero/lobby/map) / ENTER send / TAB team-match / ESC cancel / PgUp-PgDn history\nM microphone mute/unmute (starts muted, team voice)\nSPACE jump / SHIFT beast leap (6s cooldown), spirit burrow (4s, hold LMB 0.6s to emerge, 8s cooldown), ghost phase (3s / 12s cooldown) / ELF SHIFT+LMB yellow portal, SHIFT+RMB blue portal (5s each) / hold CTRL crouch / TAB scoreboard / ESC settings menu / F10 quit");
         return Ok(());
     }
     let smoke = args.iter().any(|a| a == "--smoke-test").then_some(14.0);
     let auto_start = args.iter().any(|a| a == "--auto-start");
+    let settings = trickcal_shooting_balddagu::settings::settings_path().ok()
+        .and_then(|path| trickcal_shooting_balddagu::settings::Settings::load(&path).ok())
+        .unwrap_or_default();
     let mut session = if let Some(index) = args.iter().position(|a| a == "--online-session") {
         let path = args
             .get(index + 1)
@@ -68,10 +74,22 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             || a == "--communication-review"
             || a == "--hud-review"
             || a == "--phase-review"
+            || a == "--race-skill-review"
             || a == "--weapon-review"
             || a == "--greeting-review"
             || a == "--attack-review"
             || a == "--naia-skill-review"
+            || a == "--id-skill-review"
+            || a == "--aya-skill-review"
+            || a == "--renua-skill-review"
+            || a == "--shion-skill-review"
+            || a == "--picora-skill-review"
+            || a == "--ui-skill-review"
+            || a == "--mayo-skill-review"
+            || a == "--bella-skill-review"
+            || a == "--komi-skill-review"
+            || a == "--butter-skill-review"
+            || a == "--vivi-skill-review"
             || a == "--portal-review"
             || a == "--impact-review"
             || a == "--deathcam-review"
@@ -82,14 +100,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             || a == "--shield-review"
             || a == "--shadow-review"
             || a == "--settings-review"
+            || a == "--character-help-review"
+            || a == "--scoreboard-review"
             || a == "--round-results-review"
             || a == "--objective-hud-review"
+            || a == "--status-effects-review"
             || a == "--nameplates-review"
             || a == "--voice-review"
+            || a == "--character-voice-review"
     }) || (!args.iter().any(|a| a == "--host") && (smoke.is_some() || !auto_start))
     {
         // Combat/art reviews keep their full fixture; regular play starts solo.
         let mut w = if smoke.is_some()
+            || (args.iter().any(|a| a == "--perf-profile") && args.iter().any(|a| a == "--perf-bots"))
             || args.iter().any(|a| {
                 a.ends_with("-review") && !matches!(a.as_str(), "--home-review" | "--lobby-review")
             }) {
@@ -98,6 +121,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
             World::room(Default::default(), true)
         };
         w.actors[0].human = true;
+        if args.iter().any(|a| a == "--chloe-practice") {
+            w.select_character(0, 6);
+        }
         Session::Solo(Box::new(w))
     } else {
         let addr = if let Some(i) = args.iter().position(|a| a == "--host") {
@@ -127,10 +153,24 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     }
     std::fs::create_dir_all("artifacts/logs")?;
     Log::set_file_name(format!("artifacts/logs/tsb-{}.log", std::process::id()));
+    // Embed the icon so portable builds and different working directories agree.
+    let icon_image = image::load_from_memory_with_format(
+        include_bytes!("../assets/ui/icons/erpin.png"),
+        image::ImageFormat::Png,
+    )?
+    .into_rgba8();
+    let (width, height) = icon_image.dimensions();
+    let icon = Icon::from_rgba(icon_image.into_raw(), width, height)?;
+    let window_attributes = WindowAttributes::default().with_window_icon(Some(icon.clone()));
+    #[cfg(target_os = "windows")]
+    let window_attributes = {
+        use fyrox::platform::windows::WindowAttributesExtWindows;
+        window_attributes.with_taskbar_icon(Some(icon))
+    };
     let mut executor = Executor::from_params(
         Some(EventLoop::new()?),
         GraphicsContextParams {
-            window_attributes: WindowAttributes::default()
+            window_attributes: window_attributes
                 .with_title("Trickcal : Shooting Balddagu | MVP")
                 .with_inner_size(
                     if args
@@ -162,6 +202,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
                         Size::Logical(LogicalSize::new(960.0, 640.0))
                     },
                 ),
+            vsync: !args.iter().any(|a| a == "--no-vsync")
+                && !(args.iter().any(|a| a == "--perf-profile") && std::env::var_os("TSB_PERF_NO_VSYNC").is_some())
+                && (settings.vsync || args.iter().any(|a| a == "--vsync")),
             ..Default::default()
         },
     );

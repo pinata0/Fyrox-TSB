@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::{
     combat::ProjectileKind,
     erpin::*,
@@ -202,7 +203,7 @@ fn all_five_primary_attacks_fire_at_the_source_event_while_moving() {
         }
         assert_eq!(w.projectiles.len(), count + 1);
     }
-    assert!((w.actors[0].pos.z - 55.0 * 5.8 * DT).abs() < 0.001);
+    assert!((w.actors[0].pos.z - 55.0 * WALK_SPEED * DT).abs() < 0.001);
     assert_eq!(w.actors[0].hp, 40);
     assert_eq!(w.actors[0].ammo, 15);
 }

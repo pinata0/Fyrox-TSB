@@ -11,7 +11,7 @@ use fyrox::{
     },
 };
 use serde::Deserialize;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 #[derive(Deserialize)]
 struct Source {
@@ -49,7 +49,9 @@ pub(super) fn restore(model: &ModelResource, slug: &str) -> Result<(), String> {
         .map(|(i, p)| (key(p), i))
         .collect();
     let model = model.data_ref();
-    let mut restored = 0;
+    // One channel can span multiple material surfaces (e.g. Butter's slingshot).
+    // Validate unique source channels, while still rebuilding every surface below.
+    let mut restored = HashSet::new();
     for node in model.get_scene().graph.linear_iter() {
         let Some(mesh) = node.cast::<Mesh>() else {
             continue;
@@ -79,6 +81,7 @@ pub(super) fn restore(model: &ModelResource, slug: &str) -> Result<(), String> {
                     .iter()
                     .find(|s| imported.name.ends_with(&s.name))
                     .ok_or_else(|| format!("{slug}: missing morph {}", imported.name))?;
+                restored.insert(shape.name.as_str());
                 if shape.offsets.len() != shape.indices.len() * 3 {
                     return Err(format!("{slug}: malformed morph offsets"));
                 }
@@ -143,16 +146,16 @@ pub(super) fn restore(model: &ModelResource, slug: &str) -> Result<(), String> {
                 &data.vertex_buffer,
                 &inputs,
             ));
-            restored += inputs.len();
         }
     }
-    if restored != source.shapes.len() {
+    if restored.len() != source.shapes.len() {
         return Err(format!(
-            "{slug}: restored {restored} of {} morph channels",
+            "{slug}: restored {} of {} morph channels",
+            restored.len(),
             source.shapes.len()
         ));
     }
-    println!("MORPH_REMAP_OK: {slug}, {restored} channels, all imported vertices mapped");
+    println!("MORPH_REMAP_OK: {slug}, {} channels, all imported vertices mapped", restored.len());
     Ok(())
 }
 

@@ -84,6 +84,36 @@ pub fn hand(left: bool, phase: f32, enhanced: bool) -> HandMotion {
     }
 }
 
+/// A broad right-to-left camera-space sweep around the middle of the handle.
+/// Positive pitch lays the upright shaft forward; yaw carries it horizontally
+/// across the view. Keep the source fold/blade clock and world wrist path intact.
+pub fn first_person_hand(phase: f32, enhanced: bool) -> HandMotion {
+    if !phase.is_finite() || phase <= 0.0 || phase >= 1.0 {
+        return HandMotion::default();
+    }
+    const KEYS: [(f32, [f32; 3], [f32; 3]); 6] = [
+        (0.0, [0.0; 3], [0.0; 3]),
+        (0.20, [-0.14, 0.06, 0.06], [1.15, -1.05, 0.08]),
+        (0.42, [0.44, 0.08, 0.16], [1.25, 0.25, -0.04]),
+        (0.58, [0.84, 0.03, 0.12], [1.15, 1.20, -0.12]),
+        (0.70, [0.76, 0.01, 0.10], [1.05, 1.10, -0.10]),
+        (1.0, [0.0; 3], [0.0; 3]),
+    ];
+    let segment = KEYS.windows(2).find(|pair| phase <= pair[1].0).unwrap();
+    let (start, from_position, from_angles) = segment[0];
+    let (end, to_position, to_angles) = segment[1];
+    let t = (phase - start) / (end - start);
+    let t = t * t * (3.0 - 2.0 * t);
+    let reach = if enhanced { 1.10 } else { 1.0 };
+    HandMotion {
+        position: std::array::from_fn(|i| {
+            (from_position[i] + (to_position[i] - from_position[i]) * t)
+                * if i == 0 { reach } else { 1.0 }
+        }),
+        angles: std::array::from_fn(|i| from_angles[i] + (to_angles[i] - from_angles[i]) * t),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

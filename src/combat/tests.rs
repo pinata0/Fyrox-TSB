@@ -1,8 +1,131 @@
 use super::*;
 
 #[test]
-fn every_melee_hero_leaves_one_cut_per_swing_with_vivi_finisher_variation() {
+fn darts_and_syringes_embed_only_on_structure_contacts_then_expire() {
+    use crate::impact::{ImpactKind, IMPACT_SECONDS};
+    for (kind, expected) in [
+        (ProjectileKind::Needle, ImpactKind::PoisonDart),
+        (ProjectileKind::Poison, ImpactKind::PoisonDart),
+        (ProjectileKind::Syringe, ImpactKind::Syringe),
+    ] {
+        for intercepted in [false, true] {
+            let mut w = shield_world(0.0, 0.0);
+            for actor in &mut w.actors {
+                actor.active = false;
+            }
+            w.actors[0].active = true;
+            w.actors[0].character = if kind == ProjectileKind::Syringe {
+                13
+            } else {
+                8
+            };
+            w.actors[0].pos = V3::default();
+            w.actors[6].active = intercepted;
+            w.actors[6].pos = V3::new(0.0, 0.0, 2.0);
+            w.map = vec![Block {
+                center: V3::new(0.0, 1.5, 5.0),
+                size: V3::new(4.0, 3.0, 1.0),
+                color: [180, 170, 150],
+                phaseable: false,
+            }];
+            w.projectile(
+                0,
+                kind,
+                V3::new(0.0, 0.0, 1.0),
+                60.0,
+                10.0,
+                AttackClass::Basic,
+            );
+            for _ in 0..8 {
+                w.advance_projectiles();
+            }
+            assert!(
+                w.projectiles.is_empty(),
+                "embedded meshes are not damaging projectiles"
+            );
+            if intercepted {
+                assert!(
+                    w.impacts.is_empty(),
+                    "a player hit cannot leave a dart on the wall behind"
+                );
+                continue;
+            }
+            assert_eq!(w.impacts.len(), 1);
+            let hit = w.impacts[0];
+            assert_eq!(hit.kind, expected);
+            assert!((hit.position.z - 4.5).abs() < 0.001);
+            assert!(hit.embedded_direction().z > 0.99);
+            w.tick = hit.tick + (IMPACT_SECONDS / DT).ceil() as u64 + 1;
+            w.expire_impacts();
+            assert!(w.impacts.is_empty());
+            w.projectile(
+                0,
+                kind,
+                V3::new(1.0, 0.0, 0.0),
+                60.0,
+                10.0,
+                AttackClass::Basic,
+            );
+            w.projectiles[0].life = DT;
+            w.advance_projectiles();
+            assert!(
+                w.impacts.is_empty(),
+                "airborne expiry cannot leave an embedded mesh"
+            );
+        }
+    }
+}
+
+#[test]
+fn burrow_rejects_all_damage_classes_control_and_does_not_absorb_shots() {
+    for id in [1, 10] {
+        let mut w = shield_world(9.6, 25.0);
+        w.actors[6].character = id;
+        w.actors[6].race_skill.remaining = crate::race_skill::BURROW_DURATION;
+        let hp = w.actors[6].hp;
+        let shield = w.actors[6].shield_health();
+        let pos = w.actors[6].pos;
+        for class in [
+            AttackClass::Basic,
+            AttackClass::Skill,
+            AttackClass::Ultimate,
+        ] {
+            assert!(!w.damage_hit(0, 6, 1000.0, class, 3));
+        }
+        w.push(6, V3::new(1.0, 0.0, 0.0), 8.0);
+        w.taunt(0, 6, 2.0);
+        w.dot(0, 6, false, 5.0, AttackClass::Skill);
+        assert_eq!(w.actors[6].pos, pos);
+        assert_eq!(w.actors[6].hp, hp);
+        assert_eq!(w.actors[6].shield_health(), shield);
+        assert_eq!(w.actors[6].combat.taunt, 0.0);
+        assert_eq!(w.actors[6].combat.poison, 0.0);
+        assert!(!w.targets(0, w.actors[0].eye(), 100.0, false).contains(&6));
+        w.actors[0].yaw = 0.0;
+        w.actors[0].pitch = 0.0;
+        w.actors[6].pos = w.actors[0].pos + V3::new(0.0, 0.0, 2.0);
+        w.actors[7] = w.actors[6].clone();
+        w.actors[7].race_skill = Default::default();
+        w.actors[7].pos.z += 2.0;
+        assert_eq!(w.ray(0, 20.0, 30.0, 1, AttackClass::Basic, false), Some(7));
+        w.actors[6].race_skill = Default::default();
+        assert!(w.damage_hit(0, 6, 20.0, AttackClass::Basic, 3));
+    }
+}
+
+#[test]
+fn every_melee_hero_leaves_one_cut_per_swing_with_vivi_direction_changes() {
     use crate::impact::ImpactKind;
+    fn strike(w:&mut World,id:u8) {
+        if id==0 {
+            let phase=if w.actors[0].combat.vivi_combo==1 {crate::vivi_skill::Phase::Right}else{crate::vivi_skill::Phase::Left};
+            w.start_vivi(0,phase);
+            for _ in 0..25 {w.advance_vivi(0,Input::default());}
+        } else if id==6 {
+            w.primary_attack(0);
+            for _ in 0..49 {w.advance_chloe(0);}
+        } else {w.primary_attack(0);}
+    }
     for id in [0, 4, 6, 9, 12] {
         let mut w = shield_world(0.0, 0.0);
         for actor in &mut w.actors {
@@ -21,7 +144,7 @@ fn every_melee_hero_leaves_one_cut_per_swing_with_vivi_finisher_variation() {
         }];
         for swing in 0..3 {
             w.actors[0].cooldown = 0.0;
-            w.primary_attack(0);
+            strike(&mut w,id);
             assert_eq!(
                 w.impacts.len(),
                 swing + 1,
@@ -34,19 +157,19 @@ fn every_melee_hero_leaves_one_cut_per_swing_with_vivi_finisher_variation() {
         }
         assert_ne!(w.impacts[0].rotation, w.impacts[1].rotation);
         if id == 0 {
-            assert!(w.impacts[2].radius > w.impacts[0].radius);
+            assert_eq!(w.impacts[2].radius,w.impacts[0].radius);
         }
         w.impacts.clear();
         w.map[0].center.z = 7.0;
         w.actors[0].cooldown = 0.0;
-        w.primary_attack(0);
+        strike(&mut w,id);
         assert!(
             w.impacts.is_empty(),
             "hero {id}: out-of-reach wall cannot be cut"
         );
         w.map[0].center.z = -3.0;
         w.actors[0].cooldown = 0.0;
-        w.primary_attack(0);
+        strike(&mut w,id);
         assert!(
             w.impacts.is_empty(),
             "hero {id}: wall behind the swing cannot be cut"
@@ -54,7 +177,7 @@ fn every_melee_hero_leaves_one_cut_per_swing_with_vivi_finisher_variation() {
         w.map.clear();
         w.actors[0].pitch = -std::f32::consts::FRAC_PI_3;
         w.actors[0].cooldown = 0.0;
-        w.primary_attack(0);
+        strike(&mut w,id);
         assert_eq!(w.impacts.len(), 1);
         assert_eq!(w.impacts[0].face, 3);
         assert_eq!(w.impacts[0].kind, ImpactKind::Slash);
@@ -194,8 +317,8 @@ fn sanctuary_is_positional_even_after_firing_and_dots_pause_damage_inside() {
     w.primary_attack(6); // An attack consumes the old timed shield, never zone protection.
     assert!(w.in_spawn(6));
     assert!(!w.damage_hit(0, 6, 1000.0, AttackClass::Basic, 0));
-    w.actors[6].combat.poison = 4.0;
-    w.actors[6].combat.dots[0] = DamageOverTime {
+    w.actors[6].combat.frost = 4.0;
+    w.actors[6].combat.dots[1] = DamageOverTime {
         tick: 0.0,
         owner: 0,
         character: 8,
@@ -204,7 +327,7 @@ fn sanctuary_is_positional_even_after_firing_and_dots_pause_damage_inside() {
     w.advance_combat();
     assert_eq!(w.actors[6].hp, MAX_HP);
     w.actors[6].pos.z -= SPAWN_HALF_DEPTH + 0.1;
-    w.actors[6].combat.dots[0].tick = 0.0;
+    w.actors[6].combat.dots[1].tick = 0.0;
     w.advance_combat();
     assert!(w.actors[6].hp < MAX_HP);
     // Enemy and inactive spawn rooms grant no immunity.
@@ -345,4 +468,18 @@ fn spawn_invulnerability_still_rejects_damage() {
     assert_eq!(w.actors[6].combat.guard, 45.0);
     assert_eq!(w.actors[6].hp, MAX_HP);
     assert_eq!(w.actors[0].combat.ultimate, 0.0);
+}
+
+#[test]
+fn aya_weaken_reduces_all_outgoing_classes_and_blocked_butterflies_never_refund() {
+    for class in [AttackClass::Basic,AttackClass::Skill,AttackClass::Ultimate] {
+        let mut w=shield_world(0.0,0.0);w.actors[0].character=4;
+        w.actors[0].combat.weaken=4.0;
+        assert!(w.damage_hit(0,6,20.0,class,4));let reduced=w.actors[6].hp;
+        let mut plain=shield_world(0.0,0.0);plain.actors[0].character=4;
+        assert!(plain.damage_hit(0,6,20.0,class,4));assert!(reduced>plain.actors[6].hp);
+    }
+    let mut w=shield_world(0.0,0.0);w.actors[6].shield=5.0;w.actors[0].character=4;w.actors[0].ability_cooldown=5.0;
+    let mut p=Projectile::visual(1,0,ProjectileKind::Butterfly,V3::default());p.character=4;p.damage=6.0;p.class=AttackClass::Skill;
+    w.projectile_hit(&mut p,6);assert_eq!(w.actors[0].ability_cooldown,5.0);assert_eq!(w.actors[6].combat.weaken,0.0);
 }

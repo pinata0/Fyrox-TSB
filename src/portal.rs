@@ -6,6 +6,7 @@ use crate::{
 };
 
 pub const COOLDOWN: f32 = 5.0;
+pub const REOPEN_DELAY: f32 = 1.0;
 pub const RANGE: f32 = 45.0;
 pub const HALF_WIDTH: f32 = 0.95;
 pub const HALF_HEIGHT: f32 = 1.45;
@@ -64,11 +65,30 @@ pub struct State {
     pub cooldown: [f32; 2],
     pub down: [bool; 2],
     pub lock: f32,
+    /// Shared lockout for both owned endpoints after any player passes through.
+    pub reopen: f32,
     pub momentum: V3,
     /// Cumulative offsets keep unacknowledged mouse inputs in a stable coordinate frame.
     pub yaw_offset: f32,
     pub pitch_offset: f32,
     pub transits: u16,
+}
+
+impl State {
+    pub fn passable_ends(&self) -> Pair {
+        if self.reopen > 0.0 {
+            [None; 2]
+        } else {
+            self.ends
+        }
+    }
+}
+
+pub fn advance_reopen(remaining: &mut f32) {
+    *remaining = (*remaining - DT).max(0.0);
+    if *remaining < DT * 0.01 {
+        *remaining = 0.0;
+    }
 }
 
 pub fn is_elf(a: &Actor) -> bool {
@@ -198,7 +218,7 @@ pub fn advance(map: &[Block], a: &mut Actor, input: Input, occupied: &[Pair]) {
             *cd = 0.0;
         }
     }
-    a.portals.lock = (a.portals.lock - DT).max(0.0);
+    advance_reopen(&mut a.portals.lock);
     let buttons = [input.fire, input.alt_fire];
     for (color, button) in buttons.into_iter().enumerate() {
         let pressed = button && !a.portals.down[color];
@@ -208,7 +228,7 @@ pub fn advance(map: &[Block], a: &mut Actor, input: Input, occupied: &[Pair]) {
             || !pressed
             || a.portals.cooldown[color] > 0.0
             || !a.alive()
-            || a.combat.disabled()
+            || a.combat.skills_locked()
             || a.combat.channeling()
         {
             continue;
@@ -258,13 +278,14 @@ fn exit_position(map: &[Block], exit: Portal, offset: V3, height: f32) -> Option
 }
 
 /// Test the swept body before solid collision prevents it reaching the portal plane.
-pub fn traverse(map: &[Block], pairs: &[Pair], a: &mut Actor, velocity: V3) -> bool {
+/// Returns the pair owner so both endpoints can be closed after a successful transit.
+pub fn traverse(map: &[Block], pairs: &[Pair], a: &mut Actor, velocity: V3) -> Option<usize> {
     if a.portals.lock > 0.0 || !a.alive() || a.combat.disabled() {
-        return false;
+        return None;
     }
     let height = a.collision_height();
     let center = a.pos + V3::new(0.0, height * 0.5, 0.0);
-    for pair in pairs {
+    for (owner, pair) in pairs.iter().enumerate() {
         let [Some(first), Some(second)] = *pair else {
             continue;
         };
@@ -305,13 +326,13 @@ pub fn traverse(map: &[Block], pairs: &[Pair], a: &mut Actor, velocity: V3) -> b
             let v = entry.vector_to(exit, velocity);
             a.vy = v.y;
             a.portals.momentum = v.flat();
-            a.portals.lock = 0.22;
+            a.portals.lock = REOPEN_DELAY;
             a.portals.transits = a.portals.transits.wrapping_add(1);
             a.think = 0.0;
             a.dancing = false;
             a.wave_ticks = 0;
-            return true;
+            return Some(owner);
         }
     }
-    false
+    None
 }

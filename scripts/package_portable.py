@@ -118,6 +118,10 @@ def runtime_assets() -> set[Path]:
     for slug in SLUGS:
         selected.add(ROOT / f'assets/character-inputs/inputs-masked/{slug}.png')
     selected.update((ROOT / 'assets/fonts').glob('*.ttf'))
+    # Audio is embedded in the executable; retain originals, provenance and licenses.
+    selected.update(p for p in (ROOT / 'assets/audio/sfx').glob('*') if p.is_file())
+    selected.update(p for p in (ROOT / 'assets/audio/music').glob('*') if p.is_file())
+    selected.update(p for p in (ROOT / 'assets/audio/characters').rglob('*') if p.is_file())
     selected.update((ROOT / 'assets/ui/markers').glob('*.png'))
     selected.update((ROOT / 'assets/ui/round-results').glob('*.png'))
     selected.update((ROOT / 'assets/ui/startup').glob('*.png'))

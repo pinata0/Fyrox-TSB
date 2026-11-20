@@ -1,0 +1,2 @@
+// Rebuild erpin.res with scripts/export_app_icons.py when the icon changes.
+1 ICON "erpin.ico"

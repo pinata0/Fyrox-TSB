@@ -28,7 +28,7 @@ pub fn can_activate(a: &Actor) -> bool {
         && character(a.character).race == Race::Ghost
         && !a.phase_skill.active()
         && a.phase_skill.cooldown <= 0.0
-        && !a.combat.disabled()
+        && !a.combat.skills_locked()
         && !a.combat.channeling()
 }
 
@@ -36,6 +36,7 @@ pub fn can_activate(a: &Actor) -> bool {
 pub fn advance(map: &[Block], a: &mut Actor, down: bool) {
     let pressed = down && !a.phase_skill.down;
     a.phase_skill.down = down;
+    if a.combat.frozen > 0.0 { return; }
     if a.phase_skill.active() {
         a.phase_skill.remaining = (a.phase_skill.remaining - DT).max(0.0);
         if a.phase_skill.remaining < DT * 0.01 {

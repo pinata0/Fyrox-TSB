@@ -93,14 +93,23 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     assert_eq!(g[rt.actors[0]].visibility(), step != 0 && step != 21);
     assert_eq!(rt.visuals[0].is_shadow_only(), step != 19);
     let mut shadow_surfaces = 0;
-    for node in g.traverse_handle_iter(rt.actors[0]) {
+    // Summoned skill effects (for example Naia's whale school) are actor
+    // children too, but must retain their color passes in first person.
+    for node in [rt.visuals[0].root, rt.visuals[0].held_weapon()]
+        .into_iter().flat_map(|root| g.traverse_handle_iter(root)) {
         if let Some(mesh) = g[node].cast::<Mesh>() {
+            // Forward-only light ribbons and outlines deliberately have no
+            // shadow pass. Check the body/weapon surfaces that cast shadows.
+            if !mesh.cast_shadows() {
+                continue;
+            }
             for surface in mesh.surfaces() {
                 let material = surface.material().data_ref();
                 let shader = material.shader().data_ref();
                 assert_eq!(
                     shader.definition.passes.iter().any(|p| p.name == "GBuffer"),
-                    step == 19
+                    step == 19,
+                    "body/weapon color pass at step {step}: {}", g[node].name()
                 );
                 assert!(shader
                     .definition

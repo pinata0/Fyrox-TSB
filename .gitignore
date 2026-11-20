@@ -6,4 +6,8 @@
 /eos.local.json
 /release/
 /scripts/onefile-launcher/target/
+__pycache__/
+*.py[cod]
+*.blend[0-9]*
+/.codex-attachments/
 

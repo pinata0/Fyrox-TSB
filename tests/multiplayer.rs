@@ -1,6 +1,7 @@
 use std::{thread, time::Duration};
 use trickcal_shooting_balddagu::{
     game::*,
+    movement::WALK_SPEED,
     net::{Client, Server},
 };
 
@@ -34,7 +35,7 @@ fn client_predicts_between_udp_snapshots_then_accepts_server_correction() {
             .unwrap();
     }
     let drawn = client.motion.actor(&client.world, slot, slot).pos;
-    assert!(drawn.z > start.z + 0.5);
+    assert!(drawn.z > start.z + WALK_SPEED * DT * 5.0);
     assert_eq!(client.world.tick, tick);
     assert_eq!(client.world.actors[slot].pos, start);
     for _ in 0..45 {
@@ -78,7 +79,7 @@ fn two_udp_clients_join_opposing_teams_move_and_receive_restart() {
         server.update(Input::default()).unwrap();
         thread::sleep(Duration::from_millis(1));
     }
-    assert!(server.world.actors[ai].pos.z > start.z + 4.0);
+    assert!(server.world.actors[ai].pos.z > start.z + WALK_SPEED * DT * 45.0);
     for _ in 0..8 {
         a.update(Input::default()).unwrap();
         b.update(Input::default()).unwrap();

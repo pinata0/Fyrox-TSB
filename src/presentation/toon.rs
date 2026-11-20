@@ -60,6 +60,7 @@ impl ToonRenderer {
         quality.use_ssao = false;
         quality.fxaa = true;
         quality.hdr_settings.bloom_settings.use_bloom = false;
+        quality.csm_settings.size = 1024;
         renderer.set_quality_settings(&quality)?;
         let shaders = &mut renderer.renderer_resources.shaders;
         shaders.directional_light = directional;

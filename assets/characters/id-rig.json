@@ -1,8 +1,8 @@
 {
   "slug": "id",
-  "vertices": 47605,
-  "triangles": 92240,
-  "bones": 54,
+  "vertices": 4873,
+  "triangles": 9720,
+  "bones": 55,
   "clips": {
     "Idle": [
       0,
@@ -47,6 +47,18 @@
     "Select": [
       456,
       528
+    ],
+    "IdSkill": [
+      531,
+      639
+    ],
+    "IdPulse": [
+      642,
+      663
+    ],
+    "IdUltimate": [
+      666,
+      826
     ]
   },
   "fps": 30,
@@ -58,21 +70,21 @@
     "front": 0.20839950010051211,
     "eye_half_height": 0.03933006897568703,
     "morph_vertices": {
-      "eyeBlink_L": 1897,
+      "eyeBlink_L": 2492,
       "eyeSquint_L": 314,
       "eyeWide_L": 314,
       "browUp_L": 532,
-      "browDown_L": 523,
+      "browDown_L": 4317,
       "mouthSmile_L": 144,
       "mouthFrown_L": 143,
       "cheekPuff_L": 405,
       "cheekStretch_L": 490,
       "cheekSquash_L": 401,
-      "eyeBlink_R": 2230,
+      "eyeBlink_R": 2508,
       "eyeSquint_R": 314,
       "eyeWide_R": 314,
       "browUp_R": 476,
-      "browDown_R": 466,
+      "browDown_R": 3880,
       "mouthSmile_R": 149,
       "mouthFrown_R": 149,
       "cheekPuff_R": 411,
@@ -90,7 +102,12 @@
     -3.075696497489844e-07
   ],
   "companions": [
-    "Crescent",
+    "IdPodMesh.Seat",
+    "IdPodMesh.Bow",
+    "IdPodMesh.Back",
+    "IdPodMesh.Crown",
+    "IdPodMesh.Lantern.L",
+    "IdPodMesh.Lantern.R",
     "Nata"
   ],
   "hands": [
@@ -106,7 +123,7 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.L",
@@ -115,16 +132,7 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.L",
@@ -133,7 +141,7 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.L",
@@ -142,43 +150,7 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.L",
@@ -187,7 +159,7 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.L",
@@ -196,46 +168,28 @@
             -0.08301916718482971,
             0.9578307271003723
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.L",
-          "axis": [
-            0.2750784158706665,
-            -0.08301916718482971,
-            0.9578307271003723
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.L",
           "axis": [
-            0.7558993101119995,
-            0.5862502455711365,
-            0.29142212867736816
+            0.9262218475341797,
+            0.3544783294200897,
+            0.12828953564167023
           ],
-          "angle": 1.5055811766428986
+          "angle": 1.5277777777777777
         },
         {
           "name": "Thumb2.L",
           "axis": [
-            -0.21758106350898743,
-            0.20735371112823486,
-            -0.9537625312805176
+            -0.16218338906764984,
+            0.2662057876586914,
+            -0.9501742124557495
           ],
-          "angle": 0.44974135868575854
-        },
-        {
-          "name": "Thumb3.L",
-          "axis": [
-            -0.41213080286979675,
-            0.13466815650463104,
-            -0.9011174440383911
-          ],
-          "angle": 0.37031417879422024
+          "angle": 0.05
         }
       ],
-      "length": 0.14010757155954126,
+      "length": 0.11308682561591545,
       "radius": 0.013009988787671687,
       "forward": [
         -0.5430830121040344,
@@ -262,7 +216,16 @@
         -0.008130841888487339,
         0.7606462836265564
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.04303303983614481,
+        "finger_diameter": 0.022016904102213623,
+        "previous_finger_length": 0.07005378577977063,
+        "previous_finger_diameter": 0.016212447566175486
+      }
     },
     {
       "side": "R",
@@ -276,7 +239,7 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.R",
@@ -285,16 +248,7 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.R",
@@ -303,7 +257,7 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.R",
@@ -312,43 +266,7 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.R",
@@ -357,7 +275,7 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.R",
@@ -366,46 +284,28 @@
             0.12997028231620789,
             -0.930273175239563
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.R",
-          "axis": [
-            0.34307360649108887,
-            0.12997028231620789,
-            -0.930273175239563
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.R",
           "axis": [
-            0.7802877426147461,
-            -0.5675345659255981,
-            -0.26278427243232727
+            0.9362375736236572,
+            -0.34283554553985596,
+            -0.07696107774972916
           ],
-          "angle": 1.5055811713581975
+          "angle": 1.5666666666666667
         },
         {
           "name": "Thumb2.R",
           "axis": [
-            -0.2843169569969177,
-            -0.2536500096321106,
-            0.9245677590370178
+            -0.22827796638011932,
+            -0.3119567334651947,
+            0.9222646951675415
           ],
-          "angle": 0.44974136696385497
-        },
-        {
-          "name": "Thumb3.R",
-          "axis": [
-            -0.4751812219619751,
-            -0.17962545156478882,
-            0.8613579273223877
-          ],
-          "angle": 0.37031417795271204
+          "angle": 0.09130434782608696
         }
       ],
-      "length": 0.1342391623481697,
+      "length": 0.10835018103816556,
       "radius": 0.012465065075187187,
       "forward": [
         0.5430829524993896,
@@ -432,21 +332,30 @@
         -0.008356419391930103,
         0.7583929300308228
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.041230599864080696,
+        "finger_diameter": 0.021094725511855237,
+        "previous_finger_length": 0.06711958117408486,
+        "previous_finger_diameter": 0.015533388786002494
+      }
     }
   ],
   "refined_hands": [
     {
       "side": "L",
-      "hand_vertices": 8074,
-      "hand_faces": 10775,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.03652804544230897,
       "cuff_clearance": 0.026019977575343373
     },
     {
       "side": "R",
-      "hand_vertices": 8072,
-      "hand_faces": 10666,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.0349980673264871,
       "cuff_clearance": 0.024930130150374374
     }
@@ -474,5 +383,333 @@
     "normal_targets": true,
     "outer_corner_erasure": true,
     "protected_accessories": false
+  },
+  "id_skills": {
+    "source_sha256": "49369c5751c574a7d8fc17a50bbb9bee388643c81814b8565e884ba222a691e0",
+    "release": 2.1333333333333333,
+    "parts": {
+      "Seat": 531,
+      "Bow": 1903,
+      "Back": 4527,
+      "Crown": 2800,
+      "Lantern.L": 1088,
+      "Lantern.R": 1149
+    },
+    "hair_vertices": 4744,
+    "hair_bones": 9,
+    "clips": {
+      "Idle": [
+        0,
+        60
+      ],
+      "Walk": [
+        63,
+        93
+      ],
+      "Run": [
+        96,
+        120
+      ],
+      "Jump": [
+        123,
+        153
+      ],
+      "Attack": [
+        156,
+        180
+      ],
+      "Skill": [
+        183,
+        219
+      ],
+      "Ultimate": [
+        222,
+        282
+      ],
+      "Dance": [
+        285,
+        405
+      ],
+      "Hurt": [
+        408,
+        420
+      ],
+      "Death": [
+        423,
+        453
+      ],
+      "Select": [
+        456,
+        528
+      ],
+      "IdSkill": [
+        531,
+        639
+      ],
+      "IdPulse": [
+        642,
+        663
+      ],
+      "IdUltimate": [
+        666,
+        826
+      ]
+    },
+    "bones": 69,
+    "body_vertices_unchanged": 47605,
+    "facial_keys_unchanged": 23,
+    "pod_faces_uv_materials_preserved": 11998,
+    "stationary_attack": true,
+    "independently_animated": [
+      "Mount",
+      "IdPod.Bow",
+      "IdPod.Back",
+      "IdPod.Crown",
+      "IdHair.L.3",
+      "IdHair.C.3",
+      "IdHair.R.3"
+    ],
+    "sha256": {
+      "id.blend": "474c4edef6803ea41b013aa989c4d04b2a4ec902f9b0b56af2327dab1a0058e1",
+      "id.fbx": "1990e1ef9c2d77fda8bc98f9a3402e6bf701a5845324c3d39df4825dfa020459",
+      "id.morphs.json": "fccf4b4b1c69212c46cc11d12fbaac0021762676da6b5c5cdeea4ca48891fa0c"
+    }
+  },
+  "cartoon_hands": {
+    "revision": "four-digits-two-segments-v1",
+    "digits": 4,
+    "segments": 2,
+    "untouched_meshes": {
+      "id_SkinnedMesh": "99818425ad7d5e55651b46189630153cfd85ca342cc99a9b0a64618138c46950",
+      "Nata": "a190abbeefaaa15d509aed78a858b448fe589a76a62b0e9092984ca835746bf9",
+      "id_RefinedSleeve.L": "3843184177a5e958093579f7426c436fe89878e237406d7c84e987ba0453be7a",
+      "id_RefinedViewSleeve.L": "855ca819ad6290039ea995a7e24dd0df7be5fcb52b5a6c82be43dac4b3dfa3d8",
+      "id_RefinedSleeve.R": "8fa3aece530c034b7b210ca8070f276e149067830340c9b043291540d4dbdf0b",
+      "id_RefinedViewSleeve.R": "5947baca72f5ea592a231ca587af0f4c7e7a7b082d2d187fb222fd30d5e48edc",
+      "IdPodMesh.Seat": "3cb81a61e4d3d2cf5188a55dbcf4d686ec6f9b8cd3d0f2575a9cea68ae7c969b",
+      "IdPodMesh.Bow": "c135a8b88d51b5828d08b64b103c38e4430db503ba745eec7c34549cc13af5a9",
+      "IdPodMesh.Back": "ffac7a2d16d05a894180e5fa32f7c4b06211d55622b0f75e5f2a085c80714b2c",
+      "IdPodMesh.Crown": "c8b1ccc2387672bfe0c4c103d29482fc8c6bad6740f07c6488a49cf680182c38",
+      "IdPodMesh.Lantern.L": "7f77193e576cb95b07f606753759f16e85449cd483d8554eedbb8bdb5f551b9d",
+      "IdPodMesh.Lantern.R": "de7f7876813fec9043d57974a82f1164b4a59c6dcab06043361e9380c3c4e4b3"
+    },
+    "grip_fit": [
+      {
+        "side": "L",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 1.472472125885367e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 8.425894046577495e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 7.789708436865828e-07,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.5277777777777777,
+              0.05
+            ],
+            "gap": 6.118432837369514e-06,
+            "penetration_p99": 0.0
+          }
+        ]
+      },
+      {
+        "side": "R",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 1.6847700298736057e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 8.433205920442555e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 5.868948277434893e-07,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.5666666666666667,
+              0.09130434782608696
+            ],
+            "gap": 4.50050103153847e-06,
+            "penetration_p99": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  "white_lash_blink": {
+    "revision": 1,
+    "geometry": {
+      "L": {
+        "vertices": 713,
+        "full_weight_vertices": 460,
+        "max_drop": 0.05771749374372259
+      },
+      "R": {
+        "vertices": 570,
+        "full_weight_vertices": 329,
+        "max_drop": 0.05771748937091847
+      }
+    },
+    "painted_dark_lash": false
+  },
+  "lowpoly": {
+    "source": "assets/character-sources/lowpoly/id/id-character-source.blend",
+    "body_triangles": 9720,
+    "hands": {
+      "id_RefinedHand.L": [
+        19980,
+        1500
+      ],
+      "id_RefinedHand.R": [
+        20040,
+        1500
+      ]
+    },
+    "rig_and_actions_preserved": true,
+    "alignment": {
+      "scale": 0.9722432472675028,
+      "rotation": [
+        [
+          1.0000000217314182,
+          0.00017425820790251123,
+          0.00012799138942876098
+        ],
+        [
+          -0.00017426567891254408,
+          0.9999999934205916,
+          4.0055547449735496e-05
+        ],
+        [
+          -0.0001279828835202279,
+          -4.007774450820456e-05,
+          1.0000000008234156
+        ]
+      ],
+      "offset": [
+        -0.003498288706433636,
+        0.19040006310930546,
+        0.9258236960190762
+      ],
+      "median": 0.0035675877006724477,
+      "p90": 0.008909845352172855,
+      "p99": 0.014936709990724923
+    },
+    "removed_arm_triangles": 693,
+    "surface_distance_p99": 0.0017970118019729842,
+    "meshes": [
+      {
+        "name": "id_SkinnedMesh",
+        "vertices": 4873,
+        "triangles": 9720
+      },
+      {
+        "name": "Nata",
+        "vertices": 1496,
+        "triangles": 3000
+      },
+      {
+        "name": "id_RefinedSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "id_RefinedViewSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "id_RefinedSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "id_RefinedViewSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "IdPodMesh.Seat",
+        "vertices": 125,
+        "triangles": 198
+      },
+      {
+        "name": "IdPodMesh.Bow",
+        "vertices": 826,
+        "triangles": 1390
+      },
+      {
+        "name": "IdPodMesh.Back",
+        "vertices": 1116,
+        "triangles": 2027
+      },
+      {
+        "name": "IdPodMesh.Crown",
+        "vertices": 903,
+        "triangles": 1666
+      },
+      {
+        "name": "IdPodMesh.Lantern.L",
+        "vertices": 210,
+        "triangles": 326
+      },
+      {
+        "name": "IdPodMesh.Lantern.R",
+        "vertices": 251,
+        "triangles": 392
+      },
+      {
+        "name": "id_RefinedHand.L",
+        "vertices": 752,
+        "triangles": 1500
+      },
+      {
+        "name": "id_RefinedHand.R",
+        "vertices": 752,
+        "triangles": 1500
+      }
+    ],
+    "total_triangles": 23623
   }
 }

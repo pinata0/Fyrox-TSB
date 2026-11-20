@@ -1,4 +1,5 @@
 //! Animated continuous liquid mesh, spiral foam, spray and splash crown.
+use crate::presentation::SceneState;
 use super::*;
 use fyrox::{
     core::math::TriangleDefinition,
@@ -89,7 +90,7 @@ impl Water {
         let node = self.nodes[slot];
         let enabled =
             a.character == 1 && a.alive() && a.combat.naia.phase == naia_skill::Phase::Fire;
-        g[node].set_visibility(enabled);
+        g[node].set_visible(enabled);
         if !enabled {
             return;
         }
@@ -99,7 +100,7 @@ impl Water {
         let end = vec(naia_skill::stream_end(map, a));
         let delta = end - origin;
         if delta.norm() < 0.15 || delta.dot(&vec(direction(a.yaw, a.pitch))) <= 0.0 {
-            g[node].set_visibility(false);
+            g[node].set_visible(false);
             return;
         }
         let rotation =

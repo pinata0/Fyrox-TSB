@@ -1,0 +1,9 @@
+CC0 Deep Monster Roar
+Author: trazzz123
+Source: https://opengameart.org/content/cc0-deep-monster-roar
+Download: https://opengameart.org/sites/default/files/monster_roar.wav
+License: CC0 1.0 Universal https://creativecommons.org/publicdomain/zero/1.0/
+Retrieved: 2026-11-20
+Local file: sebastian-roar.wav (1.5-second excerpt with 80 ms edge fades, renamed)
+Playback: gain 0.55, pitch 1.10, triggered once at Chloe roar release.
+This is a licensed replacement creature roar, not the original Trickcal voice/SFX.

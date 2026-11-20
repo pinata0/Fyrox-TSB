@@ -8,14 +8,62 @@ use trickcal_shooting_balddagu::impact::{
 const DEBRIS_SECONDS: f32 = 0.95;
 const CHUNKS: usize = 7;
 const SLASH_CHUNKS: usize = 5;
+// Interpolate between snapshots, but never let an idle/slow world leave the
+// effect clock seconds ahead of the next authoritative contact.
+const MAX_CLOCK_LEAD: f64 = 6.0;
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
+    fn fresh_syringe_impact_survives_idle_frames_and_a_slow_world() {
+        let mut graph = Graph::new();
+        let surfaces = ghost_walls::GhostWalls::default();
+        let mut effects = Impacts::default();
+        let mut world = World::default();
+        // Menus, stalled snapshots, or a slower simulation must not age a
+        // contact before the server has even created it.
+        for _ in 0..600 {
+            effects.update(&mut graph, &world, DT, &surfaces);
+        }
+        for _ in 0..300 {
+            world.tick += 1;
+            effects.update(&mut graph, &world, DT * 2.0, &surfaces);
+        }
+        world.impacts.push(Impact {
+            id: 1,
+            tick: world.tick,
+            position: V3::new(0.0, 1.0, 0.0),
+            face: 4,
+            color: [150; 3],
+            radius: 0.11,
+            kind: ImpactKind::Syringe,
+            rotation: 0,
+        });
+        effects.update(&mut graph, &world, DT, &surfaces);
+        assert_eq!(effects.effects.len(), 1, "a fresh hit must remain visible");
+        assert_eq!(effects.effects[0].chunks.len(), CHUNKS);
+        let syringe = effects.effects[0].embedded.unwrap();
+        assert_eq!(**graph[syringe].local_transform().scale(), Vector3::repeat(1.0));
+        world.tick += 120;
+        effects.update(&mut graph, &world, DT, &surfaces);
+        assert_eq!(effects.effects[0].embedded, Some(syringe));
+        world.tick += 121;
+        effects.update(&mut graph, &world, DT, &surfaces);
+        assert!(effects.effects.is_empty());
+        assert!(!graph.is_valid_handle(syringe));
+    }
+
+    #[test]
     fn snapshots_do_not_duplicate_chunks_and_expiry_or_rewind_removes_nodes() {
-        for kind in [ImpactKind::Bullet, ImpactKind::Slash] {
+        for kind in [
+            ImpactKind::Bullet,
+            ImpactKind::Slash,
+            ImpactKind::PoisonDart,
+            ImpactKind::Syringe,
+            ImpactKind::MedicalExplosion,
+        ] {
             check_lifetime(kind);
         }
     }
@@ -34,7 +82,9 @@ mod tests {
             position: V3::new(0.0, 1.0, 0.0),
             face: 4,
             color: [150; 3],
-            radius: if kind == ImpactKind::Slash {
+            radius: if kind == ImpactKind::MedicalExplosion {
+                trickcal_shooting_balddagu::hilde_skill::GRENADE_RADIUS
+            } else if kind == ImpactKind::Slash {
                 0.48
             } else {
                 0.13
@@ -43,13 +93,18 @@ mod tests {
             rotation: 23,
         });
         let baseline = graph.traverse_handle_iter(graph.get_root()).count();
+        let embedded_count =
+            usize::from(matches!(kind, ImpactKind::PoisonDart | ImpactKind::Syringe));
         for _ in 0..5 {
             effects.update(&mut graph, &world, DT, &surfaces);
         }
         assert_eq!(
             graph.traverse_handle_iter(graph.get_root()).count(),
             baseline
-                + if kind == ImpactKind::Slash {
+                + embedded_count
+                + if kind == ImpactKind::MedicalExplosion {
+                    hilde_fx::BLAST_PARTS
+                } else if kind == ImpactKind::Slash {
                     SLASH_CHUNKS
                 } else {
                     CHUNKS
@@ -59,7 +114,7 @@ mod tests {
         effects.update(&mut graph, &world, DT, &surfaces);
         assert_eq!(
             graph.traverse_handle_iter(graph.get_root()).count(),
-            baseline
+            baseline + embedded_count
         );
         assert_eq!(effects.effects.len(), 1, "mark outlasts its fragments");
         world.tick = 341;
@@ -101,12 +156,29 @@ struct Chunk {
 struct Effect {
     hit: Impact,
     chunks: Vec<Chunk>,
+    embedded: Option<Handle<Node>>,
+    blast: Option<hilde_fx::Blast>,
+}
+
+impl Effect {
+    fn remove(self, g: &mut Graph) {
+        for chunk in self.chunks {
+            g.remove_node(chunk.node);
+        }
+        if let Some(node) = self.embedded {
+            g.remove_node(node);
+        }
+        if let Some(blast) = self.blast {
+            blast.remove(g);
+        }
+    }
 }
 
 #[derive(Debug, Default)]
 pub(super) struct Impacts {
     effects: Vec<Effect>,
     geometry: Option<SurfaceResource>,
+    models: projectiles::Models,
     clock: f64,
     tick: u64,
     round: u16,
@@ -123,13 +195,12 @@ impl Impacts {
     ) {
         if self.round != w.round || self.map != Some(w.map_id) || w.tick < self.tick {
             for effect in self.effects.drain(..) {
-                for chunk in effect.chunks {
-                    g.remove_node(chunk.node);
-                }
+                effect.remove(g);
             }
             self.clock = w.tick as f64;
         } else {
-            self.clock = (self.clock + (dt / DT) as f64).max(w.tick as f64);
+            self.clock = (self.clock + (dt / DT) as f64)
+                .clamp(w.tick as f64, w.tick as f64 + MAX_CLOCK_LEAD);
         }
         self.round = w.round;
         self.map = Some(w.map_id);
@@ -142,16 +213,23 @@ impl Impacts {
                 continue;
             }
             if self.effects.len() == MAX_IMPACTS {
-                for chunk in self.effects.remove(0).chunks {
-                    g.remove_node(chunk.node);
-                }
+                self.effects.remove(0).remove(g);
             }
-            let chunks = if age < DEBRIS_SECONDS {
+            let medical = hit.kind == ImpactKind::MedicalExplosion;
+            let chunks = if !medical && age < DEBRIS_SECONDS {
                 self.spawn_chunks(g, *hit)
             } else {
                 vec![]
             };
-            self.effects.push(Effect { hit: *hit, chunks });
+            let embedded = self.models.embedded(g, hit.kind);
+            let blast = (medical && age < trickcal_shooting_balddagu::hilde_skill::BLAST_SECONDS)
+                .then(|| hilde_fx::Blast::new(g));
+            self.effects.push(Effect {
+                hit: *hit,
+                chunks,
+                embedded,
+                blast,
+            });
         }
         let mut centers = Vec::with_capacity(MAX_IMPACTS);
         let mut normals = Vec::with_capacity(MAX_IMPACTS);
@@ -159,13 +237,38 @@ impl Impacts {
         self.effects.retain_mut(|effect| {
             let age = ((self.clock - effect.hit.tick as f64) * DT as f64).max(0.0) as f32;
             let hit = effect.hit;
+            if hit.kind == ImpactKind::MedicalExplosion {
+                if age >= trickcal_shooting_balddagu::hilde_skill::BLAST_SECONDS {
+                    if let Some(blast) = effect.blast.take() {
+                        blast.remove(g);
+                    }
+                } else if let Some(blast) = &effect.blast {
+                    blast.update(g, hit.position, hit.radius, age);
+                }
+                // Keep the event id until snapshot expiry without leaving a bullet decal.
+                return age < IMPACT_SECONDS;
+            }
             if age >= DEBRIS_SECONDS {
                 for chunk in effect.chunks.drain(..) {
                     g.remove_node(chunk.node);
                 }
             }
             if age >= IMPACT_SECONDS {
+                if let Some(node) = effect.embedded.take() {
+                    g.remove_node(node);
+                }
                 return false;
+            }
+            if let Some(node) = effect.embedded {
+                let direction = hit.embedded_direction();
+                let fade = ((IMPACT_SECONDS - age) / 0.45).clamp(0.0, 1.0);
+                let tip = projectiles::embedded_tip(hit.kind);
+                // Sink the nose 2 cm into the contact; keep that point anchored during removal.
+                g[node]
+                    .local_transform_mut()
+                    .set_position(vec(hit.position - direction * ((tip - 0.02) * fade)))
+                    .set_rotation(projectiles::facing(direction))
+                    .set_scale(Vector3::repeat(fade));
             }
             let normal = vec(NORMALS[hit.face as usize]);
             for chunk in &effect.chunks {
@@ -191,7 +294,7 @@ impl Impacts {
                 ((IMPACT_SECONDS - age) / 1.25).clamp(0.0, 1.0),
             ));
             shapes.push(Vector4::new(
-                hit.kind as u8 as f32,
+                u8::from(hit.kind == ImpactKind::Slash) as f32,
                 hit.angle().cos(),
                 hit.angle().sin(),
                 0.055,

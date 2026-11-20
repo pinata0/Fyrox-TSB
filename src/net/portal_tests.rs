@@ -30,7 +30,8 @@ fn portal_packet_roundtrip_fits_mtu_and_rejects_bad_faces_timers_and_tokens() {
             ],
             cooldown: [5.0, 2.0],
             down: [true, false],
-            lock: 0.2,
+            lock: crate::portal::REOPEN_DELAY,
+            reopen: crate::portal::REOPEN_DELAY,
             momentum: V3::new(1.0, 0.0, -12.0),
             yaw_offset: 3.0,
             pitch_offset: -0.3,
@@ -44,6 +45,8 @@ fn portal_packet_roundtrip_fits_mtu_and_rejects_bad_faces_timers_and_tokens() {
     for (a, s) in world.actors.iter().zip(states) {
         assert_eq!(a.portals.ends, s.ends);
         assert_eq!(a.portals.cooldown, s.cooldown);
+        assert_eq!(a.portals.lock, s.lock);
+        assert_eq!(a.portals.reopen, s.reopen);
         assert_eq!(s.down, [true, false]);
         assert_eq!(s.transits, 7);
         assert_eq!(s.yaw_offset, 3.0);
@@ -55,9 +58,14 @@ fn portal_packet_roundtrip_fits_mtu_and_rejects_bad_faces_timers_and_tokens() {
     let mut bad = packet.clone();
     bad[21] = 6;
     assert!(read_portals(&bad, 42).is_none());
-    let mut bad = packet;
+    let mut bad = packet.clone();
     bad[47..49].copy_from_slice(&301_u16.to_le_bytes());
     assert!(read_portals(&bad, 42).is_none());
+    for offset in [52, 53] {
+        let mut bad = packet.clone();
+        bad[offset] = 61;
+        assert!(read_portals(&bad, 42).is_none());
+    }
 }
 
 #[test]
@@ -149,13 +157,20 @@ fn udp_elf_portals_reach_owner_observer_and_late_joiner() {
         clients[1].update(Input::default()).unwrap();
     }
     assert!(server.world.actors[slot].portals.ends[1].is_some());
+    server.world.actors[slot].portals.reopen = crate::portal::REOPEN_DELAY;
     clients.push(Client::connect(server.addr().unwrap()).unwrap());
     pump(&mut server, &mut clients, 20);
-    for c in clients {
+    for c in &clients {
         assert_eq!(
             c.world.actors[slot].portals.ends,
             server.world.actors[slot].portals.ends
         );
         assert!(c.world.actors[slot].portals.cooldown[1] > 0.0);
+        assert!(c.world.actors[slot].portals.reopen > 0.0);
+        assert_eq!(c.world.actors[slot].portals.passable_ends(), [None; 2]);
+    }
+    pump(&mut server, &mut clients, 65);
+    for c in &clients {
+        assert_eq!(c.world.actors[slot].portals.reopen, 0.0);
     }
 }

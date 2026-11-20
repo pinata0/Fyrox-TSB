@@ -79,6 +79,71 @@ pub struct HandMotion {
     pub angles: [f32; 3],
 }
 
+/// First-person attacks; world/source animation stays intact.
+/// Negative local X pitch lifts a +Z muzzle. The grip rises slightly and settles
+/// before the next shot, on the same attack clock used by haste and death replay.
+pub fn first_person_hand(id: u8, phase: f32) -> HandMotion {
+    if id == 2 {
+        let mut motion = hand(id, false, phase);
+        // The upright staff extends along +Y, so positive X pitch bends its
+        // head forward (+Z). Keep the source timing without a backward flick.
+        motion.angles[0] = motion.angles[0].abs();
+        return motion;
+    }
+    if id == 12 {
+        return komi_pillow_swing(phase);
+    }
+    let (pitch, lift, kick) = match id {
+        1 => (0.10, 0.018, 0.028),
+        13 => (0.12, 0.020, 0.032),
+        14 => (0.15, 0.024, 0.042),
+        _ => return hand(id, false, phase),
+    };
+    if !phase.is_finite() || phase <= 0.0 || phase >= 1.0 {
+        return HandMotion::default();
+    }
+    let smooth = |x: f32| x * x * (3.0 - 2.0 * x);
+    let amount = if phase < 0.16 {
+        smooth(phase / 0.16)
+    } else {
+        1.0 - smooth(((phase - 0.16) / 0.70).min(1.0))
+    };
+    HandMotion {
+        position: [0.0, lift * amount, -kick * amount],
+        angles: [-pitch * amount, 0.0, 0.0],
+    }
+}
+
+/// Raise the pillow beside the right shoulder, sweep across the aim, then recover.
+/// The renderer rotates around the palm contact and attaches the closed hand to
+/// that same pivot, so the enlarged pillow and arm travel together throughout.
+fn komi_pillow_swing(phase: f32) -> HandMotion {
+    if !phase.is_finite() || phase <= 0.0 || phase >= 1.0 {
+        return HandMotion::default();
+    }
+    const KEYS: [(f32, [f32; 3], [f32; 3]); 5] = [
+        (0.0, [0.0; 3], [0.0; 3]),
+        (0.22, [-0.10, 0.22, -0.02], [-0.40, -0.55, -0.62]),
+        (0.46, [0.56, 0.10, 0.16], [0.30, 0.90, 1.10]),
+        (0.62, [0.70, -0.05, 0.10], [0.55, 1.20, 1.45]),
+        (1.0, [0.0; 3], [0.0; 3]),
+    ];
+    let segment = KEYS
+        .windows(2)
+        .find(|pair| phase <= pair[1].0)
+        .unwrap();
+    let (start, from_position, from_angles) = segment[0];
+    let (end, to_position, to_angles) = segment[1];
+    let t = (phase - start) / (end - start);
+    let t = t * t * (3.0 - 2.0 * t);
+    HandMotion {
+        position: std::array::from_fn(|i| {
+            from_position[i] + (to_position[i] - from_position[i]) * t
+        }),
+        angles: std::array::from_fn(|i| from_angles[i] + (to_angles[i] - from_angles[i]) * t),
+    }
+}
+
 /// The weapon-side source chain maps to shipped Hand.L. The second path is the left hand.
 /// Amplitude is limited for near-camera readability; timings and reversals are source-derived.
 pub fn hand(id: u8, left: bool, phase: f32) -> HandMotion {
@@ -128,6 +193,55 @@ pub fn hand(id: u8, left: bool, phase: f32) -> HandMotion {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn komi_viewmodel_sweeps_across_the_aim_and_recovers_continuously() {
+        for phase in [-1.0, 0.0, 1.0, 2.0, f32::NAN, f32::INFINITY] {
+            assert_eq!(first_person_hand(12, phase), HandMotion::default());
+        }
+        let windup = first_person_hand(12, 0.22);
+        let strike = first_person_hand(12, 0.46);
+        let follow = first_person_hand(12, 0.62);
+        assert!(windup.position[0] < 0.0 && windup.position[1] > 0.15);
+        assert!(strike.position[0] - windup.position[0] > 0.60);
+        assert!(strike.position[2] > windup.position[2] + 0.15);
+        assert!(follow.angles[2] - windup.angles[2] > 2.0);
+        let mut previous = first_person_hand(12, 0.0);
+        for frame in 1..=240 {
+            let next = first_person_hand(12, frame as f32 / 240.0);
+            for axis in 0..3 {
+                assert!(next.position[axis].is_finite() && next.angles[axis].is_finite());
+                assert!((next.position[axis] - previous.position[axis]).abs() < 0.025);
+                assert!((next.angles[axis] - previous.angles[axis]).abs() < 0.06);
+            }
+            previous = next;
+        }
+    }
+
+    #[test]
+    fn gun_viewmodels_kick_up_then_recover_without_sideways_swing() {
+        for id in [1, 13, 14] {
+            for phase in [0.0, 0.86, 1.0, f32::NAN] {
+                assert_eq!(first_person_hand(id, phase), HandMotion::default());
+            }
+            let peak = first_person_hand(id, 0.16);
+            assert!(peak.angles[0] < 0.0 && peak.angles[0] >= -0.16);
+            assert!(peak.position[1] > 0.0 && peak.position[2] < 0.0);
+            for i in 1..100 {
+                let phase = i as f32 / 100.0;
+                let motion = first_person_hand(id, phase);
+                assert_eq!(motion.position[0], 0.0);
+                assert_eq!(&motion.angles[1..], &[0.0, 0.0]);
+                assert!(motion.position[1] >= 0.0 && motion.position[1] <= peak.position[1]);
+                let previous = first_person_hand(id, phase - 0.01);
+                assert!((motion.angles[0] - previous.angles[0]).abs() < 0.02);
+            }
+            assert!(
+                first_person_hand(id, 0.4).position[1] > first_person_hand(id, 0.7).position[1]
+            );
+        }
+        assert_eq!(first_person_hand(11, 0.3), hand(11, false, 0.3));
+    }
 
     #[test]
     fn vivi_has_distinct_gestures_and_independent_blades_for_both_attacks() {

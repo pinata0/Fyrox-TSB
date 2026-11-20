@@ -4,14 +4,20 @@ use trickcal_shooting_balddagu::cheeks::{motions, release_duration, Phase as Che
 
 pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     let focused = std::env::args().any(|arg| arg == "--cheek-focus");
-    let heroes: Vec<usize> = if focused {
+    let single = std::env::var("TSB_CHEEK_REVIEW_HERO")
+        .ok()
+        .map(|s| s.parse::<usize>().expect("review hero index"));
+    let heroes: Vec<usize> = if let Some(id) = single {
+        assert!(id < 15);
+        vec![id]
+    } else if focused {
         vec![6, 10, 13]
     } else {
         (0..15).collect()
     };
     if rt.review_capture as usize >= heroes.len() * 7 {
         println!(
-            "CHEEK_REVIEW_OK: {} heroes, both cheeks, wide rounded skin patches, fixed head/eyes/mouth/accessories, held/release/automatic idle return, {} GPU frames", heroes.len(), heroes.len()*7
+            "CHEEK_REVIEW_OK: {} heroes, both cheeks, protected skin features, original illustrated eyes, held/release/automatic idle return, {} GPU frames", heroes.len(), heroes.len()*7
         );
         context.loop_controller.exit();
         return Ok(());
@@ -72,6 +78,7 @@ pub fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     }
     let p = rt.preview.as_ref().unwrap();
     p.cheeks.review_protected();
+    p.review_cheek_arms(&context.scenes[rt.scene].graph);
     let step = rt.review_capture % 7;
     if step == 6 {
         assert!(
@@ -97,6 +104,7 @@ pub fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
             p.cheeks.changed_vertices
         );
     }
+    p.cheeks.review_eyes(&context.scenes[rt.scene].graph);
     if matches!(step, 0 | 6) {
         assert_eq!(p.cheeks.changed_vertices, 0);
         assert_eq!(p.cheeks.interaction.phase, CheekPhase::Idle);

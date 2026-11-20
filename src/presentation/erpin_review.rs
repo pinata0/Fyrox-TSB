@@ -4,15 +4,26 @@ use trickcal_shooting_balddagu::{
     motion::{Motion, Pose},
 };
 
+const FIRST_PERSON_SKILL_AGES: [f32; 9] = [
+    0.0, 0.65, 1.2, 1.55, 1.7, 1.8, 64.0 / 30.0, 2.52,
+    trickcal_shooting_balddagu::erpin_skill::SKILL_SECONDS,
+];
+
 pub fn enabled() -> bool {
     std::env::args().any(|a| a == "--erpin-only")
 }
 fn world_view(step: u8) -> bool {
-    step < 6 || (12..18).contains(&step) || step >= 24
+    if step >= 40 {
+        step < 48
+    } else {
+        step < 6 || (12..18).contains(&step) || step >= 24
+    }
 }
 pub fn pose(rt: &Runtime) -> Pose {
     let step = rt.review_capture;
-    let (motion, age) = if step < 12 {
+    let (motion, age) = if step >= 52 {
+        (Motion::ErpinSkill, FIRST_PERSON_SKILL_AGES[(step - 52) as usize])
+    } else if step < 12 {
         (
             Motion::Attack,
             step as f32 % 6.0 / 5.0 * Motion::Attack.seconds(2),
@@ -38,6 +49,21 @@ pub fn pose(rt: &Runtime) -> Pose {
             Motion::ErpinEat,
         ][(step - 24) as usize];
         (motion, motion.seconds(2) * 0.45)
+    } else if step >= 40 {
+        [
+            (Motion::ErpinSkill, 0.35),
+            (Motion::ErpinSkill, 1.1),
+            (Motion::ErpinSkill, 1.72),
+            (Motion::ErpinSkill, 2.15),
+            (Motion::ErpinStart, 0.7),
+            (Motion::ErpinCharge, 0.25),
+            (Motion::ErpinRecover, 0.2),
+            (Motion::ErpinRecover, 1.5),
+            (Motion::ErpinSkill, 1.72),
+            (Motion::ErpinCharge, 0.25),
+            (Motion::ErpinRecover, 0.2),
+            (Motion::ErpinRecover, 1.5),
+        ][(step - 40) as usize]
     } else {
         (Motion::Idle, 0.0)
     };
@@ -49,8 +75,15 @@ pub fn pose(rt: &Runtime) -> Pose {
     }
 }
 pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
-    if rt.review_capture >= 40 {
-        println!("ERPIN_REVIEW_OK: staff attacks, left-hand cake, all twelve body clips and four dropped-cake portions");
+    if std::env::args().any(|a| a == "--erpin-skills-only") && rt.review_capture < 40 {
+        rt.review_capture = 40;
+    }
+    if std::env::args().any(|a| a == "--erpin-stun-only") && rt.review_capture < 50 { rt.review_capture = 50; }
+    if std::env::args().any(|a| a == "--erpin-skill-first-person-only") && rt.review_capture < 52 {
+        rt.review_capture = 52;
+    }
+    if rt.review_capture >= 52 + FIRST_PERSON_SKILL_AGES.len() as u8 {
+        println!("ERPIN_REVIEW_OK: staff attacks, left-hand cake, source skill/charge/recovery clips, first-person overhead strike, flustered face, blasts and cake");
         context.loop_controller.exit();
         return Ok(());
     }
@@ -65,7 +98,7 @@ pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     rt.pitch = 0.0;
     rt.keys = Keys::default();
     if let Session::Solo(w) = &mut rt.session {
-        w.phase = Phase::Lobby;
+        w.phase = if step >= 40 { Phase::Playing } else { Phase::Lobby };
         w.tick = 120;
         for (i, a) in w.actors.iter_mut().enumerate() {
             a.active = i == 0;
@@ -74,6 +107,7 @@ pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         a.character = 2;
         a.pos = V3::new(0.0, 0.0, -12.0);
         a.hp = 80;
+        a.ammo = 20;
         a.shield = 0.0;
         a.yaw = 0.0;
         a.pitch = 0.0;
@@ -90,8 +124,52 @@ pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
                 ..Default::default()
             };
         }
+        use trickcal_shooting_balddagu::erpin_skill::{Phase as Action, State};
+        let action = match pose.motion {
+            Motion::ErpinSkill => Action::Skill,
+            Motion::ErpinStart => Action::Start,
+            Motion::ErpinCharge => Action::Charge,
+            Motion::ErpinRecover => Action::Recover,
+            _ => Action::Off,
+        };
+        a.combat.erpin_skill = State {
+            phase: action,
+            elapsed: pose.age,
+        };
+        if action == Action::Start {
+            a.combat.ultimate_flash = trickcal_shooting_balddagu::erpin_skill::START_SECONDS - pose.age;
+        }
+        if action == Action::Recover {
+            a.combat.stun = 3.0 - pose.age;
+        }
+        rt.view_pos = a.eye();
         w.projectiles.clear();
-        if step >= 36 {
+        if action == Action::Skill && pose.age >= 1.7 {
+            for j in 0..4 {
+                let mut p = trickcal_shooting_balddagu::combat::Projectile::visual(
+                    200 + j,
+                    0,
+                    ProjectileKind::MagicBomb,
+                    V3::new((j as f32 - 1.5) * 0.25, 1.2, -10.5 + j as f32 * 0.35),
+                );
+                p.character = 2;
+                p.velocity = V3::new(0.0, 0.0, 20.0);
+                p.age = 0.15;
+                w.projectiles.push(p);
+            }
+        }
+        if action == Action::Recover && pose.age < 0.6 {
+            let mut p = trickcal_shooting_balddagu::combat::Projectile::visual(
+                300,
+                0,
+                ProjectileKind::ErpinCrash,
+                V3::new(0.0, 1.0, -11.1),
+            );
+            p.character = 2;
+            p.age = pose.age;
+            w.projectiles.push(p);
+        }
+        if (36..40).contains(&step) {
             let mut cake = trickcal_shooting_balddagu::combat::Projectile::visual(
                 100 + step as u32,
                 0,
@@ -111,7 +189,9 @@ pub fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         g[rt.weapon].set_visibility(false);
         g[rt.wave_hand].set_visibility(false);
         let rear = (24..36).contains(&step);
-        let position = if rear {
+        let position = if pose.motion == Motion::ErpinStart {
+            Vector3::new(8.0, 9.0, -3.0)
+        } else if rear {
             Vector3::new(1.15, 1.25, -14.9)
         } else {
             Vector3::new(1.65, 1.25, -8.7)
@@ -142,6 +222,25 @@ pub fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     if !world_view(rt.review_capture) {
         let right = rt.first_person_arm.as_ref().unwrap();
         assert!(right.grip_error(g, rt.wave_hand, rt.weapons[2]) < 0.001);
+        if p.motion == Motion::Attack {
+            let camera_inverse = g[rt.camera].global_transform().try_inverse().unwrap();
+            let palm = camera_inverse.transform_point(&right.palm(g).into());
+            let gem = camera_inverse.transform_point(&weapons::erpin_muzzle(g, rt.weapons[2]).into());
+            assert!(gem.z >= palm.z - 0.001, "Erpin's basic attack must tilt the staff forward");
+        }
+        if p.motion == Motion::ErpinSkill {
+            let camera_inverse = g[rt.camera].global_transform().try_inverse().unwrap();
+            let palm = camera_inverse.transform_point(&right.palm(g).into());
+            let gem = camera_inverse.transform_point(&weapons::erpin_muzzle(g, rt.weapons[2]).into());
+            assert!(palm.z > 0.5, "Erpin's raised grip must stay in front of the camera");
+            assert!(gem.z >= palm.z - 0.001, "Erpin's staff must never bend behind the grip");
+            if (1.02..=1.38).contains(&p.age) {
+                assert!(palm.y > 0.15, "Erpin must raise the staff above eye level");
+            }
+            if (1.7..=2.28).contains(&p.age) {
+                assert!(gem.y < 0.0, "Erpin must strike down through the first release");
+            }
+        }
         if p.motion == Motion::ErpinEat {
             rt.first_person_support_arm
                 .as_ref()

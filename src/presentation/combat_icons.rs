@@ -2,6 +2,62 @@
 use fyrox::{core::algebra::Vector2, gui::vector_image::Primitive};
 use std::f32::consts::{FRAC_PI_2, TAU};
 
+pub(super) fn surge() -> Vec<Primitive> {
+    let mut d = Drawing::default();
+    for x in [12.0, 29.0, 46.0] {
+        d.path(&[(x - 6.0, 18.0), (x + 5.0, 32.0), (x - 6.0, 46.0)], 5.0);
+    }
+    d.0
+}
+
+pub(super) fn leap() -> Vec<Primitive> {
+    let mut d = Drawing::default();
+    d.line((8.0, 55.0), (56.0, 55.0), 3.0);
+    d.path(
+        &[(10.0, 45.0), (17.0, 28.0), (29.0, 15.0), (45.0, 10.0)],
+        5.0,
+    );
+    d.path(&[(33.0, 7.0), (48.0, 9.0), (43.0, 24.0)], 5.0);
+    d.circle(16.0, 44.0, 5.0, true);
+    d.0
+}
+
+pub(super) fn burrow() -> Vec<Primitive> {
+    let mut d = Drawing::default();
+    d.line((5.0, 31.0), (20.0, 31.0), 4.0);
+    d.line((44.0, 31.0), (59.0, 31.0), 4.0);
+    d.line((32.0, 6.0), (32.0, 38.0), 5.0);
+    d.path(&[(22.0, 28.0), (32.0, 39.0), (42.0, 28.0)], 5.0);
+    d.path(
+        &[
+            (12.0, 40.0),
+            (18.0, 51.0),
+            (32.0, 56.0),
+            (46.0, 51.0),
+            (52.0, 40.0),
+        ],
+        4.0,
+    );
+    d.0
+}
+
+pub(super) fn charge() -> Vec<Primitive> {
+    let mut d = Drawing::default();
+    d.line((5.0, 19.0), (22.0, 19.0), 4.0);
+    d.line((3.0, 32.0), (17.0, 32.0), 4.0);
+    d.line((5.0, 45.0), (22.0, 45.0), 4.0);
+    d.poly(&[
+        (23.0, 17.0),
+        (40.0, 17.0),
+        (53.0, 32.0),
+        (40.0, 47.0),
+        (23.0, 47.0),
+        (32.0, 32.0),
+    ]);
+    d.path(&[(45.0, 10.0), (59.0, 32.0), (45.0, 54.0)], 3.5);
+    d.0
+}
+
 #[derive(Default)]
 struct Drawing(Vec<Primitive>);
 impl Drawing {
@@ -199,28 +255,40 @@ pub(super) fn weapon(id: u8) -> Vec<Primitive> {
             }
         }
         7 => {
-            d.poly(&[
-                (9.0, 27.0),
-                (28.0, 17.0),
-                (67.0, 17.0),
-                (78.0, 24.0),
-                (78.0, 43.0),
-                (20.0, 43.0),
-            ]);
-            d.rect(72.0, 23.0, 28.0, 18.0);
-            d.rect(99.0, 19.0, 7.0, 26.0);
-            d.poly(&[(27.0, 43.0), (44.0, 43.0), (38.0, 58.0), (22.0, 58.0)]);
-            d.path(&[(29.0, 15.0), (45.0, 6.0), (62.0, 15.0)], 3.0);
+            d.circle(56.0, 32.0, 22.0, false);
+            d.circle(56.0, 32.0, 16.0, false);
+            d.circle(56.0, 32.0, 5.0, true);
+            for i in 0..4 {
+                let angle = i as f32 * FRAC_PI_2;
+                let point = |radius: f32, side: f32| {
+                    (56.0 + angle.cos() * radius - angle.sin() * side,
+                     32.0 + angle.sin() * radius + angle.cos() * side)
+                };
+                d.path(&[point(23.0, 0.0), point(27.0, -3.0),
+                    point(31.0, 0.0), point(27.0, 3.0), point(23.0, 0.0)], 2.0);
+            }
         }
         8 => {
-            d.rect(19.0, 25.0, 60.0, 16.0);
-            d.poly(&[(26.0, 41.0), (41.0, 41.0), (36.0, 58.0), (20.0, 58.0)]);
-            for y in [26.0, 33.0, 40.0] {
-                d.line((75.0, y), (108.0, y - 2.0), 2.0);
+            // Match the equipped blowpipe: straight hollow tube, end collars,
+            // two bands and the diamond emblem in the middle.
+            d.line((16.0, 22.0), (97.0, 22.0), 3.5);
+            d.line((16.0, 42.0), (97.0, 42.0), 3.5);
+            d.rect(10.0, 19.0, 8.0, 26.0);
+            for x in [38.0, 75.0] {
+                d.line((x, 23.0), (x, 41.0), 3.5);
             }
-            d.rect(41.0, 15.0, 25.0, 6.0);
-            d.line((42.0, 21.0), (42.0, 26.0), 3.0);
-            d.line((64.0, 21.0), (64.0, 26.0), 3.0);
+            d.path(
+                &[(56.0, 25.0), (64.0, 32.0), (56.0, 39.0),
+                    (48.0, 32.0), (56.0, 25.0)],
+                2.5,
+            );
+            let rim: Vec<_> = (0..=16)
+                .map(|i| {
+                    let angle = i as f32 * TAU / 16.0;
+                    (98.0 + angle.cos() * 6.0, 32.0 + angle.sin() * 12.0)
+                })
+                .collect();
+            d.path(&rim, 3.5);
         }
         9 => {
             d.circle(56.0, 10.0, 7.0, false);

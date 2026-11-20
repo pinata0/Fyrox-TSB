@@ -5,7 +5,7 @@
 ## 조사
 
 - [블리자드 공식 핑 시스템 설명](https://overwatch.blizzard.com/en-gb/news/23785337/an-inside-look-at-the-ping-system-in-overwatch-2/): 커뮤니케이션 휠의 집결·치유 요청을 팀 협동에 사용하는 흐름을 확인했다. 원작의 머리 위 핑 기능까지 이번에 구현한 것은 아니다.
-- [블리자드 2020년 5월 패치 노트](https://overwatch.blizzard.com/en-gb/news/patch-notes/live/2020/05/): 커뮤니케이션 휠 확장과 반복 사용 간격을 참고했다. 이 게임은 단순한 0.75초 간격을 사용하며 원작의 충전식 제한을 재현하지 않는다.
+- [블리자드 2020년 5월 패치 노트](https://overwatch.blizzard.com/en-gb/news/patch-notes/live/2020/05/): 커뮤니케이션 휠 확장과 반복 사용 간격을 참고했다. 이 게임은 일반 항목 0.75초·음성 대사 4초 간격을 사용하며 원작의 충전식 제한을 재현하지 않는다.
 - [블리자드 포럼의 휠 사용 중 입력 충돌 보고](https://us.forums.blizzard.com/en/overwatch/t/communication-wheel-allows-ability-use-before-swapping-page/1000337), [휠 종료 시 카메라 이동 보고](https://us.forums.blizzard.com/en/overwatch/t/commemote-wheel-flicks-camera-after-selecting-option-pc/1043403): 사용자 보고를 회귀 점검 항목으로 삼았다. 공식 동작 명세로 취급하지 않는다. 구현에서는 휠 동안 전투 입력을 차단하고 마우스를 워프시키지 않는 상대 이동 포인터를 쓴다.
 
 ## 조작과 배치
@@ -19,7 +19,7 @@ C를 누르면 즉시 열린다. 마우스를 원하는 방향으로 움직이�
 | 오른쪽 | 치유 요청 | ‘치유가 필요합니다!’ |
 | 오른쪽 아래 | 집결 | ‘제게 집결해 주세요!’ |
 | 아래 | 궁극기 상태 | 실제 서버 충전율 또는 100% 준비 완료 |
-| 왼쪽 아래 | 음성 대사 | 회색 준비 중 표시. 선택 시 로컬 안내만 표시 |
+| 왼쪽 아래 | 음성 대사 | 원본 한국어 친밀도 대사 재생. 서버 승인 후 주변 팀원에게도 재생(4초 간격) |
 | 왼쪽 | 응답 | ‘알겠습니다!’ |
 | 왼쪽 위 | 감사 | ‘감사합니다!’ |
 
@@ -28,7 +28,7 @@ C를 누르면 즉시 열린다. 마우스를 원하는 방향으로 움직이�
 ## 구현
 
 - `src/communication.rs`: 8방향 판정, 취소 영역, 한 번만 실행되는 release, 서버 액션·쿨다운·문구, 인사 모션 곡선.
-- `src/presentation/communication.rs`: 벡터 원형 UI·아이콘, 선택 강조, 준비 중 표시.
+- `src/presentation/communication.rs`: 벡터 원형 UI·아이콘, 선택 강조, 사망 중 대사 사용 불가 표시.
 - `src/presentation/first_person.rs`: 선택한 캐릭터 FBX의 `UpperArm.R`·`Forearm.R`·`Hand.R`에 연결된 원본 메시로 1인칭 오른팔을 만든다. 원본 정점·스키닝·UV·재질·텍스처를 보존하고 표시할 삼각형만 분리한다. 캐릭터 변경 시 함께 교체한다.
 - `src/presentation/characters.rs`: 기존 FBX 애니메이션 평가 뒤 오른팔·팔꿈치를 보간하는 상체 모션. 캐릭터 원본 에셋은 이 기능을 위해 다시 생성하지 않는다.
 - `src/net.rs`: 인증된 발신자의 액션 요청·확인·재전송과 서버의 팀 채팅 라우팅. 인사 잔여 틱을 모든 플레이어의 스냅샷에 포함한다. 재전송은 채팅이나 인사를 다시 시작하지 않는다.

@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use std::{thread, time::Duration};
 use trickcal_shooting_balddagu::{
     combat::{Projectile, ProjectileKind},
@@ -43,7 +44,7 @@ fn final_momentum_slows_then_freezes_without_processing_new_actions() {
     for _ in 0..30 {
         w.tick(input);
     }
-    assert!((w.actors[0].pos.z - pos.z - 5.8 * 0.5 * SLOW_MOTION_SCALE).abs() < 0.002);
+    assert!((w.actors[0].pos.z - pos.z - WALK_SPEED * 0.5 * SLOW_MOTION_SCALE).abs() < 0.002);
     assert!((w.phase_time - (ROUND_RESULT_SECONDS - 0.5)).abs() < 0.001);
     assert_eq!(w.actors[0].shot, shot);
     assert_eq!(w.actors[TEAM_SIZE].hp, hp);

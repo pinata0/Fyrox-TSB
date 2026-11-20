@@ -9,6 +9,7 @@ impl Runtime {
     pub(super) fn controls_active(&self) -> bool {
         !self.home_open
             && !self.settings_menu.open
+            && !self.character_help.open
             && !self.lobby.open
             && self.grabbed
             && !self.chat.open
@@ -24,6 +25,8 @@ impl Runtime {
             && self.error.is_none()
             && matches!(world.phase, Phase::Setup | Phase::Playing)
             && actor.character == SHION
+            && !actor.combat.view_locked()
+            && actor.combat.polymorph <= 0.0
             && !actor.dancing
             && actor.wave_ticks == 0
     }
@@ -37,7 +40,9 @@ impl Runtime {
     }
 
     pub(super) fn gameplay_fov(&self) -> f32 {
-        if self.zoomed() { ZOOM_FOV } else { NORMAL_FOV }.to_radians()
+        let base = if self.zoomed() { ZOOM_FOV } else { NORMAL_FOV };
+        // At full slow, 80 -> 74 degrees; preserve the scope's relative magnification.
+        (base * (1.0 - 0.075 * slow_effects::view_strength(self))).to_radians()
     }
 
     pub(super) fn look_sensitivity(&self) -> f32 {
@@ -129,5 +134,39 @@ mod tests {
         assert!((rt.look_sensitivity() - normal * 2.35).abs() < 0.000001);
         rt.settings_menu.open = true;
         assert!(!rt.controls_active());
+    }
+
+    #[test]
+    fn slows_zoom_gently_and_restore_across_camera_and_menu_transitions() {
+        let mut rt = runtime();
+        world(&mut rt).actors[0].combat.slow = 2.0;
+        assert!((rt.gameplay_fov().to_degrees() - 74.0).abs() < 0.001);
+        rt.set_zoom(true);
+        assert!((rt.gameplay_fov().to_degrees() - 32.375).abs() < 0.001);
+        rt.set_zoom(false);
+        world(&mut rt).actors[0].combat.slow = 0.0;
+        world(&mut rt).actors[0].combat.rain_slow = 2.0;
+        assert!(rt.gameplay_fov().to_degrees() > 74.0);
+        assert!(rt.gameplay_fov().to_degrees() < 80.0);
+        for interrupt in [
+            (|rt: &mut Runtime| world(rt).actors[0].dancing = true) as fn(&mut Runtime),
+            |rt| world(rt).actors[0].hp = 0,
+            |rt| world(rt).actors[0].active = false,
+            |rt| rt.selecting = true,
+            |rt| rt.settings_menu.open = true,
+            |rt| rt.character_help.open = true,
+            |rt| rt.keys.score = true,
+            |rt| rt.home_open = true,
+            |rt| rt.lobby.open = true,
+            |rt| rt.grabbed = false,
+            |rt| world(rt).phase = Phase::Intermission,
+        ] {
+            let mut rt = runtime();
+            world(&mut rt).actors[0].combat.slow = 2.0;
+            interrupt(&mut rt);
+            assert!((rt.gameplay_fov().to_degrees() - 80.0).abs() < 0.001);
+        }
+        world(&mut rt).actors[0].combat.rain_slow = 0.0;
+        assert!((rt.gameplay_fov().to_degrees() - 80.0).abs() < 0.001);
     }
 }

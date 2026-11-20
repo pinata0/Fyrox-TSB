@@ -7,6 +7,7 @@ use std::collections::HashMap;
 pub(super) struct Mask {
     pub centers: [Vector3<f32>; 2],
     pub hit_radius: f32,
+    pub tear_anchors: [Vector3<f32>; 2],
     pub vertices: HashMap<[i32; 3], Control>,
 }
 
@@ -25,6 +26,18 @@ struct Source {
     vertices: Vec<[f32; 12]>,
 }
 
+#[derive(Deserialize)]
+struct RigSource {
+    face: Landmarks,
+}
+#[derive(Deserialize)]
+struct Landmarks {
+    center_x: f32,
+    eye_x: f32,
+    eye_y: f32,
+    front: f32,
+}
+
 static MASKS: std::sync::OnceLock<Vec<Mask>> = std::sync::OnceLock::new();
 
 pub(super) fn key(p: Vector3<f32>) -> [i32; 3] {
@@ -37,6 +50,32 @@ pub(super) fn load() -> Result<(), String> {
         let bytes = std::fs::read(characters::asset_path(&format!("{slug}-cheeks.json")))
             .map_err(|e| format!("{slug} cheek mask: {e}"))?;
         let source: Source = serde_json::from_slice(&bytes).map_err(|e| e.to_string())?;
+        let rig: RigSource = serde_json::from_slice(
+            &std::fs::read(characters::asset_path(&format!("{slug}-rig.json")))
+                .map_err(|e| format!("{slug} tear landmarks: {e}"))?,
+        )
+        .map_err(|e| e.to_string())?;
+        // Landmarks and the skin are authored in FBX source space, before the
+        // rider/head animation. World-space face heights put Ui's tears on her hands.
+        let tear_anchors = [-1.0, 1.0].map(|side| {
+            let target = Vector3::new(
+                rig.face.center_x + side * rig.face.eye_x,
+                -rig.face.front,
+                rig.face.eye_y - 0.035,
+            );
+            let nearest = source
+                .vertices
+                .iter()
+                .min_by(|a, b| {
+                    let score = |row: &[f32; 12]| {
+                        let delta = Vector3::new(row[0], row[1], row[2]) - target;
+                        delta.x * delta.x + delta.z * delta.z + delta.y * delta.y * 0.15
+                    };
+                    score(a).total_cmp(&score(b))
+                })
+                .expect("nonempty cheek skin");
+            Vector3::new(target.x, nearest[1] - 0.006, target.z)
+        });
         if source.version != 1 || !(0.10..=0.18).contains(&source.hit_radius) {
             return Err(format!("{slug}: invalid cheek control version/radius"));
         }
@@ -76,6 +115,7 @@ pub(super) fn load() -> Result<(), String> {
         masks.push(Mask {
             centers: source.centers.map(Vector3::from),
             hit_radius: source.hit_radius,
+            tear_anchors,
             vertices,
         });
     }

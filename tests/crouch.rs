@@ -68,7 +68,7 @@ fn crouch_fits_tunnel_and_cannot_stand_until_clear() {
             a.pos,
             a.collision_height()
         ));
-        for _ in 0..30 {
+        for _ in 0..60 {
             movement::step_actor(
                 &map,
                 &mut a,
@@ -79,7 +79,7 @@ fn crouch_fits_tunnel_and_cannot_stand_until_clear() {
             );
             assert!(a.crouching);
         }
-        for _ in 0..30 {
+        for _ in 0..60 {
             movement::step_actor(
                 &map,
                 &mut a,
@@ -126,7 +126,7 @@ fn standing_cannot_enter_low_tunnel_but_crouching_can() {
         ..actor()
     };
     let mut crouching = standing.clone();
-    for _ in 0..60 {
+    for _ in 0..120 {
         movement::step_actor(
             &map,
             &mut standing,

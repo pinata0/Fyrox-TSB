@@ -1,11 +1,16 @@
 //! GPU regression fixtures for every equipped hand, combat motion and visibility transition.
 use super::*;
+use trickcal_shooting_balddagu::motion::Motion;
 
 const SWING_PHASES: [f32; 9] = [0.0, 0.08, 0.16, 0.29, 0.42, 0.52, 0.62, 0.80, 1.0];
 const ERPIN_STEPS: [u8; 7] = [2, 17, 32, 46, 47, 48, 49];
+const PICORA_STEPS: [u8; 5] = [5, 20, 35, 77, 92];
 const RENUA_STEPS: [u8; 5] = [7, 22, 37, 79, 94];
 const HILDE_STEPS: [u8; 5] = [13, 28, 43, 85, 100];
-const SHION_STEPS: [u8; 5] = [14, 45, 45, 14, 46];
+const AYA_STEPS: [u8; 5] = [4, 19, 34, 76, 91];
+const MAYO_STEPS: [u8; 5] = [8, 23, 38, 80, 95];
+const UI_KOMI_STEPS: [u8; 6] = [10, 12, 25, 27, 40, 42];
+const SHION_STEPS: [u8; 9] = [14, 45, 45, 14, 46, 29, 44, 86, 101];
 const WORLD_STEPS: [u8; 30] = [
     72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95,
     96, 97, 98, 99, 100, 101,
@@ -21,12 +26,20 @@ fn selected_steps() -> Option<&'static [u8]> {
         Some(&SHION_STEPS)
     } else if std::env::args().any(|arg| arg == "--hilde-only") {
         Some(&HILDE_STEPS)
+    } else if std::env::args().any(|arg| arg == "--aya-only") {
+        Some(&AYA_STEPS)
+    } else if std::env::args().any(|arg| arg == "--mayo-only") {
+        Some(&MAYO_STEPS)
+    } else if std::env::args().any(|arg| arg == "--ui-komi-only") {
+        Some(&UI_KOMI_STEPS)
     } else if std::env::args().any(|arg| arg == "--support-grips-only") {
         Some(&SUPPORT_STEPS)
     } else if std::env::args().any(|arg| arg == "--renua-only") {
         Some(&RENUA_STEPS)
     } else if std::env::args().any(|arg| arg == "--erpin-only") {
         Some(&ERPIN_STEPS)
+    } else if std::env::args().any(|arg| arg == "--picora-only") {
+        Some(&PICORA_STEPS)
     } else {
         None
     }
@@ -56,25 +69,45 @@ pub(super) fn attack_pose(
         71 | 87..102 => 0.5,
         _ => return None,
     };
+    // Vivi's live basic attacks use the four-blade clips. The old generic
+    // Attack clip puts a gesturing palm through a resting blade in this fixture.
+    let motion = if id == 0 {
+        if (59..68).contains(&step) { Motion::ViviRight } else { Motion::ViviLeft }
+    } else {
+        Motion::Attack
+    };
     Some(Pose {
-        motion: Motion::Attack,
-        age: phase * Motion::Attack.seconds(id),
+        motion,
+        age: phase * motion.seconds(id),
         shot_age: 0.0,
         locomotion: None,
     })
 }
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
+    if std::env::args().any(|arg| arg == "--first-person-framing-only") && rt.review_capture >= 45 {
+        println!("FIRST_PERSON_FRAMING_REVIEW_OK: 15 heroes, idle/attack/reload, lower right primary sleeve, lower left support sleeve, palm contacts");
+        context.loop_controller.exit();
+        return Ok(());
+    }
     let erpin_only = std::env::args().any(|arg| arg == "--erpin-only");
     if selected_steps().is_some_and(|steps| rt.review_capture as usize >= steps.len()) {
         if std::env::args().any(|arg| arg == "--world-weapons-only") {
             println!("WORLD_WEAPONS_OK: 15 world idle/attack poses; contact error < 1 mm");
         } else if std::env::args().any(|arg| arg == "--shion-only") {
-            println!("SHION_SCOPE_REVIEW_OK: idle, scope, scoped hit, release, selection");
+            println!("SHION_SCOPE_REVIEW_OK: enlarged rifle, scope, muzzle-to-hit laser, release, selection, hip-fire bullet, reload, world grips");
         } else if std::env::args().any(|arg| arg == "--hilde-only") {
             println!("HILDE_WEAPON_REVIEW_OK: first-person idle/attack/reload, world idle/attack; contact error < 1 mm");
+        } else if std::env::args().any(|arg| arg == "--aya-only") {
+            println!("AYA_WEAPON_REVIEW_OK: first-person idle/attack/reload, world idle/attack; contact error < 1 mm");
+        } else if std::env::args().any(|arg| arg == "--mayo-only") {
+            println!("MAYO_WEAPON_REVIEW_OK: first-person idle/attack/reload, world idle/attack; contact error < 1 mm");
+        } else if std::env::args().any(|arg| arg == "--ui-komi-only") {
+            println!("UI_KOMI_WEAPON_REVIEW_OK: one-handed first-person idle/attack/reload; contact error < 1 mm");
         } else if erpin_only {
             println!("ERPIN_WEAPON_REVIEW_OK: idle, attack, reload, selection, dance, greeting, return; contact error < 1 mm");
+        } else if std::env::args().any(|arg| arg == "--picora-only") {
+            println!("PICORA_WEAPON_REVIEW_OK: first-person idle/attack/reload, world idle/attack; contact error < 1 mm");
         } else if std::env::args().any(|arg| arg == "--support-grips-only") {
             println!(
                 "SUPPORT_GRIPS_OK: first-person and world idle/attack, articulated palm contacts"
@@ -176,6 +209,14 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
         } else {
             0.0
         };
+        if std::env::args().any(|arg| arg == "--shion-only") {
+            if rt.review_capture == 2 || step == 29 {
+                // Exercise real shot detection every fixture frame, including
+                // post-animation muzzle placement and bullet/laser exclusion.
+                actor.shot = actor.shot.wrapping_add(1);
+                actor.shot_end = actor.eye() + direction(actor.yaw, actor.pitch) * 12.0;
+            }
+        }
     }
     render(rt, context)?;
     if step >= 70 {
@@ -187,12 +228,14 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
                 .unwrap();
             for animation in player.animations_mut().iter_mut() {
                 let attack = step == 71 || step >= 87;
+                let motion = if id == 0 { Motion::ViviLeft } else { Motion::Attack };
+                let (start, end) = motion.frames();
                 animation.set_time_slice(if attack {
-                    156.0 / 30.0..180.0 / 30.0
+                    start as f32 / 30.0..end as f32 / 30.0
                 } else {
                     0.0..2.0
                 });
-                animation.set_time_position(if attack { 168.0 / 30.0 } else { 0.0 });
+                animation.set_time_position(if attack { (start + end) as f32 / 60.0 } else { 0.0 });
                 animation.set_speed(0.0).set_enabled(true);
             }
         }
@@ -227,6 +270,9 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
         rt.review_capture
     };
     let id = rt.session.world().actors[0].character;
+    if std::env::args().any(|arg| arg == "--shion-only") && step < 70 {
+        rt.projectile_models.verify_shion_shot(g, 0, rt.review_capture == 2, step == 29);
+    }
     let held = step < 45 || step == 49 || (50..68).contains(&step) || step == 69;
     assert_eq!(g[rt.weapon].visibility(), held);
     assert_eq!(
@@ -248,8 +294,17 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
             .traverse_handle_iter(rt.actors[0])
             .find(|h| g[*h].name() == kit(id).weapon)
             .unwrap();
-        assert_eq!(g[weapon].visibility(), !matches!(id, 3 | 6));
+        assert_eq!(g[weapon].visibility(), !matches!(id, 3 | 6 | 7 | 9));
         for left in [false, true] {
+            // These heroes now use free gestures, and Butter's pouch hand is
+            // released between shots. Naia's left hand supports only spells;
+            // her basic attack uses its dedicated fish/hand animation.
+            if matches!(id, 3 | 6 | 7 | 9)
+                || (id == 11 && left)
+                || (id == 1 && (left || step >= 87))
+            {
+                continue;
+            }
             if id == 0 {
                 let blade = weapons::vivi_blade_node(g, weapon, left);
                 assert!(
@@ -310,12 +365,31 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
             .expect("right hand must be loaded");
         assert_eq!(right.character, id);
         assert_eq!(right.source, rt.visuals[0].root);
+        if matches!(id, 10 | 12) {
+            assert!(right.visible(g));
+            assert!(!rt.first_person_support_arm.as_ref().unwrap().visible(g),
+                "Ui and Komi carry their normal weapons with one hand");
+        }
         assert_eq!(
             rt.first_person_support_arm.is_some(),
-            weapons::grips(id)[1].is_some()
+            matches!(id, 1 | 2 | 4 | 7 | 8 | 9 | 13) || weapons::grips(id)[1].is_some()
         );
-        for arm in std::iter::once(right).chain(rt.first_person_support_arm.iter()) {
-            arm.verify_anatomical_hand(g, rt.camera, true);
+        for (side, arm) in std::iter::once(right)
+            .chain(rt.first_person_support_arm.iter())
+            .enumerate()
+        {
+            // Skill-only support arms are loaded even when the current pose hides
+            // them. Id and Renua use empty gestures instead of weapon sockets.
+            if !arm.visible(g) {
+                continue;
+            }
+            let free = matches!(id, 3 | 7 | 9);
+            let pouch_hand = id == 11 && side == 1;
+            arm.verify_anatomical_hand(g, rt.camera, !free && !pouch_hand);
+            arm.verify_sleeve_corner(g, rt.camera);
+            if free || pouch_hand {
+                continue;
+            }
             let error = arm.grip_error(g, rt.wave_hand, rt.weapons[id as usize]);
             assert!(
                 error.is_finite() && error < 0.001,
@@ -370,6 +444,9 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
         "weapon-{step:02}-{}-{state}-",
         characters::SLUGS[id as usize]
     );
+    if std::env::args().any(|arg| arg == "--first-person-framing-only") {
+        tag = format!("framing-{tag}");
+    }
     if std::env::args().any(|arg| arg == "--shion-only") {
         tag = format!("shion-scope-{}-{tag}", rt.review_capture);
     }

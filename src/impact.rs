@@ -1,4 +1,4 @@
-//! Bounded, authoritative surface contacts shared by rendering and replication.
+//! Bounded, authoritative contacts shared by rendering and replication.
 use crate::game::{direction, ray_box, Block, World, DT, V3};
 
 pub const MAX_IMPACTS: usize = 32;
@@ -10,6 +10,9 @@ pub enum ImpactKind {
     #[default]
     Bullet,
     Slash,
+    PoisonDart,
+    Syringe,
+    MedicalExplosion,
 }
 
 impl ImpactKind {
@@ -17,13 +20,17 @@ impl ImpactKind {
         match value {
             0 => Some(Self::Bullet),
             1 => Some(Self::Slash),
+            2 => Some(Self::PoisonDart),
+            3 => Some(Self::Syringe),
+            4 => Some(Self::MedicalExplosion),
             _ => None,
         }
     }
     pub fn size_range(self) -> std::ops::RangeInclusive<f32> {
         match self {
-            Self::Bullet => 0.08..=0.32,
+            Self::Bullet | Self::PoisonDart | Self::Syringe => 0.08..=0.32,
             Self::Slash => 0.25..=0.8,
+            Self::MedicalExplosion => crate::hilde_skill::GRENADE_RADIUS..=crate::hilde_skill::GRENADE_RADIUS,
         }
     }
 }
@@ -45,7 +52,7 @@ pub struct Impact {
     pub color: [u8; 3],
     pub radius: f32,
     pub kind: ImpactKind,
-    /// Surface-plane angle, one turn in 256 steps. Shared by clients/replays.
+    /// Slash: surface angle. Embedded darts: packed incoming hemisphere direction.
     pub rotation: u8,
 }
 
@@ -53,6 +60,32 @@ impl Impact {
     pub fn angle(self) -> f32 {
         self.rotation as f32 * (std::f32::consts::TAU / 256.0)
     }
+
+    pub fn embedded_direction(self) -> V3 {
+        let (tangent, bitangent) = surface_basis(self.face);
+        let azimuth = (self.rotation & 15) as f32 * std::f32::consts::TAU / 16.0;
+        let tilt = (self.rotation >> 4) as f32 * std::f32::consts::FRAC_PI_2 / 16.0;
+        (tangent * azimuth.cos() + bitangent * azimuth.sin()) * tilt.sin()
+            - NORMALS[self.face as usize] * tilt.cos()
+    }
+}
+
+/// Keep the existing bounded packet size: 4 bits each for azimuth and tilt.
+/// Tilt never reaches 90 degrees, so even grazing darts point into the surface.
+fn embedded_rotation(face: u8, direction: V3) -> u8 {
+    let (tangent, bitangent) = surface_basis(face);
+    let direction = direction.normalized();
+    let angle = direction.dot(bitangent).atan2(direction.dot(tangent));
+    let azimuth =
+        (angle.rem_euclid(std::f32::consts::TAU) * 16.0 / std::f32::consts::TAU).round() as u8 & 15;
+    let tilt = ((-direction.dot(NORMALS[face as usize]))
+        .clamp(0.0, 1.0)
+        .acos()
+        * 16.0
+        / std::f32::consts::FRAC_PI_2)
+        .round()
+        .min(15.0) as u8;
+    azimuth | (tilt << 4)
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -179,8 +212,35 @@ impl World {
     pub(crate) fn record_impact(&mut self, hit: SurfaceHit, radius: f32) {
         self.record_mark(hit, radius, ImpactKind::Bullet, 0);
     }
+    pub(crate) fn record_projectile_impact(
+        &mut self,
+        hit: SurfaceHit,
+        radius: f32,
+        projectile: crate::combat::ProjectileKind,
+        direction: V3,
+    ) {
+        use crate::combat::ProjectileKind;
+        // The detonation records one effect for terrain and character contacts alike.
+        if projectile == ProjectileKind::MedicalGrenade {
+            return;
+        }
+        let kind = match projectile {
+            ProjectileKind::Needle | ProjectileKind::Poison => ImpactKind::PoisonDart,
+            ProjectileKind::Syringe => ImpactKind::Syringe,
+            _ => ImpactKind::Bullet,
+        };
+        self.record_mark(hit, radius, kind, embedded_rotation(hit.face, direction));
+    }
     pub(crate) fn record_slash(&mut self, hit: SurfaceHit, half_length: f32, rotation: u8) {
         self.record_mark(hit, half_length, ImpactKind::Slash, rotation);
+    }
+    pub(crate) fn record_medical_explosion(&mut self, position: V3) {
+        self.record_mark(
+            SurfaceHit { distance: 0.0, position, face: 3, color: [65, 245, 105] },
+            crate::hilde_skill::GRENADE_RADIUS,
+            ImpactKind::MedicalExplosion,
+            0,
+        );
     }
     fn record_mark(&mut self, hit: SurfaceHit, size: f32, kind: ImpactKind, rotation: u8) {
         self.next_impact = self.next_impact.wrapping_add(1);
@@ -207,6 +267,33 @@ impl World {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn embedded_projectiles_keep_the_incoming_hemisphere_on_every_face() {
+        for face in 0..6 {
+            let (tangent, bitangent) = surface_basis(face);
+            for tilt in [0.0_f32, 0.2, 0.7, 1.2, 1.55] {
+                for step in 0..64 {
+                    let angle = step as f32 * std::f32::consts::TAU / 64.0;
+                    let incoming = (tangent * angle.cos() + bitangent * angle.sin()) * tilt.sin()
+                        - NORMALS[face as usize] * tilt.cos();
+                    let hit = Impact {
+                        id: 1,
+                        tick: 0,
+                        position: V3::default(),
+                        face,
+                        color: [0; 3],
+                        radius: 0.11,
+                        kind: ImpactKind::PoisonDart,
+                        rotation: embedded_rotation(face, incoming),
+                    };
+                    let decoded = hit.embedded_direction();
+                    assert!(decoded.dot(NORMALS[face as usize]) < 0.0);
+                    assert!(decoded.dot(incoming) > 0.97, "embedded direction drift");
+                }
+            }
+        }
+    }
 
     #[test]
     fn all_faces_and_ground_have_outward_normals_and_contacts_on_the_surface() {

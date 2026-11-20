@@ -3,8 +3,8 @@ use super::*;
 use trickcal_shooting_balddagu::portal::Portal;
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
-    if rt.review_capture >= 6 {
-        println!("PORTAL_REVIEW_OK: yellow/blue opaque markers, angled view, foreground occlusion, unpaired entrance, authored castle wall, split cooldowns");
+    if rt.review_capture >= 8 {
+        println!("PORTAL_REVIEW_OK: yellow/blue opaque markers, angled view, foreground occlusion, unpaired entrance, authored castle wall, split cooldowns, closed and reopened pair");
         context.loop_controller.exit();
         return Ok(());
     }
@@ -48,6 +48,7 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
             1 => [0.0, 0.7],
             _ => [1.8, 0.0],
         };
+        a.portals.reopen = if rt.review_capture == 6 { 1.0 } else { 0.0 };
         if rt.review_capture == 4 {
             a.portals.ends[1] = None;
         }
@@ -150,6 +151,12 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
         (normal.xyz().normalize() - vec(expected)).norm() < 0.00001,
         "Portal must lie flush with the surface"
     );
+    let width = surface.local_transform().scale().x;
+    if rt.review_capture == 6 {
+        assert!(width < 0.1, "Closed portal must collapse to a dim seam");
+    } else if rt.review_capture == 7 {
+        assert!(width > 0.9, "Reopened portal must restore its aperture");
+    }
     capture_preview(
         rt.scene,
         1,

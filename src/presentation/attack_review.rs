@@ -2,6 +2,10 @@
 use super::*;
 use trickcal_shooting_balddagu::motion::{Motion, Pose};
 
+fn recoil_only() -> bool {
+    std::env::args().any(|arg| arg == "--recoil-only")
+}
+
 fn vivi_only() -> bool {
     std::env::args().any(|arg| arg == "--vivi-only")
 }
@@ -14,8 +18,18 @@ fn aya_only() -> bool {
     std::env::args().any(|arg| arg == "--aya-only")
 }
 
+fn komi_only() -> bool {
+    std::env::args().any(|arg| arg == "--komi-only")
+}
+
+const KOMI_PHASES: [f32; 11] = [0.0, 0.11, 0.22, 0.34, 0.46, 0.54, 0.62, 0.80, 0.90, 0.96, 1.0];
+
 fn phase(step: usize) -> f32 {
-    if aya_only() {
+    if komi_only() {
+        KOMI_PHASES[step % KOMI_PHASES.len()]
+    } else if recoil_only() {
+        [0.0, 0.08, 0.16, 0.4, 0.7, 1.0][step % 6]
+    } else if aya_only() {
         [0.0, 0.06, 0.2, 0.4, 0.6, 0.8, 0.94, 1.0][step % 8]
     } else {
         (step % 90 % 6) as f32 / 5.0
@@ -23,7 +37,9 @@ fn phase(step: usize) -> f32 {
 }
 
 fn world_view(step: u8) -> bool {
-    if aya_only() {
+    if recoil_only() || komi_only() {
+        false
+    } else if aya_only() {
         step % 16 < 8
     } else if naia_only() {
         step < 6
@@ -65,7 +81,11 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
     }
     let step = rt.review_capture as usize;
     if step
-        >= if aya_only() {
+        >= if komi_only() {
+            KOMI_PHASES.len()
+        } else if recoil_only() {
+            18
+        } else if aya_only() {
             32
         } else if naia_only() {
             12
@@ -75,7 +95,11 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
             180
         }
     {
-        if aya_only() {
+        if komi_only() {
+            println!("KOMI_PILLOW_REVIEW_OK: enlarged pillow, one-handed windup, cross-screen swing and recovery; palm contact < 1 mm");
+        } else if recoil_only() {
+            println!("RECOIL_REVIEW_OK: Naia, Hilde and Sion; rise, peak and recovery; both hands keep grip contact");
+        } else if aya_only() {
             println!("AYA_TRANSFORM_REVIEW_OK: both attacks, eight world and eight first-person phases each; folds, blades and grips verified");
         } else if naia_only() {
             println!("NAIA_ATTACK_REVIEW_OK: six world and six first-person poses, independent braid chains and source facial states");
@@ -87,7 +111,11 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
         context.loop_controller.exit();
         return Ok(());
     }
-    let id = if aya_only() {
+    let id = if komi_only() {
+        12
+    } else if recoil_only() {
+        [1, 13, 14][step / 6]
+    } else if aya_only() {
         4
     } else if naia_only() {
         1
@@ -158,6 +186,19 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     }
     let id = rt.session.world().actors[0].character;
     let g = &context.scenes[rt.scene].graph;
+    if komi_only() {
+        assert!(g[rt.weapons[12]].visibility());
+        assert!(rt.first_person_arm.as_ref().unwrap().visible(g));
+        assert!(!rt.first_person_support_arm.as_ref().unwrap().visible(g));
+        assert!((g[rt.weapons[12]].local_transform().scale().x - 1.30).abs() < 0.001);
+        let palm = rt.first_person_arm.as_ref().unwrap().palm(g);
+        let local = g[rt.camera]
+            .global_transform()
+            .try_inverse()
+            .unwrap()
+            .transform_point(&palm.into());
+        assert!(local.z > 0.50, "Komi's hand crossed the near plane");
+    }
     if aya_only() {
         let weapon = if world_view(rt.review_capture) {
             g.traverse_handle_iter(rt.actors[0])
@@ -336,7 +377,7 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
             } else {
                 "fps"
             },
-            if vivi_only() || aya_only() {
+            if vivi_only() || aya_only() || komi_only() {
                 rt.review_capture
             } else {
                 rt.review_capture % 6

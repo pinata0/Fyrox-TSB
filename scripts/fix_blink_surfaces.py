@@ -37,6 +37,9 @@ for slug in (sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else SLUGS):
     profiles=sample_lids(tree,tris,points,uvs,pixels,face,skip=('R',) if slug=='aya' else ())
     fit_surfaces(points,profiles,face,protected_vertices(body))
     stats=rebuild_blink_shapes(body,face,profiles)
+    if slug=='id':
+        from id_eyelids import rebuild_white_lashes
+        stats['white_lashes']=rebuild_white_lashes(body,face)
     if not geometry_only:painter.paint_blink_textures(body,face,slug,build_nodes=False,natural=True)
     bpy.context.scene['blink_surface_revision']='smooth-depth-and-normal-v1'
     bpy.context.scene.frame_set(0)

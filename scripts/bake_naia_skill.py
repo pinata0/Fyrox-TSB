@@ -1,12 +1,12 @@
-"""Append Skill1_1..4 to Naia's existing rig, preserving all original clips/geometry."""
+"""Bake Skill1_1..4 and append Ultimate1_1 to Naia's existing rig, preserving all original clips/geometry."""
 import bpy, json, math, sys
 from pathlib import Path
 from mathutils import Vector, Matrix, Quaternion
 ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT/'scripts'))
 from export_fyrox_fbx import export_fbx
 from arm_weight_isolation import isolate_refined_arm_weights
-ASSETS=ROOT/'assets/characters';OUT=ROOT/'artifacts/naia-skill'
-bpy.ops.wm.open_mainfile(filepath=str(OUT/'before/naia.blend'))
+ASSETS=ROOT/'assets/characters';OUT=ROOT/'artifacts/naia-ultimate';OUT.mkdir(parents=True,exist_ok=True)
+bpy.ops.wm.open_mainfile(filepath=str(ASSETS/'naia.blend'))
 scene=bpy.context.scene;rig=bpy.data.objects['TSB_Rig'];mesh=bpy.data.objects['naia_SkinnedMesh']
 isolate_refined_arm_weights(mesh, rig)
 data=json.loads((ASSETS/'skill/naia.json').read_text())
@@ -35,7 +35,7 @@ def arm(side,target):
     aim(upper,fore,a+d*along+pole*height);aim(fore,hand,target)
 def smooth(x):x=max(0,min(1,x));return x*x*(3-2*x)
 checkpoints=[]
-for clip,start in zip(data['clips'],[558,605,632,645]):
+for clip,start in zip(data['clips'],[558,605,632,645,675]):
     samples=clip['samples'];count=len(samples)-1;loop=clip['clip'] in ['Skill1_2','Skill1_3']
     for index,sample in enumerate(samples):
         frame=start+index;scene.frame_set(frame)
@@ -43,7 +43,8 @@ for clip,start in zip(data['clips'],[558,605,632,645]):
         # Keep cycle boundaries continuous while retaining the sampled source accents.
         seam=smooth((index-(count-3))/3) if loop else 0
         val=lambda key,j:sample[key][j]*(1-seam)+samples[0][key][j]*seam
-        weight=smooth(index/5) if clip['clip']=='Skill1_1' else smooth((count-index)/6) if clip['clip']=='Skill1_4' else 1
+        ultimate=clip['clip']=='Ultimate1_1'
+        weight=smooth(index/5) if clip['clip']=='Skill1_1' else smooth((count-index)/6) if clip['clip']=='Skill1_4' else smooth(index/5)*smooth((count-index)/6) if ultimate else 1
         for name,angle in sample['rotations'].items():
             if name.startswith(('UpperArm','Forearm','Hand','Foot')):continue
             angle=angle*(1-seam)+samples[0]['rotations'][name]*seam
@@ -57,7 +58,8 @@ for clip,start in zip(data['clips'],[558,605,632,645]):
         for j,side in enumerate(['L','R']):
             path=[sample['hands'][j][k]*(1-seam)+samples[0]['hands'][j][k]*seam for k in range(3)]
             origin=rig.pose.bones[f'Hand.{side}'].head.copy()
-            desired=Vector((-.20 if side=='L' else .20,-.19+.30*path[0],1.10+.35*path[1]))+root
+            spread=.22+(.20*math.sin(math.pi*index/count) if ultimate else .0)
+            desired=Vector((-spread if side=='L' else spread,-.19+(.45 if ultimate else .30)*path[0],1.10+(.65 if ultimate else .35)*path[1]))+root
             arm(side,origin.lerp(desired,weight))
             for segment in range(3):
                 name=f'Braid.{side}.{segment+1:02}';p=rig.pose.bones[name];rest=p.bone.matrix_local.to_3x3()
@@ -79,10 +81,10 @@ for c in curves():
         if k.co.x>=558:k.interpolation='LINEAR'
 assert all(old_keys()[k]==v for k,v in before.items()),'existing clips changed'
 assert geometry==[v.co[:] for v in mesh.data.vertices],'mesh changed'
-scene.frame_end=672;scene.frame_set(0);scene.render.fps=30
-scene['naia_skill_clips']='Skill1_1 558:602; Skill1_2 605:629; Skill1_3 632:642; Skill1_4 645:672'
+scene.frame_end=796;scene.frame_set(0);scene.render.fps=30
+scene['naia_skill_clips']='Skill1_1 558:602; Skill1_2 605:629; Skill1_3 632:642; Skill1_4 645:672; Ultimate1_1 675:796'
 bpy.context.preferences.filepaths.save_version=0
-bpy.ops.wm.save_as_mainfile(filepath=str(ASSETS/'naia.blend'))
+bpy.ops.wm.save_as_mainfile(filepath=str(ASSETS/'naia.blend'),relative_remap=False)
 export_fbx(mesh,rig,ASSETS/'naia.fbx')
 (OUT/'bake-verification.json').write_text(json.dumps({'original_keys_preserved':True,'geometry_preserved':True,'clips':checkpoints},indent=2))
 print('NAIA_SKILL_BAKE_OK',flush=True)

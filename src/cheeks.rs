@@ -5,6 +5,78 @@ use std::sync::OnceLock;
 pub const MAX_RELEASE_SECONDS: f32 = 3.0;
 pub const RELEASE_FADE_SECONDS: f32 = 0.35;
 
+#[derive(Debug, Clone, Copy, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "snake_case")]
+pub enum EyeStyle {
+    Squeeze,
+    SqueezeSoft,
+    Pressed,
+    Closed,
+    Blank,
+    Cloud,
+    Wide,
+    Cry,
+    Sparkle,
+    Angry,
+    Sad,
+    Flat,
+    Tired,
+}
+impl EyeStyle {
+    pub fn brow(self) -> f32 {
+        match self {
+            Self::Squeeze | Self::Pressed => -0.65,
+            Self::SqueezeSoft | Self::Angry => -0.50,
+            Self::Closed | Self::Flat => -0.20,
+            Self::Tired => 0.20,
+            Self::Sad | Self::Cry | Self::Sparkle => 0.35,
+            Self::Blank | Self::Cloud | Self::Wide => 0.45,
+        }
+    }
+    pub fn closure(self) -> f32 {
+        match self {
+            Self::Angry => 0.52,
+            Self::Sad => 0.22,
+            Self::Flat => 0.38,
+            Self::Tired => 0.62,
+            // Full illustrated replacements use the smooth eye surface, keeping
+            // the raised neutral iris from showing through their new drawing.
+            _ => 1.0,
+        }
+    }
+}
+
+#[derive(Debug, Deserialize)]
+pub struct EyeProfile {
+    pub slug: String,
+    pub hold: [EyeStyle; 2],
+    pub release: [EyeStyle; 2],
+}
+impl EyeProfile {
+    pub fn mirrored(&self, released: bool) -> bool {
+        let pair = if released { self.release } else { self.hold };
+        pair[0] != pair[1]
+    }
+}
+
+pub fn eye_profile(id: u8) -> &'static EyeProfile {
+    static DATA: OnceLock<Vec<EyeProfile>> = OnceLock::new();
+    &DATA.get_or_init(|| {
+        serde_json::from_str(include_str!("../assets/characters/cheeks/eyes.json"))
+            .expect("reviewed original cheek eye drawings")
+    })[id as usize]
+}
+
+#[derive(Debug, Clone, Copy)]
+pub struct EyeReaction {
+    pub opacity: f32,
+    pub release_mix: f32,
+    pub closure: [f32; 2],
+    /// Signed motion of the original eyebrow, separate from eyelid flattening.
+    pub brow: [f32; 2],
+    pub mirror: bool,
+}
+
 pub fn release_duration(id: u8) -> f32 {
     motions(id).release.duration.min(MAX_RELEASE_SECONDS)
 }
@@ -86,8 +158,44 @@ pub struct Interaction {
     origin: [f32; 2],
     pixels_per_unit: f32,
     dragged: bool,
+    eye_release_start: f32,
 }
 impl Interaction {
+    pub fn eyes(&self, id: u8) -> EyeReaction {
+        let profile = eye_profile(id);
+        let t = if self.phase == Phase::Released {
+            (self.age / 0.10).clamp(0.0, 1.0)
+        } else {
+            0.0
+        };
+        let release_mix = t * t * (3.0 - 2.0 * t);
+        let opacity = self.blend(id)
+            * if self.phase == Phase::Released {
+                self.eye_release_start + (1.0 - self.eye_release_start) * release_mix
+            } else {
+                1.0
+            };
+        let mirror = self.side > 0.0;
+        let closure = std::array::from_fn(|i| {
+            let i = if mirror { 1 - i } else { i };
+            let a = profile.hold[i].closure();
+            let b = profile.release[i].closure();
+            (a + (b - a) * release_mix) * opacity
+        });
+        let brow = std::array::from_fn(|i| {
+            let i = if mirror { 1 - i } else { i };
+            let a = profile.hold[i].brow();
+            let b = profile.release[i].brow();
+            (a + (b - a) * release_mix) * opacity
+        });
+        EyeReaction {
+            opacity,
+            release_mix,
+            closure,
+            brow,
+            mirror,
+        }
+    }
     pub fn begin(&mut self, side: f32, cursor: [f32; 2], pixels_per_unit: f32) {
         *self = Self {
             phase: Phase::Held,
@@ -113,6 +221,7 @@ impl Interaction {
     pub fn release(&mut self) {
         if self.phase == Phase::Held {
             if self.dragged {
+                self.eye_release_start = (self.age / 0.12).clamp(0.0, 1.0);
                 self.phase = Phase::Released;
                 self.age = 0.0;
             } else {
@@ -187,6 +296,67 @@ impl Interaction {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn original_eye_drawings_cover_the_roster_and_distinct_reactions() {
+        for id in 0..15 {
+            let profile = eye_profile(id);
+            assert_eq!(profile.slug, motions(id).slug);
+            for style in profile.hold.into_iter().chain(profile.release) {
+                assert!((0.0..=1.0).contains(&style.closure()));
+            }
+        }
+        assert_eq!(eye_profile(1).hold, [EyeStyle::Cloud; 2]);
+        assert_eq!(eye_profile(1).release, [EyeStyle::Squeeze; 2]);
+        assert_eq!(eye_profile(7).hold, [EyeStyle::Wide; 2]);
+        assert_eq!(eye_profile(12).release, [EyeStyle::Cry; 2]);
+        assert_eq!(eye_profile(13).release, [EyeStyle::Blank; 2]);
+        assert!(eye_profile(10).mirrored(false));
+        assert!(eye_profile(14).mirrored(false));
+    }
+
+    #[test]
+    fn cheek_eyes_blend_on_release_fade_to_idle_and_reset_on_cancel() {
+        for id in 0..15 {
+            let mut s = Interaction::default();
+            assert_eq!(s.eyes(id).opacity, 0.0);
+            s.begin(-1.0, [0.0; 2], 300.0);
+            s.drag([40.0, 0.0]);
+            s.tick(0.12, id);
+            let held = s.eyes(id);
+            assert_eq!(held.opacity, 1.0);
+            s.release();
+            assert_eq!(s.eyes(id).closure, held.closure);
+            assert_eq!(s.eyes(id).brow, held.brow);
+            assert_eq!(s.eyes(id).release_mix, 0.0);
+            s.tick(0.05, id);
+            assert!((s.eyes(id).release_mix - 0.5).abs() < 0.001);
+            s.tick(0.05, id);
+            assert_eq!(s.eyes(id).release_mix, 1.0);
+            s.age = release_duration(id) + RELEASE_FADE_SECONDS / 2.0;
+            assert!((s.eyes(id).opacity - 0.5).abs() < 0.001);
+            s.tick(RELEASE_FADE_SECONDS, id);
+            assert_eq!(s.eyes(id).opacity, 0.0);
+            s.begin(1.0, [0.0; 2], 300.0);
+            s.tick(0.12, id);
+            assert!(s.eyes(id).mirror);
+            assert_eq!(s.eyes(id).closure, [held.closure[1], held.closure[0]]);
+            assert_eq!(s.eyes(id).brow, [held.brow[1], held.brow[0]]);
+            s.cancel();
+            assert_eq!(s.eyes(id).opacity, 0.0);
+        }
+    }
+
+    #[test]
+    fn quick_release_keeps_the_current_eye_opacity() {
+        let mut s = Interaction::default();
+        s.begin(-1.0, [0.0; 2], 300.0);
+        s.drag([30.0, 0.0]);
+        s.tick(0.025, 1);
+        let before = s.eyes(1);
+        s.release();
+        assert_eq!(s.eyes(1).opacity, before.opacity);
+        assert_eq!(s.eyes(1).closure, before.closure);
+    }
     #[test]
     fn original_clips_cover_fifteen_unique_roster_entries() {
         let mut unique = std::collections::HashSet::new();

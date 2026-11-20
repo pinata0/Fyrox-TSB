@@ -14,8 +14,10 @@ for slug in SLUGS:
         assert all(0<=w<=1 for w in row[3:5])
         if row[11]:assert row[3:5]==[0,0]
     for side,stats in enumerate(mask['stats']):
-        assert stats['apex_weight']>.99 and stats['core_vertices']>30
-        assert stats['core_height']>.04 and stats['core_width']>.045
+        # Id's measured lower cheek is narrower than the old sideburn patch.
+        id_skin=slug=='id' and mask.get('skin_domain_revision')==2
+        assert stats['apex_weight']>.99 and stats['core_vertices']>(20 if id_skin else 30)
+        assert stats['core_height']>(.010 if id_skin else .04) and stats['core_width']>(.030 if id_skin else .045)
         apex=mask['vertices'][stats['apex_vertex']]
         assert max(abs(a-b) for a,b in zip(apex[:3],mask['centers'][side]))<1e-6
         assert apex[3+side]>.99

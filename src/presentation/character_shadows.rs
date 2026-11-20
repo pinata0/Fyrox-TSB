@@ -7,7 +7,7 @@ use fyrox::{
 };
 use std::collections::HashMap;
 
-fn shadow_shader(original: &ShaderResource) -> ShaderResource {
+pub(super) fn shadow_shader(original: &ShaderResource) -> ShaderResource {
     // A fresh resource keeps the shared FBX shader and GPU cache intact.
     let mut shader = Shader {
         definition: original.data_ref().definition.clone(),
@@ -58,6 +58,7 @@ impl ShadowOnly {
             let mut shaders = HashMap::new();
             for root in roots {
                 for node in g.traverse_handle_iter(root) {
+                    if g[node].name().contains("outline") {continue;}
                     let Some(mesh) = g[node].cast::<Mesh>() else {
                         continue;
                     };

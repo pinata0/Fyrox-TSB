@@ -67,22 +67,20 @@ pub(in crate::presentation) fn update(rt: &mut Runtime, context: &mut PluginCont
             world.map.push(wall);
         }
         for (i, actor) in world.actors.iter_mut().enumerate() {
-            *actor = Actor {
-                active: matches!(i, 0 | 1 | 6 | 7),
-                human: i != 7,
-                character: if i == 7 { 2 } else { 0 },
-                pos: V3::new(
-                    match i {
-                        1 => -3.0,
-                        7 => 3.0,
-                        _ => 0.0,
-                    },
-                    30.0,
-                    if i == 0 { -12.0 } else { -4.0 },
-                ),
-                yaw: if i == 0 { rt.yaw } else { std::f32::consts::PI },
-                ..Default::default()
-            };
+            *actor = Actor::default();
+            actor.active = matches!(i, 0 | 1 | 6 | 7);
+            actor.human = i != 7;
+            actor.character = if i == 7 { 2 } else { 0 };
+            actor.pos = V3::new(
+                match i {
+                    1 => -3.0,
+                    7 => 3.0,
+                    _ => 0.0,
+                },
+                30.0,
+                if i == 0 { -12.0 } else { -4.0 },
+            );
+            actor.yaw = if i == 0 { rt.yaw } else { std::f32::consts::PI };
         }
         world.actors[0].dancing = step == 9;
         world.actors[6].hp = match step {

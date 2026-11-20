@@ -148,7 +148,7 @@ fn both_colors_pass_without_bouncing_or_sticking() {
                 forward: 1.0,
                 ..Default::default()
             },
-            42,
+            84,
         );
         let a = &w.actors[0];
         assert!((a.pos.x - (1 - side) as f32 * 12.0).abs() < 0.01, "{a:?}");
@@ -157,6 +157,55 @@ fn both_colors_pass_without_bouncing_or_sticking() {
         assert!(!movement::blocked(&w.map, a.pos));
     }
 }
+#[test]
+fn passage_closes_both_ends_for_everyone_and_reopens_after_one_second() {
+    for owner in [0, 1, 3] {
+        for side in 0..2 {
+            let mut w = world();
+            for a in &mut w.actors {
+                a.active = false;
+            }
+            for slot in [0, owner, 2] {
+                let a = &mut w.actors[slot];
+                a.active = true;
+                a.human = true;
+                a.hp = MAX_HP;
+                a.pos = V3::new(25.0, 0.0, 0.0);
+            }
+            w.actors[owner].character = 3;
+            w.actors[owner].portals.ends = pair();
+            w.actors[0].pos = V3::new(side as f32 * 12.0, 0.0, 3.425);
+            w.actors[2].pos = V3::new((1 - side) as f32 * 12.0, 0.0, 3.425);
+            let mut inputs = [Input::default(); PLAYERS];
+            inputs[0].forward = 1.0;
+            inputs[2].forward = 1.0;
+            w.tick(inputs);
+            assert_eq!(w.actors[0].portals.transits, 1);
+            assert_eq!(
+                w.actors[2].portals.transits, 0,
+                "same-tick follower must wait"
+            );
+            assert_eq!(w.actors[owner].portals.reopen, portal::REOPEN_DELAY);
+
+            // Turn back into the exit while another player tries that endpoint too.
+            inputs[0].forward = -1.0;
+            for _ in 1..60 {
+                w.tick(inputs);
+                assert_eq!(w.actors[0].portals.transits, 1);
+                assert_eq!(w.actors[2].portals.transits, 0);
+                assert!(w.actors[owner].portals.reopen > 0.0);
+                assert_eq!(w.actors[owner].portals.passable_ends(), [None; 2]);
+            }
+            w.tick(inputs);
+            assert_eq!(w.actors[0].portals.transits, 2, "re-enter on tick 60");
+            assert_eq!(w.actors[2].portals.transits, 0);
+            assert_eq!(w.actors[owner].portals.reopen, portal::REOPEN_DELAY);
+            assert_eq!(w.actors[owner].portals.ends, pair());
+            assert!(!movement::blocked(&w.map, w.actors[0].pos));
+        }
+    }
+}
+
 #[test]
 fn single_entrance_and_backside_do_not_pass() {
     let mut w = world();
@@ -199,7 +248,7 @@ fn any_player_can_pass_but_blocked_exits_remain_solid() {
             forward: 1.0,
             ..Default::default()
         },
-        42,
+        84,
     );
     assert_eq!(w.actors[0].portals.transits, 1);
     let mut w = world();
@@ -215,7 +264,7 @@ fn any_player_can_pass_but_blocked_exits_remain_solid() {
             forward: 1.0,
             ..Default::default()
         },
-        60,
+        120,
     );
     assert_eq!(w.actors[0].portals.transits, 0);
 }
@@ -257,6 +306,44 @@ fn prediction_matches_authority_across_passage_and_pending_aim() {
         assert!((predicted.yaw - w.actors[0].yaw).abs() < 0.0001);
     }
     assert_eq!(w.actors[0].portals.transits, 1);
+}
+
+#[test]
+fn prediction_matches_shared_portal_closure_and_reentry() {
+    for owner in [0, 1] {
+        let mut w = world();
+        w.actors[owner].active = true;
+        w.actors[owner].human = true;
+        w.actors[owner].hp = MAX_HP;
+        w.actors[owner].pos = V3::new(25.0, 0.0, 0.0);
+        w.actors[owner].portals.ends = pair();
+        w.actors[0].pos = V3::new(0.0, 0.0, 3.425);
+        let mut motion = ClientMotion::default();
+        motion.observe(&w, 0, 0);
+        for seq in 1..=61 {
+            let input = Input {
+                forward: if seq == 1 { 1.0 } else { -1.0 },
+                ..Default::default()
+            };
+            motion.advance(&w, seq, input);
+            if seq % 3 == 0 {
+                // Replay the unacknowledged current input over the prior snapshot.
+                motion.observe(&w, 0, seq - 1);
+            }
+            tick(&mut w, input, 1);
+            let predicted = motion.actor(&w, 0, 0);
+            assert!((predicted.pos - w.actors[0].pos).length() < 0.0001);
+            assert_eq!(predicted.portals.transits, w.actors[0].portals.transits);
+            assert_eq!(
+                motion.actor(&w, owner, 0).portals.reopen,
+                w.actors[owner].portals.reopen
+            );
+            if seq == 1 {
+                motion.observe(&w, 0, seq);
+            }
+        }
+        assert_eq!(w.actors[0].portals.transits, 2);
+    }
 }
 #[test]
 fn transforms_are_reversible_for_every_surface_orientation() {

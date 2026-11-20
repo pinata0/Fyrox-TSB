@@ -6,6 +6,14 @@ pub(super) fn enabled() -> bool {
     std::env::args().any(|arg| arg == "--move-review")
 }
 
+fn ui_only() -> bool {
+    std::env::args().any(|arg| arg == "--ui-only")
+}
+
+fn first_person(step: usize) -> bool {
+    ui_only() && step >= 16
+}
+
 pub(super) fn pose(rt: &Runtime, id: u8) -> Pose {
     let step = rt.review_capture as usize;
     let mode = step % 16 / 4;
@@ -46,12 +54,15 @@ pub(super) fn pose(rt: &Runtime, id: u8) -> Pose {
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     let step = rt.review_capture as usize;
-    if step >= 240 {
-        println!("MOVE_REVIEW_OK: 15 heroes x 4 modes x 4 phases; non-arm bones preserve Move during attacks");
+    if step >= if ui_only() { 32 } else { 240 } {
+        println!("MOVE_REVIEW_OK: non-arm bones preserve Move during attacks");
+        if ui_only() {
+            println!("UI_MOVE_REVIEW_OK: 16 world + 16 first-person poses; frog tracks, stable camera, hand/weapon sway and grip verified");
+        }
         context.loop_controller.exit();
         return Ok(());
     }
-    let id = (step / 16) as u8;
+    let id = if ui_only() { 10 } else { (step / 16) as u8 };
     rt.home_open = false;
     rt.lobby.open = false;
     rt.selecting = false;
@@ -59,11 +70,11 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
     rt.chat.open = false;
     rt.yaw = 0.0;
     rt.pitch = 0.0;
-    rt.keys.w = false;
+    rt.keys.w = first_person(step);
     rt.keys.zoom = false;
     if let Session::Solo(w) = &mut rt.session {
         w.phase = Phase::Lobby;
-        w.tick = 120;
+        w.tick = 120 + if ui_only() { (step % 4) as u64 * 5 } else { 0 };
         for (i, actor) in w.actors.iter_mut().enumerate() {
             actor.active = i == 0;
         }
@@ -81,9 +92,13 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
         actor.hurt = 0.0;
         actor.ability_flash = 0.0;
         actor.combat = Default::default();
+        rt.view_pos = actor.eye();
     }
     rt.review_frames = rt.review_frames.max(1);
     render(rt, context)?;
+    if first_person(step) {
+        return Ok(());
+    }
     let g = &mut context.scenes[rt.scene].graph;
     rt.visuals[0].set_shadow_only(g, false);
     g[rt.weapon].set_visibility(false);
@@ -118,6 +133,7 @@ pub(super) fn capture(rt: &mut Runtime, mut context: PluginContext) -> GameResul
                 && !name.starts_with("Thigh.")
                 && !name.starts_with("Shin.")
                 && !name.starts_with("Foot.")
+                && !(ui_only() && name.starts_with("Frog"))
             {
                 continue;
             }
@@ -141,6 +157,29 @@ pub(super) fn capture(rt: &mut Runtime, mut context: PluginContext) -> GameResul
         }
     }
     assert!(checked >= 27, "missing Move body tracks for {id}");
+    if first_person(rt.review_capture as usize) {
+        let actor = &rt.session.world().actors[0];
+        let camera_error = (g[rt.camera].global_position() - vec(actor.eye())).norm();
+        assert!(
+            camera_error < 0.0001,
+            "Ui hop leaked into camera: {camera_error}"
+        );
+        assert!(rt.visuals[0].is_shadow_only());
+        assert!(g[rt.weapon].visibility() && g[rt.wave_hand].visibility());
+        let arm = rt.first_person_arm.as_ref().expect("Ui first-person hand");
+        assert!(arm.visible(g));
+        assert!(arm.grip_error(g, rt.wave_hand, rt.weapons[10]) < 0.001);
+        // In non-attacking poses, only the original walking sway moves the grip vertically.
+        if rt.review_capture % 16 < 8 {
+            let bob = (rt.session.world().tick as f32 * 0.18).sin() * 0.012;
+            assert!(bob.abs() > 0.001, "review must sample nonzero sway");
+            assert!((g[rt.weapon].local_transform().position().y - bob).abs() < 0.0001);
+            assert!((g[rt.wave_hand].local_transform().position().y - bob).abs() < 0.0001);
+        }
+        println!("UI_MOVE_FIRST_PERSON_OK step={} camera_error={camera_error:.7} weapon_y={:.6} hand_y={:.6}",
+            rt.review_capture, g[rt.weapon].local_transform().position().y,
+            g[rt.wave_hand].local_transform().position().y);
+    }
     let mode = ["walk", "run", "walk-attack", "run-attack"][rt.review_capture as usize % 16 / 4];
     // A full roster produces 240 screenshots. JPEG keeps review artifacts small.
     let (width, height, pixels) = capture_frame(rt.scene, false, &mut context)
@@ -148,9 +187,14 @@ pub(super) fn capture(rt: &mut Runtime, mut context: PluginContext) -> GameResul
     let rgba = image::RgbaImage::from_raw(width, height, pixels).unwrap();
     let capture = image::DynamicImage::ImageRgba8(image::imageops::flip_vertical(&rgba)).to_rgb8();
     let path = format!(
-        "artifacts/preview-move-{id:02}-{}-{mode}-phase{}-dance-front.jpg",
+        "artifacts/preview-move-{id:02}-{}-{mode}-phase{}-{}.jpg",
         characters::SLUGS[id as usize],
-        rt.review_capture % 4
+        rt.review_capture % 4,
+        if first_person(rt.review_capture as usize) {
+            "fps"
+        } else {
+            "dance-front"
+        },
     );
     capture
         .save(&path)

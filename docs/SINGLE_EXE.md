@@ -1,6 +1,19 @@
 # Windows 단일 EXE 패키징
 
-최신 배포본(2026-11-17): 프로젝트 루트의 `release/TSB-Multiplayer-ErpinMotions.exe`.
+## v0.1 공개본 (2026-11-21)
+
+v0.1은 최신 소스를 릴리스 빌드한 `release/v0.1/TSB.exe`이며, 루트 배포 경로 `release/TSB.exe`도 같은 파일을 사용합니다. [GitHub 릴리즈](https://github.com/pinata0/Fyrox-TSB/releases/tag/v0.1)에 단일 EXE와 선택형 SHA-256 텍스트를 게시합니다. 개발 시작일은 2026-11-12, 게시일은 2026-11-21입니다.
+
+- 크기: 339,184,445바이트 / 내부 파일: 1,766개.
+- SHA-256: `3def454e881b7607b99235079cd40a520ae628c61464582acdf46891dcc0ac83`.
+- 빌드 stage: `artifacts/releases/TSB-v0-1-20261121`.
+- 검증 기록: `artifacts/v0.1-validation/results.json`, `artifacts/v0.1-headless-full.log`.
+- 검증 결과와 알려진 제한은 [v0.1 릴리즈 노트](releases/v0.1.md)에 정리했습니다. 아래 내용은 기존 패키징 방식과 이전 저폴리곤 빌드의 작업 기록입니다.
+
+## 패키징 방식과 이전 빌드 기록
+
+최신 배포본(2026-11-21): 프로젝트 루트의 `release/TSB.exe`.
+최신 개발 내용, 성능 최적화, 저폴리곤 캐릭터·무기와 표정 데이터를 포함합니다.
 패키징 스크립트의 기본 출력 이름은 `TSB-Multiplayer-Portable.exe`이며, 배포본 이름은 `--output`으로 지정한다.
 기존 게임 실행 파일, EOS 진단 도구, EOS/VC++/XAudio2 DLL, 런타임 에셋,
 게임 클라이언트용 EOS 설정, 라이선스를 압축해 하나의 네이티브 실행 파일에 담습니다.
@@ -16,11 +29,15 @@ cargo build --locked --offline --release --bin tsb --bin tsb-eos-check --bin tsb
 Push-Location scripts/onefile-launcher
 cargo build --locked --offline --release
 Pop-Location
-python scripts/package_portable.py --include-eos-config --profile release --name TSB-single-exe-release --stage-only
-python scripts/package_single_exe.py --stage artifacts/releases/TSB-single-exe-release
+python scripts/package_portable.py --include-eos-config --profile release --name TSB-single-exe-20261121-lowpoly --stage-only
+python scripts/package_single_exe.py --stage artifacts/releases/TSB-single-exe-20261121-lowpoly --output artifacts/single-exe/20261121-lowpoly/TSB.exe
 ```
 
 실행기 디렉터리에서 빌드해야 `.cargo/config.toml`의 정적 CRT 설정이 적용됩니다.
+위 stage와 후보 EXE 경로는 이 빌드에서 사용한 경로이므로, 다음 빌드에는 새 이름을 지정하세요.
+후보 EXE를 별도 작업 폴더에서 `--verify-only`, `--check-eos --offline`,
+`--solo --auto-start --lan --smoke-test`로 확인한 뒤 `release/TSB.exe`를 교체합니다.
+`release/TSB.zip`과 Linux 배포본은 이번 Windows 단일 EXE 재빌드 대상에 포함되지 않았습니다.
 패키징은 stage 파일의 SHA-256을 검사하고, 압축 페이로드의 SHA-256과 길이를 EXE 끝에
 덧붙입니다. 빌드 결과와 최종 SHA-256은 `artifacts/single-exe/package-report.json`에 남깁니다.
 
@@ -49,3 +66,18 @@ python scripts/package_single_exe.py --stage artifacts/releases/TSB-single-exe-r
 한 PC의 두 프로세스는 EOS Device ID를 공유하므로 EOS 중계의 실제 양방향 접속 검증에는
 서로 다른 PC가 필요합니다. 로컬 UDP 회귀 테스트나 EOS 로그인 성공만으로 이 검증을
 대체하지 않습니다.
+
+## 2026-11-21 빌드 검증
+
+- 단일 EXE: 339,145,244바이트, 내부 파일 1,766개, 추출 크기 473,440,253바이트.
+- 최신 게임/진단 실행파일과 저폴리곤 런타임 에셋 231개를 원본 SHA-256과 대조했습니다.
+- 별도 작업 폴더에서 최초 추출, 파일별 무결성 검사, EOS DLL 오프라인 초기화,
+  연습 모드 구동과 정상 종료, 아야 E/Q의 10개 GPU 검증 장면을 확인했습니다.
+- 15개 캐릭터와 각 23개 표정 채널이 정상 로드됐으며, 게임 종료 후 캐시 재검사도 통과했습니다.
+- 기존 `--smoke-test`는 5개 화면을 캡처했으나 종합 완료 조건에서 실패했습니다.
+  단일 EXE 재실행과 추출된 게임 직접 실행에서도 실패했고, 저장소의 원본 실행파일에서는
+  통과했습니다. 원인은 확정하지 않았으며 전체 회귀 테스트 통과를 의미하지 않습니다. 상세 결과는
+  `artifacts/single-exe/20261121-lowpoly/validation.json`에 보관합니다.
+- 이번 검증은 로컬 구동과 패키지 구성 확인이며, 다른 PC와의 온라인 접속은 검사하지 않았습니다.
+
+최종 파일의 SHA-256은 `release/TSB.exe.sha256`에 기록합니다.

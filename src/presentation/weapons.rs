@@ -1,4 +1,5 @@
 //! Imported Meshy props and animated weapon contact sockets.
+use crate::presentation::SceneState;
 use super::*;
 use fyrox::{
     asset::manager::ResourceManager,
@@ -12,6 +13,7 @@ use fyrox::{
 /// Keep the viewmodel, floating blades, worn companions and small props separate.
 pub(super) fn world_scale(id: u8) -> f32 {
     match id {
+        0 => 1.0,
         2 => 1.55,  // Erpin: staff reaches from the feet to above the crown.
         4 => 1.40,  // Aya: open flower canopy spans the head and shoulders.
         5 => 2.00,  // Picora: long decorated staff, close to body height.
@@ -20,6 +22,48 @@ pub(super) fn world_scale(id: u8) -> f32 {
         13 => 1.65, // Hilde: long medical gun, not a handgun.
         14 => 2.20, // Shion: oversized rifle is longer than her body height.
         _ => 0.70,
+    }
+}
+
+/// Lean enlarged staff heads away from the hair/hat, rotating about the palm.
+/// Positive X pitch carries the upright (+Y) staff forward along actor-local +Z.
+pub(super) fn world_pitch(id: u8, animated_pitch: f32) -> f32 {
+    let forward = match id {
+        5 => 30.0_f32.to_radians(),
+        10 => 35.0_f32.to_radians(),
+        _ => return animated_pitch,
+    };
+    // Looking up or an attack's backswing must not pull the head into the face.
+    (animated_pitch + forward).max(forward)
+}
+
+/// View props must stay proportional to the enlarged camera-mounted hands.
+/// Scale about the grip so the hand sockets and animated effects follow it.
+pub(super) fn first_person_scale(id: u8) -> f32 {
+    match id {
+        2 => 1.08,  // Erpin: substantial staff head and shaft beside the palm.
+        4 => 1.24,  // Aya: oversized parasol; the canopy may extend beyond the view.
+        5 => 1.20,  // Picora: full staff and curled head proportional to the view hand.
+        10 => 1.30, // Ui: broad clover instead of a leaf smaller than the hand.
+        12 => 1.30, // Komi: a full-sized pillow, about 1.8x the previous view prop.
+        14 => 1.30, // Shion: a full-sized rifle alongside the enlarged view hands.
+        _ => 0.72,
+    }
+}
+
+pub(super) fn first_person_position(id: u8) -> Vector3<f32> {
+    match id {
+        // Empty hands are in front; levitating blades rest behind the shoulders.
+        0 => Vector3::zeros(),
+        // Keep the larger staff heads in frame, with the grip at the same
+        // lower-right screen position. Camera-local -X is screen right.
+        2 => Vector3::new(-0.54, -0.35, 0.70),
+        5 => Vector3::new(-0.50, -0.36, 0.70),
+        10 => Vector3::new(-0.50, -0.32, 0.64),
+        // Bring the pillow's grasped right edge into view, with room for its sweep.
+        12 => Vector3::new(-0.20, -0.22, 0.68),
+        14 => Vector3::new(-0.40, -0.27, 0.62),
+        _ => Vector3::new(-0.44, -0.28, 0.56),
     }
 }
 
@@ -34,17 +78,70 @@ pub(super) fn grips(id: u8) -> [Option<Vector3<f32>>; 2] {
     };
     let left = match id {
         0 => Some(Vector3::zeros()),
+        1 => Some(Vector3::zeros()),
         11 => Some(Vector3::zeros()),
         6 => Some(Vector3::new(0.21, -0.12, 0.0)),
         12 => Some(Vector3::new(0.20, 0.02, 0.0)),
         14 => Some(Vector3::new(0.0, -0.035, 0.30)),
+        10 => Some(Vector3::new(0.0, 0.065, 0.0)),
         _ => None,
     };
     [Some(right), left]
 }
 
+const ERPIN_GEM_SOCKET: &str = "Erpin staff gem";
+const PICORA_HEAD_SOCKET: &str = "Picora staff head";
+const MAYO_MUZZLE_SOCKET: &str = "Mayo blowpipe muzzle";
+pub(super) const MAYO_MUZZLE: Vector3<f32> = Vector3::new(0.0, 0.0, 0.535);
+const HILDE_MUZZLE_SOCKET: &str = "Hilde syringe muzzle";
+const SHION_MUZZLE_SOCKET: &str = "Shion rifle muzzle";
+
+pub(super) fn shion_muzzle(g: &Graph, weapon: Handle<Node>) -> Vector3<f32> {
+    let socket = g[weapon].children().iter().copied()
+        .find(|&node| g[node].name() == SHION_MUZZLE_SOCKET)
+        .expect("Shion rifle muzzle socket");
+    g[socket].global_position()
+}
+
+pub(super) fn mayo_muzzle(g: &Graph, weapon: Handle<Node>) -> Vector3<f32> {
+    let socket = g[weapon].children().iter().copied()
+        .find(|&node| g[node].name() == MAYO_MUZZLE_SOCKET)
+        .expect("Mayo blowpipe muzzle socket");
+    g[socket].global_position()
+}
+
+pub(super) fn picora_muzzle(g: &Graph, weapon: Handle<Node>) -> Vector3<f32> {
+    let socket = g[weapon]
+        .children()
+        .iter()
+        .copied()
+        .find(|&node| g[node].name() == PICORA_HEAD_SOCKET)
+        .expect("Picora staff head socket");
+    g[socket].global_position()
+}
+
+pub(super) fn hilde_muzzle(g: &Graph, weapon: Handle<Node>) -> Vector3<f32> {
+    let socket = g[weapon]
+        .children()
+        .iter()
+        .copied()
+        .find(|&node| g[node].name() == HILDE_MUZZLE_SOCKET)
+        .expect("Hilde syringe muzzle socket");
+    g[socket].global_position()
+}
+
+pub(super) fn erpin_muzzle(g: &Graph, weapon: Handle<Node>) -> Vector3<f32> {
+    let socket = g[weapon]
+        .children()
+        .iter()
+        .copied()
+        .find(|&node| g[node].name() == ERPIN_GEM_SOCKET)
+        .expect("Erpin staff gem socket");
+    g[socket].global_position()
+}
+
 pub(super) const VIVI_SWING_SECONDS: f32 = 0.52;
-const VIVI_BLADES: [&str; 2] = ["Mercury sword.R", "Mercury sword.L"];
+const VIVI_BLADES: [&str; 4] = ["Mercury sword.R", "Mercury sword.R.outer", "Mercury sword.L", "Mercury sword.L.outer"];
 const VIVI_HANDS: [&str; 2] = ["Empty hand gesture.R", "Empty hand gesture.L"];
 
 pub(super) fn vivi_blade_node(g: &Graph, weapon: Handle<Node>, left: bool) -> Handle<Node> {
@@ -52,7 +149,7 @@ pub(super) fn vivi_blade_node(g: &Graph, weapon: Handle<Node>, left: bool) -> Ha
         .children()
         .iter()
         .copied()
-        .find(|h| g[*h].name() == VIVI_BLADES[usize::from(left)])
+        .find(|h| g[*h].name() == VIVI_BLADES[usize::from(left)*2])
         .expect("Vivi floating blade")
 }
 
@@ -67,7 +164,14 @@ fn vivi_gestures(g: &mut Graph, weapon: Handle<Node>) {
 
 /// Vivi uses empty gesture targets. Her blades never serve as hand contacts.
 pub(super) fn grip_node(g: &Graph, weapon: Handle<Node>, id: u8, left: bool) -> Handle<Node> {
-    if id == 0 {
+    if id == 1 {
+        g[weapon]
+            .children()
+            .iter()
+            .copied()
+            .find(|h| g[*h].name() == super::naia_whales::HANDS[usize::from(left)])
+            .expect("Naia whale cradle socket")
+    } else if id == 0 {
         g[weapon]
             .children()
             .iter()
@@ -86,64 +190,28 @@ pub(super) fn grip_node(g: &Graph, weapon: Handle<Node>, id: u8, left: bool) -> 
     }
 }
 
-/// Source hand gestures and floating dagger tracks remain completely independent.
-pub(super) fn update_vivi_viewmodel(
-    g: &mut Graph,
-    weapon: Handle<Node>,
-    phase: f32,
-    finisher: bool,
-) {
-    for left in [false, true] {
-        let side = if left { 1.0 } else { -1.0 };
-        let motion = trickcal_shooting_balddagu::attack::vivi_hand(left, phase, finisher);
-        let gesture = grip_node(g, weapon, 0, left);
-        g[gesture]
-            .local_transform_mut()
-            .set_position(Vector3::new(side * 0.52, -0.38, 0.72) + Vector3::from(motion.position))
-            .set_rotation(UnitQuaternion::from_euler_angles(
-                0.25 + motion.angles[0],
-                -side * 0.30 + motion.angles[1],
-                -side * 0.35 + motion.angles[2],
-            ));
+/// The four independent blades and the empty hand targets share the authoritative pose.
+pub(super) fn update_vivi_pose(g: &mut Graph, weapon: Handle<Node>, pose: trickcal_shooting_balddagu::motion::Pose, time: f32, first: bool) {
+    use trickcal_shooting_balddagu::vivi_skill as v;
+    if first {
+        for left in [false,true] {
+            let side=if left {1.0}else{-1.0};
+            let motion=v::hand(pose.motion,pose.age,left);
+            let gesture=grip_node(g,weapon,0,left);
+            g[gesture].local_transform_mut()
+                .set_position(Vector3::new(side*0.52,-0.38,0.72)+Vector3::from(motion.position))
+                .set_rotation(UnitQuaternion::from_euler_angles(0.25+motion.angles[0],-side*0.30+motion.angles[1],-side*0.35+motion.angles[2]));
+        }
     }
-    update_vivi_blades(g, weapon, phase, finisher, true);
-}
-
-pub(super) fn update_vivi_blades(
-    g: &mut Graph,
-    weapon: Handle<Node>,
-    phase: f32,
-    finisher: bool,
-    first_person: bool,
-) {
-    for left in [false, true] {
-        let side = if left { 1.0 } else { -1.0 };
-        let path = trickcal_shooting_balddagu::attack::vivi_blade(left, phase, finisher);
-        let blade = vivi_blade_node(g, weapon, left);
-        // The reference faces -X: map forward to +Z, height to +Y.
-        // Depth and lateral separation are the 3D adaptation of the source plane.
-        let base = if first_person {
-            Vector3::new(side * 1.05, 0.05, -0.50)
-        } else {
-            Vector3::new(side * 0.86, 1.5, -0.70)
-        };
-        g[blade]
-            .local_transform_mut()
-            .set_position(
-                base + Vector3::new(
-                    side * path[2].sin() * 0.22,
-                    (path[1] * 0.65).clamp(-0.65, 2.2),
-                    (-path[0] * 1.2).clamp(-1.6, 3.2),
-                ),
-            )
-            .set_rotation(UnitQuaternion::from_euler_angles(
-                -path[2],
-                side * 0.10,
-                -side * 0.35,
-            ));
+    for (i,name) in VIVI_BLADES.into_iter().enumerate() {
+        let blade=g[weapon].children().iter().copied().find(|&h|g[h].name()==name).expect("Vivi blade");
+        let (p,a)=v::blade(i,pose.motion,pose.age,time);
+        let mut p=Vector3::from(p);
+        if first {p.y-=1.45;p.z-=0.12;}
+        g[blade].local_transform_mut().set_position(p)
+            .set_rotation(UnitQuaternion::from_euler_angles(a[0],a[1],a[2]));
     }
 }
-
 pub(super) fn update_slingshot(g: &mut Graph, weapon: Handle<Node>, phase: f32) {
     let held = trickcal_shooting_balddagu::attack::hand(11, false, phase);
     let draw = trickcal_shooting_balddagu::attack::hand(11, true, phase);
@@ -193,7 +261,7 @@ pub(super) fn load(manager: &ResourceManager) -> Result<Vec<Option<ModelResource
     let mut models = vec![None; 15];
     for (id, result) in ids.into_iter().zip(block_on(join_all(pending))) {
         let model = result.map_err(|e| format!("{} weapon: {e:?}", characters::SLUGS[id]))?;
-        if matches!(id, 4 | 11) {
+        if matches!(id, 1 | 4 | 11) {
             super::morph_import::restore(&model, &format!("{}-weapon", characters::SLUGS[id]))?;
         }
         if !model
@@ -216,10 +284,89 @@ pub(super) fn build(
     shapes: &Shapes,
     id: u8,
     model: Option<&ModelResource>,
+    first_person: bool,
 ) -> Handle<Node> {
-    let root = PivotBuilder::new(BaseBuilder::new().with_name(kit(id).weapon))
+    let root: Handle<Node> = PivotBuilder::new(BaseBuilder::new().with_name(kit(id).weapon))
         .build(g)
         .to_base();
+    if matches!(id, 2 | 5) && first_person {
+        // Twist around the staff's own shaft before the parent applies the
+        // attack pitch. The grip stays fixed and the head socket follows it.
+        g[root].local_transform_mut().set_rotation(
+            UnitQuaternion::from_axis_angle(&Vector3::y_axis(), std::f32::consts::FRAC_PI_2),
+        );
+    }
+    if id == 10 {
+        super::ui_fx::attach_staff_glow(g, root, model.is_some());
+    }
+    if id == 5 {
+        // Center of the decorated curl after FBX's Z-up -> Y-up conversion.
+        // A child socket follows the grip, animation and both presentation scales.
+        let socket: Handle<Node> =
+            PivotBuilder::new(BaseBuilder::new().with_name(PICORA_HEAD_SOCKET))
+                .build(g)
+                .to_base();
+        g[socket].local_transform_mut().set_position(Vector3::new(0.0, 0.51, 0.0));
+        g.link_nodes(socket, root);
+    }
+    if id == 8 {
+        // FBX maps the tube's -Y end to +Z; the imported grip adds 0.05 m.
+        // Its radial correction centers the bore at X=Y=0 in weapon space.
+        let socket: Handle<Node> = PivotBuilder::new(
+            BaseBuilder::new().with_name(MAYO_MUZZLE_SOCKET),
+        ).build(g).to_base();
+        g[socket].local_transform_mut().set_position(if model.is_some() {
+            MAYO_MUZZLE
+        } else {
+            Vector3::new(0.0, 0.0, 0.63)
+        });
+        g.link_nodes(socket, root);
+    }
+    if id == 13 {
+        // In corrected weapon space, after the imported mesh's half turn and
+        // grip translation. Parenting here includes recoil and both view scales.
+        let center = if model.is_some() {
+            Vector3::new(0.0, 0.15, 0.565)
+        } else {
+            Vector3::new(0.0, 0.0, 0.655)
+        };
+        let socket: Handle<Node> = PivotBuilder::new(
+            BaseBuilder::new().with_name(HILDE_MUZZLE_SOCKET),
+        )
+        .build(g)
+        .to_base();
+        g[socket].local_transform_mut().set_position(center);
+        g.link_nodes(socket, root);
+    }
+    if id == 14 {
+        // FBX Z-up conversion, then the imported rifle's half turn and +0.42
+        // grip correction below: the barrel tip lies at +1.055 along Z.
+        let center = if model.is_some() {
+            Vector3::new(0.0, 0.04, 1.055)
+        } else {
+            Vector3::new(0.0, 0.0, 0.70)
+        };
+        let socket: Handle<Node> = PivotBuilder::new(
+            BaseBuilder::new().with_name(SHION_MUZZLE_SOCKET),
+        ).build(g).to_base();
+        g[socket].local_transform_mut().set_position(center);
+        g.link_nodes(socket, root);
+    }
+    if id == 2 {
+        // Center of the suspended pink diamond in erpin-weapon.fbx, after
+        // FBX's Z-up -> Y-up conversion. The old 0.72 height was above the gem.
+        let center = if model.is_some() {
+            Vector3::new(0.0, 0.575, 0.0)
+        } else {
+            Vector3::new(0.05, 0.48, 0.0)
+        };
+        let socket: Handle<Node> =
+            PivotBuilder::new(BaseBuilder::new().with_name(ERPIN_GEM_SOCKET))
+                .build(g)
+                .to_base();
+        g[socket].local_transform_mut().set_position(center);
+        g.link_nodes(socket, root);
+    }
     if let Some(model) = model {
         let data = model.data_ref();
         if id == 0 {
@@ -253,7 +400,31 @@ pub(super) fn build(
         g[imported]
             .local_transform_mut()
             .set_scale(Vector3::repeat(0.01));
-        if id == 13 {
+        if id == 4 && first_person {
+            // The delivered parasol's handle is behind and above the authored
+            // origin. Center the middle of its straight handle inside the palm,
+            // and align the tilted shaft with the fingers' grasp axis (+Y).
+            // Apply this to the imported assembly so folding/blades follow it.
+            let grip = Vector3::new(0.0135, 0.375, -0.089);
+            let shaft = Vector3::new(-0.055, 1.0, 0.19).normalize();
+            let rotation = UnitQuaternion::rotation_between(&shaft, &Vector3::y()).unwrap();
+            g[imported]
+                .local_transform_mut()
+                .set_rotation(rotation)
+                .set_position(-(rotation * grip));
+        } else if id == 8 {
+            // Move the rear rim just behind the grip, with the long tube ahead
+            // of the hand, and center its axis inside the curled fingers.
+            // Match its cross-section to the hand's authored grasp clearance;
+            // view hands are enlarged independently of the weapon's length.
+            let hand_scale = if first_person { super::first_person::HAND_SCALE } else { 1.0 };
+            let prop_scale = if first_person { first_person_scale(id) } else { world_scale(id) };
+            let radial_scale = super::hand_grip::radius(id, false) * hand_scale / (0.068 * prop_scale);
+            g[imported]
+                .local_transform_mut()
+                .set_scale(Vector3::new(0.01 * radial_scale, 0.01 * radial_scale, 0.01))
+                .set_position(Vector3::new(0.0, -0.04 * radial_scale, 0.05));
+        } else if id == 13 {
             // Hilde's imported muzzle also points along -Z. Her actual grip is
             // at (0, -0.06, 0.40), not the authored origin in front of the trigger.
             // Correct only the mesh so both views retain their animated palm socket.
@@ -277,6 +448,22 @@ pub(super) fn build(
                 .set_position(Vector3::new(0.0, 0.0, 0.42));
         }
         g.link_nodes(imported, root);
+        if id == 10 {
+            let leaf = g.traverse_handle_iter(imported).find(|&h|g[h].name()=="Ui_Clover");
+            if let Some(leaf)=leaf {
+                let parent=g[leaf].parent();
+                let position=**g[leaf].local_transform().position();
+                let pivot:Handle<Node>=PivotBuilder::new(BaseBuilder::new().with_name("Ui spinning clover hub")).build(g).to_base();
+                g[pivot].local_transform_mut().set_position(position);
+                g.link_nodes(pivot,parent);
+                g[leaf].local_transform_mut().set_position(Vector3::zeros());
+                g.link_nodes(leaf,pivot);
+            }
+        }
+        if id == 1 {
+            g[imported].set_name("Naia transforming gun");
+            super::naia_whales::sockets(g, root);
+        }
         if id == 4 {
             // Preserve FBX unit conversion on the mesh. Animate a separate hilt
             // pivot; replacing the imported mesh scale shrinks blades 100-fold.
@@ -308,12 +495,13 @@ pub(super) fn build(
                     .build(g)
                     .to_base();
             g.link_nodes(socket, root);
+            super::butter_fx::sockets(g, shapes, root);
         }
         return root;
     }
     if id == 0 {
         vivi_gestures(g, root);
-        for (index, x) in [-0.16, 0.16].into_iter().enumerate() {
+        for (index, x) in [-0.16, -0.24, 0.16, 0.24].into_iter().enumerate() {
             let blade: Handle<Node> =
                 PivotBuilder::new(BaseBuilder::new().with_name(VIVI_BLADES[index]))
                     .build(g)
@@ -801,6 +989,7 @@ pub(super) fn build(
             .to_base();
         g.link_nodes(draw, root);
         update_slingshot(g, root, 0.0);
+        super::butter_fx::sockets(g, shapes, root);
     }
     root
 }
@@ -815,7 +1004,7 @@ pub(super) fn update_aya(g: &mut Graph, weapon: Handle<Node>, phase: f32, enhanc
             .strip_prefix("Aya_Blade_")
             .and_then(|n| n.parse::<u8>().ok())
         {
-            g[node].set_visibility(number == state.blade && state.emergence > 0.001);
+            g[node].set_visible(number == state.blade && state.emergence > 0.001);
         }
         if g[node].name().starts_with("Aya_Emerge_") {
             g[node]

@@ -22,6 +22,12 @@
 
 ## 검증 재현
 
+### 머리 관통 보정 (2026-11-21)
+
+15명의 3인칭 대기·공격을 정면과 측면에서 확인하고, 피코라의 장식 지팡이와 우이의 클로버가 머리·모자에 파묻히는 부분을 보정했다. `weapons::world_pitch()`가 피코라는 30도, 우이는 35도 앞으로 기울인다. 위쪽 조준이나 공격의 뒤로 젖히는 동작에서도 이 최소 앞기울기를 유지한다. 손바닥을 중심으로 회전하므로 손잡이 파지, 양손 IK와 무기 끝 이펙트가 함께 따라간다. 1인칭 각도와 무기 크기는 기존 값을 사용한다.
+
+수정 후 전원 정면·측면 대기/공격 60장(파지 오차 1mm 미만), 우이 스킬 15장, 피코라 스킬 13장의 GPU 검사가 통과했다. 개발용·release 빌드가 성공했으며 `Play.cmd`로 실행한다. Clippy의 경고 오류화 검사는 이번 수정 밖의 `combat.rs`, `game.rs`, `butter_skill.rs`에 있는 기존 경고 4건 때문에 통과하지 못했다. [전후 비교](../artifacts/weapon-head-clearance/comparison.png)와 검증 로그·캡처는 `artifacts/weapon-head-clearance/`에 보관한다.
+
 ```powershell
 cargo run --bin tsb -- --solo --auto-start --weapon-review --world-weapons-only --hud-review-small
 cargo run --bin tsb -- --solo --auto-start --weapon-review --world-weapons-only --weapon-side-view --hud-review-small

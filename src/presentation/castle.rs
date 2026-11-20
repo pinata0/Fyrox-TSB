@@ -144,6 +144,7 @@ pub fn attach(
         .with_radius(light.radius)
         .build(&mut scene.graph);
     }
+    super::scenery_batch::merge(&mut scene.graph, root)?;
     println!(
         "MAP_SCENERY_OK: {} / {count} mesh chunks / {} room lights",
         map.slug(),

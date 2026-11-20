@@ -111,6 +111,9 @@ impl GhostWalls {
             };
             for surface in mesh.surfaces_mut() {
                 let original = surface.material();
+                if !original.data_ref().shader().data_ref().definition.passes.iter().any(|p| p.name == "GBuffer") {
+                    continue;
+                }
                 let replacement = materials.entry(original.key()).or_insert_with(|| {
                     let original = original.data_ref();
                     let shader = shaders

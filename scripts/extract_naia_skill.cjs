@@ -1,4 +1,4 @@
-// Sample the four archived Naia E clips with Spine's curves and IK, offline.
+// Sample the archived Naia E and ultimate clips with Spine's curves and IK, offline.
 const fs = require('fs'), vm = require('vm'), crypto = require('crypto');
 vm.runInThisContext(fs.readFileSync('artifacts/cheek-interaction/research/spine-core.js', 'utf8'));
 spine.MeshAttachment.prototype.updateRegion = spine.RegionAttachment.prototype.updateRegion = function () {};
@@ -19,14 +19,15 @@ function pose(anim,t){sk.setToSetupPose();anim.apply(sk,0,Math.min(anim.duration
 const idle=pose(data.findAnimation('Idle'),0), idleHair=hairNames.map(n=>sk.findBone(n).rotation);
 const height=Math.max(100,idle.Head[1]-Math.min(idle['Foot.L'][1],idle['Foot.R'][1]));
 const records=[];
-for (let clip=1;clip<=4;clip++) {
-  const anim=data.findAnimation(`Skill1_${clip}`); if(!anim)throw Error(`Missing Skill1_${clip}`);
+for (const name of ['Skill1_1','Skill1_2','Skill1_3','Skill1_4','Ultimate1_1']) {
+  const anim=data.findAnimation(name); if(!anim)throw Error(`Missing ${name}`);
   const count=Math.round(anim.duration*30), samples=[];
   for(let i=0;i<=count;i++) {
     const p=pose(anim,anim.duration*i/count), rotations={};
     for(const k of Object.keys(bones)) {const parent=parents[k];rotations[k]=round(wrap(p[k][2]-idle[k][2]-(parent?p[parent][2]-idle[parent][2]:0))*Math.PI/180);}
     samples.push({rotations,root:[round((p.Hips[0]-idle.Hips[0])/height),round((p.Hips[1]-idle.Hips[1])/height)],
       hands:['L','R'].map(s=>{const k=`Hand.${s}`;return [round((p[k][0]-p.Torso[0]-idle[k][0]+idle.Torso[0])/height),round((p[k][1]-p.Torso[1]-idle[k][1]+idle.Torso[1])/height),round(wrap(p[k][2]-idle[k][2])*Math.PI/180)];}),
+      whales:['D_Body','D_Body5','D_Body9'].map(n=>{const b=sk.findBone(n);return [round((b.worldX-p.Hips[0])/height),round((b.worldY-p.Hips[1])/height),round(b.getWorldRotationX()*Math.PI/180),round(Math.abs(b.getWorldScaleX()))];}),
       hair:hairNames.map((n,j)=>round(wrap(sk.findBone(n).rotation-idleHair[j])*Math.PI/180))});
   }
   records.push({clip:anim.name,duration:count/30,samples});

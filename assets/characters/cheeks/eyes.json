@@ -1,0 +1,17 @@
+[
+  {"slug":"vivi","hold":["squeeze","squeeze"],"release":["sad","sad"]},
+  {"slug":"naia","hold":["cloud","cloud"],"release":["squeeze","squeeze"]},
+  {"slug":"erpin","hold":["squeeze","squeeze"],"release":["squeeze","squeeze"]},
+  {"slug":"id","hold":["closed","closed"],"release":["closed","closed"]},
+  {"slug":"aya","hold":["blank","blank"],"release":["sad","sad"]},
+  {"slug":"picora","hold":["squeeze","squeeze"],"release":["sad","sad"]},
+  {"slug":"chloe","hold":["squeeze","squeeze"],"release":["sad","sad"]},
+  {"slug":"renua","hold":["wide","wide"],"release":["angry","angry"]},
+  {"slug":"mayo","hold":["flat","flat"],"release":["tired","tired"]},
+  {"slug":"bella","hold":["squeeze","squeeze"],"release":["sad","sad"]},
+  {"slug":"ui","hold":["squeeze","squeeze_soft"],"release":["squeeze_soft","squeeze_soft"]},
+  {"slug":"butter","hold":["squeeze","squeeze"],"release":["squeeze","squeeze"]},
+  {"slug":"komi","hold":["pressed","pressed"],"release":["cry","cry"]},
+  {"slug":"hilde","hold":["squeeze","squeeze"],"release":["blank","blank"]},
+  {"slug":"shion","hold":["squeeze","squeeze_soft"],"release":["sparkle","sparkle"]}
+]

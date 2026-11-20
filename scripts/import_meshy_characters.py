@@ -253,7 +253,7 @@ def add_face(mesh,slug,points,offset,scale):
     assert all(n>4 for n in changes.values()),(slug,changes)
     return dict(center_x=cx,eye_y=ez,eye_x=ex,mouth_y=mz,front=-front,eye_half_height=eh,morph_vertices=changes)
 
-def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
+def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False,illustrator=None):
     """Bake closed illustrated lids into the original UV atlas."""
     mat=mesh.data.materials[0];nodes=mat.node_tree.nodes;links=mat.node_tree.links;bsdf=nodes.get('Principled BSDF')
     original=next(n for n in nodes if n.type=='TEX_IMAGE');image=original.image;w,h=image.size
@@ -272,17 +272,21 @@ def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
             uv=a@uv;skin_samples.append(pixels[min(h-1,int(uv[1]*h)),min(w-1,int(uv[0]*w)),:3])
     skin=np.median(skin_samples,axis=0)
     if skin.mean()<.4:skin=np.array([.97,.83,.78])
-    outputs={side:pixels.copy() for side in (['L','R','closed','half'] if natural else ['L','R','closed'])}
+    outputs={side:pixels.copy() for side in (illustrator.variants if illustrator else ['L','R','closed','half'] if natural else ['L','R','closed'])}
     coverage={side:np.zeros((h,w),dtype=np.float32) for side in outputs}
+    occupied=np.zeros((h,w),dtype=bool)
     if natural:
         from natural_eyelids import sample_lids,lid_samples
         from blink_surfaces import fit_surfaces,footprint,protected_vertices
+        from face_regions import blush_layer
+        blush_profiles=json.loads((ROOT/'assets/characters/blush-regions.json').read_text())[slug]
         lid_profiles=sample_lids(tree,tris,coords,uvs,pixels,face,skip=('R',) if slug=='aya' else ())
         accessories=protected_vertices(mesh)
         fit_surfaces(coords,lid_profiles,face,accessories)
+    eye_paint_top=max(ez+eh*1.7,1.370) if natural and slug=='id' else ez+eh*1.7
     for tri in tris:
         p=coords[list(tri.vertices)]
-        if p[:,2].max()<ez-eh*1.7 or p[:,2].min()>ez+eh*1.7 or p[:,1].min()>-face['front']+.10:continue
+        if p[:,2].max()<ez-eh*1.7 or p[:,2].min()>eye_paint_top or p[:,1].min()>-face['front']+.10:continue
         uv=uvs[list(tri.loops)]*np.array([w,h]);low=np.maximum(0,np.floor(uv.min(0)).astype(int));high=np.minimum([w-1,h-1],np.ceil(uv.max(0)).astype(int))
         if np.prod(high-low+1)>100000:continue
         matrix=np.vstack([uv.T,np.ones(3)])
@@ -290,6 +294,7 @@ def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
         xx,yy=np.meshgrid(np.arange(low[0],high[0]+1),np.arange(low[1],high[1]+1));at=np.stack([xx.ravel()+.5,yy.ravel()+.5,np.ones(xx.size)])
         bary=np.linalg.solve(matrix,at).T;inside=np.all(bary>=-.001,axis=1)
         pos=bary@p;ix=xx.ravel();iy=yy.ravel()
+        occupied[iy[inside],ix[inside]]=True
         for side,sign in [('L',-1),('R',1)]:
             if slug=='aya' and side=='R':continue
             dx=pos[:,0]-(cx+sign*ex);dz=pos[:,2]-ez;rx=ex*.83;rz=eh*1.6
@@ -348,9 +353,50 @@ def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
                     alpha*=smooth((heart-.85)/.15)
                     alpha*=~blush
                 alpha*=1-smooth((bary@accessories[list(tri.vertices)]-.05)/.80)
+            if natural:
+                base=pixels[iy,ix,:3]
+                underlay,blush_coverage=blush_layer(pos,blush_profiles,skin)
+                # The sclera's pale lower rim can sit outside the old erasure
+                # ellipse. Clear it wherever the completed cheek circle passes
+                # under the eye, or a white crescent survives inside the blush.
+                lower_eye=blush_coverage*inside
+                lower_eye*=1-smooth((np.abs(dx)-ex*.62)/.012)
+                lower_eye*=smooth((-dz-eh*.30)/.010)*smooth((dz+eh*1.55)/.010)
+                lower_eye*=1-smooth((np.abs(pos[:,1]-surface)-.045)/.04)
+                lower_eye*=1-smooth((bary@accessories[list(tri.vertices)]-.05)/.80)
+                alpha=np.maximum(alpha,lower_eye)
+                # Preserve the complete warm cheek paint, not just its outer
+                # edge. Red/orange irises do not satisfy this pale-pink range.
+                painted=(base[:,0]>.75)&(base[:,0]>=base[:,2]*.99)&(base[:,1]>base[:,0]*.50)&(base[:,1]<base[:,0]*.93)&(base[:,2]>base[:,1]*.96)
+                if side in blush_profiles:
+                    painted&=base[:,1]<blush_profiles[side]['color'][1]+.045
+                painted&=(dz<-eh*.35)&(sign*dx>-ex*.40)
+                if slug in ['picora','shion']:
+                    # Their multicoloured irises contain the same pink as the
+                    # cheek. Inside the source eye, always replace that paint
+                    # with the completed cheek underlay before drawing the lid.
+                    painted&=~((np.abs(dx)<ex*.62+.006)&(dz>-eh*1.35))
+                alpha*=~painted
+                if slug=='chloe':
+                    alpha*=smooth((heart-.85)/.15)
+            else:
+                underlay=skin
+            if natural and slug=='id':
+                # Id has sculpted white lashes, animated by eyeBlink. Clear the
+                # painted eye below them without inventing a second dark lash.
+                from id_eyelids import eye_coverage,lid_height,upper_shadow_coverage
+                alpha=np.maximum(eye_coverage(pos,face,side),
+                                 upper_shadow_coverage(pos,face,side,pixels[iy,ix,:3]))*inside
             active=alpha>0
             if not active.any():continue
-            base=pixels[iy,ix,:3];color=base*(1-alpha[:,None])+skin*alpha[:,None]
+            if illustrator:
+                for key in outputs:
+                    color,paint=illustrator.draw(key,side,pos,face,base,underlay,alpha,lid_profiles[side])
+                    active=paint>0
+                    outputs[key][iy[active],ix[active],:3]=color[active]
+                    coverage[key][iy[active],ix[active]]=np.maximum(coverage[key][iy[active],ix[active]],paint[active])
+                continue
+            base=pixels[iy,ix,:3];color=base*(1-alpha[:,None])+underlay*alpha[:,None]
             line_z=-.009+.014*(dx/rx)**2
             if slug=='chloe':line_z=-.009+.026*(dx/rx)**2
             ink=(1-smooth((np.abs(dz-line_z)-.0015)/.0025))*(1-smooth((np.abs(dx)/rx-.76)/.12))*alpha
@@ -360,11 +406,15 @@ def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
                 closed_y,thick,ink_color,span=lid_samples(profile,pos[:,0],1.0)
                 ink=(1-smooth((np.abs(pos[:,2]-closed_y)-thick*.5)/.0015))*span*alpha
                 half_y,half_thick,half_ink,half_span=lid_samples(profile,pos[:,0],.52)
+                if slug=='id':
+                    ink[:]=0
+                    half_y=lid_height(pos[:,0],face,side,.52)-.008
                 half_alpha=alpha*smooth((pos[:,2]-half_y+.008)/.014)
                 lo,hi=profile['span'];corner=np.abs(pos[:,0]-(lo+hi)*.5)/((hi-lo)*.5)
                 half_alpha=np.maximum(half_alpha,alpha*smooth((corner-.78)/.16))
-                half_color=base*(1-half_alpha[:,None])+skin*half_alpha[:,None]
+                half_color=base*(1-half_alpha[:,None])+underlay*half_alpha[:,None]
                 half_line=(1-smooth((np.abs(pos[:,2]-half_y)-half_thick*.5)/.0015))*half_span*alpha
+                if slug=='id':half_line[:]=0
                 half_color=half_color*(1-half_line[:,None])+half_ink*half_line[:,None]
                 half_active=(half_alpha>0)|(half_line>0)
                 outputs['half'][iy[half_active],ix[half_active],:3]=half_color[half_active]
@@ -383,12 +433,14 @@ def paint_blink_textures(mesh,face,slug,build_nodes=True,natural=False):
                                 ((slice(None,-1),slice(None)),(slice(1,None),slice(None))),
                                 ((slice(None),slice(1,None)),(slice(None),slice(None,-1))),
                                 ((slice(None),slice(None,-1)),(slice(None),slice(1,None)))]:
-                fill=mask[source]&~expanded[dest]
+                fill=mask[source]&~expanded[dest]&~occupied[dest]
                 outputs[key][dest][fill,:3]=outputs[key][source][fill,:3]
                 expanded[dest]|=fill
             mask=expanded
     current=original.outputs['Color']
     for side in outputs:
+        if illustrator:
+            illustrator.save(side,outputs[side]);continue
         img=bpy.data.images.get(f'{slug}-blink-{side}') or bpy.data.images.new(f'{slug}-blink-{side}',width=w,height=h,alpha=True)
         if tuple(img.size)!=(w,h):img.scale(w,h)
         img.pixels.foreach_set(outputs[side].ravel());img.scale(2048,2048);img.filepath_raw=str(STAGE/f'{slug}-blink-{side}.png');img.file_format='PNG';img.save();img.pack()

@@ -18,8 +18,11 @@ for (const s of ['L', 'R']) Object.assign(parents, {
   [`Thigh.${s}`]: 'Hips', [`Shin.${s}`]: `Thigh.${s}`, [`Foot.${s}`]: `Shin.${s}`,
 });
 const round = x => +x.toFixed(6), wrap = x => ((x + 180) % 360 + 360) % 360 - 180;
-const records = [], reports = [];
+const selected = new Set(process.argv.slice(2));
+const output = 'assets/characters/move/motions.json';
+const records = selected.size ? JSON.parse(fs.readFileSync(output, 'utf8')) : [], reports = [];
 for (const source of JSON.parse(fs.readFileSync('assets/references/manifest.json', 'utf8'))) {
+  if (selected.size && !selected.has(source.slug)) continue;
   const bytes = fs.readFileSync(`assets/references/${source.slug}-motion-reference.skel`);
   const data = new spine.SkeletonBinary(loader).readSkeletonData(new Uint8Array(bytes));
   const sk = new spine.Skeleton(data);
@@ -59,9 +62,35 @@ for (const source of JSON.parse(fs.readFileSync('assets/references/manifest.json
     const values = samples.map(s => s.rotations[key]);
     return [key, [round(Math.min(...values)), round(Math.max(...values))]];
   }));
-  records.push({id: source.id, slug: source.slug, clip: anim.name, duration: count / 30,
+  const record = {id: source.id, slug: source.slug, clip: anim.name, duration: count / 30,
     source: source.spine_sources.skeleton, sha256: crypto.createHash('sha256').update(bytes).digest('hex'),
-    bones: Object.fromEntries(Object.entries(bones).map(([k, b]) => [k, b.data.name])), samples});
+    bones: Object.fromEntries(Object.entries(bones).map(([k, b]) => [k, b.data.name])), samples};
+  if (source.slug === 'ui') {
+    // The frog is a separate hierarchy: human joint retargeting cannot move it.
+    const mapping = {Mount: 'Eru_Body', 'Frog.Head': 'Eru_Head',
+      'Frog.Arm.L': 'Eru_Arm_L', 'Frog.Arm.R': 'Eru_Arm_R',
+      'Frog.Leg.L': 'Eru_Calf_L', 'Frog.Leg.R': 'Eru_Calf_R'};
+    const frog = Object.fromEntries(Object.entries(mapping).map(([k, n]) => [k, sk.findBone(n)]));
+    if (Object.values(frog).some(b => !b)) throw Error('Ui frog bone missing');
+    function mountPose(animation, time) {
+      pose(animation, time);
+      return Object.fromEntries(Object.entries(frog).map(([k, b]) =>
+        [k, [b.worldX, b.worldY, b.getWorldRotationX(), b.getWorldScaleX(), b.getWorldScaleY()]]));
+    }
+    const rest = mountPose(data.findAnimation('Idle'), 0);
+    record.mount = {bones: mapping, samples: []};
+    for (let i = 0; i <= count; i++) {
+      const p = mountPose(anim, anim.duration * i / count);
+      record.mount.samples.push({
+        root: [0, 1].map(j => round((p.Mount[j] - rest.Mount[j]) / height)),
+        scale: [3, 4].map(j => round(p.Mount[j] / rest.Mount[j])),
+        rotations: Object.fromEntries(Object.keys(frog).map(k => [k,
+          round(wrap(p[k][2] - rest[k][2] - (k === 'Mount' ? 0 : p.Mount[2] - rest.Mount[2])) * Math.PI / 180)])),
+      });
+    }
+  }
+  const oldIndex = records.findIndex(r => r.slug === source.slug);
+  if (oldIndex < 0) records.push(record); else records[oldIndex] = record;
   reports.push({slug: source.slug, duration: count / 30, ranges, idle, points,
     alternatives: data.animations.filter(a => /Move|Run|Walk/.test(a.name)).map(a => ({name: a.name, duration: a.duration}))});
   console.log(source.slug, count + '/30', 'thigh', JSON.stringify(ranges['Thigh.L']), JSON.stringify(ranges['Thigh.R']));

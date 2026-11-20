@@ -15,6 +15,7 @@ from mathutils import Matrix, Vector
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'scripts'))
 from export_fyrox_fbx import export_fbx
+import ui_move
 
 OUT = ROOT / 'artifacts/move-motions'
 BACKUP = OUT / 'before/assets/characters'
@@ -136,10 +137,13 @@ for record in DATA:
                     p = rig.pose.bones[name]
                     rest = p.bone.matrix_local.to_3x3()
                     rotation(p, base[name][0] @ (rest.inverted() @ Matrix.Rotation(sway*factor, 3, 'X') @ rest).to_quaternion())
+            if slug == 'ui':
+                ui_move.apply(rig, base, record, a, b, t,
+                              lambda name, angle: ui_move.turn_from_base(rig, base, name, angle, rotation))
             bpy.context.view_layer.update()
             evaluated = mesh.evaluated_get(bpy.context.evaluated_depsgraph_get())
             floor = min((evaluated.matrix_world @ v.co).z for v in evaluated.data.vertices)
-            if floor < base_floor and slug != 'id':
+            if floor < base_floor and slug not in ('id', 'ui'):
                 hips.location += hips.bone.matrix_local.to_3x3().inverted() @ Vector((0, 0, base_floor-floor))
             if frame == start:
                 first_pose = transforms(rig)
@@ -165,6 +169,8 @@ for record in DATA:
     assert {o.name: mesh_hash(o) for o in meshes} == geometry, (slug, 'mesh/weights/morphs changed')
     scene['move_source'] = 'Original battle Move; source periods restored at runtime'
     scene['move_seconds'] = record['duration']
+    if slug == 'ui':
+        scene['ui_move'] = 'Source Eru_Body squash/hop and frog limbs; seated rider; visual only'
     scene.frame_set(0)
     bpy.context.preferences.filepaths.save_version = 0
     bpy.ops.wm.save_as_mainfile(filepath=str(blend))

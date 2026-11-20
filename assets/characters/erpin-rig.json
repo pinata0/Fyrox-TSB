@@ -1,8 +1,8 @@
 {
   "slug": "erpin",
-  "vertices": 40773,
-  "triangles": 76872,
-  "bones": 56,
+  "vertices": 4747,
+  "triangles": 9385,
+  "bones": 42,
   "clips": {
     "Idle": [
       0,
@@ -51,6 +51,22 @@
     "Attack2_1": [
       531,
       581
+    ],
+    "ErpinSkill": [
+      584,
+      669
+    ],
+    "ErpinStart": [
+      672,
+      707
+    ],
+    "ErpinCharge": [
+      710,
+      726
+    ],
+    "ErpinRecover": [
+      729,
+      819
     ]
   },
   "fps": 30,
@@ -103,139 +119,76 @@
           "name": "Index1.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.L",
           "axis": [
             0.40613853931427,
-            -0.2259971648454666,
+            -0.22599714994430542,
             0.8854246139526367
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.L",
-          "axis": [
-            0.40613853931427,
-            -0.2259971648454666,
-            0.8854246139526367
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.L",
           "axis": [
-            0.8963595032691956,
-            0.4021388292312622,
-            0.18661192059516907
+            0.9870396852493286,
+            0.15937457978725433,
+            -0.018772732466459274
           ],
-          "angle": 1.5055811641268877
+          "angle": 1.5277777777777777
         },
         {
           "name": "Thumb2.L",
           "axis": [
-            -0.32478106021881104,
-            0.3362717032432556,
-            -0.8839901685714722
+            -0.25879165530204773,
+            0.3829950988292694,
+            -0.8867590427398682
           ],
-          "angle": 0.4497413736943739
-        },
-        {
-          "name": "Thumb3.L",
-          "axis": [
-            -0.5186677575111389,
-            0.296797513961792,
-            -0.8018073439598083
-          ],
-          "angle": 0.3703141782601769
+          "angle": 0.05
         }
       ],
-      "length": 0.15680000000000002,
+      "length": 0.12656,
       "radius": 0.01456,
       "forward": [
         -0.6797749996185303,
@@ -262,7 +215,16 @@
         -0.010675668716430664,
         0.6850144267082214
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.04816,
+        "finger_diameter": 0.024640000000000002,
+        "previous_finger_length": 0.07840000000000001,
+        "previous_finger_diameter": 0.018144
+      }
     },
     {
       "side": "R",
@@ -272,140 +234,77 @@
         {
           "name": "Index1.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.R",
           "axis": [
-            0.37483373284339905,
+            0.37483376264572144,
             0.19275468587875366,
             -0.9068325757980347
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.R",
-          "axis": [
-            0.37483373284339905,
-            0.19275468587875366,
-            -0.9068325757980347
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.R",
           "axis": [
-            0.8865976333618164,
-            -0.4145877957344055,
-            -0.20508936047554016
+            0.9861254692077637,
+            -0.16559569537639618,
+            -0.011601966805756092
           ],
-          "angle": 1.5055811679174815
+          "angle": 1.6833333333333333
         },
         {
           "name": "Thumb2.R",
           "axis": [
-            -0.2942241132259369,
-            -0.3035847544670105,
-            0.9062386155128479
+            -0.22844979166984558,
+            -0.350650429725647,
+            0.9082152843475342
           ],
-          "angle": 0.4497413715573305
-        },
-        {
-          "name": "Thumb3.R",
-          "axis": [
-            -0.4907507300376892,
-            -0.26557448506355286,
-            0.8298397064208984
-          ],
-          "angle": 0.37031417765751606
+          "angle": 0.2152173913043478
         }
       ],
-      "length": 0.15680000000000002,
+      "length": 0.12656,
       "radius": 0.01456,
       "forward": [
         0.6797746419906616,
@@ -432,21 +331,30 @@
         -0.009974714368581772,
         0.6889867186546326
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.04816,
+        "finger_diameter": 0.024640000000000002,
+        "previous_finger_length": 0.07840000000000001,
+        "previous_finger_diameter": 0.018144
+      }
     }
   ],
   "refined_hands": [
     {
       "side": "L",
-      "hand_vertices": 8148,
-      "hand_faces": 10782,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.04088,
       "cuff_clearance": 0.02912
     },
     {
       "side": "R",
-      "hand_vertices": 8152,
-      "hand_faces": 10787,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.04088,
       "cuff_clearance": 0.02912
     }
@@ -497,5 +405,202 @@
     "weighted_vertices": 744,
     "baked_inertia_all_clips": true,
     "runtime_inertia": true
+  },
+  "cartoon_hands": {
+    "revision": "four-digits-two-segments-v1",
+    "digits": 4,
+    "segments": 2,
+    "untouched_meshes": {
+      "erpin_SkinnedMesh": "0ec43274a278ef5de836b907c48c6bf6d983538b636f979bc39f41900f12b92f",
+      "erpin_RefinedSleeve.L": "9dba64167ec7577cdc4541ad4ceaf8e56d391d62e0940ac04e94757f51fee648",
+      "erpin_RefinedViewSleeve.L": "fb3c5b618b0e929f2c54a465dab491cbebdec50ecc5fd6a7283f602dd2d3efd2",
+      "erpin_RefinedEmblem.L": "1952b937c3a7c65d46582096d12dd19e6a32f3cbb072b443cdf5638af34f9864",
+      "erpin_RefinedSleeve.R": "567116b4e3822913ed090a497aa804e29d69f47a4aaf77b730740371b126b588",
+      "erpin_RefinedViewSleeve.R": "11661ab12e4496cb12a600fccc6f0f14eed9040796104541fd6e4f4dfab381b5",
+      "erpin_RefinedEmblem.R": "03cbfc86989421cc073ae0bef006bb62ae15ba93df89df8f54ac5fd93ee427b5",
+      "erpin_RearHairRepair": "fe78fd71e6b801e1e75cd625130db5e4324dc1000c612074ee6dc13e9afc6e13"
+    },
+    "grip_fit": [
+      {
+        "side": "L",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 1.0693414515190389e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 3.4842884530164597e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 1.932201901010816e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.5277777777777777,
+              0.05
+            ],
+            "gap": 3.803972827048745e-05,
+            "penetration_p99": 0.0
+          }
+        ]
+      },
+      {
+        "side": "R",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 1.4021460303763333e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 3.8723224980788395e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 1.1727728677021071e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.6833333333333333,
+              0.2152173913043478
+            ],
+            "gap": 4.822319535290401e-06,
+            "penetration_p99": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  "lowpoly": {
+    "source": "assets/character-sources/lowpoly/erpin/erpin-character-source.blend",
+    "body_triangles": 9385,
+    "hands": {
+      "erpin_RefinedHand.L": [
+        20186,
+        1500
+      ],
+      "erpin_RefinedHand.R": [
+        20200,
+        1500
+      ]
+    },
+    "rig_and_actions_preserved": true,
+    "alignment": {
+      "scale": 0.9722318037082706,
+      "rotation": [
+        [
+          0.9999998717757507,
+          0.00048315628625780066,
+          0.00019781095438292998
+        ],
+        [
+          -0.0004831987763625617,
+          1.0000000161203464,
+          0.0001334435021588254
+        ],
+        [
+          -0.0001977465800616935,
+          -0.00013348556933737155,
+          0.9999999765448349
+        ]
+      ],
+      "offset": [
+        -0.0037331875416940817,
+        0.12740220724110224,
+        0.9254935462068252
+      ],
+      "median": 0.0033441835548728704,
+      "p90": 0.009016979113221172,
+      "p99": 0.028198501951992746
+    },
+    "removed_arm_triangles": 1037,
+    "surface_distance_p99": 0.039381828531622885,
+    "meshes": [
+      {
+        "name": "erpin_SkinnedMesh",
+        "vertices": 4747,
+        "triangles": 9385
+      },
+      {
+        "name": "erpin_RefinedSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "erpin_RefinedViewSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "erpin_RefinedEmblem.L",
+        "vertices": 13,
+        "triangles": 22
+      },
+      {
+        "name": "erpin_RefinedSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "erpin_RefinedViewSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "erpin_RefinedEmblem.R",
+        "vertices": 13,
+        "triangles": 22
+      },
+      {
+        "name": "erpin_RearHairRepair",
+        "vertices": 17,
+        "triangles": 16
+      },
+      {
+        "name": "erpin_RefinedHand.L",
+        "vertices": 752,
+        "triangles": 1500
+      },
+      {
+        "name": "erpin_RefinedHand.R",
+        "vertices": 752,
+        "triangles": 1500
+      }
+    ],
+    "total_triangles": 14349
   }
 }

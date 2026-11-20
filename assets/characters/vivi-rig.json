@@ -1,8 +1,8 @@
 {
   "slug": "vivi",
-  "vertices": 46016,
-  "triangles": 88507,
-  "bones": 52,
+  "vertices": 4774,
+  "triangles": 9515,
+  "bones": 48,
   "clips": {
     "Idle": [
       0,
@@ -51,6 +51,22 @@
     "Attack2": [
       531,
       555
+    ],
+    "ViviLeft": [
+      558,
+      582
+    ],
+    "ViviRight": [
+      585,
+      618
+    ],
+    "ViviSkill": [
+      621,
+      665
+    ],
+    "ViviUltimate": [
+      668,
+      788
     ]
   },
   "fps": 30,
@@ -106,7 +122,7 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.L",
@@ -115,16 +131,7 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.L",
@@ -133,7 +140,7 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.L",
@@ -142,43 +149,7 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.L",
@@ -187,7 +158,7 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.L",
@@ -196,46 +167,28 @@
             0.5577479004859924,
             -0.3410606384277344
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.L",
-          "axis": [
-            -0.7567000389099121,
-            0.5577479004859924,
-            -0.3410606384277344
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.L",
           "axis": [
-            0.23881788551807404,
-            0.9200104475021362,
-            -0.31071987748146057
+            0.24669162929058075,
+            0.9689584970474243,
+            0.01620875485241413
           ],
-          "angle": 1.5055811655939226
+          "angle": 1.6055555555555556
         },
         {
           "name": "Thumb2.L",
           "axis": [
-            0.8379265069961548,
-            -0.4761975407600403,
-            0.2666740417480469
+            0.8789917826652527,
+            -0.4112687408924103,
+            0.24131186306476593
           ],
-          "angle": 0.44974137403816294
-        },
-        {
-          "name": "Thumb3.L",
-          "axis": [
-            0.725388765335083,
-            -0.6523492932319641,
-            0.21966232359409332
-          ],
-          "angle": 0.37031417765532265
+          "angle": 0.13260869565217392
         }
       ],
-      "length": 0.15680000000000002,
+      "length": 0.12656,
       "radius": 0.01456,
       "forward": [
         -0.6536816358566284,
@@ -262,7 +215,16 @@
         -0.052663709968328476,
         0.8019689917564392
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.04816,
+        "finger_diameter": 0.024640000000000002,
+        "previous_finger_length": 0.07840000000000001,
+        "previous_finger_diameter": 0.018144
+      }
     },
     {
       "side": "R",
@@ -276,7 +238,7 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 0.5
+          "angle": 0.12
         },
         {
           "name": "Index2.R",
@@ -285,16 +247,7 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 0.95
-        },
-        {
-          "name": "Index3.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 1.05
+          "angle": 0.8129629629629629
         },
         {
           "name": "Middle1.R",
@@ -303,7 +256,7 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 0.55
+          "angle": 0.12
         },
         {
           "name": "Middle2.R",
@@ -312,43 +265,7 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 1.05
-        },
-        {
-          "name": "Middle3.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 1.1
-        },
-        {
-          "name": "Ring1.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 0.5
-        },
-        {
-          "name": "Ring2.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 0.95
-        },
-        {
-          "name": "Ring3.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 1.05
+          "angle": 0.9407407407407407
         },
         {
           "name": "Pinky1.R",
@@ -357,7 +274,7 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 0.3
+          "angle": 0.12
         },
         {
           "name": "Pinky2.R",
@@ -366,46 +283,28 @@
             -0.5380801558494568,
             0.3731921315193176
           ],
-          "angle": 0.85
-        },
-        {
-          "name": "Pinky3.R",
-          "axis": [
-            -0.7557759881019592,
-            -0.5380801558494568,
-            0.3731921315193176
-          ],
-          "angle": 0.75
+          "angle": 0.6851851851851851
         },
         {
           "name": "Thumb1.R",
           "axis": [
-            0.23348963260650635,
-            -0.9155421853065491,
-            0.3275134861469269
+            0.23256193101406097,
+            -0.9725798964500427,
+            0.0018049144418910146
           ],
-          "angle": 1.5055811651694015
+          "angle": 1.761111111111111
         },
         {
           "name": "Thumb2.R",
           "axis": [
-            0.8376678228378296,
-            0.45719021558761597,
-            -0.29881390929222107
+            0.8784323930740356,
+            0.39230555295944214,
+            -0.2728606164455414
           ],
-          "angle": 0.4497413754896975
-        },
-        {
-          "name": "Thumb3.R",
-          "axis": [
-            0.7288193702697754,
-            0.6360708475112915,
-            -0.2534485459327698
-          ],
-          "angle": 0.37031417733808686
+          "angle": 0.29782608695652174
         }
       ],
-      "length": 0.14027008915436992,
+      "length": 0.11321800053174143,
       "radius": 0.013025079707191491,
       "forward": [
         0.6536814570426941,
@@ -432,21 +331,30 @@
         -0.060965072363615036,
         0.7877382040023804
       ],
-      "refined_mesh": true
+      "refined_mesh": true,
+      "digit_count": 4,
+      "segments_per_digit": 2,
+      "hand_mesh_revision": "four-digits-two-segments-v1",
+      "dimensions": {
+        "finger_length": 0.04308295595455647,
+        "finger_diameter": 0.022042442581400985,
+        "previous_finger_length": 0.07013504457718496,
+        "previous_finger_diameter": 0.016231253173577088
+      }
     }
   ],
   "refined_hands": [
     {
       "side": "L",
-      "hand_vertices": 7975,
-      "hand_faces": 10434,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.04088,
       "cuff_clearance": 0.02912
     },
     {
       "side": "R",
-      "hand_vertices": 7998,
-      "hand_faces": 10394,
+      "hand_vertices": 752,
+      "hand_faces": 1500,
       "cuff_radius": 0.03657041610096073,
       "cuff_clearance": 0.026050159414382983
     }
@@ -474,5 +382,203 @@
     "normal_targets": true,
     "outer_corner_erasure": true,
     "protected_accessories": false
+  },
+  "cartoon_hands": {
+    "revision": "four-digits-two-segments-v1",
+    "digits": 4,
+    "segments": 2,
+    "untouched_meshes": {
+      "vivi_SkinnedMesh": "004f58c28ba14013a37c0d8586cf605f739fbff643d870f0d19fb013b004cfb7",
+      "vivi_RefinedSleeve.L": "41d4e0e0a6b75d8b15520aa55fac8aee25a85d219bc9626bac9eb61285c84739",
+      "vivi_RefinedViewSleeve.L": "bea25e290f2acd391395d747adc5c24cb1b77f86b1a0367e7bdedef23a67a025",
+      "vivi_RefinedSleeve.R": "59ee730c14fbc07b91ebe19a8e5793ee59bf99e333b1a3fec88126e67dae67bd",
+      "vivi_RefinedViewSleeve.R": "0438f16b8a8a9b295109af90b0612b9c7bbae13dd45faa0cee099a869d60355b"
+    },
+    "grip_fit": [
+      {
+        "side": "L",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 4.351041158989072e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 5.986842982447227e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 1.6877249888531953e-05,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.6055555555555556,
+              0.13260869565217392
+            ],
+            "gap": 1.4324338799135902e-05,
+            "penetration_p99": 0.0
+          }
+        ]
+      },
+      {
+        "side": "R",
+        "digits": [
+          {
+            "digit": "Index",
+            "angles": [
+              0.12,
+              0.8129629629629629
+            ],
+            "gap": 2.5511519517896347e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Middle",
+            "angles": [
+              0.12,
+              0.9407407407407407
+            ],
+            "gap": 1.895057097134334e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Pinky",
+            "angles": [
+              0.12,
+              0.6851851851851851
+            ],
+            "gap": 4.93396061466457e-06,
+            "penetration_p99": 0.0
+          },
+          {
+            "digit": "Thumb",
+            "angles": [
+              1.761111111111111,
+              0.29782608695652174
+            ],
+            "gap": 3.7160803128353376e-06,
+            "penetration_p99": 0.0
+          }
+        ]
+      }
+    ]
+  },
+  "vivi_skills": {
+    "source": "skill/vivi.json",
+    "new_bones": [
+      "ViviWing.L.0",
+      "ViviWing.L.1",
+      "ViviWing.R.0",
+      "ViviWing.R.1",
+      "ViviSkirt.L.0",
+      "ViviSkirt.L.1",
+      "ViviSkirt.L.2",
+      "ViviSkirt.R.0",
+      "ViviSkirt.R.1",
+      "ViviSkirt.R.2"
+    ],
+    "weighted_vertices": {
+      "wings": 1726,
+      "skirt": 4299
+    }
+  },
+  "lowpoly": {
+    "source": "assets/character-sources/lowpoly/vivi/vivi-character-source.blend",
+    "body_triangles": 9515,
+    "hands": {
+      "vivi_RefinedHand.L": [
+        19766,
+        1500
+      ],
+      "vivi_RefinedHand.R": [
+        19788,
+        1500
+      ]
+    },
+    "rig_and_actions_preserved": true,
+    "alignment": {
+      "scale": 1.0431202453047526,
+      "rotation": [
+        [
+          0.9999999722679063,
+          0.0002114742470614786,
+          0.00015436590613302414
+        ],
+        [
+          -0.0002114833986883516,
+          0.9999999378049698,
+          9.085275520534508e-05
+        ],
+        [
+          -0.00015434918891361633,
+          -9.089910903305187e-05,
+          0.9999999851787448
+        ]
+      ],
+      "offset": [
+        -0.00365620146164263,
+        0.12693184500099508,
+        0.9362357455626306
+      ],
+      "median": 0.0032222806476056576,
+      "p90": 0.010128501802682878,
+      "p99": 0.0195157654955983
+    },
+    "removed_arm_triangles": 756,
+    "surface_distance_p99": 0.012378006400540468,
+    "meshes": [
+      {
+        "name": "vivi_SkinnedMesh",
+        "vertices": 4774,
+        "triangles": 9515
+      },
+      {
+        "name": "vivi_RefinedSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "vivi_RefinedViewSleeve.L",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "vivi_RefinedSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "vivi_RefinedViewSleeve.R",
+        "vertices": 240,
+        "triangles": 476
+      },
+      {
+        "name": "vivi_RefinedHand.L",
+        "vertices": 752,
+        "triangles": 1500
+      },
+      {
+        "name": "vivi_RefinedHand.R",
+        "vertices": 752,
+        "triangles": 1500
+      }
+    ],
+    "total_triangles": 14419
   }
 }

@@ -54,13 +54,17 @@ pub fn interrupted(a: &Actor, input: Input) -> bool {
         || input.crouch
         || !a.alive()
         || a.character != 2
-        || a.combat.disabled()
+        || a.combat.skills_locked()
 }
 
 /// Return (new bites, dropped portions). Prediction discards both effects.
 pub fn advance(a: &mut Actor, input: Input, grounded: bool) -> (usize, u8) {
     let pressed = input.alt_fire && !a.combat.erpin.alt_down;
     a.combat.erpin.alt_down = input.alt_fire;
+    if a.alive() && a.character == 2 && a.combat.temporal >= 1.0
+        && !a.combat.action_interrupted() {
+        return (0, 0);
+    }
     if a.combat.erpin.eating {
         if interrupted(a, input) {
             let remaining = a.combat.erpin.remaining();
@@ -69,7 +73,8 @@ pub fn advance(a: &mut Actor, input: Input, grounded: bool) -> (usize, u8) {
             return (0, remaining);
         }
         let before = a.combat.erpin.bites();
-        a.combat.erpin.elapsed = (a.combat.erpin.elapsed + DT).min(EAT_SECONDS);
+        a.combat.erpin.elapsed = (a.combat.erpin.elapsed
+            + DT * crate::renua_skill::time_factor(a)).min(EAT_SECONDS);
         let bites = a.combat.erpin.bites() - before;
         if a.combat.erpin.elapsed + 0.00001 >= EAT_SECONDS {
             a.combat.erpin.eating = false;
@@ -120,7 +125,7 @@ impl World {
         let grounded = crate::movement::grounded(&self.map, self.actors[i].pos);
         let (bites, remaining) = advance(&mut self.actors[i], input, grounded);
         if bites > 0 {
-            self.heal(i, bites as f32 * HEAL_PER_BITE);
+            self.heal_from(i, i, bites as f32 * HEAL_PER_BITE);
         }
         if remaining > 0 {
             let a = &self.actors[i];
@@ -137,11 +142,12 @@ impl World {
             }
         }
         let a = &mut self.actors[i];
-        if a.character != 2 || !a.alive() || a.combat.disabled() {
+        if a.character != 2 || !a.alive() || a.combat.action_interrupted() {
             a.combat.erpin.shot_delay = 0.0;
         }
         if a.combat.erpin.shot_delay > 0.0 {
-            a.combat.erpin.shot_delay = (a.combat.erpin.shot_delay - DT).max(0.0);
+            a.combat.erpin.shot_delay = (a.combat.erpin.shot_delay
+                - DT * crate::renua_skill::time_factor(a)).max(0.0);
             if a.combat.erpin.shot_delay == 0.0 {
                 let dir = direction(a.yaw, a.pitch);
                 self.projectile(

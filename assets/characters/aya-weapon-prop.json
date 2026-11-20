@@ -1,8 +1,8 @@
 {
   "slug": "aya",
   "kind": "weapon",
-  "vertices": 6424,
-  "triangles": 12905,
+  "vertices": 1927,
+  "triangles": 3905,
   "bounds": [
     [
       -0.7486751079559326,
@@ -29,5 +29,42 @@
     "Aya_Blade_2",
     "Aya_Blade_3"
   ],
-  "bounds_state": "open parasol, blades hidden"
+  "bounds_state": "open parasol, blades hidden",
+  "lowpoly": {
+    "source": "assets/character-sources/lowpoly/aya/aya-weapon-source.blend",
+    "parts": [
+      {
+        "name": "aya_weapon",
+        "triangles": 2999
+      }
+    ],
+    "alignment": {
+      "scale": 0.6830151191612822,
+      "rotation": [
+        [
+          0.9976091215263192,
+          -0.003981647818178863,
+          0.06899410937274494
+        ],
+        [
+          -0.0075609277456495354,
+          0.9860577893595538,
+          0.16623137012903094
+        ],
+        [
+          -0.06869405373910743,
+          -0.1663555906003816,
+          0.9836701400657069
+        ]
+      ],
+      "offset": [
+        -0.14998588420837441,
+        0.1878073529543344,
+        0.6535218889468715
+      ],
+      "median": 0.020902439951896667,
+      "p90": 0.04975087568163872,
+      "p99": 0.12076612636446922
+    }
+  }
 }

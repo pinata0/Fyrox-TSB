@@ -611,7 +611,7 @@ impl VoiceUi {
         let size = ui.screen_size();
         let scale = (size.x / 1280.0).min(size.y / 800.0);
         let (x, y, scale) = if selecting {
-            // Below team synergies, left of the team cards. Keep the same
+            // Below team synergy icons, left of the team cards. Keep the same
             // readable row size, including when all six humans are present.
             (
                 (size.x - 1280.0 * scale) * 0.5 + 44.0 * scale,

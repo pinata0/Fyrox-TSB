@@ -26,7 +26,7 @@ def resolve_character_textures(meshes):
                 image.filepath = str(path)
 
 
-def export_fbx(mesh,rig,path,extra_meshes=None,bake_step=1):
+def export_fbx(mesh,rig,path,extra_meshes=None,bake_step=1,texture_path_mode='AUTO'):
     # Character post-processors may only pass the body. Keep its independently
     # skinned hands, sleeves and companions attached to the same rig in the FBX.
     if extra_meshes is None:
@@ -61,7 +61,7 @@ def export_fbx(mesh,rig,path,extra_meshes=None,bake_step=1):
         bpy.ops.export_scene.fbx(filepath=str(path),use_selection=True,object_types={'ARMATURE','MESH'},
             apply_unit_scale=True,axis_forward='-Z',axis_up='Y',add_leaf_bones=False,
             bake_anim=True,bake_anim_use_all_actions=False,bake_anim_use_nla_strips=False,
-            bake_anim_step=bake_step,bake_anim_simplify_factor=0,path_mode='AUTO')
+            bake_anim_step=bake_step,bake_anim_simplify_factor=0,path_mode=texture_path_mode)
     finally:
         for material,socket,source in saved_links:
             if source:material.node_tree.links.new(source,socket)

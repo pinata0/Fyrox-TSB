@@ -30,7 +30,7 @@ pub const KITS: [Kit; 15] = [
         "MERCURY BLADES",
         Melee,
         26.0,
-        0.7,
+        crate::vivi_skill::LEFT_SECONDS,
         3.8,
         0,
         "Mercury Guard",
@@ -38,7 +38,7 @@ pub const KITS: [Kit; 15] = [
         12.0,
         "Quicksilver Lance",
         "퀵실버랜스",
-        "E shield bursts when broken / Q spear weakens and taunts"
+        "LMB tap: left slash; hold: alternate / E 40% base HP silver shield / Q falling lance: 100 impact damage, mercury pool weakens and taunts"
     ),
     kit!(
         "WATER GUN",
@@ -52,7 +52,7 @@ pub const KITS: [Kit; 15] = [
         10.0,
         "Tidal Blessing",
         "물의 세례를 받아라!",
-        "E: hold LMB for healing water (rooted); release to move +30% / Q tidal wave"
+        "E: hold LMB for healing water; release to move +30% / Q wave: 100 shield for 5s, 25 damage + knockback"
     ),
     kit!(
         "MAGIC STAFF",
@@ -66,10 +66,10 @@ pub const KITS: [Kit; 15] = [
         10.0,
         "Royal Charge",
         "돌겨어어어!!! 억...?",
-        "LMB mobile staff bolt / hold RMB eat cake to heal; release or another action cancels / E four explosive orbs / Q staff charge"
+        "LMB mobile staff bolt / hold RMB eat cake to heal; release or another action cancels / E four explosive orbs after frame 50 / Q unstoppable charge, collision recoil + 3s stun"
     ),
     kit!(
-        "QUAD LASER",
+        "NATA LASER",
         Ray,
         28.0,
         0.8,
@@ -80,7 +80,7 @@ pub const KITS: [Kit; 15] = [
         16.0,
         "Our Universe",
         "너와 나의 우주",
-        "E shield + lethal-hit wards / Q pulses and ally skill boost"
+        "LMB Nata laser / RMB pulse (3s) / E self invulnerability + team HP floor 10% (3s) / Q charge: 50% max HP damage, 30% damage reduction"
     ),
     kit!(
         "FLOWER PARASOL",
@@ -94,7 +94,7 @@ pub const KITS: [Kit; 15] = [
         9.0,
         "Blooming Snow",
         "만개설화",
-        "E returning butterfly weakens skills / Q chained frost blooms"
+        "E five butterflies: damage -20%, each hit refunds 1s / Q snow garden: nearby enemies frozen for 3s"
     ),
     kit!(
         "STICKER WAND",
@@ -108,7 +108,7 @@ pub const KITS: [Kit; 15] = [
         11.0,
         "Fashion Star",
         "너도 될 수 있다 패션피플",
-        "E heal three wounded allies / Q aimed ally gains guard + taunt"
+        "LMB blue magic bolt / E aimed ally: heal 44 + sleeve sticker, damage -25% for 4s / Q aimed ally: double max HP for 8s"
     ),
     kit!(
         "SEBASTIAN ARMS",
@@ -122,21 +122,21 @@ pub const KITS: [Kit; 15] = [
         14.0,
         "Petit Sebastian",
         "쁘띠 세바스티안",
-        "E shield + empowered combo / Q seven explosive dolls"
+        "E ride Sebastian for 12s; nine landed swings refresh time and roar / Q nine seeking dolls: damage + knockback"
     ),
     kit!(
-        "ARC CANNON",
+        "TIME MAGIC",
         Projectile,
         15.0,
-        0.4,
+        crate::renua_skill::BASIC_SECONDS,
         40.0,
-        30,
+        0,
         "Temporal Echo",
         "시공의 메아리",
         12.0,
         "Time Break",
         "타임 브레이크",
-        "E five shots strip buffs and guard / Q haste allies, stop foes"
+        "LMB blue orb / RMB hand laser / E five life-stealing lasers / Q slows and stops both teams"
     ),
     kit!(
         "NEEDLE LAUNCHER",
@@ -144,13 +144,13 @@ pub const KITS: [Kit; 15] = [
         12.0,
         0.35,
         40.0,
-        18,
+        0,
         "Collection Rule",
         "수집의 법칙임.",
         9.0,
         "Mine To Collect",
         "그 수집품 내꺼임.",
-        "E three poison darts / Q eight poison darts; aim the volley"
+        "LMB unlimited needles / E three poison darts / Q eight poison darts; aim the volley"
     ),
     kit!(
         "GHOST LANTERN",
@@ -164,7 +164,7 @@ pub const KITS: [Kit; 15] = [
         15.0,
         "Proof of Existence",
         "앳된 존재의 증명",
-        "E flame path + ally buffs / Q steal flames to heal allies"
+        "E violet fire rectangle + 3s skill lock / Q visible foes taunted, then allies heal 40% max HP"
     ),
     kit!(
         "ERU SPIRIT",
@@ -178,21 +178,21 @@ pub const KITS: [Kit; 15] = [
         12.0,
         "As You Say",
         "말하는대로!",
-        "E rain heals and restores skills / Q rescue, refresh and morph"
+        "E rain: enemy speed -15%, damage / ally healing; Q visible enemies become frogs, visible allies refresh E"
     ),
     kit!(
         "SLINGSHOT",
         Projectile,
         20.0,
-        0.65,
+        crate::butter_skill::RELEASE_SECONDS,
         38.0,
-        12,
+        0,
         "Butter Fly",
         "버터 플라이!",
         10.0,
         "Stone Strike",
         "새쭁! 쓔튜라이크!",
-        "E ricochet stone / Q giant boulder; stones fall with gravity"
+        "Hold LMB to draw, release yellow ball; unlimited ammo / E hover: knockback immune, 6 bounces / Q giant boulder: 80 damage, 3s stun"
     ),
     kit!(
         "PILLOW",
@@ -206,7 +206,7 @@ pub const KITS: [Kit; 15] = [
         12.0,
         "Special Feed",
         "엘프산 특제 사료",
-        "E sleep, heal and resist debuffs / Q giant pillow rampage"
+        "E invulnerable rest, any non-chat key wakes / Q giant: 1s Shift and landing slam"
     ),
     kit!(
         "SYRINGE GUN",
@@ -220,7 +220,7 @@ pub const KITS: [Kit; 15] = [
         10.0,
         "Overtreatment",
         "과잉진료",
-        "Third attack heals / E pulse + regeneration / Q ally attack haste"
+        "Syringes heal allies 8 HP / E heals all nearby allies over 2s / Q equips healing-damage grenades for 6s"
     ),
     kit!(
         "DARK RIFLE",

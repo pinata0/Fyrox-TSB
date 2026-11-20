@@ -1,0 +1,8 @@
+Generated with the built-in image_gen tool, 2026-11-19.
+Concept: naia-ultimate-wave-concept.png
+Editable asset: naia-ultimate-wave.blend
+Portable asset: naia-ultimate-wave.glb
+Runtime mesh: naia-ultimate-wave-mesh.json
+
+Prompt:
+Use case: stylized-concept. Asset type: separate 3D game VFX modeling reference for Naia's ultimate tidal wave. Primary request: one enormous broad ocean wave surging forward, taller than a small chibi character, seen alone in a clear three-quarter front-side perspective. A continuous wide curved wall of translucent saturated aqua and turquoise water rises from a shallow trailing sheet, with an overhanging curling crest, rounded scalloped white foam breaking along its entire width, flowing pale cyan streaks, small spray droplets and white foam at the base. The crest leans toward the viewer and rolls forward, not a circular splash or water beam. Style: polished stylized real-time 3D fantasy game effect, soft rounded sculpted forms and readable silhouette, watery translucent depth with a darker blue lower body. Isolate the complete wave with margin on a dark desaturated slate background. No characters, no whales, no weapons, no scenery, no words, no labels, no watermark. Landscape composition. This reference will be used to build a separate editable lightweight animated 3D wave mesh.

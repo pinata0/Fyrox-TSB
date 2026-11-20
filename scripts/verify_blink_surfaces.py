@@ -48,12 +48,22 @@ for slug in selected:
         assert np.isfinite(target).all() and np.isfinite(normal).all()
         assert ((weight>=0)&(weight<=1)).all()
         assert np.max(np.abs(np.linalg.norm(normal,axis=1)-1))<1e-5
-        assert np.array_equal(basis[:,[0,2]],target[:,[0,2]])
-        assert np.array_equal(basis[weight==0],target[weight==0])
+        if slug=='id':
+            from id_eyelids import lash_weight
+            face=json.loads((OUT/'before'/f'{slug}-rig.json').read_text())['face']
+            lash=lash_weight(basis,face,side)
+            assert np.array_equal(basis[:,0],target[:,0])
+            assert np.array_equal(basis[lash==0,2],target[lash==0,2])
+            assert np.all(target[:,2]<=basis[:,2]+1e-6)
+            assert np.max(np.abs(target[:,2]-basis[:,2]))<.065
+            assert np.array_equal(basis[(weight==0)&(lash==0)],target[(weight==0)&(lash==0)])
+        else:
+            assert np.array_equal(basis[:,[0,2]],target[:,[0,2]])
+            assert np.array_equal(basis[weight==0],target[weight==0])
         guarded=protected_vertices(bpy.data.objects[f'{slug}_SkinnedMesh'])
         assert not weight[guarded].any(),(slug,'glasses/hair clip moved')
         assert np.count_nonzero(weight>.99)>30
-        assert np.max(np.abs(target-basis))<.03
+        assert np.max(np.abs(target[:,1]-basis[:,1]))<.03
         channels[side]=dict(vertices=int(np.count_nonzero(weight>0)),core=int(np.count_nonzero(weight>.99)))
     morph=json.loads((OUT/'candidate'/f'{slug}.morphs.json').read_text())
     for shape in morph['shapes']:

@@ -2,12 +2,18 @@
 use super::*;
 
 const STAGES: [&str; 7] = [
-    "none", "active", "damaged", "expired", "spirit", "giant", "dead",
+    "none",
+    "active",
+    "damaged",
+    "expired",
+    "spirit-unshielded",
+    "giant",
+    "dead",
 ];
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     if rt.review_capture as usize >= STAGES.len() {
-        println!("SHIELD_REVIEW_OK: E, damage, expiry, spirit, giant, death; grid spheres and yellow shield HUD");
+        println!("SHIELD_REVIEW_OK: E, damage, expiry, unshielded spirit, giant, death; grid spheres and yellow shield HUD");
         context.loop_controller.exit();
         return Ok(());
     }
@@ -20,11 +26,9 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
         if rt.review_frames == 0 {
             w.phase = Phase::Playing;
             for (i, a) in w.actors.iter_mut().enumerate() {
-                *a = Actor {
-                    human: true,
-                    pos: V3::new(25.0 + i as f32 * 2.0, 0.0, 40.0),
-                    ..Default::default()
-                };
+                *a = Actor::default();
+                a.human = true;
+                a.pos = V3::new(25.0 + i as f32 * 2.0, 0.0, 40.0);
             }
             w.actors[0].pos = V3::new(0.0, 0.0, -12.0);
             w.actors[1].pos = V3::new(1.6, 0.0, -6.5);
@@ -66,14 +70,18 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
                     for i in [0, 1] {
                         w.actors[i].character = 1;
                         w.actors[i].combat.guard = 0.0;
-                        w.actors[i].barrier = 9.6;
+                    }
+                    for _ in 0..300 {
+                        w.tick([Input::default(); PLAYERS]);
+                    }
+                    for i in [0, 1] {
+                        assert_eq!(w.actors[i].shield_health(), 0.0);
                     }
                 }
                 5 => {
                     for i in [0, 1] {
                         w.actors[i].combat.giant = 8.0;
                         w.actors[i].combat.guard = 120.0;
-                        w.actors[i].barrier = 9.6;
                     }
                 }
                 6 => {

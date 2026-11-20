@@ -1,13 +1,17 @@
 //! Fyrox scene and UI. Gameplay stays in the authoritative simulation.
 mod account;
 mod attack_review;
+mod burrow_fx;
 mod castle;
+mod character_help;
 mod character_shadows;
 mod characters;
 mod chat;
 mod cheek_masks;
+mod cheek_eyes;
 mod cheek_review;
 mod cheeks;
+mod chloe_arms;
 mod combat_hud;
 mod combat_icons;
 mod communication;
@@ -20,37 +24,86 @@ mod erpin_review;
 mod erpin_wings;
 mod expressions;
 mod first_person;
+mod frame_pacing;
 mod ghost_review;
 mod ghost_walls;
 mod greeting_review;
 mod hand_grip;
 mod home;
+mod id_fx;
+mod renua_fx;
+mod hilde_fx;
+mod mayo_fx;
+mod mayo_skill_review;
+mod komi_fx;
+mod komi_skill_review;
+mod butter_fx;
+mod butter_skill_review;
+mod aya_fx;
+mod weaken_outline;
+mod frost_screen;
+mod shion_fx;
+mod shion_laser;
+mod ui_fx;
+mod vivi_fx;
+mod picora_fx;
+mod chloe_fx;
+mod chloe_hud;
+mod chloe_skill_review;
+mod picora_outline;
+mod picora_skill_review;
+mod bella_fx;
+mod bella_skill_review;
+mod ui_skill_review;
+mod vivi_skill_review;
+mod renua_skill_review;
+mod hilde_skill_review;
+mod shion_skill_review;
+mod id_hud;
+mod id_skill_review;
+mod aya_skill_review;
 mod impact_review;
 mod impacts;
 mod lobby;
+mod low_health;
 mod map_review;
 mod morph_import;
 mod move_review;
 mod naia_skill_review;
 mod naia_water;
+mod naia_wave;
+mod naia_whales;
 mod nameplates;
 mod objective_hud;
 mod phase_hud;
 mod player_info;
+mod perf;
 mod portal_review;
 mod portals;
 mod portraits;
+mod projectile_review;
+mod projectiles;
+mod race_skill_review;
 mod rooms;
 mod round_results;
 mod scope;
 mod scope_blur;
+mod scene_state;
+mod scenery_batch;
+mod scoreboard;
 mod selection;
+mod selection_backdrop;
 mod settings_menu;
+mod sfx;
+mod music;
+mod character_voice;
 mod shadow_review;
 mod shield_review;
 mod shields;
 mod skeleton;
 mod startup;
+mod status_effects;
+mod slow_effects;
 mod toon;
 mod trait_markers;
 mod ultimate_hud;
@@ -102,6 +155,7 @@ use fyrox::{
     window::{CursorGrabMode, Window},
 };
 use std::time::Instant;
+use scene_state::SceneState;
 use trickcal_shooting_balddagu::{
     chat::{clean_text, ChatHistory, ChatInput, ChatMessage, ChatTranscript},
     combat::{ProjectileKind, MAX_PROJECTILES},
@@ -241,16 +295,23 @@ struct Keys {
     ability: bool,
     ultimate: bool,
     dance: bool,
+
 }
 #[derive(Debug, Default)]
 struct Hud {
+    low_health: low_health::LowHealthUi,
+    frost_screen: frost_screen::FrostScreen,
+    slow_screen: slow_effects::Screen,
+    id_hud: id_hud::Hud,
     scope: scope::ScopeUi,
     round_results: round_results::ResultUi,
     settings: settings_menu::SettingsUi,
+    character_help: character_help::HelpUi,
     voice: voice::VoiceUi,
     brand: Handle<UiNode>,
     connection: Handle<UiNode>,
     objective: objective_hud::ObjectiveHud,
+    objective_markers: objective_hud::ObjectiveMarkers,
     player_info: player_info::PlayerInfoUi,
     nameplates: nameplates::Nameplates,
     combat: combat_hud::CombatHud,
@@ -258,8 +319,9 @@ struct Hud {
     banner: Handle<UiNode>,
     panel: Handle<UiNode>,
     menu: Handle<UiNode>,
-    scoreboard: Handle<UiNode>,
+    scoreboard: scoreboard::ScoreboardUi,
     status: Handle<UiNode>,
+    status_effects: status_effects::StatusEffectsUi,
     ultimate: ultimate_hud::UltimateHud,
     selection: selection::SelectionUi,
     chat: chat::ChatUi,
@@ -274,8 +336,18 @@ struct Hud {
 #[derive(Debug)]
 pub struct Runtime {
     settings_menu: settings_menu::Menu,
+    character_help: character_help::Help,
+    character_help_review: bool,
+    scoreboard_review: bool,
     settings_review: bool,
     last_perf_log: Instant,
+    presentation_pending_dt: f32,
+    presentation_frame_dt: f32,
+    presentation_updated: bool,
+    first_update: bool,
+    animate_visuals: [bool; PLAYERS],
+    visual_pending_dt: [f32; PLAYERS],
+    frame_pacing: frame_pacing::FramePacing,
     ghost_walls: ghost_walls::GhostWalls,
     portals: portals::Portals,
     portal_review: bool,
@@ -284,15 +356,21 @@ pub struct Runtime {
     impacts: impacts::Impacts,
     impact_review: bool,
     ghost_review: bool,
+    race_skill_review: bool,
     shield_review: bool,
     shadow_review: bool,
     voice: voice::Voice,
+    sfx: sfx::Audio,
+    music: music::Music,
+    character_voice: character_voice::Audio,
     voice_review: bool,
     session: Session,
     scene: Handle<Scene>,
     rendered_map: MapId,
     toon: toon::ToonRenderer,
     camera: Handle<Node>,
+    selection_camera: Handle<Node>,
+    selection_backdrop: selection_backdrop::Backdrop,
     actors: [Handle<Node>; PLAYERS],
     weapon: Handle<Node>,
     wave_hand: Handle<Node>,
@@ -307,9 +385,11 @@ pub struct Runtime {
     deathcam_review: bool,
     round_results_review: bool,
     objective_hud_review: bool,
+    status_effects_review: bool,
     map_review: bool,
     preview: Option<selection::Preview>,
     preview_serial: u64,
+    last_selection_click: Option<(usize, Instant)>,
     pending_ready: Option<u8>,
     selection_review: bool,
     cheek_review: bool,
@@ -321,6 +401,15 @@ pub struct Runtime {
     dance_review: bool,
     attack_review: bool,
     naia_skill_review: bool,
+    id_skill_review: bool,
+    aya_skill_review: bool,
+    renua_skill_review: bool,
+    hilde_skill_review: bool,
+    shion_skill_review: bool,
+    ui_skill_review: bool,
+    vivi_skill_review: bool,
+    picora_skill_review: bool,
+    bella_skill_review: bool,
     spawn_edges: [Handle<Node>; 4],
     smoke_dance_seen: bool,
     smoke_dance_cancelled: bool,
@@ -329,14 +418,34 @@ pub struct Runtime {
     review_frames: u32,
     cheek_review_idle_frames: u8,
     projectiles: [Handle<Node>; MAX_PROJECTILES],
-    projectile_materials: [MaterialResource; MAX_PROJECTILES],
+    projectile_models: projectiles::Models,
     guards: [Handle<Node>; PLAYERS],
+    burrows: [Handle<Node>; PLAYERS],
     team_marks: [Handle<Node>; PLAYERS],
     flash: Handle<Node>,
     point_materials: [MaterialResource; 2],
     tracers: [Handle<Node>; PLAYERS],
     naia_water: Option<naia_water::Water>,
+    naia_wave: Option<naia_wave::Wave>,
     erpin_fx: Option<erpin_fx::Effects>,
+    id_fx: Option<id_fx::Effects>,
+    renua_fx: Option<renua_fx::Effects>,
+    hilde_fx: Option<hilde_fx::Effects>,
+    mayo_fx: Option<mayo_fx::Effects>,
+    mayo_skill_review: bool,
+    komi_fx: Option<komi_fx::Effects>,
+    komi_skill_review: bool,
+    butter_skill_review: bool,
+    komi_wake_requested: bool,
+    aya_fx: Option<aya_fx::Effects>,
+    slow_feet: Option<slow_effects::Feet>,
+    shion_fx: Option<shion_fx::Effects>,
+    ui_fx: Option<ui_fx::Effects>,
+    vivi_fx: Option<vivi_fx::Effects>,
+    picora_fx: Option<picora_fx::Effects>,
+    chloe_fx: Option<chloe_fx::Effects>,
+    chloe_skill_review: bool,
+    bella_fx: Option<bella_fx::Effects>,
     tracer_time: [f32; PLAYERS],
     last_shots: [u32; PLAYERS],
     hud: Hud,
@@ -421,6 +530,7 @@ impl Runtime {
                         character: world.actors[0].character,
                         channel: trickcal_shooting_balddagu::chat::ChatChannel::Team,
                         text,
+                        voice_line: action == Communication::VoiceLine,
                     });
                     CommunicationResult::Accepted
                 }
@@ -508,6 +618,7 @@ impl Runtime {
                     character: world.actors[0].character,
                     channel,
                     text: text.into(),
+                    voice_line: false,
                 });
                 Ok(())
             }
@@ -535,30 +646,73 @@ impl Runtime {
             self.pending_ready = Some(id);
         }
     }
-    fn close_selection(&mut self, window: &Window) {
+    fn selection_confirmed(&self) -> bool {
+        self.pending_ready.is_some_and(|id| {
+            self.session.world().actors[self.session.slot()].character == id
+                && match &self.session {
+                    Session::Join(c) => {
+                        !c.selection_pending()
+                            && c.selection_result == Some(SelectionResult::Accepted)
+                    }
+                    _ => true,
+                }
+        })
+    }
+    /// Keep an accepted selection until the authoritative setup phase has ended.
+    fn sync_selection(&mut self) -> bool {
+        if self.pending_ready.is_none() {
+            return false;
+        }
+        if self.selection_confirmed() {
+            let return_to_lobby = self.lobby.return_from_selection && !self.lobby.start_requested;
+            if !return_to_lobby && self.session.world().phase == Phase::Lobby {
+                self.session.start();
+                // This selection already belongs to the match we just started.
+                self.lobby.observed_phase = self.session.world().phase;
+            }
+            return self.finish_selection(return_to_lobby);
+        }
+        if let Session::Join(c) = &self.session {
+            if !c.selection_pending() {
+                if let Some(result) = c
+                    .selection_result
+                    .filter(|r| *r != SelectionResult::Accepted)
+                {
+                    self.selection_message = result.message().into();
+                    self.pending_ready = None;
+                }
+            }
+        }
+        false
+    }
+    fn finish_selection(&mut self, return_to_lobby: bool) -> bool {
+        if !return_to_lobby && self.session.world().phase == Phase::Setup {
+            return false;
+        }
         if let Some(preview) = &mut self.preview {
             preview.cheeks.cancel();
         }
         self.selecting = false;
         self.home_open = false;
-        self.grabbed = !self.chat.open;
-        if self.chat.open {
-            self.chat_restore_grab = true;
-        }
+        self.lobby.open = return_to_lobby;
+        self.grabbed = !return_to_lobby && !self.chat.open;
+        self.chat_restore_grab = !return_to_lobby && self.chat.open;
         self.keys = Keys::default();
         self.pending_ready = None;
+        self.last_selection_click = None;
         self.lobby.return_from_selection = false;
         self.lobby.start_requested = false;
+        true
+    }
+    fn close_selection(&mut self, window: &Window) {
+        self.finish_selection(false);
         set_cursor(window, self.grabbed);
     }
     fn cancel_selection(&mut self, window: &Window) {
-        let return_to_lobby = self.lobby.return_from_selection;
-        self.close_selection(window);
-        if return_to_lobby || self.session.world().phase == Phase::Lobby {
-            self.lobby.open = true;
-            self.grabbed = false;
-            set_cursor(window, false);
-        }
+        let return_to_lobby = self.lobby.return_from_selection
+            || matches!(self.session.world().phase, Phase::Lobby | Phase::Setup);
+        self.finish_selection(return_to_lobby);
+        set_cursor(window, self.grabbed);
     }
     pub fn new(session: Session, smoke: Option<f32>, auto_start: bool) -> Self {
         let lobby = lobby::Lobby::new(&session);
@@ -576,22 +730,51 @@ impl Runtime {
                     | "--dance-review"
                     | "--attack-review"
                     | "--naia-skill-review"
+                    | "--id-skill-review"
+                    | "--aya-skill-review"
+                    | "--renua-skill-review"
+                    | "--shion-skill-review"
+                    | "--picora-skill-review"
+                    | "--picora-muzzle-review"
+                    | "--chloe-skill-review"
+                    | "--ui-skill-review"
+                    | "--ui-attack-review"
+                    | "--bella-skill-review"
+                    | "--hilde-skill-review"
+                    | "--mayo-skill-review"
+                    | "--komi-skill-review"
+                    | "--butter-skill-review"
+                    | "--vivi-skill-review"
                     | "--portal-review"
                     | "--deathcam-review"
                     | "--map-review"
                     | "--ghost-review"
+                    | "--race-skill-review"
                     | "--shield-review"
                     | "--shadow-review"
                     | "--settings-review"
+                    | "--character-help-review"
                     | "--round-results-review"
                     | "--objective-hud-review"
+                    | "--status-effects-review"
                     | "--nameplates-review"
                     | "--voice-review"
+                    | "--character-voice-review"
             )
         });
         Self {
             last_perf_log: Instant::now(),
+            presentation_pending_dt: 0.0,
+            presentation_frame_dt: DT,
+            presentation_updated: true,
+            first_update: true,
+            animate_visuals: [true; PLAYERS],
+            visual_pending_dt: [0.0; PLAYERS],
+            frame_pacing: Default::default(),
             settings_menu: settings_menu::Menu::default(),
+            character_help: character_help::Help::default(),
+            character_help_review: std::env::args().any(|a| a == "--character-help-review"),
+            scoreboard_review: std::env::args().any(|a| a == "--scoreboard-review"),
             settings_review: std::env::args().any(|a| a == "--settings-review"),
             session,
             ghost_walls: ghost_walls::GhostWalls::default(),
@@ -600,16 +783,23 @@ impl Runtime {
             portal_view_offset: Vector2::zeros(),
             portal_transits: 0,
             impacts: impacts::Impacts::default(),
-            impact_review: std::env::args().any(|a| a == "--impact-review"),
+            impact_review: std::env::args()
+                .any(|a| matches!(a.as_str(), "--impact-review" | "--projectile-review" | "--hilde-muzzle-review" | "--naia-muzzle-review" | "--erpin-muzzle-review" | "--picora-muzzle-review" | "--ui-attack-review")),
             ghost_review: std::env::args().any(|a| a == "--ghost-review"),
+            race_skill_review: std::env::args().any(|a| a == "--race-skill-review"),
             shield_review: std::env::args().any(|a| a == "--shield-review"),
             shadow_review: std::env::args().any(|a| a == "--shadow-review"),
             voice: voice::Voice::default(),
+            sfx: sfx::Audio::default(),
+            music: music::Music::default(),
+            character_voice: character_voice::Audio::default(),
             voice_review: std::env::args().any(|a| a == "--voice-review"),
             scene: Handle::NONE,
             rendered_map: MapId::default(),
             toon: toon::ToonRenderer::default(),
             camera: Handle::NONE,
+            selection_camera: Handle::NONE,
+            selection_backdrop: Default::default(),
             actors: [Handle::NONE; PLAYERS],
             weapon: Handle::NONE,
             wave_hand: Handle::NONE,
@@ -624,9 +814,11 @@ impl Runtime {
             deathcam_review: std::env::args().any(|a| a == "--deathcam-review"),
             round_results_review: std::env::args().any(|a| a == "--round-results-review"),
             objective_hud_review: std::env::args().any(|a| a == "--objective-hud-review"),
+            status_effects_review: std::env::args().any(|a| a == "--status-effects-review"),
             map_review: std::env::args().any(|a| a == "--map-review"),
             preview: None,
             preview_serial: 0,
+            last_selection_click: None,
             pending_ready: None,
             selection_review: std::env::args().any(|a| a == "--selection-review"),
             cheek_review: std::env::args().any(|a| a == "--cheek-review"),
@@ -638,11 +830,22 @@ impl Runtime {
             dance_review: std::env::args().any(|a| a == "--dance-review"),
             attack_review: std::env::args().any(|a| a == "--attack-review"),
             naia_skill_review: std::env::args().any(|a| a == "--naia-skill-review"),
+            id_skill_review: std::env::args().any(|a| a == "--id-skill-review"),
+            aya_skill_review: std::env::args().any(|a| a == "--aya-skill-review"),
+            renua_skill_review: std::env::args().any(|a| a == "--renua-skill-review"),
+            hilde_skill_review: std::env::args().any(|a| a == "--hilde-skill-review"),
+            shion_skill_review: std::env::args().any(|a| a == "--shion-skill-review"),
+            ui_skill_review: std::env::args().any(|a| a == "--ui-skill-review"),
+            vivi_skill_review: std::env::args().any(|a| a == "--vivi-skill-review"),
+            picora_skill_review: std::env::args().any(|a| a == "--picora-skill-review"),
+            bella_skill_review: std::env::args().any(|a| a == "--bella-skill-review"),
             spawn_edges: [Handle::NONE; 4],
             smoke_dance_seen: false,
             smoke_dance_cancelled: false,
             art_review: std::env::args().any(|a| a == "--art-review"),
-            review_capture: if std::env::args().any(|a| a == "--phase-review") {
+            review_capture: if std::env::args().any(|a| a == "--low-health-review") {
+                47
+            } else if std::env::args().any(|a| a == "--phase-review") {
                 37
             } else {
                 0
@@ -650,14 +853,34 @@ impl Runtime {
             review_frames: 0,
             cheek_review_idle_frames: 0,
             projectiles: [Handle::NONE; MAX_PROJECTILES],
-            projectile_materials: std::array::from_fn(|_| material(CREAM)),
+            projectile_models: projectiles::Models::default(),
             guards: [Handle::NONE; PLAYERS],
+            burrows: [Handle::NONE; PLAYERS],
             team_marks: [Handle::NONE; PLAYERS],
             flash: Handle::NONE,
             point_materials: [placeholder.clone(), placeholder],
             tracers: [Handle::NONE; PLAYERS],
             naia_water: None,
+            naia_wave: None,
             erpin_fx: None,
+            id_fx: None,
+            renua_fx: None,
+            hilde_fx: None,
+            mayo_fx: None,
+            mayo_skill_review: std::env::args().any(|a|a=="--mayo-skill-review"),
+            komi_fx: None,
+            komi_wake_requested: false,
+            komi_skill_review: std::env::args().any(|a| a == "--komi-skill-review"),
+            butter_skill_review: std::env::args().any(|a| a == "--butter-skill-review"),
+            aya_fx: None,
+            slow_feet: None,
+            shion_fx: None,
+            ui_fx: None,
+            vivi_fx: None,
+            picora_fx: None,
+            chloe_fx: None,
+            chloe_skill_review: std::env::args().any(|a|a=="--chloe-skill-review"),
+            bella_fx: None,
             tracer_time: [0.0; PLAYERS],
             last_shots: [0; PLAYERS],
             hud: Hud::default(),
@@ -829,8 +1052,22 @@ fn make_scene(rt: &mut Runtime) -> Scene {
     let g = &mut scene.graph;
     let shapes = Shapes::new();
     rt.guards = shields::create(g);
+    rt.burrows = burrow_fx::create(g);
     rt.naia_water = Some(naia_water::Water::new(g));
+    rt.naia_wave = Some(naia_wave::Wave::new(g));
     rt.erpin_fx = Some(erpin_fx::Effects::new(g, &shapes));
+    rt.id_fx = Some(id_fx::Effects::new(g));
+    rt.renua_fx = Some(renua_fx::Effects::new(g));
+    rt.hilde_fx = Some(hilde_fx::Effects::new(g));
+    rt.mayo_fx = Some(mayo_fx::Effects::new(g));
+    rt.komi_fx = Some(komi_fx::Effects::new(g));
+    rt.aya_fx = None;
+    rt.slow_feet = Some(slow_effects::Feet::new(g));
+    rt.shion_fx = Some(shion_fx::Effects::new(g));
+    rt.ui_fx = Some(ui_fx::Effects::new(g, &rt.models[10]));
+    rt.vivi_fx = Some(vivi_fx::Effects::new(g));
+    rt.picora_fx = Some(picora_fx::Effects::new(g));
+    rt.bella_fx = Some(bella_fx::Effects::new(g));
     for i in 0..4 {
         rt.spawn_edges[i] = shapes.solid(
             g,
@@ -841,6 +1078,12 @@ fn make_scene(rt: &mut Runtime) -> Scene {
             0,
         );
     }
+    let mut sun_shadows = fyrox::scene::light::directional::CsmOptions::default();
+    // Concentrate shadow resolution on the playable view instead of
+    // resubmitting the whole map into the far cascade each frame.
+    sun_shadows.split_options = fyrox::scene::light::directional::FrustumSplitOptions::Absolute {
+        far_planes: [4.0, 12.0, 32.0],
+    };
     DirectionalLightBuilder::new(
         BaseLightBuilder::new(
             BaseBuilder::new()
@@ -858,6 +1101,7 @@ fn make_scene(rt: &mut Runtime) -> Scene {
         }))
         .with_intensity(if night { 0.75 } else { 2.0 }),
     )
+    .with_csm_options(sun_shadows)
     .build(g);
     for (index, p) in rt.session.world().points().into_iter().enumerate() {
         let color = if index == 0 { MINT } else { PINK };
@@ -885,22 +1129,6 @@ fn make_scene(rt: &mut Runtime) -> Scene {
                 .local_transform_mut()
                 .set_rotation(UnitQuaternion::from_axis_angle(&Vector3::y_axis(), a));
         }
-        shapes.solid(
-            g,
-            "Objective beacon",
-            p + V3::new(0.0, 4.3, 0.0),
-            V3::new(0.43, 0.43, 0.43),
-            color,
-            1,
-        );
-        shapes.solid(
-            g,
-            "Beacon crown",
-            p + V3::new(0.0, 4.9, 0.0),
-            V3::new(0.15, 0.15, 0.15),
-            CREAM,
-            1,
-        );
     }
     for i in 0..PLAYERS {
         let root = PivotBuilder::new(BaseBuilder::new().with_name(format!("Balddagu {}", i + 1)))
@@ -923,7 +1151,7 @@ fn make_scene(rt: &mut Runtime) -> Scene {
             [255, 221, 134],
             0,
         );
-        g[rt.tracers[i]].set_visibility(false);
+        g[rt.tracers[i]].set_visible(false);
         rt.pulses[i] = shapes.solid(
             g,
             "Ability pulse",
@@ -932,9 +1160,11 @@ fn make_scene(rt: &mut Runtime) -> Scene {
             [164, 233, 244],
             2,
         );
-        g[rt.pulses[i]].set_visibility(false);
+        g[rt.pulses[i]].set_visible(false);
     }
     rt.portals = portals::Portals::new(g);
+    // Fyrox renders cameras in graph order: capture the live map before the preview.
+    rt.selection_camera = selection_backdrop::create_camera(g);
     rt.camera = CameraBuilder::new(BaseBuilder::new().with_name("FPS camera"))
         .with_fov(zoom::NORMAL_FOV.to_radians())
         .with_z_near(0.02)
@@ -946,35 +1176,34 @@ fn make_scene(rt: &mut Runtime) -> Scene {
         .build(g)
         .to_base();
     g.link_nodes(rt.weapon, rt.camera);
+    rt.sfx.attach(g, rt.camera);
+    rt.character_voice.attach();
     rt.wave_hand = PivotBuilder::new(BaseBuilder::new().with_name("Character first-person arm"))
         .build(g)
         .to_base();
     g.link_nodes(rt.wave_hand, rt.camera);
-    g[rt.wave_hand].set_visibility(false);
+    g[rt.wave_hand].set_visible(false);
     for id in 0..15 {
-        let h = weapons::build(g, &shapes, id, rt.weapon_models[id as usize].as_ref());
+        let h = weapons::build(g, &shapes, id, rt.weapon_models[id as usize].as_ref(), true);
         g[h].local_transform_mut()
-            .set_position(if id == 0 {
-                // Empty hands are in front; levitating blades rest behind the shoulders.
-                Vector3::zeros()
-            } else {
-                // Camera-local -X is screen right; +Z is distance from the eye.
-                Vector3::new(-0.44, -0.28, 0.56)
-            })
-            .set_scale(Vector3::repeat(0.72));
+            .set_position(weapons::first_person_position(id))
+            .set_scale(Vector3::repeat(weapons::first_person_scale(id)));
         g.link_nodes(h, rt.weapon);
         rt.weapons[id as usize] = h;
     }
+    rt.chloe_fx = None;
+    rt.projectile_models = projectiles::Models::default();
+    rt.projectile_models.create_bullets(g);
     for i in 0..MAX_PROJECTILES {
         rt.projectiles[i] = shapes.mesh(
             g,
             "Moving projectile",
             V3::default(),
             V3::new(0.1, 0.1, 0.1),
-            rt.projectile_materials[i].clone(),
+            material(CREAM),
             1,
         );
-        g[rt.projectiles[i]].set_visibility(false);
+        g[rt.projectiles[i]].set_visible(false);
     }
     rt.flash = shapes.solid(
         g,
@@ -985,7 +1214,7 @@ fn make_scene(rt: &mut Runtime) -> Scene {
         1,
     );
     g.link_nodes(rt.flash, rt.weapon);
-    g[rt.flash].set_visibility(false);
+    g[rt.flash].set_visible(false);
     character_shadows::disable_casting(g, rt.weapon);
     scene
 }
@@ -1000,10 +1229,8 @@ fn populate_scene(
     rt.ghost_walls = ghost_walls::GhostWalls::default();
     rt.impacts = impacts::Impacts::default();
     let mut scene = make_scene(rt);
-    if !rt.selection_review {
-        let scenery = castle::attach(&mut scene, manager, rt.session.world().map_id)?;
-        rt.ghost_walls.attach(&mut scene.graph, scenery);
-    }
+    let scenery = castle::attach(&mut scene, manager, rt.session.world().map_id)?;
+    rt.ghost_walls.attach(&mut scene.graph, scenery);
     let shapes = Shapes::new();
     for i in 0..PLAYERS {
         let id = rt.session.world().actors[i].character;
@@ -1023,6 +1250,7 @@ fn populate_scene(
 
 fn sync_map_scene(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     if rt.rendered_map != rt.session.world().map_id {
+        rt.music.detach(&mut context.scenes[rt.scene].graph);
         let scene = populate_scene(rt, context.resource_manager)
             .map_err(fyrox::plugin::error::GameError::str)?;
         context.scenes.remove(rt.scene);
@@ -1060,13 +1288,23 @@ fn panel(ctx: &mut BuildContext, color: Color) -> Handle<UiNode> {
     .to_base()
 }
 fn make_hud(ui: &mut UserInterface) -> Hud {
+    // Tint the scene edges while keeping labels, aiming aids and menus legible.
+    let slow_screen = slow_effects::Screen::new(ui);
+    let low_health = low_health::LowHealthUi::new(ui);
+    let frost_screen = frost_screen::FrostScreen::new(ui);
     // World labels sit behind the scope mask and every gameplay/menu overlay.
     let nameplates = nameplates::Nameplates::new(ui);
+    let objective_markers = objective_hud::ObjectiveMarkers::new(ui);
     // Create the scope first so health, ammo, objectives and menus remain above it.
     let scope = scope::ScopeUi::new(ui);
     let ctx = &mut ui.build_ctx();
     let hud = Hud {
+        id_hud: id_hud::Hud::new(ctx),
+        low_health,
+        frost_screen,
+        slow_screen,
         nameplates,
+        objective_markers,
         scope,
         round_results: round_results::ResultUi::default(),
         brand: label(ctx, "TRICKCAL\nSHOOTING BALDDAGU", 19.0, CREAM),
@@ -1077,9 +1315,10 @@ fn make_hud(ui: &mut UserInterface) -> Hud {
         banner: label(ctx, "", 24.0, CREAM),
         panel: panel(ctx, Color::from_rgba(24, 35, 46, 235)),
         menu: label(ctx, "", 22.0, CREAM),
-        scoreboard: label(ctx, "", 17.0, CREAM),
+        scoreboard: scoreboard::ScoreboardUi::default(),
         player_info: player_info::PlayerInfoUi::default(),
         status: label(ctx, "", 16.0, MINT),
+        status_effects: status_effects::StatusEffectsUi::new(ctx),
         ultimate: ultimate_hud::UltimateHud::default(),
         selection: selection::SelectionUi::default(),
         chat: chat::ChatUi::default(),
@@ -1091,6 +1330,7 @@ fn make_hud(ui: &mut UserInterface) -> Hud {
         lobby: lobby::LobbyUi::default(),
         rooms: rooms::BrowserUi::default(),
         settings: settings_menu::SettingsUi::default(),
+        character_help: character_help::HelpUi::default(),
     };
     // Widgets are already attached to the UI root canvas. A nested canvas with
     // no explicit size measures to zero and clips the entire HUD.
@@ -1132,7 +1372,25 @@ fn set_cursor(window: &Window, grab: bool) {
 
 impl Plugin for Game {
     fn post_update(&mut self, context: &mut PluginContext) -> GameResult {
+        let _perf = perf::span("plugin.post_update");
+        let fixed_dt = context.dt;
         if let Some(rt) = &mut self.runtime {
+            perf::post_update(context, rt.scene);
+            if !rt.presentation_updated {
+                return Ok(());
+            }
+            context.dt = rt.presentation_frame_dt;
+            let show_selection = selection::showing(rt);
+            let world = if show_selection {
+                rt.session.world()
+            } else {
+                rt.deathcam.scene().unwrap_or(rt.session.world())
+            };
+            let view_slot = if show_selection {
+                rt.session.slot()
+            } else {
+                rt.deathcam.view.map_or(rt.session.slot(), |v| v.target)
+            };
             let g = &mut context.scenes[rt.scene].graph;
             if let Some(preview) = &mut rt.preview {
                 preview.react(
@@ -1147,25 +1405,87 @@ impl Plugin for Game {
                     preview.review_face(g, rt.review_capture % 2 == 1);
                 }
             }
-            for (visual, actor) in rt
-                .visuals
-                .iter()
-                .zip(&rt.deathcam.scene().unwrap_or(rt.session.world()).actors)
-            {
+            for (i, (visual, actor)) in rt.visuals.iter().zip(&world.actors).enumerate() {
+                if !actor.active || !rt.animate_visuals[i] {
+                    continue;
+                }
+                let _perf = perf::span(if actor.active {
+                    "post.character.active"
+                } else {
+                    "post.character.inactive"
+                });
                 visual.layer_attack_arms(g);
                 visual.crouch(g);
+                visual.prepare_chloe_arms(g, [actor.wave_ticks > 0, false]);
                 if actor.wave_ticks > 0 {
                     visual.wave(g, actor);
                 }
                 visual.attach_weapons(g);
-                visual.update_wings(g, context.dt);
+                visual.update_wings(g, rt.visual_pending_dt[i].max(context.dt));
+                rt.visual_pending_dt[i] = 0.0;
+            }
+            g.update_hierarchical_data_for_descendants(rt.camera);
+            // The scoped rifle is hidden, but its animated muzzle still defines
+            // the beam launch. Capture it once so recoil cannot drag a fired ray.
+            for (i, actor) in world.actors.iter().enumerate() {
+                if actor.character == 14 {
+                    let first = i == view_slot && !rt.orbit.active && !show_selection;
+                    let weapon = if first { rt.weapons[14] } else { rt.visuals[i].held_weapon() };
+                    let muzzle = weapons::shion_muzzle(g, weapon);
+                    let camera = g[rt.camera].global_position();
+                    rt.projectile_models.update_shion_laser(g, i, muzzle, camera);
+                }
+            }
+            let mut projectile_muzzles = std::array::from_fn(|i| {
+                let first = i == view_slot && g[rt.weapon].visibility();
+                let id = world.actors[i].character;
+                let position = match (id, first) {
+                    (1, true) => g[rt.weapons[1]].global_transform()
+                        .transform_point(&naia_whales::MUZZLE.into()).coords,
+                    (1, false) => rt.visuals[i].water_muzzle(g),
+                    (2, true) => weapons::erpin_muzzle(g, rt.weapons[2]),
+                    (2, false) => rt.visuals[i].staff_muzzle(g),
+                    (5, true) => weapons::picora_muzzle(g, rt.weapons[5]),
+                    (5, false) => weapons::picora_muzzle(g, rt.visuals[i].held_weapon()),
+                    (8, true) => weapons::mayo_muzzle(g, rt.weapons[8]),
+                    (8, false) => weapons::mayo_muzzle(g, rt.visuals[i].held_weapon()),
+                    (10, true) => ui_fx::muzzle(g, rt.weapons[10]),
+                    (10, false) => rt.visuals[i].clover_muzzle(g),
+                    (13, true) => weapons::hilde_muzzle(g, rt.weapons[13]),
+                    (13, false) => rt.visuals[i].syringe_muzzle(g),
+                    _ => Vector3::zeros(),
+                };
+                projectiles::Muzzle {
+                    position,
+                    // Match the smaller camera-mounted gun at launch, then
+                    // return to the shared world projectile proportions.
+                    scale: if first && matches!(id, 8 | 10 | 13) {
+                        weapons::first_person_scale(id) / weapons::world_scale(id)
+                    } else if id == 1 {
+                        // A 0.036 m nozzle / 0.15 m droplet radius, scaled with
+                        // the gun. Grow to the shared water bomb after launch.
+                        0.24 * if first { weapons::first_person_scale(id) } else { weapons::world_scale(id) }
+                    } else { 1.0 },
+                }
+            });
+            // Ui's fourth basic attack is a ray instead of a bolt. Keep its
+            // visible beam attached to the same animated clover launch socket.
+            for (i, actor) in world.actors.iter().enumerate() {
+                if actor.character != 10 || !g[rt.tracers[i]].visibility() {
+                    continue;
+                }
+                let origin = projectile_muzzles[i].position;
+                let delta = vec(actor.shot_end) - origin;
+                g[rt.tracers[i]].local_transform_mut()
+                    .set_position(origin + delta * 0.5)
+                    .set_scale(Vector3::new(0.045, 0.045, delta.norm()))
+                    .set_rotation(UnitQuaternion::rotation_between(&Vector3::z(), &delta.normalize()).unwrap_or_default());
+                g.update_hierarchical_data_for_descendants(rt.tracers[i]);
             }
             if let Some(water) = &rt.naia_water {
-                let world = rt.deathcam.scene().unwrap_or(rt.session.world());
-                let view_slot = rt.deathcam.view.map_or(rt.session.slot(), |v| v.target);
                 g.update_hierarchical_data_for_descendants(rt.camera);
                 for i in 0..PLAYERS {
-                    let actor = if rt.deathcam.scene().is_none() {
+                    let actor = if show_selection || rt.deathcam.scene().is_none() {
                         match &rt.session {
                             Session::Join(client) => {
                                 client.motion.actor(world, i, rt.session.slot())
@@ -1179,7 +1499,7 @@ impl Plugin for Game {
                     let origin = if first {
                         g[rt.weapons[1]]
                             .global_transform()
-                            .transform_point(&Vector3::new(0.0, 0.10, 0.49).into())
+                            .transform_point(&naia_whales::MUZZLE.into())
                             .coords
                     } else {
                         rt.visuals[i].water_muzzle(g)
@@ -1193,14 +1513,47 @@ impl Plugin for Game {
                     rt.wave_hand,
                     rt.camera,
                     rt.weapons[arm.character as usize],
-                    rt.deathcam.scene().unwrap_or(rt.session.world()).actors
-                        [rt.deathcam.view.map_or(rt.session.slot(), |v| v.target)]
-                    .wave_ticks,
+                    world.actors[view_slot].wave_ticks,
                 );
             }
-            let world = rt.deathcam.scene().unwrap_or(rt.session.world());
-            let view_slot = rt.deathcam.view.map_or(rt.session.slot(), |v| v.target);
+            if let Some(effects) = &rt.id_fx {
+                g.update_hierarchical_data_for_descendants(rt.camera);
+                for i in 0..PLAYERS {
+                    let actor = if rt.deathcam.scene().is_none() {
+                        match &rt.session {
+                            Session::Join(c) => c.motion.actor(world, i, rt.session.slot()),
+                            _ => world.actors[i].clone(),
+                        }
+                    } else {
+                        world.actors[i].clone()
+                    };
+                    let muzzle = rt.visuals[i]
+                        .pod
+                        .as_ref()
+                        .map_or(vec(actor.eye()), |pod| pod.muzzle(g));
+                    effects.update(
+                        g,
+                        i,
+                        &actor,
+                        rt.visuals[i].pose(),
+                        muzzle,
+                        rt.camera,
+                        i == view_slot && g[rt.wave_hand].visibility(),
+                        !show_selection,
+                    );
+                }
+            }
             let pose = rt.visuals[view_slot].pose();
+            if let Some(effects) = &rt.shion_fx {
+                for i in 0..PLAYERS {
+                    effects.update(g, i, &world.actors[i], !show_selection);
+                }
+            }
+            if let Some(arm) = &rt.first_person_arm {
+                if world.actors[view_slot].wave_ticks == 0 {
+                    arm.id(g, rt.wave_hand, rt.camera, pose.shot_age);
+                }
+            }
             let eating = pose.motion == trickcal_shooting_balddagu::motion::Motion::ErpinEat;
             if let Some(effects) = &mut rt.erpin_fx {
                 effects.view.show(g, 0);
@@ -1230,10 +1583,7 @@ impl Plugin for Game {
                         );
                     }
                 }
-                let muzzle = g[rt.weapons[2]]
-                    .global_transform()
-                    .transform_point(&Vector3::new(0.0, 0.72, 0.0).into())
-                    .coords;
+                let muzzle = weapons::erpin_muzzle(g, rt.weapons[2]);
                 effects.update(
                     g,
                     world,
@@ -1243,18 +1593,206 @@ impl Plugin for Game {
                         slot: view_slot,
                         first_person: g[rt.weapon].visibility(),
                         muzzle,
-                        replay: rt.deathcam.is_replay(),
+                        replay: !show_selection && rt.deathcam.is_replay(),
                         dt: context.dt,
                     },
                 );
             }
+            for arm in rt
+                .first_person_arm
+                .iter()
+                .chain(rt.first_person_support_arm.iter())
+            {
+                arm.naia(g, rt.wave_hand, rt.camera, pose);
+            }
+            for arm in rt.first_person_arm.iter().chain(rt.first_person_support_arm.iter()) {
+                if world.actors[view_slot].wave_ticks == 0 {
+                    arm.renua(g, rt.wave_hand, rt.camera, pose);
+                }
+                arm.hilde(g, rt.wave_hand, rt.camera, pose);
+                arm.mayo(g, rt.wave_hand, rt.camera, pose);
+                arm.ui(g, pose, world.actors[view_slot].wave_ticks);
+                arm.vivi(g, pose, world.actors[view_slot].wave_ticks);
+                arm.komi(g, rt.wave_hand, rt.camera, pose, world.actors[view_slot].combat.komi);
+                arm.butter(g, rt.wave_hand, rt.camera, rt.weapons[11], pose, world.actors[view_slot].wave_ticks);
+                arm.aya(g, rt.wave_hand, rt.camera, pose);
+                arm.bella(g, rt.wave_hand, rt.camera, pose, world.actors[view_slot].wave_ticks);
+                arm.picora(g, rt.wave_hand, rt.camera, pose, world.actors[view_slot].wave_ticks);
+                arm.erpin_skill(g, rt.wave_hand, rt.camera, pose);
+                arm.chloe(g, rt.wave_hand, rt.camera, pose);
+                arm.frame_sleeve(g, rt.wave_hand, rt.camera);
+            }
+            if let Some(effects)=&mut rt.chloe_fx {
+                effects.update(g,world,&world.actors[view_slot],pose,g[rt.wave_hand].visibility()&&!rt.orbit.active,!show_selection&&!rt.home_open&&!rt.lobby.open);
+            }
+            if let Some(effects)=&rt.vivi_fx {
+                effects.hide_view(g);
+                for i in 0..PLAYERS {
+                    let a=&world.actors[i];let p=rt.visuals[i].pose();
+                    let show=a.character==0 && a.alive() && !show_selection;
+                    let first=i==view_slot && !rt.orbit.active && g[rt.wave_hand].visibility();
+                    effects.held(g,i,p,rt.visuals[i].palm_contact(g,false),UnitQuaternion::from_axis_angle(&Vector3::y_axis(),a.yaw),false,show&&!first);
+                    if show && first {
+                        let grip=weapons::grip_node(g,rt.weapons[0],0,false);
+                        effects.held(g,i,p,g[grip].global_position(),skeleton::world_rotation(g,rt.camera),true,true);
+                    }
+                }
+            }
+            if let Some(effects) = &rt.komi_fx {
+                effects.view.can(g,pose,Vector3::zeros(),UnitQuaternion::identity(),1.0,false);
+                for i in 0..PLAYERS {
+                    let a=&world.actors[i];let p=rt.visuals[i].pose();
+                    let show=!show_selection && a.character==12 && a.alive();
+                    let first=i==view_slot && !rt.orbit.active && g[rt.wave_hand].visibility();
+                    let (origin,rotation)=rt.visuals[i].komi_grip(g,a.body_scale(),a.combat.komi.active());
+                    effects.world[i].can(g,p,origin,rotation,a.body_scale(),show && !first);
+                    effects.actor(g,i,a,p,show);
+                    if show && first {
+                        let origin=g[rt.camera].global_transform().transform_point(&komi_fx::view_tin(p).into()).coords;
+                        let rotation=skeleton::world_rotation(g,rt.camera)*komi_fx::tin_rotation(p);
+                        effects.view.can(g,p,origin,rotation,0.85,true);
+                    }
+                }
+            }
+            if let Some(effects) = &rt.hilde_fx {
+                effects.view.update(g,pose,Vector3::zeros(),UnitQuaternion::identity(),hilde_fx::VIEW_SCALE,false);
+                for i in 0..PLAYERS {
+                    let a=&world.actors[i];let p=rt.visuals[i].pose();
+                    let first=i==view_slot && g[rt.wave_hand].visibility();
+                    let show=!show_selection && a.character==13 && a.alive() && hilde_fx::active(p);
+                    let (point,rotation)=rt.visuals[i].hilde_grip(g);
+                    effects.world[i].update(g,p,point,rotation,hilde_fx::SCALE,show&&!first);
+                    effects.field(g,i,a,show);
+                    if first && show {
+                        let rotation=skeleton::world_rotation(g,rt.camera)*hilde_fx::view_rotation(p);
+                        let point=rt.first_person_arm.as_ref().map_or(vec(a.eye()),|arm|arm.palm(g));
+                        effects.view.update(g,p,point,rotation,hilde_fx::VIEW_SCALE,true);
+                    }
+                    if p.motion == trickcal_shooting_balddagu::motion::Motion::HildeUltimate {
+                        let props = if first { &effects.view } else { &effects.world[i] };
+                        projectile_muzzles[i] = projectiles::Muzzle {
+                            position: props.muzzle(g),
+                            scale: if first { hilde_fx::VIEW_SCALE / hilde_fx::SCALE } else { 1.0 },
+                        };
+                    }
+                }
+            }
+            if let Some(effects) = &rt.picora_fx {
+                effects.begin(g);
+                g.update_hierarchical_data_for_descendants(rt.camera);
+                for i in 0..PLAYERS {
+                    let a = if rt.deathcam.scene().is_none() { match &rt.session { Session::Join(c) => c.motion.actor(world,i,rt.session.slot()), _ => world.actors[i].clone() } } else {world.actors[i].clone()};
+                    let first=i==view_slot && !rt.orbit.active && g[rt.wave_hand].visibility();
+                    let show=!show_selection && a.alive() && !a.burrowed() && a.combat.polymorph<=0.0;
+                    rt.visuals[i].picora_outline(g, show && !first && a.combat.fashion>0.0, world.tick as f32*DT);
+                    let (elbow,wrist)=rt.visuals[i].sleeve_points(g);
+                    let outward=UnitQuaternion::from_axis_angle(&Vector3::y_axis(),a.yaw)*Vector3::new(-0.8,0.2,0.6);
+                    effects.sleeve(g,i,false,rt.visuals[i].sleeve_binding().0,rt.visuals[i].sleeve_binding().1,elbow,wrist,outward,a.body_scale(),show && !first && a.combat.sticker>0.0);
+                    if first {
+                        if let Some(arm)=&rt.first_person_arm {
+                            let (elbow,wrist)=arm.sleeve_points(g);
+                            let outward=skeleton::world_rotation(g,rt.camera)*Vector3::new(1.2,0.5,-0.35);
+                            effects.sleeve(g,i,true,arm.sleeve_binding().0,arm.sleeve_binding().1,elbow,wrist,outward,0.72,show && a.combat.sticker>0.0);
+                        }
+                    }
+                }
+                // Resolve all sleeve attachments before aiming casts at them.
+                for (i, a) in world.actors.iter().enumerate() {
+                    let first = i == view_slot && g[rt.weapon].visibility();
+                    let show = !show_selection && a.alive() && !a.burrowed() && a.combat.polymorph <= 0.0;
+                    let weapon = if first { rt.weapons[5] } else { rt.visuals[i].held_weapon() };
+                    let target = a.combat.picora.target.filter(|&target| {
+                        let ally = &world.actors[target];
+                        ally.alive() && !ally.burrowed() && match a.combat.picora.phase {
+                            trickcal_shooting_balddagu::picora_skill::Phase::Skill => ally.combat.sticker > 0.0,
+                            trickcal_shooting_balddagu::picora_skill::Phase::Ultimate => ally.combat.fashion > 0.0,
+                            _ => false,
+                        }
+                    }).map(|target| {
+                        if a.combat.picora.phase == trickcal_shooting_balddagu::picora_skill::Phase::Skill {
+                            let sticker = if target == view_slot && g[effects.view_sticker].visibility() {
+                                effects.view_sticker
+                            } else {
+                                effects.stickers[target]
+                            };
+                            **g[sticker].local_transform().position()
+                        } else {
+                            vec(world.actors[target].pos) + Vector3::y() * world.actors[target].hit_height() * 0.65
+                        }
+                    });
+                    effects.cast(g,i,rt.visuals[i].pose(),weapon,target,show && a.character==5);
+                }
+            }
+            if let Some(effects) = &rt.bella_fx {
+                effects.begin(g);
+                for i in 0..PLAYERS {
+                    let a = if rt.deathcam.scene().is_none() { match &rt.session { Session::Join(c) => c.motion.actor(world,i,rt.session.slot()), _ => world.actors[i].clone() } } else {world.actors[i].clone()};
+                    let first=i==view_slot && !rt.orbit.active && g[rt.wave_hand].visibility() && (!rt.bella_skill_review || bella_skill_review::first(rt));
+                    let palm=if first {rt.first_person_arm.as_ref().map_or(vec(a.eye()),|arm|arm.palm(g))}else{rt.visuals[i].palm_contact(g,false)};
+                    effects.actor(g,world,i,&a,rt.visuals[i].pose(),palm,rt.camera,first,!show_selection);
+                }
+            }
+            if let Some(effects) = &rt.mayo_fx {
+                effects.view.update(g,pose,Vector3::zeros(),UnitQuaternion::identity(),mayo_fx::VIEW_SCALE,false);
+                for i in 0..PLAYERS {
+                    let a=&world.actors[i];let p=rt.visuals[i].pose();
+                    let first=i==view_slot && g[rt.wave_hand].visibility();
+                    let show=!show_selection && a.character==8 && a.alive() && mayo_fx::active(p);
+                    let (point,rotation)=rt.visuals[i].mayo_grip(g);
+                    effects.world[i].update(g,p,point,rotation,mayo_fx::SCALE,show&&!first);
+                    if first && show {
+                        let rotation=skeleton::world_rotation(g,rt.camera)*mayo_fx::view_rotation(p);
+                        let point=rt.first_person_arm.as_ref().map_or(vec(a.eye()),|arm|arm.palm(g));
+                        effects.view.update(g,p,point,rotation,mayo_fx::VIEW_SCALE,true);
+                    }
+                    if a.character == 8 && mayo_fx::active(p) {
+                        let props = if first { &effects.view } else { &effects.world[i] };
+                        projectile_muzzles[i] = projectiles::Muzzle {
+                            position: props.muzzle(g, p),
+                            scale: if first { mayo_fx::VIEW_SCALE / mayo_fx::SCALE } else { 1.0 },
+                        };
+                    }
+                }
+            }
+            // Skill guns follow the final hand pose. Capture their launch
+            // sockets after both the arms and the Hilde/Mayo props have updated.
+            rt.projectile_models.update_muzzle_launches(
+                g,
+                world,
+                &rt.projectiles,
+                &projectile_muzzles,
+                !show_selection && rt.deathcam.is_replay(),
+                if rt.impact_review { 0.0 } else { context.dt * world.presentation_time_scale() },
+            );
+            if let Some(effects) = &rt.renua_fx {
+                for i in 0..PLAYERS {
+                    let actor = if rt.deathcam.scene().is_none() { match &rt.session { Session::Join(c) => c.motion.actor(world, i, rt.session.slot()), _ => world.actors[i].clone() } } else { world.actors[i].clone() };
+                    let first=i==view_slot && g[rt.wave_hand].visibility();
+                    let palm=if first { rt.first_person_arm.as_ref().map_or(vec(actor.eye()),|arm|arm.palm(g)) } else {rt.visuals[i].palm_contact(g,false)};
+                    effects.actor(g,i,&actor,rt.visuals[i].pose(),rt.visuals[i].head_position(g),palm,rt.camera,first,!show_selection);
+                }
+            }
+
         }
+        context.dt = fixed_dt;
         Ok(())
     }
-    fn before_rendering(&mut self, context: PluginContext) -> GameResult {
+    fn before_rendering(&mut self, mut context: PluginContext) -> GameResult {
         let Some(rt) = self.runtime.as_mut() else {
             return Ok(());
         };
+        if !perf::enabled() {
+            rt.frame_pacing.wait(rt.settings_menu.settings.frame_limit);
+        }
+        perf::frame(rt, &mut context);
+        let show_selection = selection::showing(rt);
+        rt.selection_backdrop.install(
+            &mut context.graphics_context.as_initialized_mut().renderer,
+            rt.scene,
+            rt.selection_camera,
+            rt.camera,
+            show_selection,
+        );
         rt.toon
             .install(
                 &mut context.graphics_context.as_initialized_mut().renderer,
@@ -1275,11 +1813,20 @@ impl Plugin for Game {
         if rt.settings_review {
             return settings_menu::review_capture(rt, context);
         }
+        if rt.scoreboard_review {
+            return scoreboard::review::capture(rt, context);
+        }
+        if rt.character_help_review {
+            return character_help::review::capture(rt, context);
+        }
         if rt.round_results_review {
             return round_results::review_capture(rt, context);
         }
         if rt.objective_hud_review {
             return objective_hud::review_capture(rt, context);
+        }
+        if rt.status_effects_review {
+            return status_effects::review_capture(rt, context);
         }
         if rt.nameplates_review {
             return nameplates::review::capture(rt, context);
@@ -1317,6 +1864,19 @@ impl Plugin for Game {
             || rt.dance_review
             || rt.attack_review
             || rt.naia_skill_review
+            || rt.id_skill_review
+            || rt.aya_skill_review
+            || rt.renua_skill_review
+            || rt.hilde_skill_review
+            || rt.mayo_skill_review
+            || rt.komi_skill_review
+            || rt.butter_skill_review
+            || rt.shion_skill_review
+            || rt.ui_skill_review
+            || rt.vivi_skill_review
+            || rt.picora_skill_review
+            || rt.chloe_skill_review
+            || rt.bella_skill_review
             || rt.portal_review
             || rt.impact_review
             || rt.shadow_review)
@@ -1337,6 +1897,12 @@ impl Plugin for Game {
         }
         if rt.ghost_review && rt.review_frames >= ghost_review::capture_frames(rt) {
             return ghost_review::capture(rt, context);
+        }
+        if rt.race_skill_review && rt.review_frames > 0 {
+            rt.review_frames += 1;
+            if rt.review_frames >= 24 {
+                return race_skill_review::capture(rt, context);
+            }
         }
         if rt.impact_review && rt.review_frames >= 8 {
             return impact_review::capture(rt, context);
@@ -1386,6 +1952,14 @@ impl Plugin for Game {
             return Ok(());
         }
         if rt.hud_review && rt.review_frames >= 24 {
+            if rt.review_capture >= 47 {
+                assert_eq!(
+                    context.user_interfaces.first()[rt.hud.low_health.root].visibility(),
+                    matches!(rt.review_capture, 49 | 50),
+                    "critical-health vignette in HUD review state {}",
+                    rt.review_capture
+                );
+            }
             let prefix = if std::env::args().any(|a| a == "--hud-review-small") {
                 "hud-small"
             } else {
@@ -1397,6 +1971,19 @@ impl Plugin for Game {
                     rt.review_capture,
                     characters::SLUGS[rt.review_capture as usize]
                 )
+            } else if rt.review_capture >= 47 {
+                let state = [
+                    "healthy",
+                    "threshold",
+                    "below-threshold",
+                    "critical",
+                    "recovered",
+                    "dead",
+                    "respawned",
+                    "selection",
+                    "settings",
+                ][(rt.review_capture - 47) as usize];
+                format!("{prefix}-low-health-{state}-")
             } else {
                 format!("{prefix}-state-{}-", rt.review_capture - 15)
             };
@@ -1409,7 +1996,7 @@ impl Plugin for Game {
         if rt.weapon_review && rt.review_frames >= 24 {
             return weapon_review::capture(rt, context);
         }
-        if rt.greeting_review && rt.review_frames >= 24 {
+        if rt.greeting_review && rt.review_frames >= if std::env::args().any(|arg| arg == "--first-person-framing-only") { 8 } else { 24 } {
             return greeting_review::capture(rt, context);
         }
         if rt.dance_review && rt.review_frames >= 12 {
@@ -1417,6 +2004,21 @@ impl Plugin for Game {
         }
         if rt.attack_review && rt.review_frames >= 6 {
             return attack_review::capture(rt, context);
+        }
+        if rt.shion_skill_review && rt.review_frames >= 8 { return shion_skill_review::capture(rt, context); }
+        if rt.bella_skill_review && rt.review_frames >= 8 { return bella_skill_review::capture(rt, context); }
+        if rt.chloe_skill_review && rt.review_frames >= 8 { return chloe_skill_review::capture(rt,context); }
+        if rt.picora_skill_review && rt.review_frames >= 8 { return picora_skill_review::capture(rt, context); }
+        if rt.ui_skill_review && rt.review_frames >= 8 { return ui_skill_review::capture(rt, context); }
+        if rt.vivi_skill_review && rt.review_frames >= 8 { return vivi_skill_review::capture(rt, context); }
+        if rt.butter_skill_review && rt.review_frames >= 8 {return butter_skill_review::capture(rt,context);}
+        if rt.komi_skill_review && rt.review_frames >= 8 {return komi_skill_review::capture(rt,context);}
+        if rt.mayo_skill_review && rt.review_frames >= 8 {return mayo_skill_review::capture(rt,context);}
+        if rt.hilde_skill_review && rt.review_frames >= 8 {return hilde_skill_review::capture(rt,context);}
+        if rt.renua_skill_review && rt.review_frames >= 8 { return renua_skill_review::capture(rt, context); }
+        if rt.aya_skill_review && rt.review_frames >= 8 { return aya_skill_review::capture(rt, context); }
+        if rt.id_skill_review && rt.review_frames >= 8 {
+            return id_skill_review::capture(rt, context);
         }
         if rt.naia_skill_review && rt.review_frames >= 8 {
             return naia_skill_review::capture(rt, context);
@@ -1476,6 +2078,23 @@ impl Plugin for Game {
                 characters::SLUGS[id as usize],
                 rt.review_capture % steps
             );
+            let tag = if std::env::args().any(|a| a == "--selection-objective-review") {
+                format!(
+                    "selection-objective-{}-{}-",
+                    rt.session.world().map_id.slug(),
+                    if rt.session.world().point == 0 {
+                        "a"
+                    } else {
+                        "b"
+                    },
+                )
+            } else if std::env::args().any(|a| a == "--selection-synergy-review") {
+                format!("selection-synergy-{:02}-", rt.review_capture)
+            } else if std::env::args().any(|a| a == "--selection-capacity-review") {
+                format!("selection-capacity-{:02}-", rt.review_capture)
+            } else {
+                tag
+            };
             capture_preview(rt.scene, 0, &tag, context)
                 .map_err(|e| fyrox::plugin::error::GameError::str(e.to_string()))?;
             rt.review_capture += 1;
@@ -1589,9 +2208,17 @@ impl Plugin for Game {
             context.user_interfaces.first_mut(),
             context.resource_manager,
         );
+        rt.hud.scoreboard = scoreboard::ScoreboardUi::new(
+            context.user_interfaces.first_mut(),
+            context.resource_manager,
+        );
         // Shared overlay must be drawn above the lobby and map-selection modal.
         rt.hud.chat = chat::ChatUi::new(context.user_interfaces.first_mut());
         rt.hud.settings = settings_menu::SettingsUi::new(context.user_interfaces.first_mut());
+        rt.hud.character_help = character_help::HelpUi::new(
+            context.user_interfaces.first_mut(),
+            context.resource_manager,
+        );
         // The startup gate owns input and must cover every other overlay.
         rt.hud.startup = startup::StartupUi::new(
             context.user_interfaces.first_mut(),
@@ -1619,12 +2246,14 @@ impl Plugin for Game {
                 rt.hud.menu,
                 rt.hud.banner,
                 rt.hud.status,
-                rt.hud.scoreboard,
             ])
+            .chain(rt.hud.scoreboard.labels())
             .chain(rt.hud.player_info.labels())
             .chain(rt.hud.nameplates.labels())
             .chain(rt.hud.combat.labels())
             .chain(rt.hud.objective.labels())
+            .chain(rt.hud.objective_markers.labels())
+            .chain(rt.hud.status_effects.labels())
             .chain(rt.hud.ultimate.labels())
             .chain(rt.hud.chat.labels())
             .chain(rt.hud.communication.labels())
@@ -1635,6 +2264,7 @@ impl Plugin for Game {
             .chain(rt.hud.account.labels())
             .chain(rt.hud.voice.labels())
             .chain(rt.hud.settings.labels())
+            .chain(rt.hud.character_help.labels())
             .chain(rt.hud.round_results.labels())
         {
             ui.send(h, TextMessage::Font(font.clone()));
@@ -1683,15 +2313,41 @@ impl Plugin for Game {
         let Some(rt) = &mut self.runtime else {
             return Ok(());
         };
+        if !rt.chat.open && rt.session.world().actors[rt.session.slot()].combat.komi.resting() {
+            let wake = matches!(event, Event::WindowEvent { event: WindowEvent::KeyboardInput { event, .. }, .. }
+                if event.state == ElementState::Pressed && !event.repeat && !matches!(event.physical_key,PhysicalKey::Code(KeyCode::Enter | KeyCode::NumpadEnter)))
+                || matches!(event, Event::WindowEvent { event: WindowEvent::MouseInput { state: ElementState::Pressed, .. } | WindowEvent::MouseWheel { .. }, .. });
+            if wake { rt.komi_wake_requested = true; }
+        }
         if let Event::WindowEvent { event, .. } = event {
+            if matches!(
+                event,
+                WindowEvent::KeyboardInput { .. }
+                    | WindowEvent::Focused(false)
+                    | WindowEvent::Resized(_)
+                    | WindowEvent::CursorLeft { .. }
+            ) || matches!(event, WindowEvent::MouseInput { button, state: ElementState::Pressed, .. } if *button != MouseButton::Left)
+            {
+                rt.last_selection_click = None;
+            }
             match event {
+                WindowEvent::KeyboardInput { event, .. }
+                    if event.physical_key == PhysicalKey::Code(KeyCode::Tab)
+                        && event.state == ElementState::Released =>
+                {
+                    rt.keys.score = false
+                }
                 WindowEvent::ModifiersChanged(modifiers) => rt.modifiers = modifiers.state(),
                 WindowEvent::Focused(focused) => {
                     rt.voice.focus(*focused);
+                    rt.sfx.focus(*focused);
+                    rt.character_voice.focus(*focused);
+                    rt.music.focus(*focused);
                     if *focused && !rt.home_review && !rt.lobby.review && !rt.account.review {
                         rt.browser.refresh_profile();
                     }
                     if !focused {
+                        rt.keys.score = false;
                         if let Some(preview) = &mut rt.preview {
                             preview.cheeks.cancel();
                         }
@@ -1742,6 +2398,9 @@ impl Plugin for Game {
             return Ok(());
         }
         if account::on_event(rt, event, &context) {
+            return Ok(());
+        }
+        if character_help::on_event(rt, event, &context) {
             return Ok(());
         }
         if settings_menu::on_event(rt, event, &mut context) {
@@ -1846,7 +2505,7 @@ impl Plugin for Game {
                     ..
                 } => match event.physical_key {
                     PhysicalKey::Code(KeyCode::Tab) => {
-                        rt.keys.score = event.state == ElementState::Pressed;
+                        scoreboard::on_tab(rt, event.state == ElementState::Pressed);
                     }
                     PhysicalKey::Code(KeyCode::F10) if event.state == ElementState::Pressed => {
                         context.loop_controller.exit();
@@ -1873,7 +2532,8 @@ impl Plugin for Game {
                 ..
             } if rt.grabbed
                 && !rt.chat.open
-                && rt.session.world().actors[rt.session.slot()].alive() =>
+                && rt.session.world().actors[rt.session.slot()].alive()
+                && !rt.session.world().actors[rt.session.slot()].combat.view_locked() =>
             {
                 if rt.orbit.active {
                     rt.orbit.rotate(delta.0 as f32, delta.1 as f32);
@@ -1912,6 +2572,9 @@ impl Plugin for Game {
                         return Ok(());
                     }
                     if let PhysicalKey::Code(code) = event.physical_key {
+                        if rt.confirm_selection_key(code, down, event.repeat) {
+                            return Ok(());
+                        }
                         match code {
                             KeyCode::KeyC if down && !event.repeat && !rt.selecting => {
                                 rt.begin_communication(
@@ -1922,7 +2585,7 @@ impl Plugin for Game {
                             KeyCode::KeyS => rt.keys.s = down,
                             KeyCode::KeyA => rt.keys.a = down,
                             KeyCode::KeyD => rt.keys.d = down,
-                            KeyCode::Space => rt.keys.jump = down,
+                            KeyCode::Space if !event.repeat => rt.keys.jump = down,
                             KeyCode::ShiftLeft => rt.keys.phase_left = down,
                             KeyCode::ShiftRight => rt.keys.phase_right = down,
                             KeyCode::ControlLeft => rt.keys.crouch_left = down,
@@ -1931,7 +2594,7 @@ impl Plugin for Game {
                             KeyCode::KeyE => rt.keys.ability = down,
                             KeyCode::KeyQ => rt.keys.ultimate = down,
                             KeyCode::KeyG => rt.keys.dance = down,
-                            KeyCode::Tab => rt.keys.score = down,
+                            KeyCode::Tab => scoreboard::on_tab(rt, down),
                             KeyCode::KeyH if down && !event.repeat => {
                                 let window = &context.graphics_context.as_initialized_ref().window;
                                 if rt.selecting {
@@ -1969,9 +2632,6 @@ impl Plugin for Game {
                                 }
                                 rt.selection_message.clear();
                             }
-                            KeyCode::F5 if down && !event.repeat && rt.selecting => {
-                                rt.confirm_selection();
-                            }
                             KeyCode::F5 if down && !event.repeat => {
                                 if matches!(
                                     rt.session.world().phase,
@@ -1979,12 +2639,13 @@ impl Plugin for Game {
                                 ) {
                                     rt.session.start();
                                 }
-                                rt.selecting = false;
-                                rt.grabbed = true;
-                                set_cursor(
-                                    &context.graphics_context.as_initialized_ref().window,
-                                    true,
-                                );
+                                let window = &context.graphics_context.as_initialized_ref().window;
+                                if rt.session.world().phase == Phase::Setup {
+                                    rt.open_lobby_selection(true);
+                                    set_cursor(window, false);
+                                } else {
+                                    rt.close_selection(window);
+                                }
                             }
                             KeyCode::Escape if down && !event.repeat && rt.selecting => {
                                 rt.cancel_selection(
@@ -2028,11 +2689,14 @@ impl Plugin for Game {
                         }
                     } else if rt.selecting && *state == ElementState::Pressed {
                         rt.keys.fire = false;
-                        if selection::showing(rt)
-                            && rt.preview.as_mut().is_some_and(|p| {
-                                p.cheeks.id as usize == rt.selected && p.cheeks.press(rt.cursor)
-                            })
-                        {
+                        if !selection::showing(rt) {
+                            rt.last_selection_click = None;
+                            return Ok(());
+                        }
+                        if rt.preview.as_mut().is_some_and(|p| {
+                            p.cheeks.id as usize == rt.selected && p.cheeks.press(rt.cursor)
+                        }) {
+                            rt.last_selection_click = None;
                             return Ok(());
                         }
                         let size = context.user_interfaces.first().screen_size();
@@ -2043,15 +2707,11 @@ impl Plugin for Game {
                                 && rt.cursor.y >= y
                                 && rt.cursor.y <= y + h
                             {
-                                rt.selected = id;
-                                rt.preview_serial += 1;
-                                if let Some(preview) = &mut rt.preview {
-                                    preview.cheeks.cancel();
-                                }
-                                rt.selection_message.clear();
-                                break;
+                                rt.click_selection_card(id, Instant::now());
+                                return Ok(());
                             }
                         }
+                        rt.last_selection_click = None;
                         if selection::contains(rt.cursor, selection::confirm_rect(size.x, size.y)) {
                             rt.confirm_selection();
                         } else if selection::contains(
@@ -2094,18 +2754,28 @@ impl Plugin for Game {
         message: &fyrox::gui::message::UiMessage,
         _ui_handle: Handle<UserInterface>,
     ) -> GameResult {
+        let _perf = perf::span("ui.message");
         if let Some(rt) = &mut self.runtime {
             account::on_ui_message(rt, context.user_interfaces.first_mut(), message);
         }
         Ok(())
     }
     fn update(&mut self, context: &mut PluginContext) -> GameResult {
+        let _perf = perf::span("plugin.update");
         if context.loop_controller.exiting() {
             return Ok(());
         }
         let Some(rt) = &mut self.runtime else {
             return Ok(());
         };
+        rt.presentation_updated = true;
+        rt.animate_visuals.fill(true);
+        if std::mem::take(&mut rt.first_update) {
+            // Loading models/fonts is not elapsed gameplay. Do not replay that
+            // startup delay as hundreds of simulation/scene updates.
+            *context.lag = context.dt;
+        }
+        rt.presentation_frame_dt = context.dt;
         rt.chat.tick(context.dt);
         if !rt.account.review {
             rooms::update(rt);
@@ -2121,11 +2791,20 @@ impl Plugin for Game {
         if rt.settings_review {
             settings_menu::review_update(rt, context);
         }
+        if rt.scoreboard_review {
+            return scoreboard::review::update(rt, context);
+        }
+        if rt.character_help_review {
+            return character_help::review::update(rt, context);
+        }
         if rt.round_results_review {
             return round_results::review_update(rt, context);
         }
         if rt.objective_hud_review {
             return objective_hud::review_update(rt, context);
+        }
+        if rt.status_effects_review {
+            return status_effects::review_update(rt, context);
         }
         if rt.nameplates_review {
             return nameplates::review::update(rt, context);
@@ -2141,6 +2820,25 @@ impl Plugin for Game {
         }
         if rt.attack_review {
             return attack_review::update(rt, context);
+        }
+        if rt.butter_skill_review {return butter_skill_review::update(rt,context);}
+        if rt.komi_skill_review {return komi_skill_review::update(rt,context);}
+        if rt.mayo_skill_review {return mayo_skill_review::update(rt,context);}
+        if rt.hilde_skill_review {return hilde_skill_review::update(rt,context);}
+        if rt.renua_skill_review {
+            return renua_skill_review::update(rt, context);
+        }
+        if rt.shion_skill_review {
+            return shion_skill_review::update(rt, context);
+        }
+        if rt.chloe_skill_review { return chloe_skill_review::update(rt, context); }
+        if rt.picora_skill_review { return picora_skill_review::update(rt, context); }
+        if rt.ui_skill_review { return ui_skill_review::update(rt,context); }
+        if rt.vivi_skill_review { return vivi_skill_review::update(rt,context); }
+        if rt.bella_skill_review { return bella_skill_review::update(rt,context); }
+        if rt.aya_skill_review { return aya_skill_review::update(rt, context); }
+        if rt.id_skill_review {
+            return id_skill_review::update(rt, context);
         }
         if rt.naia_skill_review {
             return naia_skill_review::update(rt, context);
@@ -2166,6 +2864,9 @@ impl Plugin for Game {
         if rt.ghost_review {
             return ghost_review::update(rt, context);
         }
+        if rt.race_skill_review {
+            return race_skill_review::update(rt, context);
+        }
         if rt.map_review {
             return map_review::update(rt, context);
         }
@@ -2178,24 +2879,33 @@ impl Plugin for Game {
             lobby::review(rt, context);
         }
         if rt.hud_review {
-            if rt.review_capture >= 47 {
-                println!("HUD_REVIEW_OK: 15 portraits/skills/weapons; health, recovery, selection hidden; cooldown, reload, empty ammo, disabled, magic; ultimate 0/25/50/75/99/100%, ready, disabled, dead, activated and reset");
+            let review_end = if std::env::args().any(|a| a == "--phase-review") {
+                47
+            } else {
+                56
+            };
+            if rt.review_capture >= review_end {
+                println!("HUD_REVIEW_OK: portraits/skills/weapons; health, recovery, selection hidden; cooldown, reload, empty ammo, disabled, magic; ultimate and phase states; critical-health vignette threshold, recovery, death, respawn and menus");
                 context.loop_controller.exit();
                 return Ok(());
             }
             rt.review_frames = rt.review_frames.max(1);
             // Keep captures deterministic if desktop input reaches the review window.
-            rt.settings_menu.open = false;
+            rt.settings_menu.open = rt.review_capture == 55;
             rt.chat.open = false;
             rt.keys.score = false;
             rt.wheel.cancel();
             rt.yaw = 0.0;
             rt.pitch = 0.0;
             rt.grabbed = true;
-            rt.selecting = matches!(rt.review_capture, 19 | 46);
+            rt.selecting = matches!(rt.review_capture, 19 | 46 | 54);
             rt.selected = 11;
             if let Session::Solo(world) = &mut rt.session {
-                world.phase = Phase::Lobby;
+                world.phase = if rt.review_capture >= 47 {
+                    Phase::Playing
+                } else {
+                    Phase::Lobby
+                };
                 let actor = &mut world.actors[0];
                 actor.character =
                     if rt.review_capture == 25 || (37..47).contains(&rt.review_capture) {
@@ -2209,7 +2919,10 @@ impl Plugin for Game {
                 actor.hp = match rt.review_capture {
                     15 => 72,
                     16 => 24,
-                    17 | 34 | 45 => 0,
+                    17 | 34 | 45 | 52 => 0,
+                    48 | 51 => MAX_HP / 10,
+                    49 | 54 | 55 => MAX_HP / 10 - 1,
+                    50 => 1,
                     _ => MAX_HP,
                 };
                 actor.combat.regen = if matches!(rt.review_capture, 15 | 17 | 18) {
@@ -2307,12 +3020,39 @@ impl Plugin for Game {
             }
         }
         if rt.selection_review {
+            let objective = std::env::args().any(|a| a == "--selection-objective-review");
+            let capacity = std::env::args().any(|a| a == "--selection-capacity-review");
+            let synergy = std::env::args().any(|a| a == "--selection-synergy-review");
             let steps = if std::env::args().any(|a| a == "--blink-review") {
                 3
             } else {
                 2
             };
-            if rt.review_capture >= 15 * steps {
+            let captures = if objective {
+                4
+            } else if synergy {
+                5
+            } else if capacity {
+                12
+            } else {
+                15 * steps
+            };
+            if rt.review_capture >= captures {
+                if objective {
+                    println!("SELECTION_OBJECTIVE_REVIEW_OK: castle/city A -> B, live map switch; 4 GPU frames");
+                    context.loop_controller.exit();
+                    return Ok(());
+                }
+                if synergy {
+                    println!("SELECTION_SYNERGY_REVIEW_OK: 3/2/1, pairs, singles, one member, empty team; 5 GPU frames");
+                    context.loop_controller.exit();
+                    return Ok(());
+                }
+                if capacity {
+                    println!("SELECTION_CAPACITY_REVIEW_OK: 3 rows, outsider/member/reopened/opponent, 12 GPU frames");
+                    context.loop_controller.exit();
+                    return Ok(());
+                }
                 if steps == 3 {
                     println!("BLINK_REVIEW_OK: 15 heroes, 45 open/half/closed GPU frames, coupled eyebrows");
                 }
@@ -2324,7 +3064,15 @@ impl Plugin for Game {
                 return Ok(());
             }
             rt.selecting = true;
-            rt.selected = (rt.review_capture / steps) as usize;
+            if objective {
+                selection_backdrop::review_objectives(rt);
+            } else if synergy {
+                selection::review_synergy(rt);
+            } else if capacity {
+                selection::review_capacity(rt);
+            } else {
+                rt.selected = (rt.review_capture / steps) as usize;
+            }
             rt.review_frames = rt.review_frames.max(1);
         }
         if rt.selecting && !rt.selection_review && !rt.session.world().can_select(rt.session.slot())
@@ -2359,8 +3107,13 @@ impl Plugin for Game {
             };
             rt.review_frames = rt.review_frames.max(1);
         }
+        if !rt.session.world().actors[rt.session.slot()].combat.komi.resting() { rt.komi_wake_requested = false; }
         let controls_active = rt.controls_active();
         let mut input = Input {
+            view_aspect: {
+                let size=context.user_interfaces.first().screen_size();
+                size.x / size.y.max(1.0)
+            },
             yaw: rt.yaw - rt.portal_view_offset.x,
             pitch: rt.pitch - rt.portal_view_offset.y,
             forward: if controls_active {
@@ -2382,6 +3135,7 @@ impl Plugin for Game {
             ability: controls_active && rt.keys.ability,
             ultimate: controls_active && rt.keys.ultimate,
             dance: controls_active && rt.keys.dance,
+            wake_rest: rt.komi_wake_requested,
         };
         if rt.smoke.is_some() {
             let time = rt.started.elapsed().as_secs_f32();
@@ -2437,9 +3191,11 @@ impl Plugin for Game {
                 input.forward = 0.2;
             }
         }
+        let simulation_perf = perf::span("simulation");
         if let Err(e) = rt.session.update(input) {
             rt.error = Some(e);
         }
+        drop(simulation_perf);
         if rt.session.world().phase == Phase::Intermission && rt.last_phase != Phase::Intermission {
             rt.keys = Keys::default();
             rt.wheel.cancel();
@@ -2473,34 +3229,47 @@ impl Plugin for Game {
         {
             rt.smoke_ult_used = true;
         }
-        if let Some(id) = rt.pending_ready {
-            let accepted = match &rt.session {
-                Session::Join(c) => {
-                    !c.selection_pending()
-                        && c.selection_result == Some(SelectionResult::Accepted)
-                        && c.world.actors[rt.session.slot()].character == id
-                }
-                _ => rt.session.world().actors[rt.session.slot()].character == id,
-            };
-            if accepted {
-                let window = &context.graphics_context.as_initialized_ref().window;
-                if rt.lobby.return_from_selection && !rt.lobby.start_requested {
-                    rt.cancel_selection(window);
-                } else {
-                    if matches!(rt.session.world().phase, Phase::Lobby | Phase::Finished) {
-                        rt.session.start();
-                    }
-                    rt.close_selection(window);
-                }
-            } else if matches!(&rt.session,Session::Join(c) if !c.selection_pending() && c.selection_result.is_some_and(|r|r!=SelectionResult::Accepted))
-            {
-                if let Session::Join(c) = &rt.session {
-                    rt.selection_message = c.selection_result.unwrap().message().into();
-                }
-                rt.pending_ready = None;
+        if rt.sync_selection() {
+            set_cursor(
+                &context.graphics_context.as_initialized_ref().window,
+                rt.grabbed,
+            );
+        }
+        character_help::sync(rt, &context.graphics_context.as_initialized_ref().window);
+        // Catch up gameplay at its fixed rate, but only prepare the final visible pose.
+        rt.presentation_pending_dt += context.dt;
+        rt.presentation_updated = scene_state::presentation_due(*context.lag, context.dt);
+        // Clips are explicitly sought by render(). Reapplying the same pose on
+        // intermediate catch-up ticks only repeats hierarchy work.
+        for visual in &rt.visuals {
+            context.scenes[rt.scene].graph[visual.player]
+                .cast_mut::<fyrox::scene::animation::AnimationPlayer>().unwrap()
+                .set_auto_apply(rt.presentation_updated);
+        }
+        if rt.presentation_updated {
+            rt.presentation_frame_dt = rt.presentation_pending_dt.min(0.1);
+            rt.presentation_pending_dt = 0.0;
+            let fixed_dt = context.dt;
+            context.dt = rt.presentation_frame_dt;
+            let result = render(rt, context);
+            context.dt = fixed_dt;
+            result?;
+            let g = &mut context.scenes[rt.scene].graph;
+            let camera = **g[rt.camera].local_transform().position();
+            let view_slot = rt.deathcam.view.map_or(rt.session.slot(), |v| v.target);
+            let world = rt.deathcam.scene().unwrap_or(rt.session.world());
+            for (i, visual) in rt.visuals.iter().enumerate() {
+                rt.visual_pending_dt[i] = if world.actors[i].active {
+                    rt.visual_pending_dt[i] + rt.presentation_frame_dt
+                } else { 0.0 };
+                // Distant rigs sample the same authoritative clip at 30 Hz.
+                // Positions, gameplay and the local view remain at the full rate.
+                let near = (vec(world.actors[i].pos) - camera).norm_squared() < 24.0 * 24.0;
+                let animate = i == view_slot || near || rt.visual_pending_dt[i] >= 1.0 / 30.0 - 0.00001;
+                rt.animate_visuals[i] = animate;
+                g[visual.player].cast_mut::<fyrox::scene::animation::AnimationPlayer>().unwrap().set_auto_apply(animate);
             }
         }
-        render(rt, context)?;
         if rt.smoke.is_some() {
             rt.smoke_dance_seen |= rt.orbit.active;
             if rt.started.elapsed().as_secs_f32() > 11.5 && rt.smoke_dance_seen && !rt.orbit.active
@@ -2544,6 +3313,8 @@ impl Plugin for Game {
 }
 
 fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
+    let _perf = perf::span("presentation.total");
+    let setup_perf = perf::span("presentation.setup");
     let show_selection = selection::showing(rt);
     if let Some(preview) = &mut rt.preview {
         preview.update(
@@ -2569,11 +3340,18 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     let slot = rt.session.slot();
     let me = &live.actors[slot];
     let previous_stage = rt.deathcam.stage;
-    let death_view = rt.deathcam.update(live, slot, context.dt);
-    let top_down = rt.deathcam.stage == DeathStage::TopDown;
-    let replaying = rt.deathcam.is_replay();
+    let death_view = rt
+        .deathcam
+        .update(live, slot, context.dt)
+        .filter(|_| !show_selection);
+    let top_down = !show_selection && rt.deathcam.stage == DeathStage::TopDown;
+    let replaying = !show_selection && rt.deathcam.is_replay();
     let scene_changed = previous_stage != rt.deathcam.stage;
-    let w = rt.deathcam.scene().unwrap_or(live);
+    let w = if show_selection {
+        live
+    } else {
+        rt.deathcam.scene().unwrap_or(live)
+    };
     let result_active = live.in_round_transition();
     let result_started = result_active && rt.last_phase != live.phase;
     let world_dt = context.dt * live.presentation_time_scale();
@@ -2625,7 +3403,7 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             )
             .map_err(fyrox::plugin::error::GameError::str)?,
         );
-        if viewed.character == 2 || weapons::grips(viewed.character)[1].is_some() {
+        if matches!(viewed.character, 1 | 2 | 4 | 7 | 8 | 9 | 13) || weapons::grips(viewed.character)[1].is_some() {
             rt.first_person_support_arm = Some(
                 first_person::FirstPersonArm::spawn(
                     &mut context.scenes[rt.scene],
@@ -2639,7 +3417,17 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         }
     }
     let g = &mut context.scenes[rt.scene].graph;
+    if rt.aya_fx.is_none() && (poses.iter().any(|a| a.active && (a.character == 4 || a.combat.frozen > 0.0))
+        || w.projectiles.iter().any(|p| matches!(p.kind, ProjectileKind::Butterfly | ProjectileKind::SnowGarden))) {
+        rt.aya_fx = Some(aya_fx::Effects::new(g));
+    }
+    if rt.chloe_fx.is_none() && (poses.iter().any(|a| a.active && a.character == 6)
+        || w.projectiles.iter().any(|p| matches!(p.kind, ProjectileKind::Doll | ProjectileKind::Confetti))) {
+        rt.chloe_fx = Some(chloe_fx::Effects::new(g, &rt.models[6], rt.camera, &Shapes::new()));
+    }
     rt.ghost_walls.update(w, world_dt);
+    drop(setup_perf);
+    let impacts_perf = perf::span("presentation.impacts");
     rt.impacts.update(
         g,
         w,
@@ -2647,12 +3435,18 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         &rt.ghost_walls,
     );
     let portal_state = poses[slot].portals;
+    drop(impacts_perf);
+    let world_perf = perf::span("presentation.world");
     let offset = Vector2::new(portal_state.yaw_offset, portal_state.pitch_offset);
     let teleported = rt.portal_transits != portal_state.transits;
     rt.yaw += offset.x - rt.portal_view_offset.x;
     rt.pitch = (rt.pitch + offset.y - rt.portal_view_offset.y).clamp(-1.45, 1.45);
     rt.portal_view_offset = offset;
     rt.portal_transits = portal_state.transits;
+    if me.combat.view_locked() {
+        rt.yaw = me.yaw; rt.pitch = me.pitch; rt.view_pos = me.eye();
+        rt.keys.zoom = false; rt.orbit.active = false;
+    }
     if rt.last_round != w.round
         || (rt.last_dead && me.alive())
         || (rt.last_phase == Phase::Lobby && w.phase != Phase::Lobby)
@@ -2672,6 +3466,8 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     // Interruptions require a new right-button press, even if it was held throughout.
     rt.keys.zoom &= rt.can_zoom();
     let zoomed = rt.zoomed();
+    // Follow gameplay eye height, never animated bones (including Ui's frog hop).
+    // Walking sway belongs to the separate camera-mounted hands and weapon below.
     rt.view_pos = if teleported || matches!(rt.session, Session::Join(_)) {
         poses[slot].eye()
     } else {
@@ -2705,14 +3501,20 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         rt.orbit.active = false;
         g[rt.camera]
             .local_transform_mut()
-            .set_position(vec(rt.view_pos))
+            .set_position(
+                vec(rt.view_pos)
+                    + Vector3::y()
+                        * trickcal_shooting_balddagu::id_skill::camera_lift(poses[slot].combat.id),
+            )
             .set_rotation(UnitQuaternion::from_euler_angles(-rt.pitch, rt.yaw, 0.0));
     }
+    selection_backdrop::update_camera(g, rt.selection_camera, live, show_selection);
     if show_selection {
-        // Keep both faces above the lower roster cards for the companion pairs.
+        // Frame Ui around the rider's body; Eru may sit behind the roster cards.
+        // Chloe still needs room for both companion faces.
         let (height, distance) = match rt.selected {
             6 => (1.00, 5.00),
-            10 => (0.78, 3.65),
+            10 => (1.18, 3.65),
             _ => (1.18, 2.65),
         };
         g[rt.camera]
@@ -2731,6 +3533,12 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         .set_projection(fyrox::scene::camera::Projection::Perspective(
             fyrox::scene::camera::PerspectiveProjection {
                 z_near: 0.02,
+                // Only the isolated hero belongs in the foreground depth mask.
+                z_far: if show_selection {
+                    12.0
+                } else {
+                    fyrox::scene::camera::PerspectiveProjection::default().z_far
+                },
                 fov: if show_selection {
                     48.0_f32.to_radians()
                 } else if death_view.is_some() {
@@ -2738,7 +3546,6 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
                 } else {
                     rt.gameplay_fov()
                 },
-                ..Default::default()
             },
         ));
     let spawn = w.spawn_center(team(slot));
@@ -2776,8 +3583,33 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             .set_scale(vec(scale));
     }
     for (i, a) in poses.iter().enumerate() {
-        g[rt.pulses[i]]
-            .set_visibility(a.active && (a.ability_flash > 0.0 || a.combat.ultimate_flash > 0.0));
+        let reactivated = a.active && !g[rt.actors[i]].is_enabled();
+        g[rt.actors[i]].set_active(a.active);
+        if !a.active {
+            g[rt.actors[i]].set_visible(false);
+            for node in [rt.burrows[i], rt.pulses[i], rt.team_marks[i], rt.guards[i], rt.tracers[i]] {
+                g[node].set_visible(false);
+            }
+            rt.last_shots[i] = a.shot;
+            rt.tracer_time[i] = 0.0;
+            rt.projectile_models.update_bullet(g, i, 0.0, false);
+            continue;
+        }
+        let _perf = perf::span(if a.active {
+            "presentation.character.active"
+        } else {
+            "presentation.character.inactive"
+        });
+        let shadow_distance = (vec(a.pos) - **g[rt.camera].local_transform().position()).norm_squared();
+        // The far cascade ends at 32 m; retain a margin for a character's height
+        // and shadow footprint, without submitting every remote rig to it.
+        rt.visuals[i].set_shadow_casting(g, i == view_slot || show_selection || shadow_distance < 40.0 * 40.0);
+        burrow_fx::update(g, rt.burrows[i], a);
+        g[rt.pulses[i]].set_visible(
+            a.active && !matches!(a.character, 0 | 8 | 13) && !a.burrowed()
+                && !(a.character == 2 && a.combat.ultimate_flash > 0.0)
+                && (a.ability_flash > 0.0 || a.combat.ultimate_flash > 0.0),
+        );
         let radius = if a.combat.ultimate_flash > 0.0 {
             3.0 + (w.tick as f32 * 0.12).sin().abs() * 4.0
         } else {
@@ -2787,10 +3619,13 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             .local_transform_mut()
             .set_position(vec(a.pos + V3::new(0.0, 0.04, 0.0)))
             .set_scale(Vector3::new(radius, 0.025, radius));
-        g[rt.actors[i]].set_visibility(a.active && (!rt.art_review || i == slot));
+        g[rt.actors[i]].set_visible(a.active && a.combat.polymorph<=0.0 && !a.burrowed() && (!rt.art_review || i == slot));
         // Global visibility also gates shadow passes. Keep the animated body and
         // world weapon alive, hiding only their camera passes in first person.
-        rt.visuals[i].set_shadow_only(g, i == view_slot && !rt.orbit.active && !top_down);
+        rt.visuals[i].set_shadow_only(
+            g,
+            i == view_slot && !rt.orbit.active && !top_down && !show_selection,
+        );
         let target = vec(a.pos);
         let previous = g[rt.actors[i]].local_transform().position();
         let position =
@@ -2804,7 +3639,7 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             .set_position(position)
             .set_scale(Vector3::repeat(a.body_scale()))
             .set_rotation(UnitQuaternion::from_axis_angle(&Vector3::y_axis(), a.yaw));
-        if scene_changed {
+        if scene_changed || reactivated {
             rt.visuals[i].reset_timeline(g);
             rt.last_shots[i] = a.shot;
             rt.tracer_time[i] = 0.0;
@@ -2846,28 +3681,37 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
                 rt.visuals[i].seek(g, pose);
             }
         }
-        g[rt.team_marks[i]].set_visibility(
+        g[rt.team_marks[i]].set_visible(
             (!rt.art_review || i == slot) && a.alive() && (i != view_slot || rt.orbit.active),
         );
         g[rt.team_marks[i]]
             .local_transform_mut()
             .set_position(vec(a.pos + V3::new(0.0, 0.025, 0.0)));
         shields::update(g, rt.guards[i], a);
+        if a.character == 3 && rt.visuals[i].is_shadow_only() {
+            // Id's first-person protection is communicated by the brief HUD;
+            // the world shield must not leave a grid across the player's view.
+            g[rt.guards[i]].set_visible(false);
+        }
         if !a.active {
             rt.last_shots[i] = a.shot;
             rt.tracer_time[i] = 0.0;
         }
         if a.active && (a.shot != rt.last_shots[i] || replaying) {
             rt.last_shots[i] = a.shot;
+            let laser = a.character == 14 && i == slot && zoomed && !replaying;
             rt.tracer_time[i] = if a.character == 0 {
                 weapons::VIVI_SWING_SECONDS
+            } else if laser {
+                shion_laser::SECONDS
             } else if kit(a.character).mode == AttackMode::Melee {
                 0.24
             } else {
-                0.09
+                projectiles::SHOT_SECONDS
             };
             let origin = a.eye() + V3::new(0.0, -0.15, 0.0);
             let diff = a.shot_end - origin;
+            rt.projectile_models.shot(i, origin, a.shot_end, laser);
             let rot = UnitQuaternion::rotation_between(&Vector3::z(), &vec(diff).normalize())
                 .unwrap_or_default();
             g[rt.tracers[i]]
@@ -2881,66 +3725,120 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         } else {
             (rt.tracer_time[i] - world_dt).max(0.0)
         };
-        g[rt.tracers[i]]
-            .set_visibility(rt.tracer_time[i] > 0.0 && kit(a.character).mode == AttackMode::Ray);
+        g[rt.tracers[i]].set_visible(
+            rt.tracer_time[i] > 0.0
+                && (kit(a.character).mode == AttackMode::Ray
+                    || a.character == 10 && a.combat.attacks > 0
+                        && a.combat.attacks.is_multiple_of(4))
+                && !matches!(a.character, 3 | 14),
+        );
+        rt.projectile_models
+            .update_bullet(g, i, rt.tracer_time[i], a.alive() && a.character == 14 && !show_selection);
     }
     for (i, node) in rt.projectiles.iter().enumerate() {
         let Some(p) = w.projectiles.get(i) else {
-            g[*node].set_visibility(false);
+            g[*node].set_visible(false);
             continue;
         };
-        let (color, scale) = projectile_look(p.kind);
-        rt.projectile_materials[i]
-            .data_ref()
-            .set_property("diffuseColor", rgb(color));
+        rt.projectile_models
+            .update(g, *node, i, p, w.actors[p.owner].character);
         let direction = if p.velocity.length() > 0.01 {
             p.velocity
         } else {
             direction(w.actors[p.owner].yaw, w.actors[p.owner].pitch)
         };
-        let rotation = UnitQuaternion::rotation_between(&Vector3::z(), &vec(direction).normalize())
-            .unwrap_or_default();
-        g[*node].set_visibility(true);
+        let rotation = if p.kind == ProjectileKind::BoulderBlast { UnitQuaternion::identity() } else {
+            UnitQuaternion::rotation_between(&Vector3::z(), &vec(direction).normalize()).unwrap_or_default()
+        };
+        g[*node].set_visible(!matches!(p.kind, ProjectileKind::Wave | ProjectileKind::TimeField | ProjectileKind::SnowGarden | ProjectileKind::RainField | ProjectileKind::Butterfly | ProjectileKind::BellaFire | ProjectileKind::BellaHeal | ProjectileKind::MercuryField | ProjectileKind::Doll | ProjectileKind::Confetti));
         g[*node]
             .local_transform_mut()
             .set_position(vec(p.pos))
-            .set_scale(vec(scale))
             .set_rotation(rotation);
     }
-    let weapon_kit = kit(viewed.character);
-    for id in 0..15 {
-        g[rt.weapons[id]].set_visibility(id == viewed.character as usize);
+    if let Some(effects) = &rt.renua_fx { effects.fields(g, w, !show_selection); }
+    if let Some(effects) = &rt.aya_fx { effects.update(g, w, &poses, view_slot, !rt.orbit.active && !show_selection, !show_selection); }
+    if let Some(effects) = &rt.slow_feet {
+        effects.update(g, &poses, view_slot, !rt.orbit.active && !top_down,
+            !show_selection && !rt.home_open && !rt.lobby.open && !result_active
+                && matches!(w.phase, Phase::Setup | Phase::Playing), w.tick as f32 * DT);
     }
-    g[rt.weapon].set_visibility(
-        view_alive && !rt.orbit.active && !show_selection && viewed.wave_ticks == 0 && !zoomed,
+    if let Some(effects) = &rt.bella_fx { effects.fields(g,w,!show_selection); }
+    if let Some(effects) = &rt.vivi_fx { effects.fields(g,w,!show_selection); }
+    if let Some(effects) = &rt.ui_fx { effects.update(g,w,&poses,view_slot,!rt.orbit.active && !show_selection && !rt.ui_skill_review
+        && !rt.chloe_skill_review
+        && !rt.picora_skill_review,!show_selection); }
+    let weapon_kit = kit(viewed.character);
+    if let Some(wave) = &rt.naia_wave {
+        wave.update(g, w);
+    }
+    for id in 0..15 {
+        g[rt.weapons[id]].set_visible(id == viewed.character as usize && id != 7 && id != 9 && !(id == 4 && viewed.combat.aya.phase == trickcal_shooting_balddagu::aya_skill::Phase::Ultimate && (0.45..3.25).contains(&viewed.combat.aya.elapsed)));
+    }
+    g[rt.weapon].set_visible(
+        view_alive
+            && viewed.combat.polymorph<=0.0
+            && !viewed.burrowed()
+            && !rt.orbit.active
+            && !show_selection
+            && viewed.wave_ticks == 0
+            && !zoomed,
     );
     let show_arms = g[rt.weapon].visibility() || (waving && !rt.orbit.active && !show_selection);
-    g[rt.wave_hand].set_visibility(show_arms);
-    g[rt.flash]
-        .set_visibility(rt.tracer_time[view_slot] > 0.0 && weapon_kit.mode == AttackMode::Ray);
+    g[rt.wave_hand].set_visible(show_arms);
+    g[rt.flash].set_visible(
+        rt.tracer_time[view_slot] > 0.0
+            && weapon_kit.mode == AttackMode::Ray
+            && viewed.character != 3,
+    );
     let pose = rt.visuals[view_slot].pose();
+    if viewed.character==6 {g[rt.weapons[6]].set_visible(false);}
+    if viewed.character==10 {ui_fx::weapon(g,rt.weapons[10],pose);}
+    if viewed.character == 12 && viewed.combat.komi.active() {g[rt.weapons[12]].set_visible(false);}
+    if viewed.character == 8 && mayo_fx::active(pose) {g[rt.weapons[8]].set_visible(false);}
+    if viewed.character == 13 && hilde_fx::active(pose) {g[rt.weapons[13]].set_visible(false);}
+    if viewed.character == 1 {
+        naia_whales::update_weapon(g, rt.weapons[1], pose, true);
+        // Keep the arm holder visible while the carried whale disappears.
+        g[rt.weapons[1]].set_visible(
+            pose.motion != trickcal_shooting_balddagu::motion::Motion::NaiaUltimate,
+        );
+    }
     let attack_phase = if pose.motion.is_attack() {
         pose.age / trickcal_shooting_balddagu::attack::seconds(viewed.character)
     } else {
         0.0
     };
-    let hand = if pose.motion.is_naia_skill() {
+    let hand = if viewed.character == 3 {
+        Default::default()
+    } else if viewed.character == 2 && viewed.combat.erpin_skill.active() {
+        trickcal_shooting_balddagu::erpin_skill::hand_motion(pose.motion, pose.age)
+    } else if pose.motion.is_naia_skill() {
         trickcal_shooting_balddagu::naia_skill::hand(pose.motion, pose.age)
+    } else if viewed.character == 14 && viewed.combat.shion.active() {
+        trickcal_shooting_balddagu::shion_skill::hand(pose.motion, pose.age)
+    } else if viewed.character == 5 && viewed.combat.picora.active() {
+        trickcal_shooting_balddagu::picora_skill::hand(pose.motion,pose.age,true)
+    } else if viewed.character == 10 && viewed.combat.ui.active() {
+        trickcal_shooting_balddagu::ui_skill::hand(pose.motion,pose.age)
     } else if viewed.character == 4 {
-        trickcal_shooting_balddagu::aya_attack::hand(
-            false,
+        trickcal_shooting_balddagu::aya_attack::first_person_hand(
             attack_phase,
             pose.motion == trickcal_shooting_balddagu::motion::Motion::Attack2,
         )
     } else {
-        trickcal_shooting_balddagu::attack::hand(viewed.character, false, attack_phase)
+        trickcal_shooting_balddagu::attack::first_person_hand(viewed.character, attack_phase)
     };
     let moving = !result_active
         && death_view.is_none()
         && input_moving(&rt.keys)
+        && !viewed.combat.disabled()
+        && !viewed.combat.aya.active()
         && rt.grabbed
         && viewed.combat.naia.phase != trickcal_shooting_balddagu::naia_skill::Phase::Fire
-        && !viewed.combat.erpin.eating;
+        && !viewed.combat.erpin.eating
+        && !viewed.combat.shion.active();
+    // Retain the usual hand/weapon sway for Ui too; this never moves the camera.
     let bob = if moving {
         (w.tick as f32 * 0.18).sin() * 0.012
     } else {
@@ -2957,6 +3855,12 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     // Vivi's floating blades keep their independently authored paths.
     let grip_yaw = if viewed.character == 0 {
         0.0
+    } else if viewed.character == 1
+        && pose.motion.is_naia_skill()
+        && pose.motion != trickcal_shooting_balddagu::motion::Motion::NaiaUltimate
+    {
+        10.0_f32.to_radians()
+            * (1.0 - trickcal_shooting_balddagu::naia_skill::whale_form(pose.motion, pose.age))
     } else {
         10.0_f32.to_radians()
     };
@@ -2970,6 +3874,8 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         **equipped.position() + **equipped.rotation() * grip.component_mul(&**equipped.scale());
     let flash_offset = match viewed.character {
         // Follow the corrected guns' forward muzzles, including viewmodel scale.
+        8 => **equipped.rotation()
+            * weapons::MAYO_MUZZLE.component_mul(&**equipped.scale()),
         13 => {
             **equipped.rotation()
                 * Vector3::new(0.0, 0.15, 0.565).component_mul(&**equipped.scale())
@@ -2999,15 +3905,12 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         )
         .set_rotation(rotation);
     if viewed.character == 0 {
-        weapons::update_vivi_viewmodel(
-            g,
-            rt.weapons[0],
-            attack_phase,
-            pose.motion == trickcal_shooting_balddagu::motion::Motion::Attack2,
-        );
+        weapons::update_vivi_pose(g, rt.weapons[0], pose, w.tick as f32 * DT, true);
     }
     if viewed.character == 11 {
-        weapons::update_slingshot(g, rt.weapons[11], attack_phase);
+        butter_fx::weapon(g, rt.weapons[11], pose, true);
+        // Giant fork is centered in camera space; its own draw sockets pose both hands.
+        g[rt.weapon].local_transform_mut().set_position(Vector3::new(0.0,bob,0.0)).set_rotation(UnitQuaternion::identity());
     }
     if viewed.character == 4 {
         weapons::update_aya(
@@ -3041,13 +3944,16 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         !show_selection && !rt.home_open && !rt.lobby.open,
         w.tick as f32 * DT,
     );
-    let ui = context.user_interfaces.first();
+    let ui = context.user_interfaces.first_mut();
+    drop(world_perf);
+    let hud_perf = perf::span("presentation.hud");
     let size = ui.screen_size();
     let width = size.x;
     let height = size.y;
     let center = width * 0.5;
     let hud = &rt.hud;
     hud.nameplates.render(rt, g, ui);
+    hud.objective_markers.render(rt, g, ui);
     place(ui, hud.brand, 24.0, 20.0, 255.0, 65.0);
     let connection_width =
         ((width - 488.0 * (width / 1280.0).min(height / 800.0).clamp(0.65, 1.25)) * 0.5 - 40.0)
@@ -3076,7 +3982,7 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             )
         }),
     );
-    text(ui, hud.status, me.combat.status_text());
+    text(ui, hud.status, status_effects::buff_text(me));
     place(
         ui,
         hud.banner,
@@ -3153,6 +4059,7 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     let show_menu = !rt.art_review
         && !result_active
         && !rt.settings_menu.open
+        && !rt.character_help.open
         && !rt.hud_review
         && !rt.objective_hud_review
         && !rt.weapon_review
@@ -3160,6 +4067,19 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         && !rt.dance_review
         && !rt.attack_review
         && !rt.naia_skill_review
+        && !rt.id_skill_review
+        && !rt.aya_skill_review
+        && !rt.renua_skill_review
+        && !rt.hilde_skill_review
+        && !rt.mayo_skill_review
+        && !rt.komi_skill_review
+        && !rt.butter_skill_review
+        && !rt.shion_skill_review
+        && !rt.ui_skill_review
+        && !rt.vivi_skill_review
+        && !rt.chloe_skill_review
+        && !rt.picora_skill_review
+        && !rt.bella_skill_review
         && !rt.communication_review
         && !show_selection
         && !rt.chat.open
@@ -3168,9 +4088,8 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             || w.phase == Phase::Finished
             || (!rt.grabbed && rt.smoke.is_none())
             || rt.error.is_some());
-    visible(ui, hud.panel, show_menu || rt.keys.score);
+    visible(ui, hud.panel, show_menu && !scoreboard::showing(rt));
     visible(ui, hud.menu, show_menu && !rt.keys.score);
-    visible(ui, hud.scoreboard, rt.keys.score);
     place(
         ui,
         hud.panel,
@@ -3214,46 +4133,6 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         };
         text(ui,hud.menu,format!("{title}\n\nFAIRY KINGDOM CASTLE / COMPETITIVE 2CP / 6 vs 6\nCapture A, then B. Swap sides. Win the time bank.\n\n{prompt}\nH  Character selection / E  Skill / Q  Ultimate / G  Dance\n\n{}",rt.error.clone().unwrap_or_else(||rt.session.label())));
     }
-    place(
-        ui,
-        hud.scoreboard,
-        center - 290.0,
-        height * 0.5 - 195.0,
-        620.0,
-        405.0,
-    );
-    if rt.keys.score {
-        let mut board = "6 vs 6 / CHARACTER / POSITION / ELIMS : DEATHS\n".to_string();
-        for (i, a) in w.actors.iter().enumerate() {
-            if i % TEAM_SIZE == 0 {
-                let counts = w.position_counts(team(i));
-                board.push_str(&format!(
-                    "\n{}  +{}% DMG  F{}/M{}/R{}\n",
-                    team_name(team(i)),
-                    w.damage_bonus(team(i)),
-                    counts[0],
-                    counts[1],
-                    counts[2]
-                ));
-            }
-            let c = character(a.character);
-            if !a.active {
-                board.push_str(&format!("  {} EMPTY\n", i % TEAM_SIZE + 1));
-                continue;
-            }
-            board.push_str(&format!(
-                "{} {} {}  {} / {}    {} : {}\n",
-                if i == slot { ">" } else { " " },
-                i % TEAM_SIZE + 1,
-                if a.human { "PLAYER" } else { "BOT   " },
-                if rt.korean_font { c.korean } else { c.name },
-                c.position.name(),
-                a.kills,
-                a.deaths
-            ));
-        }
-        text(ui, hud.scoreboard, board);
-    }
     hud.cross.render(
         ui,
         me.active
@@ -3267,6 +4146,7 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             && !rt.orbit.active
             && !rt.wheel.open
             && !rt.settings_menu.open
+            && !rt.character_help.open
             && !rt.keys.score
             && !show_menu
             && !zoomed,
@@ -3282,6 +4162,25 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
             show && (node != hud.brand || result_active || rt.art_review),
         );
     }
+    hud.id_hud.render(
+        rt,
+        ui,
+        &poses[view_slot],
+        !show_selection && !result_active && !show_menu,
+    );
+    hud.frost_screen.render(ui, &poses[view_slot], !show_selection && !result_active && !show_menu && !rt.home_open && !rt.lobby.open);
+    hud.slow_screen.render(rt, ui, !show_selection && !result_active && !show_menu);
+    hud.low_health.render(
+        rt,
+        ui,
+        !show_selection && !rt.art_review && !result_active && !show_menu,
+    );
+    hud.status_effects.render(
+        rt,
+        ui,
+        &poses[slot],
+        !show_selection && !rt.art_review && !result_active && !show_menu && me.alive(),
+    );
     hud.player_info
         .render(rt, ui, !show_selection && !rt.art_review && !result_active);
     hud.selection.render(rt, ui, show_selection);
@@ -3315,6 +4214,15 @@ fn render(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
         context.user_interfaces.first_mut(),
         !show_selection && !rt.art_review && !result_active,
     );
+    hud.scoreboard
+        .render(rt, context.user_interfaces.first_mut());
+    hud.character_help
+        .render(rt, context.user_interfaces.first_mut());
+    drop(hud_perf);
+    let _audio_perf = perf::span("presentation.audio");
+    sfx::update(rt, context);
+    music::update(rt, context);
+    character_voice::update(rt, context);
     Ok(())
 }
 
@@ -3322,7 +4230,9 @@ fn projectile_look(kind: ProjectileKind) -> ([u8; 3], V3) {
     use ProjectileKind::*;
     match kind {
         Water => ([109, 216, 255], V3::new(0.12, 0.12, 0.22)),
-        Stone | Ricochet => ([165, 166, 155], V3::new(0.15, 0.12, 0.13)),
+        Stone => ([255, 220, 42], V3::new(0.15, 0.15, 0.15)),
+        Ricochet => ([165, 166, 155], V3::new(0.15, 0.12, 0.13)),
+        BoulderBlast => ([255, 195, 85], V3::new(1.0, 1.0, 1.0)),
         Needle | Poison => ([197, 238, 113], V3::new(0.035, 0.035, 0.32)),
         Syringe => ([115, 239, 172], V3::new(0.05, 0.05, 0.22)),
         Butterfly => ([176, 225, 255], V3::new(0.46, 0.10, 0.22)),
@@ -3336,6 +4246,17 @@ fn projectile_look(kind: ProjectileKind) -> ([u8; 3], V3) {
         MagicBomb => ([253, 180, 222], V3::new(0.30, 0.30, 0.30)),
         Cake4 | Cake3 | Cake2 | Cake1 => ([255, 240, 211], V3::new(0.1, 0.1, 0.1)),
         Bolt => ([255, 224, 145], V3::new(0.12, 0.12, 0.18)),
+        RenuaOrb => ([45, 170, 255], V3::new(0.18, 0.18, 0.18)),
+        TimeField => ([255, 213, 40], V3::new(1.0, 1.0, 1.0)),
+        SnowGarden => ([165, 225, 255], V3::new(1.0, 1.0, 1.0)),
+        RainField => ([145, 235, 190], V3::new(1.0, 1.0, 1.0)),
+        BellaFire => ([181, 91, 255], V3::new(0.5, 0.8, 0.5)),
+        BellaHeal => ([255, 213, 116], V3::new(0.5, 0.5, 0.5)),
+        MedicalGrenade => ([115, 239, 172], V3::new(0.18, 0.18, 0.18)),
+        ErpinBlast => ([216, 150, 255], V3::new(1.0, 1.0, 1.0)),
+        ErpinCrash => ([255, 224, 40], V3::new(1.0, 1.0, 1.0)),
+        MercuryField => ([220, 225, 235], V3::new(1.0, 1.0, 1.0)),
+        Confetti => ([255, 200, 80], V3::new(0.01, 0.01, 0.01)),
     }
 }
 fn input_moving(keys: &Keys) -> bool {

@@ -120,8 +120,7 @@ impl Nameplates {
                 visible(ui, plate.root, false);
                 continue;
             }
-            g.update_hierarchical_data_for_descendants(rt.actors[i]);
-            let head = visual.head_position(g);
+            let head = visual.current_head_position(g);
             let anchor = head + Vector3::y() * (0.95 * actor.body_scale());
             let camera = g[rt.camera].cast::<Camera>().unwrap();
             let camera_pos = camera.global_position();
@@ -195,7 +194,7 @@ impl Nameplates {
                 plate.fill,
                 12.0,
                 30.0,
-                BAR_WIDTH * actor.hp.min(MAX_HP) as f32 / MAX_HP as f32,
+                BAR_WIDTH * actor.hp.min(actor.max_hp()) as f32 / actor.max_hp() as f32,
                 BAR_HEIGHT,
             );
         }

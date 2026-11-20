@@ -22,11 +22,11 @@ fn tick(w: &mut World, input: Input, frames: usize) {
 #[test]
 fn walk_up_a_staircases_and_jump_from_each_height() {
     for (start, yaw, frames, height) in [
-        (V3::new(-12.0, 0.0, -6.3), 0.0, 155, 3.6),
+        (V3::new(-12.0, 0.0, -6.3), 0.0, 310, 3.6),
         (
             V3::new(24.28, 0.0, 4.0),
             -std::f32::consts::FRAC_PI_2,
-            110,
+            220,
             3.6,
         ),
     ] {
@@ -126,7 +126,7 @@ fn jump_through_window_then_land_on_gallery() {
             yaw: std::f32::consts::FRAC_PI_2,
             ..Default::default()
         },
-        24,
+        48,
     );
     assert!(
         w.actors[0].pos.x > -8.3,

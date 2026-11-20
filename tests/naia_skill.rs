@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::{
     game::*,
     motion::{Motion, MotionClock},
@@ -84,7 +85,7 @@ fn held_stream_roots_and_release_moves_immediately_with_bonus() {
             ..Default::default()
         },
     );
-    assert!((w.actors[0].pos.z - pos.z - 5.8 * SPEED_MULTIPLIER * DT).abs() < 0.0001);
+    assert!((w.actors[0].pos.z - pos.z - WALK_SPEED * SPEED_MULTIPLIER * DT).abs() < 0.0001);
     for _ in 0..12 {
         tick(&mut w, Input::default());
     }
@@ -226,6 +227,7 @@ fn source_clips_and_appended_ranges_preserve_the_original_timing() {
         Motion::NaiaMove,
         Motion::NaiaFire,
         Motion::NaiaEnd,
+        Motion::NaiaUltimate,
     ]
     .into_iter()
     .enumerate()
@@ -235,4 +237,131 @@ fn source_clips_and_appended_ranges_preserve_the_original_timing() {
         );
         assert!(m.frames().0 > 555);
     }
+}
+
+fn ultimate(w: &mut World) {
+    w.actors[0].combat.ultimate = 100.0;
+    tick(
+        w,
+        Input {
+            ultimate: true,
+            ..Default::default()
+        },
+    );
+}
+fn advance(w: &mut World, ticks: usize) {
+    for _ in 0..ticks {
+        tick(w, Input::default());
+    }
+}
+
+#[test]
+fn ultimate_releases_from_behind_on_source_cue_and_locks_actions() {
+    let mut w = fixture();
+    ultimate(&mut w);
+    assert_eq!(
+        w.actors[0].combat.naia.phase,
+        trickcal_shooting_balddagu::naia_skill::Phase::Ultimate
+    );
+    let mut clock = MotionClock::default();
+    assert_eq!(
+        clock.observe(&w.actors[0], DT, w.tick, true).motion,
+        Motion::NaiaUltimate
+    );
+    advance(&mut w, 89);
+    assert!(w.projectiles.is_empty());
+    let pos = w.actors[0].pos;
+    let ammo = w.actors[0].ammo;
+    tick(
+        &mut w,
+        Input {
+            forward: 1.0,
+            jump: true,
+            fire: true,
+            ability: true,
+            reload: true,
+            ..Default::default()
+        },
+    );
+    assert_eq!(w.actors[0].pos, pos);
+    assert_eq!(w.actors[0].ammo, ammo);
+    assert_eq!(w.projectiles.len(), 1);
+    assert!((w.projectiles[0].origin.z + WAVE_BEHIND).abs() < 0.001);
+    advance(&mut w, 40);
+    assert_eq!(
+        w.actors[0].combat.guard, WAVE_GUARD,
+        "caster is crossed by the wave"
+    );
+    advance(&mut w, 120);
+    assert!(!w.actors[0].combat.naia.active());
+}
+
+#[test]
+fn broad_wave_grants_temporary_guard_and_hits_enemies_only_once() {
+    let mut w = fixture();
+    w.actors[1].pos = V3::new(4.5, 0.0, 3.0);
+    w.actors[6].pos = V3::new(-4.5, 0.0, 3.0);
+    w.actors[6].barrier = 0.0;
+    w.actors[6].character = 14;
+    let hp = w.actors[6].hp;
+    ultimate(&mut w);
+    advance(&mut w, 160);
+    assert_eq!(w.actors[1].hp, 1, "Q gives guard rather than healing");
+    assert_eq!(w.actors[1].combat.guard, WAVE_GUARD);
+    assert!(w.actors[6].hp < hp);
+    assert!((w.actors[6].pos.z - 5.0).abs() < 0.01);
+    let damaged = w.actors[6].hp;
+    advance(&mut w, 80);
+    assert_eq!(w.actors[6].hp, damaged);
+    advance(&mut w, 300);
+    assert_eq!(w.actors[1].combat.guard, 0.0);
+}
+
+#[test]
+fn wave_respects_cover_width_height_and_burrow() {
+    let mut w = fixture();
+    w.actors[1].pos = V3::new(3.0, 0.0, 4.0);
+    w.actors[2].pos = V3::new(6.0, 0.0, 4.0);
+    w.actors[3].pos = V3::new(0.0, 8.0, 4.0);
+    w.actors[3].vy = 0.0;
+    w.map.push(Block {
+        center: V3::new(0.0, 7.75, 4.0),
+        size: V3::new(2.0, 0.5, 2.0),
+        color: [0; 3],
+        phaseable: false,
+    });
+    w.actors[6].pos = V3::new(-3.0, 0.0, 4.0);
+    w.actors[6].character = 1;
+    w.actors[6].race_skill.remaining = trickcal_shooting_balddagu::race_skill::BURROW_DURATION;
+    w.map.push(Block {
+        center: V3::new(3.0, 2.0, 2.0),
+        size: V3::new(2.0, 4.0, 0.3),
+        color: [0; 3],
+        phaseable: true,
+    });
+    let hp = w.actors[6].hp;
+    ultimate(&mut w);
+    advance(&mut w, 90);
+    w.actors[6].race_skill.remaining = trickcal_shooting_balddagu::race_skill::BURROW_DURATION;
+    advance(&mut w, 60);
+    assert_eq!(w.actors[1].combat.guard, 0.0, "covered lane");
+    assert_eq!(w.actors[2].combat.guard, 0.0, "outside crest");
+    assert_eq!(w.actors[3].combat.guard, 0.0, "above crest");
+    assert_eq!(w.actors[6].hp, hp, "burrowed");
+}
+
+#[test]
+fn ultimate_interrupts_low_skill_and_stun_before_release_cancels_wave() {
+    let mut w = fixture();
+    start(&mut w);
+    ultimate(&mut w);
+    advance(&mut w, 50);
+    w.actors[0].combat.stun = 2.0;
+    advance(&mut w, 80);
+    assert!(!w.actors[0].combat.naia.active());
+    assert!(w.projectiles.is_empty());
+    assert!(
+        w.actors[0].combat.ultimate < 10.0,
+        "interruption does not refund charge"
+    );
 }

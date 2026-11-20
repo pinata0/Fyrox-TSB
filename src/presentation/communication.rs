@@ -296,7 +296,8 @@ impl CommunicationUi {
         for (i, action) in Communication::ALL.into_iter().enumerate() {
             place(ui, self.sectors[i], 0.0, 0.0, 600.0, 600.0);
             let active = selected == Some(action);
-            let disabled = action == Communication::VoiceLine;
+            let disabled = action == Communication::VoiceLine
+                && !rt.session.world().actors[rt.session.slot()].alive();
             let color = if active {
                 if disabled {
                     [76, 82, 92]
@@ -324,9 +325,9 @@ impl CommunicationUi {
                         "{}\n{}",
                         action.label(rt.korean_font),
                         if rt.korean_font {
-                            "준비 중"
+                            "부활 후 사용"
                         } else {
-                            "COMING SOON"
+                            "AFTER RESPAWN"
                         }
                     )
                 } else {
@@ -358,9 +359,9 @@ impl CommunicationUi {
         let detail = match selected {
             Some(Communication::VoiceLine) => {
                 if rt.korean_font {
-                    "준비 중 · 소리 없음".into()
+                    "캐릭터 대사 재생\nC를 놓으면 실행".into()
                 } else {
-                    "COMING SOON".into()
+                    "CHARACTER VOICE\nRELEASE C".into()
                 }
             }
             Some(Communication::UltimateStatus) => format!(

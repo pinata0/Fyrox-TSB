@@ -1,6 +1,6 @@
 //! Competitive two-control-point simulation. All gameplay is decided here by the host.
 
-use crate::roster::{character, Race, SelectionResult, DEFAULT_TEAM, ROSTER};
+use crate::roster::{character, Race, SelectionResult, DEFAULT_TEAM, POSITION_LIMIT, ROSTER};
 use crate::{
     combat::{CombatState, Projectile},
     kits::{kit, AttackMode},
@@ -150,6 +150,8 @@ pub enum Phase {
 
 #[derive(Debug, Default, Clone, Copy)]
 pub struct Input {
+    /// Viewport aspect ratio for authoritative visible-target abilities.
+    pub view_aspect: f32,
     pub forward: f32,
     pub strafe: f32,
     pub yaw: f32,
@@ -163,6 +165,8 @@ pub struct Input {
     pub ability: bool,
     pub ultimate: bool,
     pub dance: bool,
+    /// Any newly pressed non-chat key, including keys without a gameplay action.
+    pub wake_rest: bool,
 }
 impl Input {
     pub fn sanitized(mut self) -> Self {
@@ -173,6 +177,9 @@ impl Input {
             return Self::default();
         }
         self.forward = self.forward.clamp(-1.0, 1.0);
+        self.view_aspect = if self.view_aspect.is_finite() && self.view_aspect > 0.0 {
+            self.view_aspect.clamp(0.5, 4.0)
+        } else { 16.0 / 9.0 };
         self.strafe = self.strafe.clamp(-1.0, 1.0);
         self.yaw = self.yaw.rem_euclid(std::f32::consts::TAU);
         // The final angle is clamped after applying cumulative portal rotation.
@@ -183,6 +190,7 @@ impl Input {
 
 #[derive(Debug, Clone)]
 pub struct Actor {
+    pub view_aspect: f32,
     pub crouching: bool,
     pub wave_ticks: u8,
     pub communication_cooldown: f32,
@@ -202,6 +210,9 @@ pub struct Actor {
     pub shield: f32,
     pub kills: u16,
     pub deaths: u16,
+    pub stats: crate::match_stats::MatchStats,
+    /// Server-local damage contributors for this life, indexed by attacker slot.
+    pub contributors: [Option<u64>; PLAYERS],
     pub human: bool,
     /// Occupied by a human or an explicitly added bot. Empty slots never simulate.
     pub active: bool,
@@ -215,10 +226,10 @@ pub struct Actor {
     /// Server-local target identity; invalidates a cached chase on sanctuary entry.
     pub bot_target: Option<usize>,
     pub barrier: f32,
-    pub safe_time: f32,
     /// Authoritative recent wall contact, used to render local wall ripples on all clients.
     pub ghost_phase: f32,
     pub phase_skill: crate::phase_skill::State,
+    pub race_skill: crate::race_skill::State,
     pub portals: crate::portal::State,
     pub ability_cooldown: f32,
     pub ability_flash: f32,
@@ -228,6 +239,7 @@ impl Default for Actor {
     fn default() -> Self {
         Self {
             crouching: false,
+            view_aspect: 16.0 / 9.0,
             dancing: false,
             wave_ticks: 0,
             communication_cooldown: 0.0,
@@ -245,6 +257,8 @@ impl Default for Actor {
             shield: 0.0,
             kills: 0,
             deaths: 0,
+            stats: Default::default(),
+            contributors: [None; PLAYERS],
             human: false,
             active: true,
             vy: 0.0,
@@ -256,9 +270,9 @@ impl Default for Actor {
             think: 0.0,
             bot_target: None,
             barrier: 0.0,
-            safe_time: 0.0,
             ghost_phase: 0.0,
             phase_skill: Default::default(),
+            race_skill: Default::default(),
             portals: Default::default(),
             ability_cooldown: 0.0,
             ability_flash: 0.0,
@@ -270,15 +284,26 @@ impl Actor {
     pub fn alive(&self) -> bool {
         self.active && self.hp > 0
     }
+    pub fn burrowed(&self) -> bool {
+        character(self.character).race == Race::Spirit && self.race_skill.active()
+    }
     /// Absorbable shield health, excluding timed spawn invulnerability.
     pub fn shield_health(&self) -> f32 {
         self.combat.guard + self.barrier
     }
     pub fn eye(&self) -> V3 {
+        if self.combat.komi.resting() {
+            let t=(self.combat.komi.motion_age()/0.9).clamp(0.0,1.0);
+            let t=t*t*(3.0-2.0*t);
+            return self.pos+V3::new(0.0,EYE_HEIGHT+(0.68-EYE_HEIGHT)*t,0.0);
+        }
+        if self.burrowed() {
+            return self.pos + V3::new(0.0, 0.55, 0.0);
+        }
         self.pos
             + V3::new(
                 0.0,
-                (EYE_HEIGHT
+                (EYE_HEIGHT + self.combat.chloe.lift()
                     - self
                         .crouch_drop()
                         .max(crate::erpin::CAMERA_DROP * self.combat.erpin.seated()))
@@ -297,10 +322,15 @@ impl Actor {
         movement::BODY_HEIGHT - self.crouch_drop()
     }
     pub fn hit_height(&self) -> f32 {
-        (1.9 - self.crouch_drop()) * self.body_scale()
+        (1.9 + self.combat.chloe.lift() - self.crouch_drop()) * self.body_scale()
+    }
+    pub fn max_hp(&self) -> u16 {
+        MAX_HP * if self.combat.fashion > 0.0 { 2 } else { 1 }
     }
     pub fn body_scale(&self) -> f32 {
-        if self.combat.giant > 0.0 {
+        if self.character == 12 && self.combat.komi.active() {
+            self.combat.komi.scale()
+        } else if self.combat.giant > 0.0 {
             1.4
         } else {
             1.0
@@ -330,6 +360,7 @@ pub struct World {
     pub map_id: crate::level::MapId,
     pub actors: [Actor; PLAYERS],
     pub projectiles: Vec<Projectile>,
+    pub ground_effects: Vec<crate::ground_effect::GroundEffect>,
     pub next_projectile: u32,
     pub impacts: Vec<crate::impact::Impact>,
     pub next_impact: u32,
@@ -344,6 +375,7 @@ pub struct World {
     pub peak: f32,
     pub remaining: f32,
     pub overtime: bool,
+    /// Reserved for snapshot compatibility; overtime has no departure countdown.
     pub overtime_left: f32,
     pub absent: f32,
     pub contested: bool,
@@ -365,6 +397,7 @@ impl Default for World {
             map_id: crate::level::MapId::default(),
             actors: std::array::from_fn(|_| Actor::default()),
             projectiles: vec![],
+            ground_effects: vec![],
             next_projectile: 0,
             impacts: vec![],
             next_impact: 0,
@@ -379,7 +412,7 @@ impl Default for World {
             peak: 0.0,
             remaining: 240.0,
             overtime: false,
-            overtime_left: 3.0,
+            overtime_left: 0.0,
             absent: 0.0,
             contested: false,
             scores: [0; 2],
@@ -416,6 +449,12 @@ impl World {
     }
     pub fn clear_slot(&mut self, slot: usize) {
         self.cancel_erpin(slot);
+        for actor in &mut self.actors {
+            actor.contributors[slot] = None;
+            if actor.combat.regen_source == Some(slot) {
+                actor.combat.regen_source = None;
+            }
+        }
         self.actors[slot] = Actor {
             active: false,
             hp: 0,
@@ -459,7 +498,7 @@ impl World {
         if teammates()
             .filter(|(_, a)| character(a.character).position == character(id).position)
             .count()
-            >= 3
+            >= POSITION_LIMIT
         {
             return Err(SelectionResult::PositionFull);
         }
@@ -585,33 +624,27 @@ impl World {
         if !self.can_select(slot) {
             return Err(SelectionResult::Locked);
         }
-        if let Some((other, a)) =
+        let occupied =
             self.actors.iter().enumerate().find(|(i, a)| {
                 a.active && *i != slot && team(*i) == team(slot) && a.character == id
-            })
+            });
+        if occupied.is_some_and(|(_, actor)| actor.human) {
+            return Err(SelectionResult::Taken);
+        }
+        // A full position is reserved for its current players, including when
+        // a requested hero belongs to a bot. Players already in it can swap.
+        let position = character(id).position;
+        if character(self.actors[slot].character).position != position
+            && self.position_counts(team(slot))[position as usize] >= POSITION_LIMIT
         {
-            return if a.human {
-                Err(SelectionResult::Taken)
-            } else if a.alive() && blocked(&self.map, a.pos) {
+            return Err(SelectionResult::PositionFull);
+        }
+        if let Some((other, a)) = occupied {
+            return if a.alive() && blocked(&self.map, a.pos) {
                 Err(SelectionResult::Locked)
             } else {
                 Ok(Some(other))
             };
-        }
-        let pos = character(id).position;
-        let count = self
-            .actors
-            .iter()
-            .enumerate()
-            .filter(|(i, a)| {
-                a.active
-                    && *i != slot
-                    && team(*i) == team(slot)
-                    && character(a.character).position == pos
-            })
-            .count();
-        if count >= 3 {
-            return Err(SelectionResult::PositionFull);
         }
         Ok(None)
     }
@@ -635,21 +668,26 @@ impl World {
         let a = &mut self.actors[slot];
         a.wave_ticks = 0;
         a.dancing = false;
+        if a.burrowed() {
+            a.race_skill.cooldown = crate::race_skill::BURROW_COOLDOWN;
+        }
+        crate::race_skill::finish_charge(a);
+        a.race_skill.remaining = 0.0;
+        a.race_skill.charge = 0.0;
+        a.race_skill.velocity = V3::default();
         a.character = id;
         a.portals.ends = [None; 2];
-        // Never heal, teleport, refill ammo, or refresh skill cooldown by changing.
+        // Refill the new weapon without healing, teleporting, or refreshing skill cooldowns.
         a.barrier = 0.0;
-        a.safe_time = 0.0;
         a.ghost_phase = 0.0;
         a.ability_flash = 0.0;
         if a.phase_skill.active() {
             a.phase_skill.remaining = 0.0;
             a.phase_skill.cooldown = crate::phase_skill::COOLDOWN;
         }
-        a.ammo = a.ammo.min(kit(id).magazine);
-        if self.phase != Phase::Playing {
-            a.ammo = kit(id).magazine;
-        }
+        a.ammo = kit(id).magazine;
+        a.reload = 0.0;
+        if a.combat.fashion > 0.0 { a.hp = a.hp.div_ceil(2).min(MAX_HP); }
         a.combat = CombatState {
             ultimate: a.combat.ultimate.clamp(0.0, SWAP_ULT_CAP),
             revive_used: a.combat.revive_used,
@@ -691,12 +729,13 @@ impl World {
             240.0
         };
         self.overtime = false;
-        self.overtime_left = 3.0;
+        self.overtime_left = 0.0;
         self.absent = 0.0;
         self.contested = false;
         self.phase = Phase::Setup;
         self.phase_time = 8.0;
         self.projectiles.clear();
+        self.ground_effects.clear();
         self.impacts.clear();
         for i in 0..PLAYERS {
             self.actors[i].combat = CombatState::default();
@@ -731,16 +770,17 @@ impl World {
         a.vy = 0.0;
         a.respawn = 0.0;
         a.killed_by = None;
+        a.contributors = [None; PLAYERS];
         a.shield = 2.0;
         a.hit = 0.0;
         a.hurt = 0.0;
         a.think = 0.0;
         a.bot_target = None;
         a.barrier = 0.0;
-        a.safe_time = 0.0;
         a.ghost_phase = 0.0;
         a.ability_cooldown = 0.0;
         a.phase_skill = Default::default();
+        a.race_skill = Default::default();
         a.portals = Default::default();
         a.ability_flash = 0.0;
         a.dancing = false;
@@ -777,11 +817,20 @@ impl World {
                 || a.combat.disabled()
                 || a.combat.cast.is_some()
                 || a.combat.naia.active()
+                || a.combat.id.active()
+                || a.combat.renua.active()
+                || a.combat.hilde.active()
+                || a.combat.komi.active()
+                || a.combat.shion.active()
+                || a.combat.aya.active()
+                || a.combat.bella.active()
                 || a.combat.erpin.eating
+                || a.burrowed()
+                || crate::race_skill::charging(a)
                 || a.combat.dash > 0.0
                 || a.reload > 0.0
                 || input.fire
-                || input.alt_fire && a.character == 2
+                || input.alt_fire && matches!(a.character, 2 | 3 | 7)
                 || input.ability
                 || input.ultimate
                 || input.reload
@@ -792,11 +841,20 @@ impl World {
             let pressed = input.dance && !a.dance_down;
             a.dance_down = input.dance;
             let cancel = !a.human
+                || a.burrowed()
+                || crate::race_skill::charging(a)
                 || !a.alive()
                 || a.hurt > 0.0
                 || a.combat.disabled()
                 || a.combat.cast.is_some()
                 || a.combat.naia.active()
+                || a.combat.id.active()
+                || a.combat.renua.active()
+                || a.combat.hilde.active()
+                || a.combat.komi.active()
+                || a.combat.shion.active()
+                || a.combat.aya.active()
+                || a.combat.bella.active()
                 || a.combat.erpin.eating
                 || a.combat.dash > 0.0
                 || a.reload > 0.0
@@ -804,7 +862,7 @@ impl World {
                 || input.forward.abs() > 0.01
                 || input.strafe.abs() > 0.01
                 || input.fire
-                || input.alt_fire && a.character == 2
+                || input.alt_fire && matches!(a.character, 2 | 3 | 7)
                 || input.jump
                 || input.ability
                 || input.ultimate
@@ -830,9 +888,13 @@ impl World {
             return;
         }
         let previous_positions = self.actors.each_ref().map(|a| a.pos);
+        for a in &mut self.actors {
+            crate::renua_skill::temporal_step(&self.map, &self.projectiles, a);
+        }
         self.advance_combat();
         // Dead/disconnected owners cannot leave usable entrances behind.
         for a in &mut self.actors {
+            crate::portal::advance_reopen(&mut a.portals.reopen);
             if !a.alive() {
                 a.portals.ends = [None; 2];
             }
@@ -843,8 +905,26 @@ impl World {
             }
             if !self.actors[i].alive() {
                 self.advance_erpin(i, supplied);
+                self.advance_erpin_skill(i);
+                self.advance_id(i, supplied);
+                self.advance_renua(i, supplied);
+                self.advance_hilde(i, supplied);
+                self.advance_shion(i, supplied);
+                self.advance_aya(i);
+                self.advance_ui(i);
+                self.advance_chloe(i);
+                self.advance_vivi(i, supplied);
+            self.advance_picora(i);
+            self.advance_mayo(i);
+                self.advance_bella(i);
+                self.advance_komi(i, supplied);
+                self.advance_butter(i, supplied);
                 self.actors[i].combat.q_down = supplied.ultimate;
                 self.actors[i].phase_skill = crate::phase_skill::State {
+                    down: supplied.phase_shift,
+                    ..Default::default()
+                };
+                self.actors[i].race_skill = crate::race_skill::State {
                     down: supplied.phase_shift,
                     ..Default::default()
                 };
@@ -861,15 +941,32 @@ impl World {
             };
             let pressed = input.ultimate && !self.actors[i].combat.q_down;
             self.actors[i].combat.q_down = input.ultimate;
+            self.advance_komi(i, input);
+            self.advance_id(i, input);
+            self.advance_shion(i, input);
             self.advance_naia_skill(i, input);
             self.advance_erpin(i, input);
+            self.advance_erpin_skill(i);
             let pairs =
                 self.actors
                     .each_ref()
                     .map(|a| if a.alive() { a.portals.ends } else { [None; 2] });
             crate::portal::advance(&self.map, &mut self.actors[i], input, &pairs);
             crate::phase_skill::advance(&self.map, &mut self.actors[i], input.phase_shift);
+            crate::race_skill::advance(&self.map, &mut self.actors[i], input);
+            let komi_leaping = self.actors[i].race_skill.active() && self.actors[i].combat.komi.giant();
             self.move_actor(i, input);
+            self.komi_landing(i, komi_leaping);
+            self.advance_renua(i, input);
+            self.advance_hilde(i, input);
+            self.advance_aya(i);
+            self.advance_ui(i);
+            self.advance_chloe(i);
+            self.advance_vivi(i, input);
+            self.advance_picora(i);
+            self.advance_mayo(i);
+            self.advance_bella(i);
+            self.advance_butter(i, input);
             if pressed {
                 self.use_ultimate(i);
             } else if input.ability {
@@ -878,7 +975,7 @@ impl World {
             if input.reload {
                 self.reload(i);
             }
-            if input.fire && !(input.phase_shift && crate::portal::is_elf(&self.actors[i])) {
+            if input.fire && self.actors[i].character != 11 && !(input.phase_shift && crate::portal::is_elf(&self.actors[i])) {
                 self.primary_attack(i);
             }
             self.fire_naia_stream(i);
@@ -893,6 +990,10 @@ impl World {
             };
         }
         self.update_objective();
+        for effect in &mut self.ground_effects {
+            effect.remaining -= DT;
+        }
+        self.ground_effects.retain(|effect| effect.remaining > 0.0);
     }
     pub(crate) fn reload(&mut self, i: usize) {
         let a = &mut self.actors[i];
@@ -900,6 +1001,14 @@ impl World {
             && a.ammo < kit(a.character).magazine
             && !a.combat.disabled()
             && !a.combat.naia.active()
+            && !a.combat.id.active()
+            && !a.combat.shion.active()
+            && !a.combat.aya.active()
+            && !a.combat.ui.active()
+            && !a.combat.mayo.active()
+            && !a.combat.komi.active()
+            && !a.combat.butter.locked()
+            && !a.burrowed()
         {
             a.reload = if character(a.character).race == Race::Elf {
                 1.44
@@ -909,34 +1018,51 @@ impl World {
         }
     }
     fn move_actor(&mut self, i: usize, input: Input) {
+        let charge_contacts = self.actors.iter().any(crate::race_skill::charging);
         let pairs = self
             .actors
             .each_ref()
-            .map(|a| if a.alive() { a.portals.ends } else { [None; 2] });
+            .map(|a| if a.alive() { a.portals.passable_ends() } else { [None; 2] });
         let a = &mut self.actors[i];
-        a.cooldown = (a.cooldown - DT).max(0.0);
+        let action_dt = DT * crate::renua_skill::time_factor(a) * if a.combat.frozen > 0.0 { 0.0 } else { 1.0 };
+        a.cooldown = (a.cooldown - action_dt).max(0.0);
         a.shield = (a.shield - DT).max(0.0);
         a.hit = (a.hit - DT).max(0.0);
         a.hurt = (a.hurt - DT).max(0.0);
-        a.safe_time += DT;
         a.ghost_phase = (a.ghost_phase - DT).max(0.0);
         a.ability_cooldown = (a.ability_cooldown - DT).max(0.0);
         a.ability_flash = (a.ability_flash - DT).max(0.0);
-        let race = character(a.character).race;
-        if race == Race::Spirit && a.safe_time >= 4.0 {
-            a.barrier = MAX_HP as f32 * 0.08;
-        }
         if a.reload > 0.0 {
-            a.reload = (a.reload - DT).max(0.0);
+            a.reload = (a.reload - action_dt).max(0.0);
             if a.reload == 0.0 {
                 a.ammo = kit(a.character).magazine;
             }
         }
-        movement::step_actor_with_portals(&self.map, a, input, &pairs);
+        let transit = if self.ground_effects.is_empty() && !charge_contacts {
+            movement::step_actor_with_portals(&self.map, a, input, &pairs)
+        } else {
+            let mut path = Vec::new();
+            let transit = movement::step_actor_traced(&self.map, a, input, &pairs, &mut |from, to| {
+                path.push((from, to));
+            });
+            self.apply_ground_contacts(i, &mut path);
+            if charge_contacts {
+                for (from, to) in path {
+                    self.dragon_charge_contact(i, from, to);
+                }
+            }
+            transit
+        };
+        if let Some(owner) = transit {
+            self.actors[owner].portals.reopen = crate::portal::REOPEN_DELAY;
+        }
     }
 
     fn bot_input(&mut self, i: usize) -> Input {
         let actor = &self.actors[i];
+        if actor.combat.komi.resting() {
+            return Input { yaw: actor.yaw, pitch: actor.pitch, ..Default::default() };
+        }
         let pos = actor.pos;
         let eye = actor.eye();
         let objective = self.points()[self.point]
@@ -950,7 +1076,9 @@ impl World {
             .actors
             .iter()
             .enumerate()
-            .filter(|(j, a)| team(*j) != team(i) && a.alive() && !self.in_spawn(*j))
+            .filter(|(j, a)| {
+                team(*j) != team(i) && a.alive() && !a.burrowed() && !self.in_spawn(*j)
+            })
             .filter_map(|(j, a)| {
                 let diff = a.eye() - eye;
                 let distance = diff.length();
@@ -1010,12 +1138,13 @@ impl World {
             yaw: yaw - self.actors[i].portals.yaw_offset,
             pitch: pitch - self.actors[i].portals.pitch_offset,
             fire: enemy.is_some_and(|(_, d)| d <= k.range) && self.tick % 90 < 65,
+            phase_shift: self.actors[i].combat.komi.giant() && self.tick % 2 == 0 && enemy.is_some_and(|(_, d)| d < 18.0),
             reload: k.magazine > 0 && self.actors[i].ammo < (k.magazine / 4).max(1),
             ability: if character(self.actors[i].character).healer {
                 self.actors.iter().enumerate().any(|(j, a)| {
                     team(j) == team(i)
                         && a.alive()
-                        && a.hp <= MAX_HP - 25
+                        && a.hp <= a.max_hp() - 25
                         && (a.pos - pos).length() <= 7.0
                 })
             } else {
@@ -1037,16 +1166,12 @@ impl World {
             ..Default::default()
         }
     }
-    pub fn update_objective(&mut self) {
-        // A team without opponents can explore indefinitely. Adding opponents
-        // or a late human join resumes the normal objective and match clock.
-        if self.phase != Phase::Playing || self.team_count(0) == 0 || self.team_count(1) == 0 {
-            return;
-        }
+    fn objective_presence(&self) -> (usize, usize) {
         let mut attackers = 0;
         let mut defenders = 0;
         for (i, a) in self.actors.iter().enumerate() {
             if a.alive()
+                && !a.burrowed()
                 && a.pos.y < 2.5
                 && (a.pos - self.points()[self.point]).flat().length() <= RADIUS
             {
@@ -1057,6 +1182,15 @@ impl World {
                 }
             }
         }
+        (attackers, defenders)
+    }
+    pub fn update_objective(&mut self) {
+        // A team without opponents can explore indefinitely. Adding opponents
+        // or a late human join resumes the normal objective and match clock.
+        if self.phase != Phase::Playing || self.team_count(0) == 0 || self.team_count(1) == 0 {
+            return;
+        }
+        let (mut attackers, defenders) = self.objective_presence();
         self.contested = attackers > 0 && defenders > 0;
         if attackers > 0 {
             self.absent = 0.0;
@@ -1083,9 +1217,12 @@ impl World {
                 self.absent = 0.0;
                 if !self.extra {
                     self.remaining += 180.0;
-                    self.overtime = false;
-                    self.overtime_left = 3.0;
                 }
+                // A's occupants cannot keep B in overtime when a time-bank
+                // round has no time left and grants no capture bonus.
+                let (b_attackers, b_defenders) = self.objective_presence();
+                attackers = b_attackers;
+                self.contested = b_attackers > 0 && b_defenders > 0;
                 self.event = "Point A captured / Point B unlocked".into();
                 // Brief dead-defender regrouping, without teleporting living players.
                 for (i, a) in self.actors.iter_mut().enumerate() {
@@ -1111,21 +1248,15 @@ impl World {
             self.finish_match(self.attacker);
             return;
         }
-        if self.remaining == 0.0 {
-            if attackers > 0 {
-                self.overtime = true;
-                self.overtime_left = 3.0;
-            } else if self.overtime {
-                self.overtime_left = (self.overtime_left - DT).max(0.0);
-                if self.overtime_left == 0.0 {
-                    self.finish_round(false);
-                }
-            } else {
-                self.finish_round(false);
-            }
+        // Contested points also keep overtime alive. Only the last attacker's
+        // departure/death or a completed objective can end it.
+        self.overtime = self.remaining == 0.0 && attackers > 0;
+        if self.remaining == 0.0 && !self.overtime {
+            self.finish_round(false);
         }
     }
     fn finish_match(&mut self, winner: usize) {
+        self.overtime = false;
         self.result = Some(winner);
         self.phase = Phase::Finished;
         self.phase_time = MATCH_RESULT_SECONDS;
@@ -1140,6 +1271,7 @@ impl World {
         };
     }
     pub fn finish_round(&mut self, full: bool) {
+        self.overtime = false;
         // The existing snapshot result byte also carries the completed round's winner.
         // `begin_round` clears it; a final match result below takes precedence.
         self.result = Some(if full {

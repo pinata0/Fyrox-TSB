@@ -1,0 +1,39 @@
+{
+  "file": "release\\v0.1\\TSB.exe",
+  "bytes": 339184445,
+  "sha256": "3def454e881b7607b99235079cd40a520ae628c61464582acdf46891dcc0ac83",
+  "payload_sha256": "1cb3af351f1e41392a6ef0f3489e02f7b9aff03996ea38f1586f114deac50122",
+  "cargo_profile": "release",
+  "file_count": 1766,
+  "extracted_bytes": 473497834,
+  "eos_config_included": true,
+  "version": "v0.1",
+  "development_started_at": "2026-11-12",
+  "published_date": "2026-11-21",
+  "headless_tests": {
+    "passed": 495,
+    "failed": 3
+  },
+  "package_validation": [
+    {
+      "test": "verify",
+      "exit_code": 0,
+      "seconds": 30.34
+    },
+    {
+      "test": "eos-offline",
+      "exit_code": 0,
+      "seconds": 2.0
+    },
+    {
+      "test": "smoke",
+      "exit_code": 1,
+      "seconds": 25.62
+    },
+    {
+      "test": "mayo-skills",
+      "exit_code": 0,
+      "seconds": 16.14
+    }
+  ]
+}

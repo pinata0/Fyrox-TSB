@@ -88,7 +88,7 @@ pub(super) struct Lobby {
     pub start_requested: bool,
     pub review: bool,
     pub(super) solo: bool,
-    observed_phase: Phase,
+    pub(super) observed_phase: Phase,
     dialog: Dialog,
     focus: Action,
     address: ChatInput,
@@ -334,14 +334,15 @@ impl Runtime {
         self.view_pos = self.session.world().actors[self.session.slot()].eye();
         true
     }
-    fn open_lobby_selection(&mut self, start: bool) {
+    pub(super) fn open_lobby_selection(&mut self, start: bool) {
+        self.last_selection_click = None;
         self.home_open = false;
         self.browser.open = false;
         self.settings_menu.open = false;
         self.lobby.open = false;
         self.lobby.dialog = Dialog::None;
         self.lobby.return_from_selection = true;
-        self.lobby.start_requested = start;
+        self.lobby.start_requested = start || self.session.world().phase == Phase::Setup;
         self.keys = Keys::default();
         self.wheel.cancel();
         self.orbit = OrbitCamera::default();
@@ -585,6 +586,9 @@ impl Runtime {
             Action::Start => {
                 if matches!(self.session.world().phase, Phase::Lobby | Phase::Finished) {
                     self.start_lobby_match();
+                    set_cursor(window, false);
+                } else if self.session.world().phase == Phase::Setup {
+                    self.open_lobby_selection(true);
                     set_cursor(window, false);
                 } else {
                     self.lobby.open = false;
@@ -1740,6 +1744,10 @@ pub(super) fn review(rt: &mut Runtime, context: &PluginContext) {
                 rt.confirm_selection();
             }
             25 => {
+                if rt.session.world().phase == Phase::Setup {
+                    assert!(rt.selecting && rt.selection_confirmed() && !rt.grabbed);
+                    return;
+                }
                 rt.lobby.open = false;
                 assert!(!rt.home_open && !rt.lobby.open && !rt.selecting && rt.grabbed);
                 assert_ne!(rt.session.world().phase, Phase::Lobby);
@@ -1785,8 +1793,12 @@ pub(super) fn review(rt: &mut Runtime, context: &PluginContext) {
                 rt.confirm_selection();
             }
             28.. => {
+                if rt.session.world().phase == Phase::Setup {
+                    assert!(rt.selecting && rt.selection_confirmed() && !rt.grabbed);
+                    return;
+                }
                 assert!(!rt.lobby.open && !rt.selecting && rt.grabbed);
-                assert_eq!(rt.session.world().phase, Phase::Setup);
+                assert_eq!(rt.session.world().phase, Phase::Playing);
                 println!("LOBBY_REVIEW_OK: home, rooms, map, hero, solo match entry, empty slots, bots, match result, return to same lobby and rematch");
                 context.loop_controller.exit();
             }
@@ -1801,6 +1813,91 @@ mod tests {
     use super::*;
     fn runtime() -> Runtime {
         Runtime::new(Session::Solo(Box::default()), None, false)
+    }
+    #[test]
+    fn confirmed_hero_waits_for_setup_then_enters_automatically() {
+        for map in [MapId::FairyKingdomCastle, MapId::ElfCity] {
+            for chat_open in [false, true] {
+                let mut rt = runtime();
+                rt.replace_room(Session::Solo(Box::new(World::room(map, true))), true);
+                assert!(rt.start_lobby_match());
+                rt.selected = 4;
+                rt.confirm_selection();
+                rt.chat.open = chat_open;
+                rt.chat.insert("선택 중 작성한 메시지");
+                while rt.session.world().phase == Phase::Setup {
+                    assert!(!rt.sync_selection());
+                    assert!(!rt.finish_selection(false));
+                    assert!(rt.selecting && rt.selection_confirmed());
+                    assert!(!rt.grabbed && !rt.controls_active());
+                    rt.session.update(Input::default()).unwrap();
+                }
+                assert!(rt.sync_selection());
+                assert_eq!(rt.session.world().phase, Phase::Playing);
+                assert_eq!(rt.session.world().actors[0].character, 4);
+                assert!(!rt.selecting && !rt.lobby.open);
+                assert_eq!(rt.grabbed, !chat_open);
+                assert_eq!(rt.chat_restore_grab, chat_open);
+                assert_eq!(rt.chat.draft, "선택 중 작성한 메시지");
+                assert!(rt.pending_ready.is_none());
+                assert!(!rt.sync_selection());
+            }
+        }
+    }
+
+    #[test]
+    fn expired_countdown_waits_for_explicit_confirmation() {
+        let mut rt = runtime();
+        rt.practice_room();
+        assert!(rt.start_lobby_match());
+        rt.selected = 4; // Previewing a hero is not confirmation.
+        while rt.session.world().phase == Phase::Setup {
+            rt.session.update(Input::default()).unwrap();
+            assert!(!rt.sync_selection());
+        }
+        assert!(rt.selecting && !rt.grabbed);
+        rt.confirm_selection();
+        assert!(rt.sync_selection());
+        assert!(!rt.selecting && rt.grabbed);
+        assert_eq!(rt.session.world().actors[0].character, 4);
+    }
+
+    #[test]
+    fn selection_can_change_while_waiting_and_lobby_cancel_clears_readiness() {
+        let mut rt = runtime();
+        rt.practice_room();
+        rt.open_lobby_selection(false);
+        rt.confirm_selection();
+        assert!(rt.sync_selection());
+        assert!(rt.lobby.open && !rt.selecting && !rt.grabbed);
+        assert_eq!(rt.session.world().phase, Phase::Lobby);
+
+        assert!(rt.start_lobby_match());
+        rt.confirm_selection();
+        assert!(!rt.sync_selection());
+        rt.selected = 4;
+        rt.confirm_selection();
+        assert!(!rt.sync_selection());
+        assert_eq!(rt.pending_ready, Some(4));
+        assert_eq!(rt.session.world().actors[0].character, 4);
+        assert!(rt.finish_selection(true));
+        assert!(rt.lobby.open && !rt.grabbed && rt.pending_ready.is_none());
+
+        rt.open_lobby_selection(false);
+        assert!(rt.selecting && !rt.grabbed && rt.lobby.start_requested);
+        assert!(!rt.sync_selection());
+        rt.confirm_selection();
+        assert!(!rt.sync_selection());
+        while rt.session.world().phase == Phase::Setup {
+            rt.session.update(Input::default()).unwrap();
+        }
+        assert!(rt.sync_selection());
+        // A normal in-match hero change still returns immediately.
+        rt.open_lobby_selection(true);
+        rt.selected = 7;
+        rt.confirm_selection();
+        assert!(rt.sync_selection());
+        assert_eq!(rt.session.world().actors[0].character, 7);
     }
     #[test]
     fn menu_return_preserves_solo_match_and_cancels_pending_gameplay() {
@@ -2316,6 +2413,34 @@ mod tests {
             }
             assert!(matches!(&guests[1].session, Session::Join(c)
                 if !c.selection_pending() && c.selection_result == Some(SelectionResult::Accepted)));
+            host.confirm_selection();
+            assert!(!host.sync_selection());
+            assert!(!guests[1].sync_selection());
+            assert!(host.selecting && guests[1].selecting);
+            let mut entries = [0; PLAYERS];
+            for _ in 0..500 {
+                host.session.update(Input::default()).unwrap();
+                entries[0] += usize::from(host.sync_selection());
+                for (i, guest) in guests.iter_mut().enumerate() {
+                    guest.session.update(Input::default()).unwrap();
+                    entries[i + 1] += usize::from(guest.sync_selection());
+                    if guest.session.world().phase == Phase::Setup {
+                        assert!(guest.selecting && !guest.grabbed);
+                    }
+                }
+                if !host.selecting && !guests[1].selecting {
+                    break;
+                }
+                thread::sleep(Duration::from_millis(2));
+            }
+            assert_eq!(entries[0], 1);
+            assert_eq!(entries[2], 1);
+            for (i, guest) in guests.iter().enumerate() {
+                assert_eq!(guest.session.world().phase, Phase::Playing);
+                assert_eq!(guest.selecting, i != 1);
+                assert_eq!(guest.grabbed, i == 1);
+                assert_eq!(entries[i + 1], usize::from(i == 1));
+            }
         }
     }
 

@@ -12,9 +12,24 @@ struct Control {
 struct Profile {
     hand: String,
     socket: String,
+    radius: f32,
     controls: Vec<Control>,
 }
 static PROFILES: std::sync::OnceLock<Vec<Vec<Profile>>> = std::sync::OnceLock::new();
+
+fn valid_controls(profile: &Profile) -> bool {
+    let Some(side) = profile.hand.strip_prefix("Hand.") else {
+        return false;
+    };
+    matches!(side, "L" | "R")
+        && profile.controls.len() == 8
+        && ["Index", "Middle", "Pinky", "Thumb"].iter().all(|digit| {
+            (1..=2).all(|segment| {
+                let name = format!("{digit}{segment}.{side}");
+                profile.controls.iter().filter(|c| c.name == name).count() == 1
+            })
+        })
+}
 
 pub(super) fn load() -> Result<(), String> {
     let profiles = characters::SLUGS
@@ -23,7 +38,7 @@ pub(super) fn load() -> Result<(), String> {
             let bytes = std::fs::read(characters::asset_path(&format!("{slug}-hands.json")))
                 .map_err(|e| e.to_string())?;
             let hands: Vec<Profile> = serde_json::from_slice(&bytes).map_err(|e| e.to_string())?;
-            if hands.len() != 2 || hands.iter().any(|h| h.controls.len() != 15) {
+            if hands.len() != 2 || hands.iter().any(|h| !valid_controls(h)) {
                 return Err(format!("{slug}: incomplete finger rig"));
             }
             Ok(hands)
@@ -127,11 +142,42 @@ impl Rig {
             );
         }
     }
+    pub fn fist(&self, g: &mut Graph) {
+        // Keep the thumb wrapped outside the fingers, then close both finger
+        // segments beyond the loose cylindrical grip used for held weapons.
+        self.pose(g, 1.0);
+        for (h, axis, angle, _) in &self.joints {
+            if g[*h].name().starts_with("Thumb") {
+                continue;
+            }
+            let bend = if g[*h].name().contains("1.") { 1.20 } else { 1.45 };
+            let axis = g[self.hand].global_transform().transform_vector(axis).normalize();
+            let delta = UnitQuaternion::from_axis_angle(
+                &fyrox::core::algebra::Unit::new_normalize(axis),
+                bend - angle,
+            );
+            super::skeleton::set_global_rotation(
+                g,
+                *h,
+                delta * super::skeleton::world_rotation(g, *h),
+            );
+        }
+    }
+    pub fn point(&self, g: &mut Graph, amount: f32) {
+        self.pose(g, amount);
+        // Leave the index straight while the other three fingers curl briefly.
+        for (h, _, _, neutral) in &self.joints {
+            if g[*h].name().starts_with("Index") {
+                g[*h].local_transform_mut().set_rotation(*neutral);
+            }
+        }
+        g.update_hierarchical_data_for_descendants(self.hand);
+    }
     pub fn verify(&self, g: &Graph, closed: bool) {
         assert_eq!(
             self.joints.len(),
-            15,
-            "all five fingers need three articulated joints"
+            8,
+            "all four fingers need two articulated segments"
         );
         assert!(
             (self.contact(g) - g[self.hand].global_position()).norm() > 0.015,
@@ -152,6 +198,10 @@ impl Rig {
     }
 }
 
+pub(super) fn radius(id: u8, left: bool) -> f32 {
+    PROFILES.get().expect("hand profiles loaded")[id as usize][usize::from(left)].radius
+}
+
 pub(super) fn amount(id: u8) -> f32 {
     if id == 0 {
         0.0
@@ -163,6 +213,12 @@ pub(super) fn amount(id: u8) -> f32 {
 }
 
 pub(super) fn facing(rotation: UnitQuaternion<f32>, id: u8, left: bool) -> UnitQuaternion<f32> {
+    if id == 8 {
+        // Mayo wraps the horizontal blowpipe from above. The palm socket's
+        // +Y follows the tube and -Z is the back of the hand.
+        return rotation
+            * UnitQuaternion::from_axis_angle(&Vector3::x_axis(), std::f32::consts::FRAC_PI_2);
+    }
     if !left || id == 0 {
         return rotation;
     }

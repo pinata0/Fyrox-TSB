@@ -259,9 +259,9 @@ impl UltimateHud {
         let actor = &rt.session.world().actors[rt.session.slot()];
         let charge = actor.combat.ultimate.clamp(0.0, 100.0);
         let charged = charge >= 100.0;
-        let blocked = !actor.alive() || actor.combat.disabled();
+        let blocked = !actor.alive() || actor.combat.skills_locked() || actor.combat.komi.active();
         let ready = charged && !blocked;
-        let active = actor.combat.ultimate_flash > 0.0;
+        let active = actor.combat.ultimate_flash > 0.0 || matches!(actor.combat.komi.phase,trickcal_shooting_balddagu::komi_skill::Phase::Feast | trickcal_shooting_balddagu::komi_skill::Phase::Giant);
         let color = if blocked {
             MUTED
         } else if charged || active {
@@ -336,7 +336,7 @@ impl UltimateHud {
             } else {
                 "RESPAWNING"
             }
-        } else if actor.combat.disabled() {
+        } else if actor.combat.skills_locked() {
             if rt.korean_font {
                 "사용 불가"
             } else {

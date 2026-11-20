@@ -1,0 +1,229 @@
+{
+  "date": "2026-11-21",
+  "entries": [
+    {
+      "slug": "butter",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_butter_slingshot_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/butter/butter-weapon-source.blend",
+      "sha256": "31ed0ef35933285ac77d12f5aad656d073ce4193ea9caa119e04df4dbd8ecad7"
+    },
+    {
+      "slug": "picora",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Chibi_Candy_Girl_Remeshed_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/picora/picora-character-source.blend",
+      "sha256": "bbf099a195227e4476847ea43660a9c6ef18a11c67efb10a584e449ff7141bf8"
+    },
+    {
+      "slug": "komi",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chibi_cat_girl_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/komi/komi-character-source.blend",
+      "sha256": "e7f874849cc14da3275463a9c3e2d99da85db4db432f70a001deec6644736ab0"
+    },
+    {
+      "slug": "bella",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Chibi_Character_Remesh_10k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/bella/bella-character-source.blend",
+      "sha256": "198fa8e048c49e2b5604d46cb2cdb8b455c26e79e8cb4eb74215504dd1691569"
+    },
+    {
+      "slug": "vivi",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Chibi_Dragon_Girl_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/vivi/vivi-character-source.blend",
+      "sha256": "5dff05fdfe9f437015563aa1b31351c29989214f106c7f40bd83a4071cde144b"
+    },
+    {
+      "slug": "shion",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chibi_dragon_remesh_10k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/shion/shion-character-source.blend",
+      "sha256": "f9ce5a173bf15d1bdcd35166685fc12d5f7ffc78434ca10abb719b7dae02887e"
+    },
+    {
+      "slug": "id",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chibi_elf_remesh_10k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/id/id-character-source.blend",
+      "sha256": "a9961fc7bcd3347cd4068281a4108fdde26d0f17d2cfcdb98183f776a5b6a694"
+    },
+    {
+      "slug": "mayo",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Chibi_Fairy_Remeshed_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/mayo/mayo-character-source.blend",
+      "sha256": "0fba6e4b2f243e55676e041ea657570c48c32ff6066f0c2a55b3e908d14c2706"
+    },
+    {
+      "slug": "ui",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Chibi_Frog_Raincoat_Girl_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/ui/ui-character-source.blend",
+      "sha256": "9b5954793657a053c97eba4a9c29a0f742c4642d223ecd69247bb36163df7188"
+    },
+    {
+      "slug": "erpin",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chibi_royal_character_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/erpin/erpin-character-source.blend",
+      "sha256": "231e2fc55c0305bfeed14e458f1ad8ae62de016ea45b9fb82d5367deb4cc9419"
+    },
+    {
+      "slug": "naia",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chibi_sunhat_girl_triangle_10k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/naia/naia-character-source.blend",
+      "sha256": "6cb4a93ad79df14e124f2bf8b516e37dbb20e357f79be3e4b15dab2787f3e969"
+    },
+    {
+      "slug": "chloe",
+      "kind": "character",
+      "original": "temp/Meshy_AI_chloe_chibi_remesh_10k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/chloe/chloe-character-source.blend",
+      "sha256": "a48a4de44ec8a7af151f04860ba65dbcfb11e0e48ea12b9c5329d425a64a3c86"
+    },
+    {
+      "slug": "ui",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_clover_wand_remesh_3k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/ui/ui-weapon-source.blend",
+      "sha256": "0fc7fde27794d343361b3170d7d56abfa3ada1baadf7616f6d0f932a22c54ddd"
+    },
+    {
+      "slug": "naia",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_dolphin_water_gun_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/naia/naia-weapon-source.blend",
+      "sha256": "54f06b823a66e9d81a87fa87070f3ae75e962cfe2264bf8387bd8135dafbe62e"
+    },
+    {
+      "slug": "aya",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_Flower_Petal_Parasol_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/aya/aya-weapon-source.blend",
+      "sha256": "2172b55dff284faad1c5f3db389e3e141c4bcfa63d2308ae5185fc6dfa520e52"
+    },
+    {
+      "slug": "renua",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_golden_clock_magic_circle_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/renua/renua-weapon-source.blend",
+      "sha256": "523571c8228c1b643af994d7606c9bd4618ca18af3a6e25f8e8a6fdabece9524"
+    },
+    {
+      "slug": "hilde",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_Medical_Injector_Gun_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/hilde/hilde-weapon-source.blend",
+      "sha256": "ac386b1dc379ac8ce8e1ac5398cbe8830218bb3f9080e9c632146a59e6270fd8"
+    },
+    {
+      "slug": "vivi",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_Mercury_Blade_Shard_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/vivi/vivi-weapon-source.blend",
+      "sha256": "652ebc9b6486051dd09cbcc119111d9993565aed230cc52142e0b57d07433549"
+    },
+    {
+      "slug": "id",
+      "kind": "robot",
+      "original": "temp/Meshy_AI_nata_companion_robot_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/id/id-robot-source.blend",
+      "sha256": "d9cd06c36ed79b7823a5fbee5cb06dbddd4952e833e7e6f71c1ba917a952c00f"
+    },
+    {
+      "slug": "komi",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_pink_ruffled_pillow_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/komi/komi-weapon-source.blend",
+      "sha256": "146f298cd74ecd2b18b3620fa6c02f8c5e42fdd8afb2b8d3d95c8f3941e9ac61"
+    },
+    {
+      "slug": "hilde",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Remeshed_Chibi_Elf_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/hilde/hilde-character-source.blend",
+      "sha256": "20c03f8e99e4e205b040c6073e28e76688999bfe95378e456d8aede85a28bd8d"
+    },
+    {
+      "slug": "aya",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Remeshed_Chibi_Kimono_Girl_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/aya/aya-character-source.blend",
+      "sha256": "4ce918892fe2a37b9b93c65b02fddda18d4b921b79543b780a73776a8b15bc4e"
+    },
+    {
+      "slug": "butter",
+      "kind": "character",
+      "original": "temp/Meshy_AI_Remeshed_Chibi_Puppy_Girl_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/butter/butter-character-source.blend",
+      "sha256": "40e75f3c323aa8c60c9ee99eb9f340c27c75df2c5bc1f66d9a8a003f5b57ec2d"
+    },
+    {
+      "slug": "id",
+      "kind": "mount",
+      "original": "temp/Meshy_AI_Remeshed_Crescent_Moon_Chair_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/id/id-mount-source.blend",
+      "sha256": "ed90de9d5159d916f0cf27a28b6489c9933dc5ab528f62549fb8d9afef6d5238"
+    },
+    {
+      "slug": "picora",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_Remeshed_Curled_Staff_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/picora/picora-weapon-source.blend",
+      "sha256": "a0cf5a980560d3a36ae4d8dbd7362e6d60aa5464847845c54bb65345334687e9"
+    },
+    {
+      "slug": "ui",
+      "kind": "companion",
+      "original": "temp/Meshy_AI_Remeshed_Frog_Mount_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/ui/ui-companion-source.blend",
+      "sha256": "e380b5d02b1b54c80dca6e3ad5a39fcdd1927f6e489d7a5e7b6fd198dca4f37c"
+    },
+    {
+      "slug": "bella",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_Remeshed_Ghost_Flame_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/bella/bella-weapon-source.blend",
+      "sha256": "3a3b13139257f39641d668536e9104dc4b87b8fec8a6668415c4e482779d3834"
+    },
+    {
+      "slug": "renua",
+      "kind": "character",
+      "original": "temp/Meshy_AI_RemeshedChibiCharacter_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/renua/renua-character-source.blend",
+      "sha256": "8b0b4038c6dc2f8f42a43536854a54cd1130a7cce3ee17d4ac8b8b9053d7b4ef"
+    },
+    {
+      "slug": "erpin",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_royal_staff_remesh_3k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/erpin/erpin-weapon-source.blend",
+      "sha256": "cae8b5de63a89e7f0e0a1f6df2f3e3c14c243454bf85146f15625d06e29c0f96"
+    },
+    {
+      "slug": "chloe",
+      "kind": "companion",
+      "original": "temp/Meshy_AI_Sebastian_Bear_Remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/chloe/chloe-companion-source.blend",
+      "sha256": "fe4f3005b1eeb38c7ef56afe221dec76fb3750658638f53946cb5f8242bf4250"
+    },
+    {
+      "slug": "mayo",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_stylized_blowpipe_remesh_3k_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/mayo/mayo-weapon-source.blend",
+      "sha256": "35ebc62c15ed2e1e68de2b92408d84a741c10e35e2e44491d16dec75f568de04"
+    },
+    {
+      "slug": "shion",
+      "kind": "weapon",
+      "original": "temp/Meshy_AI_stylized_sniper_rifle_remesh_20261120_texture_remesh_tri.blend",
+      "source": "assets/character-sources/lowpoly/shion/shion-weapon-source.blend",
+      "sha256": "3c6cd2b9ef78727335f517cdbecf5b4f97ac6b6eb6cfa3962045a4ce4f249216"
+    }
+  ]
+}

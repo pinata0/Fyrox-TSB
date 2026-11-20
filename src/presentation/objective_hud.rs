@@ -1,4 +1,7 @@
 //! Compact team scores and clock, with capture progress inside A/B diamonds.
+mod markers;
+pub(super) use markers::ObjectiveMarkers;
+
 use super::*;
 use fyrox::{
     core::algebra::Matrix3,
@@ -351,7 +354,7 @@ impl ObjectiveHud {
     }
 }
 
-const REVIEW: [&str; 9] = [
+const REVIEW: [&str; 17] = [
     "a-empty",
     "a-quarter",
     "a-half",
@@ -361,11 +364,19 @@ const REVIEW: [&str; 9] = [
     "overtime",
     "practice",
     "selection-hidden",
+    "marker-capture-edge",
+    "marker-on-point",
+    "marker-middle",
+    "marker-far",
+    "marker-beyond-far",
+    "marker-wall-a",
+    "marker-wall-b",
+    "marker-behind",
 ];
 
 pub(super) fn review_update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     if rt.review_capture as usize >= REVIEW.len() {
-        println!("OBJECTIVE_HUD_REVIEW_OK: A/B fill, both attackers, scores, clock, overtime, practice and selection cleanup");
+        println!("OBJECTIVE_HUD_REVIEW_OK: A/B fill, both attackers, clock, overtime, practice, world markers, size limits, walls and selection cleanup");
         context.loop_controller.exit();
         return Ok(());
     }
@@ -398,10 +409,11 @@ pub(super) fn review_update(rt: &mut Runtime, context: &mut PluginContext) -> Ga
                         world.progress = 0.354;
                         world.remaining = 68.0;
                     } else if rt.review_capture == 6 {
-                        world.remaining = 0.0;
-                        world.overtime = true;
+                        world.remaining = DT * 0.5;
                         world.progress = 2.0 / 3.0;
-                        world.contested = true;
+                        world.actors[1].pos = world.points()[1];
+                        world.actors[TEAM_SIZE].pos = world.points()[1];
+                        world.update_objective();
                     }
                 }
                 7 => {
@@ -416,6 +428,7 @@ pub(super) fn review_update(rt: &mut Runtime, context: &mut PluginContext) -> Ga
             rt.view_pos = world.actors[0].eye();
         }
     }
+    markers::prepare_review(rt, context);
     rt.review_frames = rt.review_frames.max(1);
     render(rt, context)
 }
@@ -446,6 +459,26 @@ pub(super) fn review_capture(rt: &mut Runtime, context: PluginContext) -> GameRe
                 Some(point_progress(rt.session.world(), i))
             );
         }
+    }
+    markers::assert_review(rt, ui);
+    if rt.review_capture == 6 {
+        assert_eq!(rt.session.world().phase, Phase::Playing);
+        assert!(rt.session.world().overtime);
+        assert_eq!(
+            ui[rt.hud.objective.clock].cast::<Text>().unwrap().text(),
+            "0:00"
+        );
+        assert_eq!(
+            ui[rt.hud.objective.clock_label]
+                .cast::<Text>()
+                .unwrap()
+                .text(),
+            if rt.korean_font {
+                "추가시간"
+            } else {
+                "OVERTIME"
+            }
+        );
     }
     let size = ui.screen_size();
     let tag = format!(

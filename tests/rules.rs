@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::game::*;
 
 fn empty_match() -> World {
@@ -55,24 +56,21 @@ fn contest_stops_capture_and_checkpoints_survive_decay() {
     assert_eq!(w.peak, progress);
 }
 #[test]
-fn overtime_recontact_and_expiry() {
+fn overtime_ends_when_the_last_attacker_leaves() {
     let mut w = empty_match();
     w.remaining = 0.01;
     w.actors[0].pos = POINTS[0];
     advance_objective(&mut w, 0.1);
     assert!(w.overtime);
     w.actors[0].pos.z = -13.0;
-    advance_objective(&mut w, 2.0);
-    assert_eq!(w.phase, Phase::Playing);
-    w.actors[0].pos = POINTS[0];
-    advance_objective(&mut w, 0.1);
-    assert_eq!(w.overtime_left, 3.0);
-    w.actors[0].pos.z = -13.0;
-    advance_objective(&mut w, 3.1);
+    w.update_objective();
     assert_eq!(w.phase, Phase::Intermission);
+    assert_eq!(w.result, Some(1));
+    assert!(!w.overtime);
     advance(&mut w, 6.1);
     assert_eq!(w.attacker, 1);
     assert_eq!(w.point, 0);
+    assert!(!w.overtime);
 }
 #[test]
 fn both_b_captures_start_time_bank_without_a_bonus() {
@@ -164,7 +162,9 @@ fn hitscan_damage_reload_respawn_and_spawn_shield() {
     w.actors[TEAM_SIZE].pos = V3::new(0.0, 0.0, 0.0);
     let mut inputs = [Input::default(); PLAYERS];
     inputs[0].fire = true;
-    for _ in 0..145 {
+    // A single Nata ray rounds damage once, unlike the old four sub-hits.
+    // Allow the fourth shot to kill instead of relying on per-sub-hit rounding.
+    for _ in 0..200 {
         w.tick(inputs);
     }
     assert!(!w.actors[TEAM_SIZE].alive());
@@ -213,7 +213,7 @@ fn diagonal_speed_wall_collision_jump_and_restart() {
         ..Default::default()
     };
     w.tick(inputs);
-    assert!((w.actors[0].pos - before).flat().length() <= 5.8 * DT + 0.0001);
+    assert!((w.actors[0].pos - before).flat().length() <= WALK_SPEED * DT + 0.0001);
     assert!(w.actors[0].pos.y > 0.0);
     w.actors[0].pos = V3::new(-21.5, 0.0, -13.0);
     inputs[0].forward = 0.0;

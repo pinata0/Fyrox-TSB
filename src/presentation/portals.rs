@@ -1,4 +1,5 @@
 //! Portal markers only; destination cameras and scene clipping are disabled.
+use crate::presentation::SceneState;
 use super::*;
 use fyrox::{
     core::math::TriangleDefinition,
@@ -74,11 +75,12 @@ impl Portals {
             let actor = &actors[i / 2];
             let end = actor.portals.ends[i % 2];
             let active = show && actor.alive() && end.is_some();
-            g[aperture.surface].set_visibility(active);
+            g[aperture.surface].set_visible(active);
             if !active {
                 continue;
             }
             let entry = end.unwrap();
+            let closed = actor.portals.reopen > 0.0;
             g[aperture.surface]
                 .local_transform_mut()
                 .set_position(vec(entry.center + entry.normal() * 0.035))
@@ -86,8 +88,18 @@ impl Portals {
                     &vec(entry.normal()),
                     &vec(entry.up()),
                 ))
-                .set_scale(Vector3::new(HALF_WIDTH, HALF_HEIGHT, 1.0));
+                .set_scale(Vector3::new(
+                    if closed { 0.055 } else { HALF_WIDTH },
+                    HALF_HEIGHT,
+                    1.0,
+                ));
             aperture.material.data_ref().set_property("time", time);
+            aperture.material.data_ref().set_property(
+                "color",
+                Vector3::from(
+                    COLORS[i % 2].map(|c| c as f32 / 255.0 * if closed { 0.3 } else { 1.0 }),
+                ),
+            );
         }
     }
 }

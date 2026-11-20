@@ -80,12 +80,56 @@ pub enum Motion {
     Jump,
     Attack,
     Attack2,
+    ViviLeft,
+    ViviRight,
+    ViviSkill,
+    ViviUltimate,
     Skill,
     ErpinEat,
+    ErpinSkill,
+    ErpinStart,
+    ErpinCharge,
+    ErpinRecover,
     NaiaStart,
     NaiaMove,
     NaiaFire,
     NaiaEnd,
+    NaiaUltimate,
+    IdSkill,
+    IdPulse,
+    IdUltimate,
+    RenuaBasic,
+    RenuaEnhanced,
+    RenuaSkill,
+    RenuaUltimate,
+    ShionLoad,
+    ShionLoop,
+    ShionEnd,
+    ShionUltimate,
+    AyaSkill,
+    AyaUltimate,
+    HildeSkill,
+    HildeUltimate,
+    BellaSkill,
+    BellaUltimate,
+    MayoSkill,
+    MayoUltimate,
+    UiSkill,
+    UiUltimate,
+    ChloeAttack,
+    ChloeMount,
+    ChloeRideIdle,
+    ChloeRideMove,
+    ChloeRideAttack,
+    ChloeRoar,
+    ChloeDismount,
+    PicoraSkill,
+    PicoraUltimate,
+    ButterAttack,
+    ButterSkill,
+    ButterUltimate,
+    KomiRest,
+    KomiFeast,
     Ultimate,
     Dance,
     Hurt,
@@ -101,12 +145,56 @@ impl Motion {
             Self::Jump => (123, 153),
             Self::Attack => (156, 180),
             Self::Attack2 => (531, 555),
+            Self::ViviLeft => (558, 582),
+            Self::ViviRight => (585, 618),
+            Self::ViviSkill => (621, 665),
+            Self::ViviUltimate => (668, 788),
             Self::Skill => (183, 219),
             Self::ErpinEat => (531, 581),
+            Self::ErpinSkill => (584, 669),
+            Self::ErpinStart => (672, 707),
+            Self::ErpinCharge => (710, 726),
+            Self::ErpinRecover => (729, 819),
             Self::NaiaStart => (558, 602),
             Self::NaiaMove => (605, 629),
             Self::NaiaFire => (632, 642),
             Self::NaiaEnd => (645, 672),
+            Self::NaiaUltimate => (675, 796),
+            Self::IdSkill => (531, 639),
+            Self::IdPulse => (642, 663),
+            Self::IdUltimate => (666, 826),
+            Self::RenuaBasic => (531, 612),
+            Self::RenuaEnhanced => (615, 701),
+            Self::RenuaSkill => (704, 853),
+            Self::RenuaUltimate => (856, 1337),
+            Self::ShionLoad => (531, 595),
+            Self::ShionLoop => (598, 628),
+            Self::ShionEnd => (631, 671),
+            Self::ShionUltimate => (674, 780),
+            Self::AyaSkill => (558, 652),
+            Self::AyaUltimate => (655, 765),
+            Self::HildeSkill => (531, 630),
+            Self::HildeUltimate => (633, 818),
+            Self::BellaSkill => (531, 631),
+            Self::BellaUltimate => (634, 784),
+            Self::MayoSkill => (531, 591),
+            Self::MayoUltimate => (594, 694),
+            Self::UiSkill => (531, 596),
+            Self::UiUltimate => (599, 726),
+            Self::ChloeAttack => (531,555),
+            Self::ChloeMount => (558,618),
+            Self::ChloeRideIdle => (621,661),
+            Self::ChloeRideMove => (664,684),
+            Self::ChloeRideAttack => (687,711),
+            Self::ChloeRoar => (714,774),
+            Self::ChloeDismount => (777,837),
+            Self::PicoraSkill => (531, 597),
+            Self::PicoraUltimate => (600, 660),
+            Self::ButterAttack => (531, 576),
+            Self::ButterSkill => (579, 649),
+            Self::ButterUltimate => (652, 770),
+            Self::KomiRest => (531, 716),
+            Self::KomiFeast => (719, 851),
             Self::Ultimate => (222, 282),
             Self::Dance => (285, 405),
             Self::Hurt => (408, 420),
@@ -117,25 +205,32 @@ impl Motion {
     pub fn looping(self) -> bool {
         matches!(
             self,
-            Self::Idle | Self::Walk | Self::Run | Self::Dance | Self::NaiaMove | Self::NaiaFire
+            Self::Idle | Self::Walk | Self::Run | Self::ChloeRideIdle | Self::ChloeRideMove | Self::Dance | Self::NaiaMove | Self::NaiaFire | Self::ErpinCharge
         )
     }
     pub fn is_attack(self) -> bool {
-        matches!(self, Self::Attack | Self::Attack2)
+        matches!(self, Self::Attack | Self::Attack2 | Self::ViviLeft | Self::ViviRight | Self::ChloeAttack | Self::ChloeRideAttack)
     }
+    pub fn is_chloe(self)->bool { matches!(self,Self::ChloeAttack|Self::ChloeMount|Self::ChloeRideIdle|Self::ChloeRideMove|Self::ChloeRideAttack|Self::ChloeRoar|Self::ChloeDismount) }
     pub fn is_naia_skill(self) -> bool {
         matches!(
             self,
-            Self::NaiaStart | Self::NaiaMove | Self::NaiaFire | Self::NaiaEnd
+            Self::NaiaStart | Self::NaiaMove | Self::NaiaFire | Self::NaiaEnd | Self::NaiaUltimate
         )
     }
     pub fn seconds(self, id: u8) -> f32 {
-        if self == Self::ErpinEat {
+        if self == Self::Idle && id == 0 {
+            40.0 / 30.0
+        } else if matches!(self, Self::ViviLeft | Self::ViviRight | Self::ViviSkill | Self::ViviUltimate) {
+            let (s,e)=self.frames(); (e-s) as f32/30.0
+        } else if self == Self::ErpinEat {
             crate::erpin::EAT_SECONDS
         } else if self == Self::Death {
             death_seconds(id)
         } else if self == Self::Spawn {
             spawn_seconds(id)
+        } else if self.is_chloe() {
+            let (s,e)=self.frames(); (e-s) as f32/30.0
         } else if self.is_attack() {
             crate::attack::seconds(id)
         } else if self == Self::Dance {
@@ -204,7 +299,7 @@ impl MotionClock {
                 || a.shield > p.shield + 0.01
                 || self.previous_tick.is_some_and(|previous| tick < previous)
                 || self.previous.is_none() && a.shield > 0.0);
-        self.pose.age += dt
+        self.pose.age += dt * if a.combat.frozen > 0.0 {0.0} else {crate::renua_skill::time_factor(a)}
             * if self.pose.motion.is_attack() {
                 crate::attack::rate(a)
             } else {
@@ -219,11 +314,11 @@ impl MotionClock {
         };
         let triggered = if a.combat.ultimate_flash > 0.0 && p.combat.ultimate_flash <= 0.0 {
             Some(Motion::Ultimate)
-        } else if a.ability_flash > 0.0 && p.ability_flash <= 0.0 {
+        } else if a.ability_flash > 0.0 && p.ability_flash <= 0.0 && a.character != 12 {
             Some(Motion::Skill)
         } else if a.shot != p.shot && !changed {
             Some(
-                if (a.character == 0 && a.combat.vivi_combo == 3)
+                if (a.character == 0 && a.combat.vivi_combo == 2)
                     || (a.character == 4 && a.combat.aya_combo == 3)
                 {
                     Motion::Attack2
@@ -243,8 +338,40 @@ impl MotionClock {
         ) && self.pose.age < self.pose.motion.seconds(a.character);
         let next = if !a.alive() {
             Motion::Death
+        } else if a.combat.frozen > 0.0 && !changed {
+            self.pose.motion
+        } else if let Some(motion) = a.combat.chloe.phase.motion() {
+            motion
+        } else if a.character==6 && a.combat.chloe.riding() {
+            if speed>0.12 {Motion::ChloeRideMove}else{Motion::ChloeRideIdle}
+        } else if let Some(motion) = a.combat.vivi.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.butter.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.komi.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.bella.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.mayo.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.picora.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.ui.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.aya.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.erpin_skill.phase.motion() {
+            motion
         } else if a.combat.erpin.eating {
             Motion::ErpinEat
+        } else if let Some(motion) = a.combat.id.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.renua.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.hilde.phase.motion() {
+            motion
+        } else if let Some(motion) = a.combat.shion.phase.motion() {
+            motion
         } else if let Some(motion) = a.combat.naia.phase.motion() {
             motion
         } else if a.dancing {
@@ -275,7 +402,7 @@ impl MotionClock {
         if next != self.pose.motion
             || changed
             || spawned
-            || triggered.is_some() && a.alive() && !a.dancing
+            || triggered.is_some() && a.alive() && !a.dancing && a.combat.frozen <= 0.0
         {
             self.pose.age = 0.0;
         }
@@ -283,13 +410,34 @@ impl MotionClock {
             self.pose.shot_age = 100.0;
         }
         self.pose.motion = next;
+        if a.combat.chloe.busy() { self.pose.age = a.combat.chloe.elapsed; }
+        if a.combat.vivi.active() { self.pose.age = a.combat.vivi.elapsed; }
+        if a.combat.butter.active() { self.pose.age = a.combat.butter.motion_age(); }
+        if a.combat.komi.locked() { self.pose.age = a.combat.komi.motion_age(); }
+        if a.combat.bella.active() { self.pose.age = a.combat.bella.elapsed; }
+        if a.combat.mayo.active() { self.pose.age = a.combat.mayo.elapsed; }
+        if a.combat.picora.active() { self.pose.age = a.combat.picora.elapsed; }
+        if a.combat.ui.active() { self.pose.age = a.combat.ui.elapsed; }
+        if a.combat.hilde.active() { self.pose.age = a.combat.hilde.motion_age(); }
+        if a.combat.id.active() {
+            self.pose.age = a.combat.id.elapsed;
+        }
+        if a.combat.aya.active() { self.pose.age = a.combat.aya.elapsed; }
+        if a.combat.renua.active() {
+            self.pose.age = a.combat.renua.elapsed;
+        }
+        if a.combat.shion.active() {
+            self.pose.age = a.combat.shion.elapsed;
+        }
         // Advance independently of attack speed and attack retriggers. Preserve
         // stride phase when switching Walk/Run, including during an attack.
         self.pose.locomotion = if grounded
             && speed > 0.12
-            && (matches!(next, Motion::Walk | Motion::Run) || next.is_attack())
+            && (matches!(next, Motion::Walk | Motion::Run | Motion::ChloeRideMove) || next.is_attack())
         {
-            let motion = if speed > 6.7 {
+            let motion = if a.character==6 && a.combat.chloe.riding() {
+                Motion::ChloeRideMove
+            } else if speed > 6.7 {
                 Motion::Run
             } else {
                 Motion::Walk
@@ -309,9 +457,10 @@ impl MotionClock {
         } else {
             None
         };
-        if matches!(next, Motion::Walk | Motion::Run) {
+        if matches!(next, Motion::Walk | Motion::Run | Motion::ChloeRideMove) {
             self.pose.age = self.pose.locomotion.map_or(0.0, |movement| movement.age);
         }
+        if a.combat.erpin_skill.active() { self.pose.age = a.combat.erpin_skill.elapsed; }
         if next == Motion::ErpinEat {
             self.pose.age = a.combat.erpin.elapsed;
         }
@@ -509,29 +658,17 @@ mod tests {
 
     #[test]
     fn vivi_clock_selects_the_authoritative_combo_even_after_skipped_snapshots() {
-        let mut a = Actor {
-            character: 0,
-            ..Actor::default()
-        };
-        let mut clock = MotionClock::default();
-        clock.observe(&a, 0.0, 0, true);
-        for (shot, stage, motion) in [
-            (1, 1, Motion::Attack),
-            (2, 2, Motion::Attack),
-            (3, 3, Motion::Attack2),
-            (4, 1, Motion::Attack),
-            (6, 3, Motion::Attack2),
-        ] {
-            a.shot = shot;
-            a.combat.vivi_combo = stage;
-            let pose = clock.observe(&a, 0.2, shot as u64, true);
-            assert_eq!(pose.motion, motion);
-            assert_eq!(pose.age, 0.0);
+        use crate::vivi_skill::{Phase,State};
+        let mut a=Actor::default();let mut clock=MotionClock::default();
+        for (phase,motion) in [(Phase::Left,Motion::ViviLeft),(Phase::Right,Motion::ViviRight),(Phase::Left,Motion::ViviLeft)] {
+            a.combat.vivi=State{phase,elapsed:0.31};
+            let pose=clock.observe(&a,0.2,100,true);
+            assert_eq!(pose.motion,motion);assert_eq!(pose.age,0.31);
         }
-        a.combat.haste = 1.0;
-        let pose = clock.observe(&a, 0.1, 7, false);
-        assert_eq!(pose.motion, Motion::Attack2);
-        assert!((pose.age - 0.1 / 0.75).abs() < 0.0001);
+        a.combat.haste=1.0;crate::vivi_skill::advance_actor(&mut a);
+        let pose=clock.observe(&a,0.1,101,false);
+        assert_eq!(pose.motion,Motion::ViviLeft);
+        assert!((pose.age-(0.31+crate::game::DT/0.75)).abs()<0.0001);
     }
     #[test]
     fn attack_finishes_before_repeat_and_survives_airborne_movement() {

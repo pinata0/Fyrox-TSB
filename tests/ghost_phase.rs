@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::{
     game::*, ghost::wall_contacts, level::MapId, movement, roster::SelectionResult,
 };
@@ -40,7 +41,7 @@ fn only_ghosts_with_shift_cross_without_damage_other_races_collide() {
     for id in 0..15 {
         let mut w = world(id);
         let mut saw_contact = false;
-        for _ in 0..42 {
+        for _ in 0..84 {
             tick(
                 &mut w,
                 Input {
@@ -85,7 +86,7 @@ fn ghost_can_stop_inside_thick_wall_and_leave_in_reverse_or_diagonally() {
                 phase_shift: true,
                 ..Default::default()
             },
-            20,
+            40,
         );
         assert!(movement::blocked(&w.map, w.actors[0].pos));
         let inside = w.actors[0].pos;
@@ -120,7 +121,7 @@ fn ghost_stun_blocks_movement_and_death_and_respawn_clear_contact() {
             phase_shift: true,
             ..Default::default()
         },
-        1,
+        2,
     );
     assert!(w.actors[0].ghost_phase > 0.0);
     w.actors[0].hp = 0;
@@ -165,11 +166,11 @@ fn ghost_stairs_and_airborne_wall_crossing_still_work() {
             forward: 1.0,
             ..Default::default()
         },
-        155,
+        310,
     );
     assert!((w.actors[0].pos.y - 3.6).abs() < 0.01);
     let mut w = world(14);
-    w.actors[0].pos.z = 1.0;
+    w.actors[0].pos.z = 1.4;
     tick(
         &mut w,
         Input {
@@ -186,9 +187,10 @@ fn ghost_stairs_and_airborne_wall_crossing_still_work() {
             forward: 1.0,
             ..Default::default()
         },
-        20,
+        30,
     );
-    assert!(w.actors[0].pos.z > 2.9 && w.actors[0].pos.y > 0.0);
+    assert!(w.actors[0].pos.z > w.map[0].max().z + movement::BODY_RADIUS);
+    assert!(w.actors[0].pos.y > 0.0);
 }
 
 #[test]
@@ -234,7 +236,7 @@ fn ghosts_stay_on_authored_stairs_when_headroom_runs_out() {
                         yaw: direction.x.atan2(direction.z),
                         ..Default::default()
                     };
-                    let frames = ((end - start).flat().length() / (5.8 * DT)).ceil() as usize;
+                    let frames = ((end - start).flat().length() / (WALK_SPEED * DT)).ceil() as usize;
                     let mut previous_height = start.y;
                     for _ in 0..frames {
                         tick(&mut w, input, 1);

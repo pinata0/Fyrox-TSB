@@ -70,7 +70,7 @@ impl Communication {
                 "궁극기 충전 중입니다. ({:.0}%)",
                 actor.combat.ultimate.clamp(0.0, 100.0).floor()
             ),
-            Self::VoiceLine => "음성 대사 준비 중".into(),
+            Self::VoiceLine => "음성 대사".into(),
             Self::Acknowledge => "알겠습니다!".into(),
             Self::Thanks => "감사합니다!".into(),
         }
@@ -117,15 +117,20 @@ impl World {
         let Some(a) = self.actors.get_mut(slot).filter(|a| a.human) else {
             return Err(CommunicationResult::Unavailable);
         };
-        if action == Communication::VoiceLine {
-            return Err(CommunicationResult::VoiceUnavailable);
+        if action == Communication::VoiceLine && (!a.active || !a.alive()) {
+            return Err(CommunicationResult::Unavailable);
         }
         if a.communication_cooldown > 0.0 {
             return Err(CommunicationResult::Cooldown);
         }
         let can_animate = a.alive()
+            && !a.combat.bella.active()
+            && !a.burrowed()
+            && !crate::race_skill::charging(a)
             && !a.combat.disabled()
             && !a.combat.naia.active()
+            && !a.combat.shion.active()
+            && !a.combat.id.active()
             && a.combat.cast.is_none()
             && a.combat.dash <= 0.0
             && a.reload <= 0.0
@@ -149,7 +154,7 @@ impl World {
             }
             _ => {}
         }
-        a.communication_cooldown = QUICK_COOLDOWN;
+        a.communication_cooldown = if action == Communication::VoiceLine { 4.0 } else { QUICK_COOLDOWN };
         Ok(action.message(a))
     }
 }
@@ -236,7 +241,7 @@ mod tests {
         assert_eq!(wheel.release(), None);
     }
     #[test]
-    fn authority_reports_real_charge_and_voice_placeholder_has_no_effect() {
+    fn authority_reports_real_charge_and_voice_obeys_cooldown() {
         let mut w = World::default();
         w.actors[0].human = true;
         w.actors[0].combat.ultimate = 73.9;
@@ -259,8 +264,15 @@ mod tests {
             .contains("준비"));
         assert_eq!(
             w.communicate(0, Communication::VoiceLine),
-            Err(CommunicationResult::VoiceUnavailable)
+            Err(CommunicationResult::Cooldown)
         );
+        w.actors[0].communication_cooldown = 0.0;
+        assert_eq!(w.communicate(0, Communication::VoiceLine).unwrap(), "음성 대사");
+        assert_eq!(w.actors[0].communication_cooldown, 4.0);
+        assert_eq!(w.communicate(0, Communication::VoiceLine), Err(CommunicationResult::Cooldown));
+        w.actors[0].communication_cooldown = 0.0;
+        w.actors[0].hp = 0;
+        assert_eq!(w.communicate(0, Communication::VoiceLine), Err(CommunicationResult::Unavailable));
         assert_eq!(w.actors[0].wave_ticks, 0);
         assert!(!w.actors[0].dancing);
         assert_eq!(

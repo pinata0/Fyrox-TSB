@@ -36,6 +36,14 @@ required-features = ["desktop"]
 name = "tsb-server"
 path = "src/bin/server.rs"
 
+# Shared visual QA binary can be rebuilt while a regular tsb client is open.
+[[bin]]
+name = "tsb-review"
+path = "src/main.rs"
+required-features = ["desktop"]
+test = false
+bench = false
+
 [[bin]]
 name = "tsb-eos-check"
 path = "src/bin/eos_check.rs"
@@ -57,4 +65,3 @@ opt-level = 2
 [profile.release]
 strip = true
 lto = "thin"
-

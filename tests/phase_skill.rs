@@ -1,3 +1,4 @@
+use trickcal_shooting_balddagu::movement::WALK_SPEED;
 use trickcal_shooting_balddagu::{game::*, movement, phase_skill, roster::SelectionResult};
 
 fn world(id: u8) -> World {
@@ -42,7 +43,7 @@ fn enter(w: &mut World) {
 }
 
 #[test]
-fn no_passive_wall_crossing_or_shift_speed_boost_for_any_race() {
+fn no_passive_wall_crossing_or_shift_sprint_and_beasts_use_a_leap() {
     for id in 0..15 {
         let mut w = world(id);
         tick(
@@ -64,10 +65,28 @@ fn no_passive_wall_crossing_or_shift_speed_boost_for_any_race() {
             },
             1,
         );
-        assert!(
-            (w.actors[0].pos.z - 5.8 * DT).abs() < 0.0001,
-            "Shift acceleration: {id}"
-        );
+        if matches!(id, 11 | 12) {
+            assert!(w.actors[0].pos.y > 0.0 && w.actors[0].pos.z > WALK_SPEED * DT);
+        } else if id == 0 {
+            assert!(
+                (w.actors[0].pos.z - trickcal_shooting_balddagu::race_skill::CHARGE_SPEED * DT)
+                    .abs()
+                    < 0.0001
+            );
+        } else if trickcal_shooting_balddagu::race_skill::has_surge(
+            trickcal_shooting_balddagu::roster::character(id).race,
+        ) {
+            assert!(
+                (w.actors[0].pos.z - trickcal_shooting_balddagu::race_skill::SURGE_SPEED * DT)
+                    .abs()
+                    < 0.0001
+            );
+        } else {
+            assert!(
+                (w.actors[0].pos.z - WALK_SPEED * DT).abs() < 0.0001,
+                "Shift acceleration: {id}"
+            );
+        }
         assert_eq!(w.actors[0].phase_skill.active(), matches!(id, 9 | 14));
     }
 }

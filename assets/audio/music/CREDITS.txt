@@ -1,0 +1,13 @@
+Trickcal Revive Soundtrack Collection (2024)
+Composer: Warak
+Game / publisher: EPID Games
+
+Requested music: Trickal Main Title, Day Life, Lounge, Adventure Begins.
+Source: https://downloads.khinsider.com/game-soundtracks/album/trickcal-revive-soundtrack-collection-2024
+Composer's collection: https://www.youtube.com/watch?v=8kKIzim7ZqU
+
+These are original game soundtrack recordings, not the CC0 sound effects in
+the adjacent sfx directory. Original rights remain with their respective
+owners. This file does not grant a redistribution license.
+
+See sources.json for individual source URLs, checksums and conversion details.

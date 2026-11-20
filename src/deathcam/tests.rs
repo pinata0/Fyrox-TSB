@@ -141,26 +141,34 @@ fn playback_rewinds_all_actors_shots_projectiles_and_stops_at_lethal_tick() {
 }
 
 #[test]
-fn vivi_replay_keeps_the_recorded_finisher_after_live_combo_changes() {
+fn vivi_replay_keeps_the_recorded_sweep_after_live_direction_changes() {
     use crate::motion::Motion;
+    use crate::vivi_skill::{Phase, State};
     let mut w = arena();
     w.actors[6].character = 0;
     let mut c = DeathCamera::default();
     for tick in 0..=180 {
         w.tick = tick;
         w.actors[6].shot = if tick >= 120 { 3 } else { 2 };
-        w.actors[6].combat.vivi_combo = if tick >= 120 { 3 } else { 2 };
+        w.actors[6].combat.vivi_combo = if tick >= 120 { 2 } else { 1 };
+        w.actors[6].combat.vivi = State {
+            phase: if tick >= 120 { Phase::Right } else { Phase::Left },
+            elapsed: 0.3,
+        };
         c.update(&w, 0, DT);
     }
     w.tick += 1;
     kill(&mut w, 6, 0);
     c.update(&w, 0, DT);
     w.actors[6].combat.vivi_combo = 1;
+    w.actors[6].combat.vivi = State { phase: Phase::Left, elapsed: 0.1 };
     w.actors[6].shot = 4;
     replay(&mut c, &w);
     c.update(&w, 0, 119.0 * DT);
-    assert_eq!(c.scene().unwrap().actors[6].combat.vivi_combo, 3);
-    assert_eq!(c.poses()[6].motion, Motion::Attack2);
+    assert_eq!(c.scene().unwrap().actors[6].combat.vivi_combo, 2);
+    assert_eq!(c.poses()[6].motion, Motion::ViviRight);
+    assert_eq!(c.scene().unwrap().actors[6].combat.vivi.elapsed, 0.3);
+    assert!((0.299..=0.3 + DT * 1.4).contains(&c.poses()[6].age));
 }
 #[test]
 fn aya_replay_keeps_transformation_after_live_actor_changes() {

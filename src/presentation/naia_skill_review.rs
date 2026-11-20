@@ -1,22 +1,37 @@
-//! Real GPU checkpoints for all four E clips and both camera perspectives.
+//! Real GPU checkpoints for E transitions, Q and both camera perspectives.
 use super::*;
 use trickcal_shooting_balddagu::naia_skill::{
-    Phase as SkillPhase, State, ACTIVE_SECONDS, START_SECONDS,
+    Phase as SkillPhase, State, ACTIVE_SECONDS, START_SECONDS, TOTAL_SECONDS,
 };
-const SAMPLES: [(SkillPhase, f32); 5] = [
+const SAMPLES: [(SkillPhase, f32); 16] = [
+    (SkillPhase::Start, 0.0),
+    (SkillPhase::Start, 0.2),
+    // Highest source wrist positions are the worst cases for exposed sleeve ends.
+    (SkillPhase::Start, 0.4),
     (SkillPhase::Start, 0.7),
     (SkillPhase::Move, START_SECONDS + 0.4),
     (SkillPhase::Fire, START_SECONDS + 0.6),
     (SkillPhase::Fire, START_SECONDS + 0.78),
+    (SkillPhase::End, START_SECONDS + ACTIVE_SECONDS + 2.0 / 30.0),
     (SkillPhase::End, START_SECONDS + ACTIVE_SECONDS + 0.45),
+    (SkillPhase::End, TOTAL_SECONDS - 0.02),
+    (SkillPhase::Off, 0.0),
+    (SkillPhase::Ultimate, 0.75),
+    (SkillPhase::Ultimate, 1.25),
+    (SkillPhase::Ultimate, 1.8),
+    (SkillPhase::Ultimate, 2.6),
+    (SkillPhase::Ultimate, 3.4),
 ];
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
-    if rt.review_capture >= 10 {
-        println!("NAIA_SKILL_REVIEW_OK: four source clips, animated water, five world and five first-person frames");
+    if rt.review_capture == 0 && std::env::args().any(|arg| arg == "--naia-first-person-only") {
+        rt.review_capture = SAMPLES.len() as u8;
+    }
+    if rt.review_capture as usize >= SAMPLES.len() * 2 {
+        println!("NAIA_SKILL_REVIEW_OK: enlarged E dolphin/hands/sleeves, sleeve cuts outside the camera, restored idle/Q, palm contacts");
         context.loop_controller.exit();
         return Ok(());
     }
-    let (phase, elapsed) = SAMPLES[rt.review_capture as usize % 5];
+    let (phase, elapsed) = SAMPLES[rt.review_capture as usize % SAMPLES.len()];
     rt.home_open = false;
     rt.lobby.open = false;
     rt.selecting = false;
@@ -29,6 +44,7 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
         w.phase = Phase::Lobby;
         w.tick = (elapsed * 60.0) as u64;
         w.map.clear();
+        w.projectiles.clear();
         // A short wall-limited jet keeps the full silhouette inside the world camera.
         w.map.push(trickcal_shooting_balddagu::game::Block {
             center: V3::new(0.0, 2.0, -6.0),
@@ -58,14 +74,29 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
             pulse: 0.0,
         };
     }
+    if let Session::Solo(w) = &mut rt.session {
+        if phase == SkillPhase::Ultimate && elapsed >= 1.5 {
+            let mut p = trickcal_shooting_balddagu::combat::Projectile::visual(
+                1,
+                0,
+                ProjectileKind::Wave,
+                V3::new(0.0, 0.0, -16.5 + (elapsed - 1.5) * 10.0),
+            );
+            p.velocity = V3::new(0.0, 0.0, 10.0);
+            p.age = elapsed - 1.5;
+            w.projectiles.push(p);
+        }
+    }
     rt.review_frames = rt.review_frames.max(1);
     render(rt, context)?;
-    if rt.review_capture < 5 {
+    if (rt.review_capture as usize) < SAMPLES.len() {
         let g = &mut context.scenes[rt.scene].graph;
         rt.visuals[0].set_shadow_only(g, false);
         g[rt.weapon].set_visibility(false);
         g[rt.wave_hand].set_visibility(false);
-        let position = if phase == SkillPhase::Fire {
+        let position = if phase == SkillPhase::Ultimate {
+            Vector3::new(2.0, 3.8, -4.7)
+        } else if phase == SkillPhase::Fire {
             Vector3::new(3.7, 2.5, -8.5)
         } else {
             Vector3::new(2.3, 1.7, -8.9)
@@ -87,23 +118,71 @@ pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResul
 }
 pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     let g = &context.scenes[rt.scene].graph;
-    let (phase, _) = SAMPLES[rt.review_capture as usize % 5];
-    assert_eq!(rt.visuals[0].pose().motion, phase.motion().unwrap());
+    let (phase, _) = SAMPLES[rt.review_capture as usize % SAMPLES.len()];
+    let pose = rt.visuals[0].pose();
+    if let Some(motion) = phase.motion() {
+        assert_eq!(pose.motion, motion);
+    } else {
+        assert!(!pose.motion.is_naia_skill());
+    }
     assert_eq!(
         g[rt.naia_water.as_ref().unwrap().nodes[0]].visibility(),
         phase == SkillPhase::Fire
     );
-    if rt.review_capture >= 5 {
+    if rt.review_capture as usize >= SAMPLES.len() {
         for arm in rt
             .first_person_arm
             .iter()
             .chain(rt.first_person_support_arm.iter())
         {
+            arm.verify_naia_view(g, rt.camera, pose);
+            if phase != SkillPhase::Ultimate {
+                assert!(
+                    arm.grip_error(g, rt.wave_hand, rt.weapons[1]) < 0.001,
+                    "Naia E grip detached"
+                );
+            }
+        }
+        let amount = trickcal_shooting_balddagu::naia_skill::whale_form(pose.motion, pose.age);
+        assert!(
+            (g[rt.weapons[1]].local_transform().scale().x
+                - (0.72 + amount * 0.25) * naia_whales::view_scale(pose))
+            .abs()
+                < 1e-6,
+            "dolphin and hands must share the E view enlargement"
+        );
+        if amount == 1.0 && phase != SkillPhase::Ultimate {
+            let direction = skeleton::world_rotation(g, rt.weapons[1]) * Vector3::z();
+            let aim = skeleton::world_rotation(g, rt.camera) * Vector3::z();
+            assert!(direction.dot(&aim) > 0.9999, "E muzzle must point forward");
+            let body = g[rt.weapons[1]]
+                .children()
+                .iter()
+                .find(|h| g[**h].name() == "Naia transforming gun")
+                .unwrap();
             assert!(
-                arm.grip_error(g, rt.wave_hand, rt.weapons[1]) < 0.001,
-                "Naia E grip detached"
+                g[*body].local_transform().rotation().angle() < 1e-6,
+                "dolphin must not turn sideways during E"
             );
         }
+        if phase == SkillPhase::Fire {
+            let muzzle = g[rt.weapons[1]]
+                .global_transform()
+                .transform_point(&naia_whales::MUZZLE.into())
+                .coords;
+            assert!(
+                (g[rt.naia_water.as_ref().unwrap().nodes[0]].global_position() - muzzle).norm()
+                    < 0.001,
+                "healing water must leave the forward muzzle"
+            );
+        }
+    }
+    if phase == SkillPhase::Ultimate {
+        assert!(
+            !g[rt.weapons[1]].visibility(),
+            "ultimate must leave empty hands"
+        );
+        rt.visuals[0].verify_naia_ultimate(g);
     }
     capture_preview(
         rt.scene,

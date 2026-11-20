@@ -22,8 +22,12 @@ use std::{
     time::{Duration, Instant, SystemTime, UNIX_EPOCH},
 };
 
-const MAGIC: &[u8; 4] = b"TSBM";
+const MAGIC: &[u8; 4] = b"TSBO";
 const HELLO: u8 = 1;
+#[cfg(test)]
+mod ui_tests;
+#[cfg(test)]
+mod vivi_tests;
 const WELCOME: u8 = 2;
 const INPUT: u8 = 3;
 const SNAPSHOT: u8 = 4;
@@ -44,12 +48,27 @@ const DENIED: u8 = 18;
 const PLAYER_NAME: u8 = 19;
 const IMPACTS: u8 = 20;
 const PORTALS: u8 = 21;
+const MATCH_STATS: u8 = 22;
+#[cfg(test)]
+#[path = "net/aya_tests.rs"]
+mod aya_tests;
+mod scoreboard;
+use scoreboard::{read_stats, stats_snapshot};
 const CHAT_RETRY: Duration = Duration::from_millis(200);
 const TIMEOUT: Duration = Duration::from_secs(8);
 const MAX_PACKET: usize = MAX_DATAGRAM;
 #[cfg(test)]
+#[path = "net/dragon_charge_tests.rs"]
+mod dragon_charge_tests;
+#[cfg(test)]
+#[path = "net/id_tests.rs"]
+mod id_tests;
+#[cfg(test)]
 #[path = "net/portal_tests.rs"]
 mod portal_tests;
+#[cfg(test)]
+#[path = "net/race_skill_tests.rs"]
+mod race_skill_tests;
 #[cfg(test)]
 use std::net::UdpSocket;
 
@@ -168,6 +187,9 @@ fn chat_delivery(token: u64, message: &ChatMessage) -> Vec<u8> {
     w.u8(message.character);
     w.u8(message.channel as u8);
     w.text(&message.text);
+    if message.voice_line {
+        w.u8(1); // Optional server-owned cue; ordinary chat keeps its wire encoding.
+    }
     w.0
 }
 
@@ -176,13 +198,20 @@ fn read_chat_delivery(bytes: &[u8], token: u64) -> Option<ChatMessage> {
     if r.u64()? != token {
         return None;
     }
-    let message = ChatMessage {
+    let mut message = ChatMessage {
         id: r.u64()?,
         sender: r.u8()? as usize,
         character: r.u8()?,
         channel: ChatChannel::from_wire(r.u8()?)?,
         text: r.text()?,
+        voice_line: false,
     };
+    if !r.done() {
+        if r.u8()? != 1 || message.channel != ChatChannel::Team {
+            return None;
+        }
+        message.voice_line = true;
+    }
     (r.done()
         && message.id > 0
         && message.sender < PLAYERS
@@ -272,35 +301,116 @@ fn peer_snapshot(world: &World, token: u64, seq: u64, ack: InputAck) -> Vec<u8> 
         } else {
             a.combat.vivi_combo
         };
-        let action = if a.character == 2 {
-            (a.combat.erpin.eating as u8)
+        let action = if a.character == 6 {
+            a.combat.chloe.phase as u8
+        } else if a.character == 0 {
+            a.combat.vivi.phase as u8
+        } else if a.character == 2 {
+            if a.combat.erpin_skill.active() { 3 } else { (a.combat.erpin.eating as u8)
                 | ((a.combat.erpin.shot_delay > 0.0) as u8) << 1
-                | (a.combat.erpin.alt_down as u8) << 2
+                | (a.combat.erpin.alt_down as u8) << 2 }
+        } else if a.character == 5 {
+            a.combat.picora.phase as u8
+        } else if a.character == 4 {
+            a.combat.aya.phase as u8
+        } else if a.character == 7 {
+            a.combat.renua.phase as u8
+        } else if a.character == 9 {
+            a.combat.bella.phase as u8
+        } else if a.character == 8 {
+            a.combat.mayo.phase as u8
+        } else if a.character == 10 {
+            a.combat.ui.phase as u8
+        } else if a.character == 11 {
+            a.combat.butter.phase as u8
+        } else if a.character == 12 {
+            a.combat.komi.phase as u8
+        } else if a.character == 13 {
+            a.combat.hilde.phase as u8
+        } else if a.character == 14 {
+            a.combat.shion.phase as u8
+        } else if a.character == 3 {
+            a.combat.id.phase as u8
         } else {
             a.combat.naia.phase as u8
         };
-        w.u8(a.combat.magic_ammo | (combo << 3) | (action << 5));
+        // Ui does not use magic ammo. Reuse those three bits for her basic
+        // cycle (0=never fired, 1..4), including the fourth-shot ray visual.
+        let attack_bits = if a.character == 10 {
+            if a.combat.attacks == 0 { 0 } else { ((a.combat.attacks - 1) % 4 + 1) as u8 }
+        } else { a.combat.magic_ammo };
+        w.u8(attack_bits | (combo << 3) | (action << 5));
         w.f32(a.barrier);
-        // Reuse the old contact float: contact ticks, duration ticks, and
-        // cooldown ticks + held-key bit. The full roster still fits the MTU.
-        w.u8((a.ghost_phase / DT).round() as u8);
-        w.u8((a.phase_skill.remaining / DT).round() as u8);
-        w.u16((a.phase_skill.cooldown / DT).round() as u16 | (a.phase_skill.down as u16) << 15);
+        w.u16(
+            a.race_skill.surge_charges as u16
+                | (((a.race_skill.surge_recharge / DT).round() as u16) << 2),
+        );
+        // Race-discriminated Shift state occupies the same four bytes for all heroes.
+        if matches!(
+            crate::roster::character(a.character).race,
+            crate::roster::Race::Beast
+                | crate::roster::Race::Spirit
+                | crate::roster::Race::Dragon
+                | crate::roster::Race::Fairy
+                | crate::roster::Race::Witch
+        ) {
+            let s = a.race_skill;
+            w.u8((s.charge / DT).round() as u8 | (s.fire_latched as u8) << 7);
+            w.u8((s.remaining / DT).round() as u8);
+            w.u16((s.cooldown / DT).round() as u16 | (s.down as u16) << 15);
+        } else {
+            w.u8((a.ghost_phase / DT).round() as u8);
+            w.u8((a.phase_skill.remaining / DT).round() as u8);
+            w.u16((a.phase_skill.cooldown / DT).round() as u16 | (a.phase_skill.down as u16) << 15);
+        }
         w.f32(a.ability_cooldown);
         // During Naia E the phase owns the visual clock; its age shares the flash slot.
-        w.f32(if a.combat.erpin.eating {
-            a.combat.erpin.elapsed
-        } else if a.combat.erpin.shot_delay > 0.0 {
-            a.combat.erpin.shot_delay
-        } else if a.combat.naia.active() {
-            a.combat.naia.elapsed
+        if a.character == 6 {
+            w.u32(a.combat.chloe.pack());
+        } else if a.character == 0 {
+            w.u32(a.combat.vivi.pack());
+        } else if a.character == 2 && a.combat.erpin_skill.active() {
+            w.u32(a.combat.erpin_skill.pack(a.combat.erpin.alt_down));
+        } else if a.character == 5 {
+            w.u32(a.combat.picora.pack());
+        } else if a.character == 4 {
+            w.u32(a.combat.aya.pack());
+        } else if a.character == 7 {
+            w.u32(a.combat.renua.pack());
+        } else if a.character == 9 {
+            w.u32(a.combat.bella.pack());
+        } else if a.character == 8 {
+            w.u32(a.combat.mayo.pack());
+        } else if a.character == 10 {
+            w.u32(a.combat.ui.pack());
+        } else if a.character == 11 {
+            w.u32(a.combat.butter.pack());
+        } else if a.character == 12 {
+            w.u32(a.combat.komi.pack());
+        } else if a.character == 13 {
+            w.u32(a.combat.hilde.pack());
+        } else if a.character == 14 {
+            w.u32(a.combat.shion.pack());
+        } else if a.character == 3 {
+            w.u32(a.combat.id.pack());
         } else {
-            a.ability_flash
-        });
+            w.f32(if a.combat.erpin.eating {
+                a.combat.erpin.elapsed
+            } else if a.combat.erpin.shot_delay > 0.0 {
+                a.combat.erpin.shot_delay
+            } else if a.combat.naia.active() {
+                a.combat.naia.elapsed
+            } else {
+                a.ability_flash
+            });
+        }
         w.v3(a.pos);
         w.f32(a.yaw);
         w.f32(a.pitch);
-        w.u16(a.hp);
+        // 8 HP bits (maximum 240), two 4-bit buff timers; same snapshot size.
+        let sticker = (a.combat.sticker / crate::picora_skill::STICKER_SECONDS * 15.0).ceil().clamp(0.0, 15.0) as u16;
+        let fashion = (a.combat.fashion / crate::picora_skill::FASHION_SECONDS * 15.0).ceil().clamp(0.0, 15.0) as u16;
+        w.u16(a.hp.min(255) | (sticker << 8) | (fashion << 12));
         w.u8(a.ammo);
         w.f32(a.reload);
         w.f32(a.respawn);
@@ -318,13 +428,20 @@ fn peer_snapshot(world: &World, token: u64, seq: u64, ack: InputAck) -> Vec<u8> 
         w.u32(a.shot);
         w.v3(a.shot_end);
         w.f32(a.hit);
-        w.f32(a.hurt);
+        // Preserve the four-byte hurt slot and the full-roster datagram budget.
+        // Seven hurt bits at 120 Hz, eight frog-duration ticks, one rain bit.
+        w.u16((a.hurt.clamp(0.0,1.0)*120.0).round() as u16
+            | (((a.combat.polymorph/DT).round().clamp(0.0,180.0) as u16)<<7)
+            | ((a.combat.rain_slow>0.0) as u16)<<15);
+        w.u8((a.combat.temporal.clamp(0.0, 1.0) * 255.0).round() as u8);
+        w.u8((a.combat.frozen / DT).round().clamp(0.0, 180.0) as u8);
     }
     let event = world.event.as_bytes();
     // Reserve 35 bytes for this peer's movement acknowledgement and safe phase
     // exit position, retaining the
     // 1200-byte datagram limit (including a full twelve-player roster).
-    let mut len = event.len().min(44);
+    let event_budget = (MAX_PACKET - 1).saturating_sub(w.0.len() + 1 + 35);
+    let mut len = event.len().min(20).min(event_budget);
     while !world.event.is_char_boundary(len) {
         len -= 1;
     }
@@ -343,7 +460,15 @@ fn peer_snapshot(world: &World, token: u64, seq: u64, ack: InputAck) -> Vec<u8> 
     ] {
         w.u16((timer / DT).round().clamp(0.0, u16::MAX as f32) as u16);
     }
-    w.v3(local.phase_skill.safe_position);
+    w.v3(
+        if crate::roster::character(local.character).race == crate::roster::Race::Beast
+            || crate::race_skill::has_surge(crate::roster::character(local.character).race)
+        {
+            local.race_skill.velocity
+        } else {
+            local.phase_skill.safe_position
+        },
+    );
     debug_assert!(w.0.len() < MAX_PACKET);
     w.0
 }
@@ -404,16 +529,47 @@ fn read_snapshot(bytes: &[u8], token: u64) -> Option<(u64, World, InputAck)> {
         a.combat.guard = r.u8()? as f32;
         let attack_state = r.u8()?;
         a.combat.magic_ammo = attack_state & 7;
+        if a.character == 10 {
+            if a.combat.magic_ammo > 4 { return None; }
+            a.combat.attacks = a.combat.magic_ammo as u32;
+            a.combat.magic_ammo = 0;
+        }
         let combo = (attack_state >> 3) & 3;
         a.combat.vivi_combo = if a.character == 0 { combo } else { 0 };
         a.combat.aya_combo = if a.character == 4 { combo } else { 0 };
         let action = attack_state >> 5;
-        if a.character == 2 {
+        if a.character == 6 {
+            a.combat.chloe.phase = crate::chloe_skill::Phase::from_wire(action)?;
+        } else if a.character == 0 {
+            a.combat.vivi.phase = crate::vivi_skill::Phase::from_wire(action)?;
+            if combo > 2 { return None; }
+        } else if a.character == 2 {
             a.combat.erpin.eating = action & 1 != 0;
             a.combat.erpin.alt_down = action & 4 != 0;
-            if action & 3 == 3 {
-                return None;
-            }
+            if action == 7 { return None; }
+            if action == 3 { a.combat.erpin.eating = false; }
+        } else if a.character == 5 {
+            a.combat.picora.phase = crate::picora_skill::Phase::from_wire(action)?;
+        } else if a.character == 4 {
+            a.combat.aya.phase = crate::aya_skill::Phase::from_wire(action)?;
+        } else if a.character == 7 {
+            a.combat.renua.phase = crate::renua_skill::Phase::from_wire(action)?;
+        } else if a.character == 9 {
+            a.combat.bella.phase = crate::bella_skill::Phase::from_wire(action)?;
+        } else if a.character == 8 {
+            a.combat.mayo.phase = crate::mayo_skill::Phase::from_wire(action)?;
+        } else if a.character == 10 {
+            a.combat.ui.phase = crate::ui_skill::Phase::from_wire(action)?;
+        } else if a.character == 11 {
+            a.combat.butter.phase = crate::butter_skill::Phase::from_wire(action)?;
+        } else if a.character == 12 {
+            a.combat.komi.phase = crate::komi_skill::Phase::from_wire(action)?;
+        } else if a.character == 13 {
+            a.combat.hilde.phase = crate::hilde_skill::Phase::from_wire(action)?;
+        } else if a.character == 14 {
+            a.combat.shion.phase = crate::shion_skill::Phase::from_wire(action)?;
+        } else if a.character == 3 {
+            a.combat.id.phase = crate::id_skill::Phase::from_wire(action)?;
         } else {
             a.combat.naia.phase = crate::naia_skill::Phase::from_wire(action)?;
         }
@@ -426,26 +582,120 @@ fn read_snapshot(bytes: &[u8], token: u64) -> Option<(u64, World, InputAck)> {
             return None;
         }
         a.barrier = r.f32()?;
+        let surge = r.u16()?;
+        let surge_charges = (surge & 3) as u8;
+        let recharge_ticks = surge >> 2;
+        if recharge_ticks > 180
+            || (surge_charges == crate::race_skill::SURGE_CHARGES) != (recharge_ticks == 0)
+        {
+            return None;
+        }
         let contact_ticks = r.u8()?;
         let phase_ticks = r.u8()?;
         let phase_flags = r.u16()?;
         let cooldown_ticks = phase_flags & 0x7fff;
-        if contact_ticks > 12
-            || phase_ticks > 180
-            || cooldown_ticks > 720
-            || (phase_ticks > 0 && cooldown_ticks > 0)
-            || (phase_ticks > 0
-                && crate::roster::character(a.character).race != crate::roster::Race::Ghost)
-        {
+        if a.character as usize >= ROSTER.len() {
             return None;
         }
-        a.ghost_phase = (contact_ticks as f32 * DT).min(crate::movement::PHASE_LINGER);
-        a.phase_skill.remaining = (phase_ticks as f32 * DT).min(crate::phase_skill::DURATION);
-        a.phase_skill.cooldown = (cooldown_ticks as f32 * DT).min(crate::phase_skill::COOLDOWN);
-        a.phase_skill.down = phase_flags & 0x8000 != 0;
+        let race = crate::roster::character(a.character).race;
+        if matches!(
+            race,
+            crate::roster::Race::Beast
+                | crate::roster::Race::Spirit
+                | crate::roster::Race::Dragon
+                | crate::roster::Race::Fairy
+                | crate::roster::Race::Witch
+        ) {
+            let charge = contact_ticks & 127;
+            if phase_ticks > 240
+                || cooldown_ticks > 480
+                || charge > 36
+                || (charge > 0 && (phase_ticks == 0 || contact_ticks & 128 == 0))
+                || (race != crate::roster::Race::Spirit && charge > 0)
+                || (race != crate::roster::Race::Beast && phase_ticks > 0 && cooldown_ticks > 0)
+                || (race == crate::roster::Race::Dragon && phase_ticks > 180)
+                || (crate::race_skill::has_surge(race)
+                    && (phase_ticks > 9 || charge != 0 || (phase_ticks > 0 && surge_charges == 3)))
+            {
+                return None;
+            }
+            a.race_skill = crate::race_skill::State {
+                remaining: phase_ticks as f32 * DT,
+                cooldown: cooldown_ticks as f32 * DT,
+                charge: charge as f32 * DT,
+                down: phase_flags & 0x8000 != 0,
+                fire_latched: contact_ticks & 128 != 0,
+                surge_charges,
+                surge_recharge: recharge_ticks as f32 * DT,
+                ..Default::default()
+            };
+        } else {
+            if contact_ticks > 12
+                || phase_ticks > 180
+                || cooldown_ticks > 720
+                || (phase_ticks > 0 && cooldown_ticks > 0)
+                || (phase_ticks > 0
+                    && crate::roster::character(a.character).race != crate::roster::Race::Ghost)
+            {
+                return None;
+            }
+            a.ghost_phase = (contact_ticks as f32 * DT).min(crate::movement::PHASE_LINGER);
+            a.phase_skill.remaining = (phase_ticks as f32 * DT).min(crate::phase_skill::DURATION);
+            a.phase_skill.cooldown = (cooldown_ticks as f32 * DT).min(crate::phase_skill::COOLDOWN);
+            a.phase_skill.down = phase_flags & 0x8000 != 0;
+            a.race_skill.surge_charges = surge_charges;
+            a.race_skill.surge_recharge = recharge_ticks as f32 * DT;
+        }
         a.ability_cooldown = r.f32()?;
-        a.ability_flash = r.f32()?;
-        if a.character == 2 && action & 3 != 0 {
+        if a.character == 6 {
+            a.combat.chloe = crate::chloe_skill::State::unpack(a.combat.chloe.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 2 && action == 3 {
+            let (state, alt_down) = crate::erpin_skill::State::unpack(r.u32()?)?;
+            a.combat.erpin_skill = state;
+            a.combat.erpin.alt_down = alt_down;
+            a.ability_flash = 0.0;
+        } else if a.character == 5 {
+            a.combat.picora = crate::picora_skill::State::unpack(a.combat.picora.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 4 {
+            a.combat.aya = crate::aya_skill::State::unpack(a.combat.aya.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 7 {
+            a.combat.renua = crate::renua_skill::State::unpack(a.combat.renua.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 9 {
+            a.combat.bella = crate::bella_skill::State::unpack(a.combat.bella.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 8 {
+            a.combat.mayo = crate::mayo_skill::State::unpack(a.combat.mayo.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 10 {
+            a.combat.ui = crate::ui_skill::State::unpack(a.combat.ui.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 0 {
+            a.combat.vivi = crate::vivi_skill::State::unpack(a.combat.vivi.phase, r.u32()?)?;
+            a.combat.mercury = a.combat.guard > 0.0;
+            a.ability_flash = 0.0;
+        } else if a.character == 11 {
+            a.combat.butter = crate::butter_skill::State::unpack(a.combat.butter.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 12 {
+            a.combat.komi = crate::komi_skill::State::unpack(a.combat.komi.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 13 {
+            a.combat.hilde = crate::hilde_skill::State::unpack(a.combat.hilde.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 14 {
+            a.combat.shion = crate::shion_skill::State::unpack(a.combat.shion.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else if a.character == 3 {
+            a.combat.id = crate::id_skill::State::unpack(a.combat.id.phase, r.u32()?)?;
+            a.ability_flash = 0.0;
+        } else {
+            a.ability_flash = r.f32()?;
+        }
+        if a.character == 2 && action != 3 && action & 3 != 0 {
             if action & 1 != 0 {
                 if !(0.0..crate::erpin::EAT_SECONDS).contains(&a.ability_flash) {
                     return None;
@@ -462,14 +712,22 @@ fn read_snapshot(bytes: &[u8], token: u64) -> Option<(u64, World, InputAck)> {
         if a.combat.naia.active() {
             a.combat.naia.elapsed = a.ability_flash;
             a.ability_flash = 0.0;
-            if !(0.0..crate::naia_skill::TOTAL_SECONDS).contains(&a.combat.naia.elapsed) {
+            let duration = if a.combat.naia.phase == crate::naia_skill::Phase::Ultimate {
+                crate::naia_skill::ULTIMATE_SECONDS
+            } else {
+                crate::naia_skill::TOTAL_SECONDS
+            };
+            if !(0.0..duration).contains(&a.combat.naia.elapsed) {
                 return None;
             }
         }
         a.pos = r.v3()?;
         a.yaw = r.f32()?;
         a.pitch = r.f32()?;
-        a.hp = r.u16()?;
+        let health = r.u16()?;
+        a.hp = health & 255;
+        a.combat.sticker = ((health >> 8) & 15) as f32 / 15.0 * crate::picora_skill::STICKER_SECONDS;
+        a.combat.fashion = (health >> 12) as f32 / 15.0 * crate::picora_skill::FASHION_SECONDS;
         a.ammo = r.u8()?;
         a.reload = r.f32()?;
         a.respawn = r.f32()?;
@@ -499,12 +757,21 @@ fn read_snapshot(bytes: &[u8], token: u64) -> Option<(u64, World, InputAck)> {
         a.shot = r.u32()?;
         a.shot_end = r.v3()?;
         a.hit = r.f32()?;
-        a.hurt = r.f32()?;
+        let status = r.u16()?;
+        a.hurt = (status & 127) as f32 / 120.0;
+        let morph_ticks = (status >> 7) & 255;
+        if morph_ticks > 180 { return None; }
+        a.combat.polymorph = morph_ticks as f32 * DT;
+        a.combat.rain_slow = if status & 0x8000 != 0 { DT*2.0 } else {0.0};
+        a.combat.temporal = r.u8()? as f32 / 255.0;
+        let frozen_ticks = r.u8()?;
+        if frozen_ticks > 180 || a.hurt > 1.0 { return None; }
+        a.combat.frozen = frozen_ticks as f32 * DT;
         if a.character as usize >= ROSTER.len()
-            || a.hp > MAX_HP
+            || a.hp > a.max_hp()
             || a.ammo > kit(a.character).magazine
             || a.pos.length() > 1000.0
-            || !(0.0..=(MAX_HP as f32 * 0.08 + 0.001)).contains(&a.barrier)
+            || !(0.0..=(a.max_hp() as f32 * 0.08 + 0.001)).contains(&a.barrier)
             || !(0.0..=crate::movement::PHASE_LINGER).contains(&a.ghost_phase)
             || !(0.0..=20.0).contains(&a.ability_cooldown)
             || !(0.0..=0.4).contains(&a.ability_flash)
@@ -536,9 +803,23 @@ fn read_snapshot(bytes: &[u8], token: u64) -> Option<(u64, World, InputAck)> {
             return None;
         }
     }
-    local.phase_skill.safe_position = r.v3()?;
-    if local.phase_skill.safe_position.length() > 1000.0 {
+    let skill_vector = r.v3()?;
+    if skill_vector.length() > 1000.0 {
         return None;
+    }
+    let race = crate::roster::character(local.character).race;
+    if race == crate::roster::Race::Beast || crate::race_skill::has_surge(race) {
+        let max_speed = if crate::race_skill::has_surge(race) {
+            crate::race_skill::SURGE_SPEED
+        } else {
+            12.0
+        };
+        if skill_vector.y != 0.0 || skill_vector.length() > max_speed + 0.01 {
+            return None;
+        }
+        local.race_skill.velocity = skill_vector;
+    } else {
+        local.phase_skill.safe_position = skill_vector;
     }
     r.done().then_some((seq, w, ack))
 }
@@ -561,6 +842,7 @@ fn portal_snapshot(world: &World, token: u64, seq: u64) -> Vec<u8> {
         }
         w.u8(s.down[0] as u8 | (s.down[1] as u8) << 1);
         w.u8((s.lock / DT).ceil() as u8);
+        w.u8((s.reopen / DT).round() as u8);
         w.v3(s.momentum);
         w.f32(s.yaw_offset);
         w.f32(s.pitch_offset);
@@ -601,11 +883,14 @@ fn read_portals(bytes: &[u8], token: u64) -> Option<(u64, [crate::portal::State;
         }
         let down = r.u8()?;
         let lock = r.u8()?;
-        if down > 3 || lock > 14 {
+        let reopen = r.u8()?;
+        let max_lock = (crate::portal::REOPEN_DELAY / DT).round() as u8;
+        if down > 3 || lock > max_lock || reopen > max_lock {
             return None;
         }
         s.down = [down & 1 != 0, down & 2 != 0];
         s.lock = lock as f32 * DT;
+        s.reopen = reopen as f32 * DT;
         s.momentum = r.v3()?;
         s.yaw_offset = r.f32()?;
         s.pitch_offset = r.f32()?;
@@ -625,8 +910,25 @@ fn projectile_snapshot(world: &World, token: u64, seq: u64) -> Vec<u8> {
     w.u8(world.projectiles.len() as u8);
     for p in &world.projectiles {
         w.u32(p.id);
-        w.u8(p.owner as u8);
-        w.u8(p.kind as u8);
+        // Wave heading uses spare owner/kind bits; 96 projectiles still fit one MTU.
+        let heading = if p.kind == ProjectileKind::MercuryField {
+            (p.age * 20.0).round().clamp(0.0, 118.0) as u8
+        } else if matches!(p.kind, ProjectileKind::SnowGarden | ProjectileKind::RainField | ProjectileKind::BoulderBlast | ProjectileKind::Confetti | ProjectileKind::ErpinBlast | ProjectileKind::ErpinCrash | ProjectileKind::BellaHeal) {
+            (p.age * 20.0).round().clamp(0.0, 110.0) as u8
+        } else if matches!(p.kind, ProjectileKind::Wave | ProjectileKind::TimeField | ProjectileKind::Butterfly | ProjectileKind::Doll | ProjectileKind::BellaFire) {
+            (p.velocity
+                .x
+                .atan2(p.velocity.z)
+                .rem_euclid(std::f32::consts::TAU)
+                / std::f32::consts::TAU
+                * 128.0)
+                .round() as u8
+                & 127
+        } else {
+            0
+        };
+        w.u8(p.owner as u8 | (heading & 15) << 4);
+        w.u8(p.kind as u8 | (heading >> 4) << 5);
         for coord in [p.pos.x, p.pos.y, p.pos.z] {
             w.u16((coord * 100.0).round() as i16 as u16);
         }
@@ -647,8 +949,14 @@ fn read_projectiles(bytes: &[u8], token: u64) -> Option<(u64, Vec<Projectile>)> 
     let mut result = Vec::with_capacity(count);
     for _ in 0..count {
         let id = r.u32()?;
-        let owner = r.u8()? as usize;
-        let kind = ProjectileKind::from_wire(r.u8()?)?;
+        let packed_owner = r.u8()?;
+        let packed_kind = r.u8()?;
+        let owner = (packed_owner & 15) as usize;
+        let kind = ProjectileKind::from_wire(packed_kind & 31)?;
+        let heading = (packed_owner >> 4) | (packed_kind >> 5) << 4;
+        if !matches!(kind, ProjectileKind::Wave | ProjectileKind::TimeField | ProjectileKind::SnowGarden | ProjectileKind::RainField | ProjectileKind::Butterfly | ProjectileKind::Doll | ProjectileKind::BoulderBlast | ProjectileKind::Confetti | ProjectileKind::ErpinBlast | ProjectileKind::ErpinCrash | ProjectileKind::BellaFire | ProjectileKind::BellaHeal | ProjectileKind::MercuryField) && heading != 0 {
+            return None;
+        }
         let pos = V3::new(
             r.u16()? as i16 as f32 / 100.0,
             r.u16()? as i16 as f32 / 100.0,
@@ -660,7 +968,52 @@ fn read_projectiles(bytes: &[u8], token: u64) -> Option<(u64, Vec<Projectile>)> 
         {
             return None;
         }
-        result.push(Projectile::visual(id, owner, kind, pos));
+        let mut projectile = Projectile::visual(id, owner, kind, pos);
+        if kind == ProjectileKind::MercuryField {
+            if heading > 118 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = (crate::vivi_skill::FIELD_SECONDS - projectile.age).max(0.0);
+        }
+        if matches!(kind, ProjectileKind::Wave | ProjectileKind::TimeField | ProjectileKind::Butterfly | ProjectileKind::Doll | ProjectileKind::BellaFire) {
+            projectile.velocity = direction(heading as f32 / 128.0 * std::f32::consts::TAU, 0.0)
+                * crate::naia_skill::WAVE_SPEED;
+        }
+        if kind == ProjectileKind::TimeField { projectile.life = crate::renua_skill::FIELD_SECONDS; }
+        if matches!(kind, ProjectileKind::ErpinBlast | ProjectileKind::ErpinCrash) {
+            if heading > 12 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = (crate::erpin_skill::BLAST_SECONDS - projectile.age).max(0.0);
+        }
+        if kind == ProjectileKind::Confetti {
+            if heading > 14 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = (crate::chloe_skill::CONFETTI_SECONDS-projectile.age).max(0.0);
+        }
+        if kind == ProjectileKind::BoulderBlast {
+            if heading > 13 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = crate::butter_skill::BLAST_SECONDS - projectile.age;
+        }
+        if kind == ProjectileKind::BellaFire {
+            projectile.velocity = projectile.velocity.normalized();
+            projectile.life = crate::bella_skill::FIRE_SECONDS;
+        }
+        if kind == ProjectileKind::BellaHeal {
+            if heading > 18 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = crate::bella_skill::WAVE_SECONDS - projectile.age;
+        }
+        if kind == ProjectileKind::RainField {
+            if heading > 80 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = crate::ui_skill::RAIN_SECONDS - projectile.age;
+        }
+        if kind == ProjectileKind::SnowGarden {
+            if heading > 110 { return None; }
+            projectile.age = heading as f32 / 20.0;
+            projectile.life = crate::aya_skill::SNOW_SECONDS - projectile.age;
+        }
+        result.push(projectile);
     }
     r.done().then_some((seq, result))
 }
@@ -755,7 +1108,8 @@ fn input_packet(token: u64, seq: u64, input: Input) -> Vec<u8> {
         | (input.ultimate as u8) << 5
         | (input.dance as u8) << 6
         | (input.crouch as u8) << 7);
-    w.u8(input.alt_fire as u8);
+    w.u8(input.alt_fire as u8 | (input.wake_rest as u8) << 1);
+    w.f32(input.sanitized().view_aspect);
     w.0
 }
 fn read_input(bytes: &[u8]) -> Option<(u64, u64, Input)> {
@@ -779,10 +1133,13 @@ fn read_input(bytes: &[u8]) -> Option<(u64, u64, Input)> {
     input.dance = flags & 64 != 0;
     input.crouch = flags & 128 != 0;
     let alt = r.u8()?;
-    if alt > 1 {
+    if alt > 3 {
         return None;
     }
-    input.alt_fire = alt != 0;
+    input.alt_fire = alt & 1 != 0;
+    input.wake_rest = alt & 2 != 0;
+    input.view_aspect = r.f32()?;
+    if !(0.5..=4.0).contains(&input.view_aspect) { return None; }
     r.done().then_some((token, seq, input.sanitized()))
 }
 
@@ -968,13 +1325,16 @@ impl Server {
     fn communicate_as(&mut self, slot: usize, action: Communication) -> CommunicationResult {
         match self.world.communicate(slot, action) {
             Ok(text) => {
-                self.broadcast_chat(slot, ChatChannel::Team, text);
+                self.broadcast_message(slot, ChatChannel::Team, text, action == Communication::VoiceLine);
                 CommunicationResult::Accepted
             }
             Err(result) => result,
         }
     }
     fn broadcast_chat(&mut self, sender: usize, channel: ChatChannel, text: String) {
+        self.broadcast_message(sender, channel, text, false);
+    }
+    fn broadcast_message(&mut self, sender: usize, channel: ChatChannel, text: String, voice_line: bool) {
         self.chat_sequence += 1;
         let message = ChatMessage {
             id: self.chat_sequence,
@@ -982,6 +1342,7 @@ impl Server {
             character: self.world.actors[sender].character,
             channel,
             text,
+            voice_line,
         };
         if self
             .local
@@ -1247,6 +1608,9 @@ impl Server {
         self.sequence = self.sequence.wrapping_add(1);
         if self.sequence.is_multiple_of(3) {
             for p in &self.peers {
+                let _ = self
+                    .socket
+                    .send_to(&stats_snapshot(&self.world, p.token, self.sequence), p.addr);
                 let _ = self.socket.send_to(
                     &portal_snapshot(&self.world, p.token, self.sequence),
                     p.addr,
@@ -1312,6 +1676,8 @@ pub struct Client {
     pub received_sequence: u64,
     projectile_sequence: u64,
     impact_sequence: u64,
+    stats_sequence: u64,
+    match_stats: [crate::match_stats::MatchStats; PLAYERS],
     pending_worlds: VecDeque<(u64, World, InputAck)>,
     pending_portals: VecDeque<(u64, [crate::portal::State; PLAYERS])>,
     last_hello: Instant,
@@ -1370,6 +1736,9 @@ impl Client {
         if world.map_id == self.world.map_id && world.round == self.world.round {
             world.impacts = std::mem::take(&mut self.world.impacts);
         }
+        for (actor, stats) in world.actors.iter_mut().zip(self.match_stats) {
+            actor.stats = stats;
+        }
         self.world = world;
         self.received_sequence = seq;
         self.last_seen = Instant::now();
@@ -1416,6 +1785,8 @@ impl Client {
             received_sequence: 0,
             projectile_sequence: 0,
             impact_sequence: 0,
+            stats_sequence: 0,
+            match_stats: Default::default(),
             pending_worlds: VecDeque::new(),
             pending_portals: VecDeque::new(),
             last_hello: Instant::now() - Duration::from_secs(1),
@@ -1499,9 +1870,6 @@ impl Client {
     pub fn communicate(&mut self, action: Communication) -> CommunicationResult {
         if self.slot.is_none() || self.error.is_some() {
             return CommunicationResult::Unavailable;
-        }
-        if action == Communication::VoiceLine {
-            return CommunicationResult::VoiceUnavailable;
         }
         if self.communication_outbox.len() >= 4 {
             return CommunicationResult::Cooldown;
@@ -1677,6 +2045,14 @@ impl Client {
                         self.pending_portals.push_back((seq, states));
                         while self.pending_portals.len() > 4 {
                             self.pending_portals.pop_front();
+                        }
+                    }
+                } else if let Some((seq, stats)) = read_stats(bytes, self.token) {
+                    if seq > self.stats_sequence {
+                        self.match_stats = stats;
+                        self.stats_sequence = seq;
+                        for (actor, stats) in self.world.actors.iter_mut().zip(stats) {
+                            actor.stats = stats;
                         }
                     }
                 } else if let Some((seq, projectiles)) = read_projectiles(bytes, self.token) {
@@ -1944,16 +2320,21 @@ mod tests {
         assert!(clients[2].chat.messages.is_empty());
         assert_eq!(
             server.communicate(Communication::VoiceLine),
-            CommunicationResult::VoiceUnavailable
+            CommunicationResult::Accepted
         );
-        assert_eq!(server.chat.messages.len(), 2);
+        assert_eq!(server.chat.messages.len(), 3);
+        assert!(server.chat.messages.back().unwrap().voice_line);
+        pump(&mut server, &mut clients, 8);
+        assert!(clients[1].chat.messages.back().unwrap().voice_line);
+        assert!(clients[0].chat.messages.is_empty());
+        server.world.actors[0].communication_cooldown = 0.0;
         assert_eq!(
             server.communicate(Communication::Emote),
             CommunicationResult::Accepted
         );
         pump(&mut server, &mut clients, 8);
         assert!(clients.iter().all(|c| c.world.actors[0].dancing));
-        assert_eq!(server.chat.messages.len(), 3);
+        assert_eq!(server.chat.messages.len(), 4);
     }
     #[test]
     fn communication_retry_does_not_replay_gesture_and_rejects_bad_packets() {
@@ -2040,6 +2421,7 @@ mod tests {
             character: 3,
             channel: ChatChannel::Match,
             text: "안녕 😀".into(),
+            voice_line: false,
         };
         let packet = chat_delivery(42, &message);
         assert_eq!(read_chat_delivery(&packet, 42), Some(message));
@@ -2050,6 +2432,22 @@ mod tests {
         let mut invalid = packet;
         invalid[21] = PLAYERS as u8;
         assert!(read_chat_delivery(&invalid, 42).is_none());
+    }
+
+    #[test]
+    fn character_voice_delivery_is_marked_by_authority_not_typed_chat() {
+        let message = ChatMessage {
+            id: 1, sender: 0, character: 2, channel: ChatChannel::Team,
+            text: "음성 대사".into(), voice_line: true,
+        };
+        let packet = chat_delivery(42, &message);
+        assert_eq!(read_chat_delivery(&packet, 42), Some(message));
+        let mut invalid = packet.clone();
+        *invalid.last_mut().unwrap() = 2;
+        assert!(read_chat_delivery(&invalid, 42).is_none());
+        let mut request = chat_request(42, 1, ChatChannel::Team, "음성 대사");
+        request.push(1);
+        assert!(read_chat_request(&request).is_none());
     }
 
     #[test]
@@ -2519,6 +2917,34 @@ mod tests {
     }
 
     #[test]
+    fn overtime_snapshot_tracks_presence_and_round_end() {
+        let mut world = World::room(Default::default(), true);
+        world.join_player(TEAM_SIZE);
+        world.start();
+        world.phase = Phase::Playing;
+        world.remaining = DT * 0.5;
+        world.actors[0].pos = world.points()[0];
+        world.actors[TEAM_SIZE].pos = world.points()[0];
+        world.update_objective();
+
+        let packet = snapshot(&world, 42, 1);
+        assert!(packet.len() < 1200);
+        let (_, decoded, _) = read_snapshot(&packet, 42).unwrap();
+        assert_eq!(decoded.phase, Phase::Playing);
+        assert_eq!(decoded.remaining, 0.0);
+        assert!(decoded.overtime);
+        assert!(decoded.contested);
+        assert_eq!(decoded.result, None);
+
+        world.actors[0].pos.x += RADIUS + 0.1;
+        world.update_objective();
+        let (_, decoded, _) = read_snapshot(&snapshot(&world, 42, 2), 42).unwrap();
+        assert_eq!(decoded.phase, Phase::Intermission);
+        assert!(!decoded.overtime);
+        assert_eq!(decoded.result, Some(1));
+    }
+
+    #[test]
     fn snapshot_roundtrip_and_mtu() {
         let mut world = World::default();
         world.start();
@@ -2574,7 +3000,7 @@ mod tests {
         world.actors[0].character = 0;
         world.actors[0].ammo = 0;
         let size = snapshot(&world, 42, 1).len();
-        for stage in 0..=3 {
+        for stage in 0..=2 {
             world.actors[0].combat.vivi_combo = stage;
             let packet = snapshot(&world, 42, 1);
             assert_eq!(packet.len(), size);
@@ -2628,6 +3054,7 @@ mod tests {
             (SkillPhase::Move, START_SECONDS + 0.2),
             (SkillPhase::Fire, START_SECONDS + 0.3),
             (SkillPhase::End, START_SECONDS + ACTIVE_SECONDS + 0.2),
+            (SkillPhase::Ultimate, 2.6),
         ] {
             world.actors[0].combat.naia = State {
                 phase,
@@ -2649,7 +3076,33 @@ mod tests {
         world.actors[0].combat.naia.elapsed = 1.0;
         world.actors[0].character = 0;
         world.actors[0].ammo = 0;
-        assert!(read_snapshot(&snapshot(&world, 42, 1), 42).is_none());
+        // Vivi now owns this phase/clock slot; stale Naia state is not serialized.
+        let (_, decoded, _) = read_snapshot(&snapshot(&world, 42, 1), 42).unwrap();
+        assert_eq!(decoded.actors[0].combat.naia.phase, SkillPhase::Off);
+        assert!(!decoded.actors[0].combat.vivi.active());
+    }
+
+    #[test]
+    fn naia_wave_heading_survives_snapshot_without_growing_max_packet() {
+        let mut world = World::default();
+        for i in 0..MAX_PROJECTILES {
+            let mut p = Projectile::visual(
+                i as u32,
+                i % PLAYERS,
+                ProjectileKind::Wave,
+                V3::new(2.0, 0.0, 3.0),
+            );
+            p.velocity = direction(i as f32 * 0.173, 0.0) * crate::naia_skill::WAVE_SPEED;
+            world.projectiles.push(p);
+        }
+        let bytes = projectile_snapshot(&world, 42, 9);
+        assert!(bytes.len() < MAX_PACKET);
+        let (_, decoded) = read_projectiles(&bytes, 42).unwrap();
+        for (a, b) in world.projectiles.iter().zip(&decoded) {
+            assert_eq!(a.owner, b.owner);
+            assert_eq!(a.kind, b.kind);
+            assert!((a.velocity.normalized() - b.velocity.normalized()).length() < 0.026);
+        }
     }
     #[test]
     fn empty_room_and_configured_bots_roundtrip_and_reject_old_protocol() {
@@ -2783,7 +3236,7 @@ mod tests {
             },
         );
         assert!(read_input(&p).unwrap().2.dance);
-        let flags = p.len() - 2; // The final byte carries alternate fire.
+        let flags = p.len() - 6; // Alternate fire followed by the viewport ratio.
         p[flags] |= 128;
         let input = read_input(&p).unwrap().2;
         assert!(input.dance && input.crouch);
@@ -2930,10 +3383,18 @@ mod tests {
                 },
                 0.13,
             );
-            if i % 2 == 1 {
+            if i % 4 != 0 {
                 let hit = world.impacts.last_mut().unwrap();
-                hit.kind = ImpactKind::Slash;
-                hit.radius = 0.48;
+                hit.kind = match i % 4 {
+                    1 => ImpactKind::Slash,
+                    2 => ImpactKind::PoisonDart,
+                    _ => ImpactKind::Syringe,
+                };
+                hit.radius = if hit.kind == ImpactKind::Slash {
+                    0.48
+                } else {
+                    0.13
+                };
                 hit.rotation = (i * 17) as u8;
             }
         }
@@ -2981,7 +3442,6 @@ mod tests {
             },
             0.13,
         );
-        let hit = server.world.impacts[0];
         server.world.record_slash(
             crate::impact::SurfaceHit {
                 distance: 1.0,
@@ -2992,12 +3452,29 @@ mod tests {
             0.64,
             23,
         );
-        let slash = server.world.impacts[1];
+        for kind in [
+            ProjectileKind::Needle,
+            ProjectileKind::Poison,
+            ProjectileKind::Syringe,
+        ] {
+            server.world.record_projectile_impact(
+                crate::impact::SurfaceHit {
+                    distance: 1.0,
+                    position: V3::new(-5.8, 1.5, -21.0),
+                    face: 1,
+                    color: [231, 235, 220],
+                },
+                0.11,
+                kind,
+                V3::new(-1.0, 0.2, 0.3).normalized(),
+            );
+        }
+        let expected = server.world.impacts.clone();
         pump(&mut server, &mut clients, 12);
-        assert_eq!(clients[0].world.impacts, vec![hit, slash]);
+        assert_eq!(clients[0].world.impacts, expected);
         clients.push(Client::connect(server.addr().unwrap()).unwrap());
         pump(&mut server, &mut clients, 12);
-        assert!(clients.iter().all(|c| c.world.impacts == vec![hit, slash]));
+        assert!(clients.iter().all(|c| c.world.impacts == expected));
         // A repeated or out-of-order packet cannot overwrite newer contacts.
         let peer = &server.peers[0];
         server
@@ -3008,7 +3485,7 @@ mod tests {
             )
             .unwrap();
         clients[0].update(Input::default()).unwrap();
-        assert_eq!(clients[0].world.impacts, vec![hit, slash]);
+        assert_eq!(clients[0].world.impacts, expected);
         pump(&mut server, &mut clients, 245);
         assert!(server.world.impacts.is_empty());
         assert!(clients.iter().all(|c| c.world.impacts.is_empty()));
@@ -3044,7 +3521,8 @@ mod tests {
         pump(&mut server, &mut clients, 5);
         server.world.actors[0].combat.ultimate = 100.0;
         let mut saw_projectile = false;
-        for _ in 0..60 {
+        // Butter now releases on Ultimate1_1's 2.5s event, not on Q press.
+        for _ in 0..210 {
             clients[0]
                 .update(Input {
                     ultimate: true,
@@ -3063,7 +3541,8 @@ mod tests {
         assert!(saw_projectile);
         assert!(server.world.actors[6].hp < MAX_HP);
         assert_eq!(clients[0].world.actors[6].hp, server.world.actors[6].hp);
-        assert!(clients[0].world.actors[0].combat.ultimate < 3.0);
+        assert!(clients[0].world.actors[0].combat.ultimate < 5.0);
+        assert_eq!(server.world.actors[0].shot, 1, "held Q cannot recast");
     }
 }
 
@@ -3219,3 +3698,33 @@ mod erpin_wire_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod renua_tests;
+#[cfg(test)]
+mod hilde_tests;
+#[cfg(test)]
+mod shion_tests;
+
+#[cfg(test)]
+#[path = "net/komi_tests.rs"]
+mod komi_tests;
+#[cfg(test)]
+#[path = "net/butter_tests.rs"]
+mod butter_tests;
+
+#[cfg(test)]
+mod mayo_tests;
+
+#[cfg(test)]
+mod bella_tests;
+
+#[cfg(test)]
+mod picora_tests;
+
+#[cfg(test)]
+#[path = "net/erpin_skill_tests.rs"]
+mod erpin_skill_tests;
+
+#[cfg(test)]
+mod chloe_tests;

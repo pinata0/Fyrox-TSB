@@ -12,6 +12,7 @@ static HALF_CLOSED: std::sync::OnceLock<Vec<TextureResource>> = std::sync::OnceL
 static NAIA_ATTACK: std::sync::OnceLock<Vec<TextureResource>> = std::sync::OnceLock::new();
 
 pub(super) fn load(manager: &ResourceManager) -> Result<(), String> {
+    super::cheek_eyes::load(manager);
     let requests: Vec<_> = characters::SLUGS
         .iter()
         .map(|slug| {
@@ -137,12 +138,27 @@ fn blink_texture(closure: f32, id: u8) -> usize {
 }
 
 fn weights(motion: Motion, age: f32, id: u8) -> [f32; 5] {
+    if id == 3 {
+        return [
+            trickcal_shooting_balddagu::id_skill::eye_closure(motion, age),
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+        ];
+    }
     let time = age.max(0.0);
     let blink_time = (time + id as f32 * 0.193).rem_euclid(3.7);
     let blink = smooth((blink_time - 3.40) / 0.10) * (1.0 - smooth((blink_time - 3.52) / 0.14));
     let phase = (time / motion.seconds(id)).clamp(0.0, 1.0);
     let accent = (phase * std::f32::consts::PI).sin().powi(2);
     match motion {
+        Motion::ErpinSkill | Motion::ErpinStart | Motion::ErpinCharge | Motion::ErpinRecover => {
+            let f=trickcal_shooting_balddagu::erpin_skill::flustered(motion,age);
+            [blink*(1.0-f),0.0,0.70*f,0.0,0.60*f]
+        }
+        Motion::KomiRest => [smooth((age-0.10)/0.12)*(1.0-smooth((age-5.55)/0.35)),0.2,0.0,0.0,0.0],
+        Motion::KomiFeast => [blink,0.3,0.0,0.0,if (1.7..2.5).contains(&age){0.35}else{0.0}],
         Motion::Death => [smooth(phase / 0.45), 0.0, 0.32, 0.0, 0.0],
         Motion::Hurt => [blink, 0.0, 0.65 * accent, 0.35 * accent, 0.22 * accent],
         Motion::Attack | Motion::Attack2 | Motion::Skill | Motion::Ultimate => {
@@ -176,6 +192,10 @@ pub(super) fn apply(g: &mut Graph, root: Handle<Node>, motion: Motion, age: f32,
                         } else {
                             0.0
                         }
+                    } else if id == 2 && name.contains("browUp_") {
+                        trickcal_shooting_balddagu::erpin_skill::flustered(motion,age) * if name.ends_with("_L") {0.95}else{0.72}
+                    } else if id == 2 && name.contains("eyeWide_") {
+                        trickcal_shooting_balddagu::erpin_skill::flustered(motion,age) * 0.90
                     } else if name.contains("eyeBlink_") {
                         blink
                     } else if name.contains("browDown_") {

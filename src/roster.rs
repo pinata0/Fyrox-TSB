@@ -20,6 +20,7 @@ pub enum Position {
     Middle,
     Rear,
 }
+pub const POSITION_LIMIT: usize = 3;
 impl Position {
     pub fn name(self) -> &'static str {
         ["FRONT", "MIDDLE", "REAR"][self as usize]
@@ -44,13 +45,13 @@ impl Race {
     }
     pub fn passive(self) -> &'static str {
         match self {
-            Self::Fairy => "Healing received +10%",
-            Self::Beast => "No race passive",
+            Self::Fairy => "Shift: surge, 3 charges / 3s recharge; Healing received +10%",
+            Self::Beast => "Shift: forward leap, 6s cooldown",
             Self::Elf => "Reload time -10%",
-            Self::Spirit => "After 4s safe: restore 8% HP barrier",
+            Self::Spirit => "Shift: burrow 4s, hold LMB to emerge; 8s cooldown",
             Self::Ghost => "Shift: wall phase for 3s, then 12s cooldown",
-            Self::Dragon => "Knockback distance -30%",
-            Self::Witch => "Ability cooldown -5%",
+            Self::Dragon => "Shift: charge 3s, 30 contact damage, then 8s cooldown; knockback -30%",
+            Self::Witch => "Shift: surge, 3 charges / 3s recharge; Ability cooldown -5%",
         }
     }
 }
