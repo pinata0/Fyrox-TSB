@@ -2,6 +2,8 @@
 
 Credentials remain in memory. Prepare creates a draft; publish exposes only a
 draft whose executable, checksum, source commit and notes match local artifacts.
+Hotfix replaces a published release's assets after staging and verifying both
+new uploads. The existing version tag and release title remain unchanged.
 """
 import argparse
 import hashlib
@@ -22,7 +24,7 @@ NOTES = ROOT / "docs/releases/v0.1.md"
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("action", choices=["prepare", "publish", "inspect"])
+    parser.add_argument("action", choices=["prepare", "publish", "inspect", "hotfix"])
     args = parser.parse_args()
     credential = subprocess.run(
         ["git", "-c", "credential.interactive=never", "credential", "fill"],
@@ -77,6 +79,55 @@ def main():
     notes = NOTES.read_text(encoding="utf-8")
     if digest not in notes:
         raise SystemExit("Release notes do not include the final EXE checksum.")
+    if args.action == "hotfix":
+        if not release or release["draft"]:
+            raise SystemExit("Hotfix requires the existing published v0.1 release.")
+        replacements = []
+        # Upload under temporary names before touching the working download URL.
+        for file in [ASSET, checksum]:
+            expected = "sha256:" + hashlib.file_digest(file.open("rb"), "sha256").hexdigest()
+            current = next((a for a in release["assets"] if a["name"] == file.name), None)
+            if current is None:
+                raise SystemExit(f"Canonical asset {file.name} missing; inspect before retrying.")
+            if current.get("digest") == expected and current["size"] == file.stat().st_size:
+                continue
+            temporary = f"pending-{digest[:12]}-{file.name}"
+            uploaded = next((a for a in release["assets"] if a["name"] == temporary), None)
+            if uploaded is None:
+                upload_url = release["upload_url"].split("{", 1)[0] + "?" + urllib.parse.urlencode({"name": temporary})
+                print(f"Staging {file.name} ({file.stat().st_size} bytes)", flush=True)
+                uploaded = api(upload_url, method="POST", file=file)
+            if uploaded.get("digest") != expected or uploaded["size"] != file.stat().st_size or uploaded["state"] != "uploaded":
+                raise SystemExit("Staged hotfix failed digest/size/state verification; existing assets retained.")
+            replacements.append((file, current, uploaded, expected))
+        for file, previous, uploaded, expected in replacements:
+            live = api(f"releases/{release['id']}")
+            current = next((a for a in live["assets"] if a["name"] == file.name), None)
+            if current is None or current["id"] != previous["id"] or current.get("digest") != previous.get("digest"):
+                raise SystemExit("Release changed during staging; inspect before continuing.")
+            backup_name = f"previous-{previous['id']}-{file.name}"
+            api(f"releases/assets/{previous['id']}", {"name": backup_name}, "PATCH")
+            try:
+                result = api(f"releases/assets/{uploaded['id']}", {"name": file.name}, "PATCH")
+                if result.get("digest") != expected or result["name"] != file.name:
+                    raise SystemExit("Replacement metadata did not match the verified upload.")
+            except BaseException:
+                live = api(f"releases/{release['id']}")
+                if not any(a["name"] == file.name for a in live["assets"]):
+                    api(f"releases/assets/{previous['id']}", {"name": file.name}, "PATCH")
+                raise
+            print(f"Replaced {file.name}: {expected}", flush=True)
+        # Publish the matching checksum/notes before removing the old assets.
+        release = api(f"releases/{release['id']}", {"body": notes}, "PATCH")
+        for file in [ASSET, checksum]:
+            item = next(a for a in release["assets"] if a["name"] == file.name)
+            expected = "sha256:" + hashlib.file_digest(file.open("rb"), "sha256").hexdigest()
+            if item.get("digest") != expected or item["size"] != file.stat().st_size:
+                raise SystemExit("Canonical asset verification failed; previous assets retained.")
+        for _, previous, _, _ in replacements:
+            api(f"releases/assets/{previous['id']}", method="DELETE")
+        print(json.dumps({key: release[key] for key in ["id", "html_url", "draft", "prerelease", "tag_name"]}))
+        return
     if not release:
         if args.action != "prepare":
             raise SystemExit("Prepare the draft release first.")

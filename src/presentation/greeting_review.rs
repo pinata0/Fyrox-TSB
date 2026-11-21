@@ -9,12 +9,19 @@ fn review_step(capture: u8) -> usize {
         capture as usize / 3 * 6 + [0, 2, 5][capture as usize % 3]
     } else if std::env::args().any(|arg| arg == "--erpin-only") {
         12 + capture as usize
+    } else if std::env::args().any(|arg| arg == "--mayo-only") {
+        48 + capture as usize
     } else {
         capture as usize
     }
 }
 
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
+    if std::env::args().any(|arg| arg == "--mayo-only") && rt.review_capture >= 6 {
+        println!("MAYO_GREETING_REVIEW_OK: grip/raise/left/right/lower/return, 109-tick continuity and sleeve framing");
+        context.loop_controller.exit();
+        return Ok(());
+    }
     if std::env::args().any(|arg| arg == "--first-person-framing-only") && rt.review_capture >= 45 {
         println!("GREETING_FRAMING_REVIEW_OK: 15 heroes, 45 captures, 109 ticks per hero, visible fingers/palm and smooth grip return");
         context.loop_controller.exit();

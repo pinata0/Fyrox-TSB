@@ -18,10 +18,16 @@ const SAMPLES: &[(bool, Action, f32)] = &[
     (true, Action::Ultimate, 2.58),
     (true, Action::Off, 0.0),
     (false, Action::Off, 0.0),
+    (true, Action::Skill, 0.0),
+    (true, Action::Skill, 0.12),
+    (true, Action::Skill, 1.95),
+    (true, Action::Ultimate, 0.0),
+    (true, Action::Ultimate, 0.25),
+    (true, Action::Ultimate, 3.25),
 ];
 pub(super) fn update(rt: &mut Runtime, context: &mut PluginContext) -> GameResult {
     if rt.review_capture as usize >= SAMPLES.len() {
-        println!("MAYO_SKILL_REVIEW_OK: 13 world/first-person views, blowpipe/rifle/rotary muzzle launches, dual hand contacts and normal weapon restoration");
+        println!("MAYO_SKILL_REVIEW_OK: {} world/first-person views, blowpipe/rifle/rotary muzzle launches, dual hand contacts, uncollapsed sleeves and normal weapon restoration", SAMPLES.len());
         context.loop_controller.exit();
         return Ok(());
     }
@@ -117,6 +123,14 @@ pub(super) fn capture(rt: &mut Runtime, context: PluginContext) -> GameResult {
     assert_eq!(g[props.ultimate].visibility(), phase == Action::Ultimate);
     if first {
         assert_eq!(g[rt.weapons[8]].visibility(), phase == Action::Off);
+        let left = rt.first_person_support_arm.as_ref().unwrap();
+        assert_eq!(left.visible(g), phase != Action::Off);
+        if phase != Action::Off {
+            for arm in rt.first_person_arm.iter().chain(rt.first_person_support_arm.iter()) {
+                arm.verify_sleeve_corner(g, rt.camera);
+                arm.verify_mayo_sleeve(g);
+            }
+        }
     }
     if !rt.session.world().projectiles.is_empty() {
         let p = rt.visuals[0].pose();

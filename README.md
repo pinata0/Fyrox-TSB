@@ -8,7 +8,7 @@ Rust와 Fyrox 1.0.1로 제작했으며, 민트색 BLOOM과 분홍색 COCOA가 A 
 - 현재 버전: **v0.1 — 첫 공개 개발 버전** (패키지 버전 `0.1.0`)
 - 개발 시작: **2026년 11월 12일** / 게시일: **2026년 11월 21일**
 - 플랫폼: **Windows 10/11 64비트**, 단일 실행파일 `TSB.exe`
-- [v0.1 다운로드](https://github.com/pinata0/Fyrox-TSB/releases/download/v0.1/TSB.exe) · [릴리즈 설명](https://github.com/pinata0/Fyrox-TSB/releases/tag/v0.1) · [DotG 프로젝트 소개](https://www.dotgsince2023.co.kr/projects/trickcal-shooting-balddagu)
+- [v0.1 다운로드](https://github.com/pinata0/Fyrox-TSB/releases/download/v0.1/TSB.exe?build=9dcd2536f2a3) · [릴리즈 설명](https://github.com/pinata0/Fyrox-TSB/releases/tag/v0.1) · [DotG 프로젝트 소개](https://www.dotgsince2023.co.kr/projects/trickcal-shooting-balddagu)
 
 ## v0.1에서 즐길 수 있는 것
 

@@ -32,6 +32,7 @@ pub(super) struct FirstPersonArm {
     model: Handle<Node>,
     upper_arm: Handle<Node>,
     forearm: Handle<Node>,
+    elbow_rest_rotation: UnitQuaternion<f32>,
     hand: Handle<Node>,
     rest: Vec<(Handle<Node>, Transform)>,
     fingers: Vec<Handle<Node>>,
@@ -74,6 +75,8 @@ impl FirstPersonArm {
         let hand = bone(hand_name)?;
         let upper_arm = bone(upper_name)?;
         let forearm = bone(forearm_name)?;
+        let elbow_rest_rotation = super::skeleton::world_rotation(g, upper_arm).inverse()
+            * super::skeleton::world_rotation(g, forearm);
         let arm_bones: HashSet<_> = g.traverse_handle_iter(upper_arm).collect();
         let grasp = super::hand_grip::Rig::new(g, model, visual.id, left);
         let fingers = grasp.fingers();
@@ -292,6 +295,7 @@ impl FirstPersonArm {
             model,
             upper_arm,
             forearm,
+            elbow_rest_rotation,
             hand,
             rest,
             fingers,
@@ -694,6 +698,20 @@ impl FirstPersonArm {
         }
         aim_joint(g, self.upper_arm, self.forearm, direction);
         aim_joint(g, self.forearm, self.hand, direction);
+        if self.character == 8 {
+            // Aiming the two bones independently leaves the support forearm's
+            // gun-grip roll opposed to the upper arm. Their shared sleeve ring
+            // then collapses under linear skinning. Carry that roll through the
+            // upper arm using the imported rest frame, keeping the wrist fixed.
+            let forearm_rotation = super::skeleton::world_rotation(g, self.forearm);
+            set_global_rotation(
+                g,
+                self.upper_arm,
+                forearm_rotation * self.elbow_rest_rotation.inverse(),
+            );
+            aim_joint(g, self.upper_arm, self.forearm, direction);
+            set_global_rotation(g, self.forearm, forearm_rotation);
+        }
         set_global_rotation(g, self.hand, hand_rotation);
 
         let offset = g[holder]
@@ -742,6 +760,64 @@ impl FirstPersonArm {
             "{} sleeve must enter from its own lower corner (left={})",
             characters::SLUGS[self.character as usize], self.left
         );
+    }
+
+    pub fn verify_mayo_sleeve(&self, g: &Graph) {
+        // The shared elbow ring must retain its cross-section when both arm
+        // bones are straightened. Opposing bone rolls collapse linear skinning.
+        let bind_elbow = g[self.forearm]
+            .inv_bind_pose_transform()
+            .try_inverse()
+            .unwrap()
+            .transform_point(&Vector3::zeros().into())
+            .coords;
+        let mut checked = 0;
+        let mut min_ratio = 1.0_f32;
+        for node in g.traverse_handle_iter(self.model) {
+            if !g[node].name().contains("_RefinedViewSleeve.") {
+                continue;
+            }
+            let Some(mesh) = g[node].cast::<Mesh>() else {
+                continue;
+            };
+            for surface in mesh.surfaces() {
+                let data = surface.data_ref().data_ref();
+                let used: HashSet<_> = data.geometry_buffer.iter().flat_map(|t| t.0).collect();
+                for index in used {
+                    let vertex = data.vertex_buffer.get(index as usize).unwrap();
+                    let indices = vertex.read_4_u8(VertexAttributeUsage::BoneIndices).unwrap();
+                    let weights = vertex.read_4_f32(VertexAttributeUsage::BoneWeight).unwrap();
+                    let weight = |bone| {
+                        indices.iter().zip(weights.iter())
+                            .filter(|(i, _)| surface.bones().get(**i as usize) == Some(&bone))
+                            .map(|(_, w)| *w)
+                            .sum::<f32>()
+                    };
+                    if weight(self.upper_arm) < 0.2 || weight(self.forearm) < 0.2 {
+                        continue;
+                    }
+                    let radial = vertex.read_3_f32(VertexAttributeUsage::Position).unwrap() - bind_elbow;
+                    let mut deformed = Vector3::zeros();
+                    let mut expected = 0.0;
+                    for (i, w) in indices.iter().zip(weights.iter()).filter(|(_, w)| **w > 0.0) {
+                        let bone = surface.bones()[*i as usize];
+                        let skin = g[bone].global_transform() * g[bone].inv_bind_pose_transform();
+                        let offset = skin.transform_vector(&radial);
+                        deformed += offset * *w;
+                        expected += offset.norm() * *w;
+                    }
+                    let ratio = deformed.norm() / expected;
+                    min_ratio = min_ratio.min(ratio);
+                    assert!(
+                        ratio > 0.85,
+                        "Mayo sleeve collapsed at elbow (left={}, radius ratio={ratio:.3})", self.left
+                    );
+                    checked += 1;
+                }
+            }
+        }
+        assert!(checked > 0, "Mayo sleeve elbow must be checked");
+        println!("MAYO_SLEEVE_OK: left={}, {checked} elbow vertices, minimum radius ratio={min_ratio:.3}", self.left);
     }
 
     pub fn hilde(&self,g:&mut Graph,holder:Handle<Node>,camera:Handle<Node>,pose:trickcal_shooting_balddagu::motion::Pose) {

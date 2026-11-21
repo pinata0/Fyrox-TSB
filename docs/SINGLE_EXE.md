@@ -4,10 +4,12 @@
 
 v0.1은 최신 소스를 릴리스 빌드한 `release/v0.1/TSB.exe`이며, 루트 배포 경로 `release/TSB.exe`도 같은 파일을 사용합니다. [GitHub 릴리즈](https://github.com/pinata0/Fyrox-TSB/releases/tag/v0.1)에 단일 EXE와 선택형 SHA-256 텍스트를 게시합니다. 개발 시작일은 2026-11-12, 게시일은 2026-11-21입니다.
 
-- 크기: 339,184,445바이트 / 내부 파일: 1,766개.
-- SHA-256: `3def454e881b7607b99235079cd40a520ae628c61464582acdf46891dcc0ac83`.
-- 빌드 stage: `artifacts/releases/TSB-v0-1-20261121`.
-- 검증 기록: `artifacts/v0.1-validation/results.json`, `artifacts/v0.1-headless-full.log`.
+- 2026-11-21 마요 1인칭 팔 핫픽스이며 버전 표기는 v0.1로 유지합니다.
+- 크기: 339,195,143바이트 / 내부 파일: 1,766개.
+- SHA-256: `9dcd2536f2a37f4349331a446c47a87985cf15d2d2cc7c9150e5e0847ffc5cc7`.
+- 빌드 stage: `artifacts/releases/TSB-v0-1-20261121-mayo-hotfix`.
+- 핫픽스 검증 기록: `artifacts/mayo-hotfix-v0.1/validation.json` (추출·EOS·마요 30개 화면·실행 후 무결성).
+- 초기 공개본 검증 기록: `artifacts/v0.1-validation/results.json`, `artifacts/v0.1-headless-full.log`.
 - 검증 결과와 알려진 제한은 [v0.1 릴리즈 노트](releases/v0.1.md)에 정리했습니다. 아래 내용은 기존 패키징 방식과 이전 저폴리곤 빌드의 작업 기록입니다.
 
 ## 패키징 방식과 이전 빌드 기록
