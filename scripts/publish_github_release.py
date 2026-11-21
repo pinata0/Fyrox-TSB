@@ -68,7 +68,9 @@ def main():
             "assets": [{key: item.get(key) for key in ["id", "name", "size", "digest", "browser_download_url", "state"]} for item in release["assets"]],
         }))
         return
-    if api("git/ref/heads/main")["object"]["sha"] != sha:
+    # A published hotfix replaces only release assets and notes. It does not
+    # publish source, move the version tag, or require a push to the main branch.
+    if args.action != "hotfix" and api("git/ref/heads/main")["object"]["sha"] != sha:
         raise SystemExit("Push the reviewed local source snapshot to main before creating the release.")
     if not ASSET.is_file():
         raise SystemExit("Missing release/v0.1/TSB.exe")
